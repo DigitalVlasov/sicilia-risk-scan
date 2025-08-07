@@ -16,11 +16,12 @@ interface ResultsProps {
   minRisk: number;
   maxRisk: number;
   criticalAreas: CriticalArea[];
+  sector?: string;
 }
 
 const currency = (n: number) => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(n);
 
-export const Results = ({ minRisk, maxRisk, criticalAreas }: ResultsProps) => {
+export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProps) => {
   const cases: CaseStudy[] = [
     {
       sector: "Ristorazione (CT)",
@@ -54,9 +55,10 @@ export const Results = ({ minRisk, maxRisk, criticalAreas }: ResultsProps) => {
         </p>
       </header>
 
-      <article className="rounded-lg border p-6 bg-card">
-        <div className="text-sm text-muted-foreground">Stima del rischio economico</div>
-        <div className="mt-2 text-3xl font-bold text-primary">{currency(minRisk)} - {currency(maxRisk)}</div>
+      <article className="rounded-lg p-6 bg-gradient-hero text-background border-none shadow-md">
+        <div className="text-sm/6 opacity-90">Stima del rischio economico</div>
+        <div className="mt-1 text-3xl font-bold">{currency(minRisk)} - {currency(maxRisk)}</div>
+        <p className="mt-2 text-sm/6 opacity-90">Attivi su tutto il territorio Siciliano • Interventi rapidi e documentati</p>
       </article>
 
       <article className="space-y-4">
@@ -77,7 +79,7 @@ export const Results = ({ minRisk, maxRisk, criticalAreas }: ResultsProps) => {
       </article>
 
       <article className="space-y-4">
-        <h3 className="text-2xl font-semibold">Come Spazio Impresa risolve i tuoi problemi</h3>
+        <h3 className="text-2xl font-semibold">Perché Spazio Impresa?</h3>
         <div className="overflow-hidden rounded-lg border">
           <div className="grid grid-cols-2 bg-muted/50">
             <div className="p-3 font-medium">Mercato standard</div>
@@ -109,14 +111,113 @@ export const Results = ({ minRisk, maxRisk, criticalAreas }: ResultsProps) => {
         </div>
       </article>
 
+      <article className="space-y-3">
+        <h3 className="text-2xl font-semibold">Il tuo Piano d’Azione immediato</h3>
+        <ul className="grid gap-3 sm:grid-cols-2">
+          <li className="rounded-lg border p-4 bg-card">Audit iniziale e verifica documentale (DVR, nomine, formazione)</li>
+          <li className="rounded-lg border p-4 bg-card">Piano formativo mirato con e-learning e aula</li>
+          <li className="rounded-lg border p-4 bg-card">Nomina medico competente e calendario sorveglianza sanitaria</li>
+          <li className="rounded-lg border p-4 bg-card">Procedure di emergenza e prove di evacuazione con report</li>
+        </ul>
+      </article>
+
+      <article className="space-y-3">
+        <h3 className="text-2xl font-semibold">Aree scoperte per Coordinatore</h3>
+        {sector?.toLowerCase().includes("edilizia") ? (
+          <p className="text-muted-foreground">Per cantieri edili è spesso necessario il Coordinatore per la Sicurezza (CSP/CSE). Valutiamo caso per caso e predisponiamo PSC/POS.</p>
+        ) : (
+          <p className="text-muted-foreground">Non richiesto per il settore selezionato, salvo casi specifici.</p>
+        )}
+      </article>
+
+      <article className="space-y-3">
+        <h3 className="text-2xl font-semibold">Benchmark per il tuo settore</h3>
+        <div className="rounded-lg border p-4 bg-card">
+          <SectorBenchmark sector={sector} />
+        </div>
+      </article>
+
+      <article className="space-y-3">
+        <h3 className="text-2xl font-semibold">Vantaggi completi</h3>
+        <ul className="grid gap-3 sm:grid-cols-2">
+          <li className="rounded-lg border p-4 bg-card">Pacchetto unico con gestione completa (documenti, formazione, visite)</li>
+          <li className="rounded-lg border p-4 bg-card">Tracciamento digitale attestati e scadenze</li>
+          <li className="rounded-lg border p-4 bg-card">Supporto durante eventuali ispezioni ispettive</li>
+          <li className="rounded-lg border p-4 bg-card">Aggiornamenti 2024-2025 sempre inclusi</li>
+        </ul>
+      </article>
+
+      <Benefits minRisk={minRisk} maxRisk={maxRisk} />
+
       <aside className="rounded-lg border p-6 bg-card">
         <h3 className="text-xl font-semibold">Pianifica la tua sicurezza adesso</h3>
-        <p className="mt-2 text-muted-foreground">Richiedi un assessment gratuito e scopri come ridurre il rischio e i costi.</p>
+        <p className="mt-2 text-muted-foreground">Attivi su tutto il territorio Siciliano. Richiedi un assessment gratuito e scopri come ridurre il rischio e i costi.</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <a href="tel:0955872480" className="story-link text-primary">Chiamaci ora: 095 587 2480</a>
           <a href="https://wa.me/390955872480" target="_blank" rel="noreferrer" className="story-link text-primary">Scrivici su WhatsApp</a>
         </div>
       </aside>
     </section>
+  );
+};
+
+const SectorBenchmark = ({ sector }: { sector?: string }) => {
+  const s = (sector || "").toLowerCase();
+  const data = s.includes("edil")
+    ? { controlli: "Intensi (cantieri)", irregolarita: "70-80%", focus: "PSC/POS, coordinamento, emergenze" }
+    : s.includes("ristor")
+    ? { controlli: "Medio-alti", irregolarita: "60-75%", focus: "Formazione, HACCP, emergenze" }
+    : s.includes("manif") || s.includes("logist")
+    ? { controlli: "Alti", irregolarita: "65-80%", focus: "Sorveglianza, macchine, DPI" }
+    : s.includes("serviz") || s.includes("uffici")
+    ? { controlli: "Medi", irregolarita: "55-70%", focus: "DVR, videoterminali, formazione" }
+    : s.includes("agric")
+    ? { controlli: "Variabili", irregolarita: "65-85%", focus: "Macchine agricole, sorveglianza" }
+    : { controlli: "Medi", irregolarita: "60-75%", focus: "Formazione, DVR, emergenze" };
+
+  return (
+    <div className="grid gap-3 sm:grid-cols-3">
+      <div className="rounded-lg border p-4 bg-card">
+        <div className="text-sm text-muted-foreground">Controlli annuali stimati</div>
+        <div className="mt-1 font-medium">{data.controlli}</div>
+      </div>
+      <div className="rounded-lg border p-4 bg-card">
+        <div className="text-sm text-muted-foreground">Irregolarità medie</div>
+        <div className="mt-1 font-medium">{data.irregolarita}</div>
+      </div>
+      <div className="rounded-lg border p-4 bg-card">
+        <div className="text-sm text-muted-foreground">Focus ispezioni</div>
+        <div className="mt-1 font-medium">{data.focus}</div>
+      </div>
+    </div>
+  );
+};
+
+const Benefits = ({ minRisk, maxRisk }: { minRisk: number; maxRisk: number }) => {
+  const fundsMin = Math.round(minRisk * 0.18);
+  const fundsMax = Math.round(maxRisk * 0.35);
+  const timeMin = Math.min(24, Math.max(8, Math.round(minRisk / 5000)));
+  const timeMax = Math.min(32, Math.max(timeMin + 4, Math.round(maxRisk / 4000)));
+  const riskMin = 35;
+  const riskMax = 65;
+
+  return (
+    <article className="space-y-3">
+      <h3 className="text-2xl font-semibold">Benefici stimati</h3>
+      <ul className="grid gap-3 sm:grid-cols-3">
+        <li className="rounded-lg border p-4 bg-card">
+          <div className="text-sm text-muted-foreground">Fondi recuperabili</div>
+          <div className="mt-1 font-medium">{currency(fundsMin)} - {currency(fundsMax)}</div>
+        </li>
+        <li className="rounded-lg border p-4 bg-card">
+          <div className="text-sm text-muted-foreground">Tempo risparmiato</div>
+          <div className="mt-1 font-medium">{timeMin}-{timeMax} ore/mese</div>
+        </li>
+        <li className="rounded-lg border p-4 bg-card">
+          <div className="text-sm text-muted-foreground">Riduzione rischio</div>
+          <div className="mt-1 font-medium">{riskMin}% - {riskMax}%</div>
+        </li>
+      </ul>
+    </article>
   );
 };

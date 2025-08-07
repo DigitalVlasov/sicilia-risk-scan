@@ -10,9 +10,9 @@ import { questions } from "@/data/questions";
 // Employee multiplier mapping
 const employeeMultiplier: Record<string, number> = {
   "1-5": 1,
-  "6-15": 1.5,
-  "16-50": 2,
-  ">50": 3,
+  "6-15": 1.6,
+  "16-50": 2.4,
+  ">50": 3.5,
 };
 
 export type Step = "intro" | "quiz" | "results";
@@ -103,7 +103,7 @@ const Index = () => {
         )}
 
         {step === "results" && (
-          <Results minRisk={minRisk} maxRisk={maxRisk} criticalAreas={criticalAreas} />)
+          <Results minRisk={minRisk} maxRisk={maxRisk} criticalAreas={criticalAreas} sector={answers["settore"]?.label} />)
         }
 
         {/* Anchor section for intro page */}

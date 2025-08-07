@@ -10,6 +10,7 @@ export const questions: Question[] = [
       { label: "Manifatturiero / Logistica", value: "manifatturiero", weight: 0 },
       { label: "Edilizia", value: "edilizia", weight: 0 },
       { label: "Servizi / Uffici", value: "servizi", weight: 0 },
+      { label: "Agricoltura / Allevamento", value: "agricoltura", weight: 0 },
     ],
   },
   {
@@ -48,6 +49,15 @@ export const questions: Question[] = [
       { label: "Sì", value: "ok", weight: 0 },
       { label: "Aggiornamento necessario", value: "update", weight: 2, sanction: "€2.316 - €7.632", details: "Mancato aggiornamento DVR comporta sanzioni rilevanti." },
       { label: "Assente", value: "absent", weight: 4, sanction: "€2.894 - €7.404 + arresto 3-6 mesi", details: "Assenza DVR è tra le violazioni più gravi (sospensione)." },
+    ],
+  },
+  {
+    id: "gestione",
+    title: "Hai un sistema di gestione della sicurezza strutturato (procedure, registri, audit)?",
+    options: [
+      { label: "Sì", value: "ok", weight: 0 },
+      { label: "Parziale", value: "parziale", weight: 2, sanction: "€1.000 - €4.000", details: "Mancanza di procedure e registrazioni rende difficile dimostrare conformità." },
+      { label: "No", value: "no", weight: 3, sanction: "€2.000 - €6.000", details: "Assenza di sistema di gestione aumenta il rischio di sanzioni e sospensioni." },
     ],
   },
   {
