@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessment Sicurezza Lavoro | Test ASL 90s</title>
+  <meta name="description" content="Scopri in 90 secondi se passeresti un'ispezione ASL oggi. Stima sanzioni e aree critiche. Assessment gratuito per PMI siciliane." />
+  <link rel="canonical" href="/assessment.html" />
+  <meta name="author" content="Spazio Impresa" />
+
+  <!-- Social / Open Graph -->
+  <meta property="og:title" content="Assessment Sicurezza Lavoro | Test ASL 90s" />
+  <meta property="og:description" content="Simula un'ispezione ASL. Stima rischio sanzioni e aree critiche. Assessment gratuito per PMI." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Assessment Sicurezza Lavoro - Spazio Impresa",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Tool gratuito per valutare il rischio sanzioni ASL e le aree critiche in sicurezza sul lavoro.",
+    "provider": {"@type": "Organization", "name": "Spazio Impresa"}
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Inline CSS -->
+  <style>
+    :root{
+      --primary-red:#fd0000; /* Rosso Spazio Impresa */
+      --dark-red:#cc0000;    /* Hover states */
+      --light-red:#fff5f5;   /* Background alerts */
+      --dark:#1a1a1a;        /* Testi principali */
+      --gray-dark:#4a4a4a;   /* Testi secondari */
+      --gray-medium:#7a7a7a; /* Placeholder */
+      --gray-light:#f5f5f5;  /* Backgrounds */
+      --white:#ffffff;
+      --success-green:#10b981; /* Score 0 */
+      --warning-orange:#f59e0b; /* Intermedi */
+      --radius:16px;
+      --shadow:0 8px 20px rgba(0,0,0,.08);
+      --shadow-hover:0 10px 28px rgba(0,0,0,.12);
+      --transition:all .25s ease;
+      --container:720px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:'Roboto',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--dark);background:linear-gradient(180deg,#fff, #fafafa)}
+    a{color:var(--primary-red);text-decoration:none}
+
+    header{padding:16px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--dark)}
+    .brand-dot{width:10px;height:10px;background:var(--primary-red);border-radius:50%}
+
+    main{max-width:var(--container);margin:0 auto;padding:24px}
+
+    /* Typography */
+    h1{font-size:42px;line-height:1.15;margin:0 0 12px;font-weight:700}
+    h2{font-size:32px;line-height:1.2;margin:0 0 12px;font-weight:700}
+    h3{font-size:24px;line-height:1.25;margin:0 0 8px;font-weight:500}
+    p{font-size:16px;color:var(--gray-dark);margin:0}
+    small{font-size:14px;color:var(--gray-medium)}
+    .caption{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--gray-medium)}
+
+    /* Cards */
+    .card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+
+    /* Buttons */
+    .btn{appearance:none;border:0;border-radius:30px;padding:12px 20px;font-weight:700;cursor:pointer;transition:var(--transition);display:inline-flex;align-items:center;gap:8px}
+    .btn-primary{background:var(--primary-red);color:#fff;box-shadow:0 6px 16px rgba(253,0,0,.25)}
+    .btn-primary:hover{background:var(--dark-red);transform:translateY(-1px);box-shadow:0 8px 20px rgba(204,0,0,.28)}
+    .btn-secondary{background:transparent;color:var(--primary-red);border:2px solid var(--primary-red)}
+    .btn-secondary:hover{background:var(--light-red)}
+    .btn-ghost{background:transparent;color:var(--gray-dark)}
+    .btn-block{width:100%;justify-content:center}
+
+    /* Progress */
+    .progress{height:10px;background:#eee;border-radius:999px;overflow:hidden}
+    .progress__bar{height:100%;width:0;background:var(--primary-red);transition:width .25s ease}
+
+    /* Layout helpers */
+    .center{text-align:center}
+    .stack-16{display:grid;gap:16px}
+    .stack-12{display:grid;gap:12px}
+    .row{display:flex;gap:12px;align-items:center}
+    .space-between{display:flex;justify-content:space-between;align-items:center}
+
+    /* Intro */
+    .intro-cta{display:grid;gap:12px;grid-template-columns:1fr;}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:var(--gray-light);border-radius:999px;padding:6px 12px;color:var(--dark)}
+    .badge svg{color:var(--primary-red)}
+
+    /* Quiz */
+    #quiz{display:none}
+    #results{display:none}
+
+    .q-meta{color:var(--gray-medium);font-size:14px}
+    .options{display:grid;gap:10px}
+    .option{position:relative}
+    .option input{position:absolute;opacity:0;pointer-events:none}
+    .option label{display:flex;align-items:center;justify-content:space-between;gap:12px;border:2px solid #eee;border-radius:12px;padding:12px 14px;cursor:pointer;transition:var(--transition);background:#fff}
+    .option label:hover{box-shadow:var(--shadow-hover)}
+    .option input:checked + label{border-color:var(--primary-red);background:linear-gradient(0deg,#fff, #fff);box-shadow:0 0 0 3px rgba(253,0,0,.08) inset}
+    .option .hint{font-size:12px;color:var(--gray-medium)}
+
+    .nav{display:flex;gap:12px;justify-content:space-between;margin-top:8px}
+
+    /* Alerts */
+    .alert{background:var(--light-red);border-left:3px solid var(--primary-red);padding:12px;border-radius:10px;color:var(--dark)}
+
+    /* Results */
+    .score-0{color:var(--success-green)}
+    .score-mid{color:var(--warning-orange)}
+    .score-high{color:var(--primary-red)}
+    .violazione{border-left:3px solid var(--primary-red);padding-left:12px}
+    .violazione strong{color:var(--dark)}
+    .user-answer{color:var(--primary-red);font-weight:700}
+
+    /* Forms */
+    .field{display:grid;gap:6px}
+    input[type=email]{width:100%;padding:12px 14px;border:2px solid #eee;border-radius:12px;outline:none;transition:var(--transition);font-size:16px}
+    input[type=email]:focus{border-color:var(--primary-red);box-shadow:0 0 0 3px rgba(253,0,0,.08)}
+    .error{color:var(--primary-red);font-size:12px}
+
+    footer{padding:24px;text-align:center;color:var(--gray-medium)}
+
+    /* Print */
+    @media print{
+      header,.nav,.email-cta,.actions, .intro-only{display:none !important}
+      body{background:#fff}
+      main{max-width:100%;padding:0}
+      .card{box-shadow:none;border:1px solid #eee}
+    }
+  </style>
+</head>
+<body>
+  <header class="space-between">
+    <div class="brand" aria-label="Spazio Impresa">
+      <span class="brand-dot" aria-hidden="true"></span>
+      Spazio Impresa
+    </div>
+    <small class="caption">Assessment Sicurezza • 2025</small>
+  </header>
+
+  <main>
+    <!-- Intro Screen -->
+    <section id="intro" class="card stack-16">
+      <div class="intro-only stack-12 center">
+        <h1>Scopri in 90 secondi se passeresti un'ispezione ASL oggi</h1>
+        <p>Simulazione rapida e anonima. Ricevi una stima delle possibili sanzioni e le 3 aree prioritarie su cui intervenire.</p>
+        <div class="row center" style="justify-content:center;gap:10px;margin-top:6px">
+          <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anonimo</span>
+          <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>90–120s</span>
+        </div>
+        <div class="intro-cta" style="margin-top:8px">
+          <button id="startBtn" class="btn btn-primary btn-block">Inizia ora</button>
+          <button id="resumeBtn" class="btn btn-secondary btn-block" style="display:none">Riprendi test salvato</button>
+        </div>
+      </div>
+      <div class="alert" role="status">
+        Aumento controlli nel 2025. In edilizia e manifatturiero le ispezioni sono prioritarie. Meglio arrivare preparati.
+      </div>
+    </section>
+
+    <!-- Quiz Container -->
+    <section id="quiz" class="stack-16">
+      <div class="card stack-16">
+        <div class="space-between">
+          <div class="q-meta"><span id="qIndex">1</span>/<span id="qTotal">10</span></div>
+          <div class="q-meta" id="sectorSummary" aria-live="polite"></div>
+        </div>
+        <div class="progress" aria-hidden="true"><div id="progressBar" class="progress__bar" style="width:0%"></div></div>
+        <h2 id="qTitle">Domanda</h2>
+        <form id="qForm" class="options" aria-labelledby="qTitle"></form>
+        <div class="nav">
+          <button id="backBtn" class="btn btn-ghost" type="button">Indietro</button>
+          <button id="nextBtn" class="btn btn-primary" type="button" disabled>Avanti</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Container -->
+    <section id="results" class="stack-16">
+      <article class="card stack-16" id="resCard">
+        <h2 id="resTitle">Risultati</h2>
+        <p id="resSubtitle"></p>
+        <div class="stack-12">
+          <div class="card stack-12" style="box-shadow:none;border:1px solid #eee">
+            <div class="space-between"><strong>Stima sanzioni potenziali</strong><span class="caption">Range indicativo</span></div>
+            <h3 id="resRange" class="score-high">€0 - €0</h3>
+            <small class="caption" id="resNote">Calcolo basato su risposte e moltiplicatori per settore e dipendenti.</small>
+          </div>
+          <div class="stack-12">
+            <strong>Aree prioritarie (max 3)</strong>
+            <div id="violations" class="stack-12"></div>
+          </div>
+        </div>
+        <div class="email-cta card stack-12" style="box-shadow:none;border:1px solid #eee">
+          <h3>Ricevi suggerimenti mirati via email</h3>
+          <div class="field">
+            <label for="email">Email aziendale</label>
+            <input id="email" type="email" inputmode="email" placeholder="nome@azienda.it" autocomplete="email" />
+            <small id="emailHelp" class="caption">Evita domini gratuiti (gmail, yahoo) per una risposta prioritaria.</small>
+            <div id="emailError" class="error" role="alert" style="display:none"></div>
+          </div>
+          <div class="row" style="justify-content:flex-start">
+            <button id="emailSubmit" class="btn btn-primary" type="button">Richiedi Consulenza Gratuita</button>
+            <button id="printBtn" class="btn btn-secondary" type="button">Scarica Report PDF</button>
+          </div>
+        </div>
+        <div class="actions row" style="justify-content:space-between">
+          <button id="restartBtn" class="btn btn-ghost" type="button">Ricomincia</button>
+          <a href="#intro" id="backHome" class="btn btn-secondary" role="button">Torna all'introduzione</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <small>© 2025 Spazio Impresa • Sicurezza sul Lavoro</small>
+  </footer>
+
+  <script>
+  (function(){
+    // Configuration
+    const baseWeight = { si:0, no:3, non_sicuro:2.8, parziale:2 };
+    const sectorBonus = { edilizia:2, alimentare:1.5, manifatturiero:1.5, servizi:1, commercio:1 };
+    const employeeMultiplier = { "1-5":1, "6-15":1.5, "16-50":2, ">50":3 };
+
+    // Utility
+    function $(id){ return document.getElementById(id); }
+    function sanitizeHTML(str){ const t=document.createElement('div'); t.textContent=String(str||''); return t.innerHTML; }
+    function formatEUR(n){ return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); }
+    function saveState(){ sessionStorage.setItem('assessment_state', JSON.stringify(state)); }
+    function loadState(){ try{ return JSON.parse(sessionStorage.getItem('assessment_state')||''); }catch(e){ return null; } }
+    function clearState(){ sessionStorage.removeItem('assessment_state'); }
+
+    // Questions (10)
+    const questions = [
+      {
+        id:'gestione', title:'Chi gestisce la sicurezza nella tua azienda?', type:'radio',
+        options:[
+          {label:'RSPP interno formalmente nominato', value:'rspp_interno', key:'si'},
+          {label:'Datore di lavoro con consulente esterno', value:'dl_consulente', key:'parziale', sanction:'€1.000 - €4.000', norma:'D.Lgs. 81/08 art.18-31'},
+          {label:'Presenza informale, senza deleghe chiare', value:'informale', key:'non_sicuro', sanction:'€1.500 - €6.000', norma:'D.Lgs. 81/08'},
+          {label:'Nessuno chiaramente designato', value:'nessuno', key:'no', sanction:'€2.000 - €6.000', norma:'D.Lgs. 81/08 art.31'}
+        ]
+      },
+      {
+        id:'dipendenti', title:'Quanti dipendenti ha la tua azienda?', type:'radio',
+        options:[
+          {label:'1-5', value:'1-5', key:'si'},
+          {label:'6-15', value:'6-15', key:'si'},
+          {label:'16-50', value:'16-50', key:'si'},
+          {label:'> 50', value:'>50', key:'si'}
+        ], context:true
+      },
+      {
+        id:'settore', title:'In quale settore opera?', type:'radio',
+        options:[
+          {label:'Edilizia', value:'edilizia', key:'si'},
+          {label:'Alimentare / HACCP', value:'alimentare', key:'si'},
+          {label:'Manifatturiero / Logistica', value:'manifatturiero', key:'si'},
+          {label:'Servizi / Uffici / Commercio', value:'servizi', key:'si'}
+        ], context:true
+      },
+      {
+        id:'sorveglianza', title:'Visite mediche e sorveglianza sanitaria aggiornate? (L.203/2024)', type:'radio',
+        options:[
+          {label:'Sì, tutto aggiornato', value:'ok', key:'si'},
+          {label:'Parzialmente', value:'parziale', key:'parziale', sanction:'€2.316 - €7.632', norma:'L.203/2024, D.Lgs.81/08 art.41'},
+          {label:'Non sono sicuro', value:'ns', key:'non_sicuro', sanction:'€2.316 - €7.632', norma:'L.203/2024'},
+          {label:'No', value:'no', key:'no', sanction:'€2.316 - €7.632', norma:'L.203/2024'}
+        ]
+      },
+      {
+        id:'formazione', title:'Corsi di formazione sicurezza validi e aggiornati?', type:'radio',
+        options:[
+          {label:'Sì, tutta aggiornata', value:'ok', key:'si'},
+          {label:'Parzialmente', value:'parziale', key:'parziale', sanction:'€1.708 - €7.404', norma:'Accordo Stato-Regioni'},
+          {label:'Non sono sicuro', value:'ns', key:'non_sicuro', sanction:'€1.708 - €7.404', norma:'ASR'},
+          {label:'No', value:'no', key:'no', sanction:'€1.708 - €7.404', norma:'ASR'}
+        ]
+      },
+      {
+        id:'dvr', title:'Documento di Valutazione dei Rischi (DVR) aggiornato?', type:'radio',
+        options:[
+          {label:'Sì', value:'ok', key:'si'},
+          {label:'Da aggiornare', value:'update', key:'parziale', sanction:'€2.316 - €7.632', norma:'D.Lgs.81/08 art.29'},
+          {label:'Non sono sicuro', value:'ns', key:'non_sicuro', sanction:'€2.316 - €7.632', norma:'D.Lgs.81/08'},
+          {label:'Assente', value:'absent', key:'no', sanction:'€2.894 - €7.404 + arresto', norma:'D.Lgs.81/08 art.55'}
+        ]
+      },
+      {
+        id:'nuovo_assunto', title:'Quando formi i nuovi assunti?', type:'radio',
+        options:[
+          {label:'Prima di iniziare', value:'prima', key:'si'},
+          {label:'Entro 60 giorni', value:'60gg', key:'parziale', sanction:'€1.708 - €7.404', norma:'ASR'},
+          {label:'Quando capita', value:'tardi', key:'no', sanction:'€1.708 - €7.404', norma:'ASR'},
+          {label:'Non so', value:'ns', key:'non_sicuro', sanction:'€1.708 - €7.404', norma:'ASR'}
+        ]
+      },
+      {
+        id:'emergenze', title:'Piano emergenze e addetti formati sono in regola?', type:'radio',
+        options:[
+          {label:'Sì', value:'ok', key:'si'},
+          {label:'Parziale', value:'parziale', key:'parziale', sanction:'€1.068 - €5.695', norma:'D.Lgs.81/08'},
+          {label:'Non sono sicuro', value:'ns', key:'non_sicuro', sanction:'€1.068 - €5.695', norma:'D.Lgs.81/08'},
+          {label:'No', value:'no', key:'no', sanction:'€1.068 - €5.695', norma:'D.Lgs.81/08'}
+        ]
+      },
+      {
+        id:'sostituto', title:'Chi gestisce se manca il responsabile?', type:'radio',
+        options:[
+          {label:'Sostituto formalmente nominato', value:'nominato', key:'si'},
+          {label:'Presenza informale', value:'informale', key:'parziale', sanction:'€1.000 - €4.000', norma:'D.Lgs.81/08'},
+          {label:'Non previsto', value:'no', key:'no', sanction:'€1.500 - €6.000', norma:'D.Lgs.81/08'},
+          {label:'Non so', value:'ns', key:'non_sicuro', sanction:'€1.000 - €4.000', norma:'D.Lgs.81/08'}
+        ]
+      },
+      {
+        id:'documenti', title:'In quanti click trovi un documento di sicurezza?', type:'radio',
+        options:[
+          {label:'1-2 click', value:'2', key:'si'},
+          {label:'3-4 click', value:'4', key:'parziale', sanction:'€500 - €2.000', norma:'Tracciabilità/Organizzazione'},
+          {label:'5+ click', value:'5+', key:'no', sanction:'€500 - €2.000', norma:'Tracciabilità/Organizzazione'},
+          {label:'Non so', value:'ns', key:'non_sicuro', sanction:'€500 - €2.000', norma:'Tracciabilità/Organizzazione'}
+        ]
+      }
+    ];
+
+    const totalQuestions = questions.length;
+
+    // State
+    let state = {
+      step:'intro',
+      current:0,
+      answers:{}, // id -> { value, key, label }
+      email:''
+    };
+
+    // Elements
+    const intro = $('intro');
+    const resumeBtn = $('resumeBtn');
+    const startBtn = $('startBtn');
+    const quiz = $('quiz');
+    const results = $('results');
+    const qIndex = $('qIndex');
+    const qTotal = $('qTotal');
+    const qTitle = $('qTitle');
+    const qForm = $('qForm');
+    const progressBar = $('progressBar');
+    const sectorSummary = $('sectorSummary');
+    const backBtn = $('backBtn');
+    const nextBtn = $('nextBtn');
+
+    const resTitle = $('resTitle');
+    const resSubtitle = $('resSubtitle');
+    const resRange = $('resRange');
+    const resNote = $('resNote');
+    const violations = $('violations');
+    const email = $('email');
+    const emailSubmit = $('emailSubmit');
+    const emailError = $('emailError');
+    const printBtn = $('printBtn');
+    const restartBtn = $('restartBtn');
+
+    qTotal.textContent = String(totalQuestions);
+
+    // Rendering
+    function showIntro(){
+      intro.style.display='block';
+      quiz.style.display='none';
+      results.style.display='none';
+      state.step='intro';
+      saveState();
+    }
+    function showQuiz(){
+      intro.style.display='none';
+      quiz.style.display='block';
+      results.style.display='none';
+      state.step='quiz';
+      saveState();
+      renderQuestion();
+    }
+    function showResults(){
+      intro.style.display='none';
+      quiz.style.display='none';
+      results.style.display='block';
+      state.step='results';
+      saveState();
+      renderResults();
+    }
+
+    function progress(){ return Math.round((state.current)/totalQuestions*100); }
+
+    function renderQuestion(){
+      const q = questions[state.current];
+      qIndex.textContent = String(state.current+1);
+      qTitle.textContent = q.title;
+      progressBar.style.width = progress()+"%";
+
+      // context summary
+      const sec = state.answers['settore']?.label; const emp = state.answers['dipendenti']?.label;
+      sectorSummary.textContent = sec && emp ? `${sec} • ${emp}` : '';
+
+      // build options
+      qForm.innerHTML='';
+      qForm.setAttribute('role','radiogroup');
+      const saved = state.answers[q.id]?.value;
+      q.options.forEach((opt, idx)=>{
+        const id = `opt-${q.id}-${idx}`;
+        const wrap = document.createElement('div'); wrap.className='option';
+        const input = document.createElement('input');
+        input.type='radio'; input.name='answer'; input.id=id; input.value=opt.value; input.setAttribute('data-key', opt.key);
+        if(saved===opt.value) input.checked=true;
+        const label = document.createElement('label'); label.setAttribute('for',id);
+        const left = document.createElement('div'); left.className='stack-12';
+        const l1 = document.createElement('div'); l1.textContent = opt.label; l1.style.fontWeight='500';
+        const l2 = document.createElement('div'); l2.className='hint';
+        if(opt.sanction && (opt.key!== 'si')) l2.textContent = `Sanzione: ${opt.sanction} • ${opt.norma}`;
+        left.appendChild(l1); if(l2.textContent) left.appendChild(l2);
+        const right = document.createElement('div'); right.className='caption'; right.textContent = opt.key==='si' ? 'OK' : (opt.key==='no' ? 'Critico' : (opt.key==='parziale'?'Da migliorare':'Incerto'));
+        label.appendChild(left); label.appendChild(right);
+        wrap.appendChild(input); wrap.appendChild(label);
+        qForm.appendChild(wrap);
+      });
+
+      validateSelection();
+    }
+
+    function validateSelection(){
+      const has = qForm.querySelector('input[name="answer"]:checked');
+      nextBtn.disabled = !has;
+    }
+
+    function computeScore(){
+      const sector = state.answers['settore']?.value || 'servizi';
+      const emp = state.answers['dipendenti']?.value || '1-5';
+      const bonus = sectorBonus[sector] || 0;
+      const mult = employeeMultiplier[emp] || 1;
+      let score = 0;
+      const details = [];
+
+      questions.forEach((q)=>{
+        if(q.context) return; // non contribuisce
+        const ans = state.answers[q.id];
+        if(!ans) return;
+        const key = ans.key;
+        if(key && key !== 'si'){
+          const base = baseWeight[key] || 0;
+          const final = (base + bonus) * mult;
+          score += final;
+          const optMeta = q.options.find(o=>o.value===ans.value) || {};
+          details.push({
+            id:q.id, title:q.title, user:ans.label, key, contribution:final,
+            sanction:optMeta.sanction, norma:optMeta.norma
+          });
+        }
+      });
+
+      const min = Math.round(score*200);
+      const max = Math.round(score*500);
+      return { score, min, max, details };
+    }
+
+    function segment(score){
+      if(score===0){
+        return {title:'Complimenti! Ecco come migliorare ancora', cta:'Scopri il Sistema Premium', cls:'score-0'};
+      } else if(score < 8){
+        return {title:'Attenzione: 3-5 aree critiche', cta:'Richiedi Assessment Gratuito', cls:'score-mid'};
+      } else if(score < 15){
+        return {title:`⚠️ Rischio sanzioni fino a ${formatEUR(score*500)}`, cta:'Richiedi Intervento Urgente', cls:'score-high'};
+      } else {
+        return {title:'🚨 SITUAZIONE CRITICA', cta:'CONTATTO IMMEDIATO', cls:'score-high'};
+      }
+    }
+
+    function renderResults(){
+      const {score, min, max, details} = computeScore();
+      const seg = segment(score);
+      resTitle.textContent = seg.title;
+      resRange.textContent = `${formatEUR(min)} - ${formatEUR(max)}`;
+      resRange.className = seg.cls;
+      resSubtitle.textContent = score===0 ? 'Ottimo livello di conformità. Possiamo aiutarti a ottimizzare tempi e documenti.' : 'Priorità di intervento suggerite per ridurre il rischio di sanzioni.';
+
+      // top 3 violazioni
+      violations.innerHTML='';
+      details.sort((a,b)=>b.contribution-a.contribution).slice(0,3).forEach((d)=>{
+        const item = document.createElement('div'); item.className='violazione card'; item.style.boxShadow='none'; item.style.border='1px solid #eee';
+        const t = document.createElement('div'); t.innerHTML = `<strong>${sanitizeHTML(d.title)}</strong>`;
+        const s = document.createElement('div'); s.className='caption'; s.textContent = `${d.sanction || '—'} • ${d.norma || ''}`;
+        const u = document.createElement('div'); u.innerHTML = `Risposta: <span class="user-answer">${sanitizeHTML(d.user)}</span>`;
+        item.appendChild(t); item.appendChild(s); item.appendChild(u);
+        violations.appendChild(item);
+      });
+
+      // Note settore/dipendenti
+      const sec = state.answers['settore']?.label; const emp = state.answers['dipendenti']?.label;
+      resNote.textContent = `Settore: ${sec||'—'} • Dipendenti: ${emp||'—'}`;
+    }
+
+    // Handlers
+    startBtn.addEventListener('click', ()=>{ state.step='quiz'; state.current=0; saveState(); showQuiz(); });
+
+    resumeBtn.addEventListener('click', ()=>{ const saved = loadState(); if(saved){ state = saved; (state.step==='results')?showResults():showQuiz(); }});
+
+    backBtn.addEventListener('click', ()=>{
+      if(state.current>0){ state.current--; saveState(); renderQuestion(); }
+      if(state.current===0){ backBtn.disabled=true; }
+    });
+
+    nextBtn.addEventListener('click', ()=>{
+      const sel = qForm.querySelector('input[name="answer"]:checked');
+      if(!sel) return;
+      const q = questions[state.current];
+      const opt = q.options.find(o=>o.value===sel.value);
+      state.answers[q.id] = { value: sel.value, key: sel.getAttribute('data-key'), label: opt.label };
+      saveState();
+      if(state.current < totalQuestions-1){
+        state.current++;
+        renderQuestion();
+        backBtn.disabled=false;
+      } else {
+        showResults();
+      }
+    });
+
+    qForm.addEventListener('change', validateSelection);
+
+    function isBusinessEmail(v){
+      const re=/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; if(!re.test(v)) return false;
+      const free=['gmail.com','yahoo.com','hotmail.com','outlook.com','live.com','icloud.com','virgilio.it','libero.it'];
+      const domain=(v.split('@')[1]||'').toLowerCase();
+      return free.indexOf(domain)===-1; // prefer business
+    }
+
+    emailSubmit.addEventListener('click', ()=>{
+      const val = (email.value||'').trim();
+      const valid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(val);
+      const business = isBusinessEmail(val);
+      if(!valid){ emailError.style.display='block'; emailError.textContent='Inserisci un indirizzo email valido.'; return; }
+      if(!business){ emailError.style.display='block'; emailError.textContent='Consigliato usare un dominio aziendale (no Gmail/Yahoo).'; return; }
+      emailError.style.display='none';
+      state.email = val; saveState();
+      // Mini feedback senza console
+      emailSubmit.textContent='Richiesta inviata'; emailSubmit.disabled=true; emailSubmit.classList.add('btn-secondary');
+    });
+
+    printBtn.addEventListener('click', ()=>{ window.print(); });
+
+    restartBtn.addEventListener('click', ()=>{
+      state={step:'intro', current:0, answers:{}, email:''}; saveState(); clearState();
+      showIntro();
+    });
+
+    // Init
+    function init(){
+      const saved = loadState();
+      if(saved && (saved.step==='quiz' || saved.step==='results')){
+        state = saved; resumeBtn.style.display='inline-flex';
+      }
+      backBtn.disabled = true;
+      showIntro();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  })();
+  </script>
+</body>
+</html>
