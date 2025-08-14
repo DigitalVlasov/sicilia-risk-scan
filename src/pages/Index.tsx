@@ -1,71 +1,42 @@
-import { useEffect, useMemo, useReducer, useState, useCallback } from "react";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Users, AlertTriangle } from "lucide-react";
+import { ChevronRight, Shield, AlertTriangle, TrendingUp, Clock, Users, FileCheck, Phone, MessageCircle, CheckCircle2, XCircle, AlertCircle, ArrowRight, Target, Zap, Award, BarChart3, Building2, Euro } from "lucide-react";
 
-// Types
-interface BaseOption {
+// Tipi
+type Option = {
   value: string;
   label: string;
-}
-interface ScoreOption extends BaseOption {
-  weight: number;
-}
-interface MultiplierOption extends BaseOption {
-  multiplier: number;
-}
-
-type QuestionType = "score" | "multiplier";
+  weight?: number;
+  multiplier?: number;
+};
 
 type Question = {
   id: string;
   title: string;
   subtitle?: string;
-  type: QuestionType;
-  options: (ScoreOption | MultiplierOption)[];
+  type: "multiplier" | "score";
+  options: Option[];
 };
 
 type Answers = Record<string, string>;
 
-type Stage = "intro" | "quiz" | "loading" | "results";
-
-// State & reducer
-const initialState = {
-  stage: "intro" as Stage,
-  currentQ: 0,
-  answers: {} as Answers,
-  score: 0,
-  mult: 1,
+type Violation = {
+  key: string;
+  text: string;
+  min: number;
+  max: number;
+  consequences: string[];
+  actions: string[];
+  fonte: string;
+  priority: {
+    order: number;
+    urgency: string;
+    reason: string;
+  };
 };
 
-type Action =
-  | { type: "SET_STAGE"; payload: Stage }
-  | { type: "NEXT_Q" }
-  | { type: "PREV_Q" }
-  | { type: "SET_ANSWER"; payload: typeof initialState }
-  | { type: "RESET" };
-
-function quizReducer(state: typeof initialState, action: Action) {
-  switch (action.type) {
-    case "SET_STAGE":
-      return { ...state, stage: action.payload };
-    case "NEXT_Q":
-      return { ...state, currentQ: state.currentQ + 1 };
-    case "PREV_Q":
-      return { ...state, currentQ: Math.max(0, state.currentQ - 1) };
-    case "SET_ANSWER":
-      return action.payload;
-    case "RESET":
-      return initialState;
-    default:
-      return state;
-  }
-}
-
-// Questions
 const questions: Question[] = [
   {
     id: "gestione",
@@ -73,11 +44,27 @@ const questions: Question[] = [
     subtitle: "Scegli l'opzione più vicina alla tua situazione",
     type: "multiplier",
     options: [
-      { value: "gestisco-io", label: "Gestisco tutto io in prima persona", multiplier: 1.5 },
-      { value: "interno", label: "Internamente c'è una persona che gestisce la sicurezza aziendale", multiplier: 1.3 },
-      { value: "consulente", label: "Ho un consulente che si occupa di tutto", multiplier: 1 },
-      { value: "studi-multipli", label: "Ho diversi studi professionali che si occupano ognuno di aspetti diversi", multiplier: 1.2 },
-    ],
+      {
+        value: "gestisco-io",
+        label: "Gestisco tutto io in prima persona",
+        multiplier: 1.5
+      },
+      {
+        value: "interno",
+        label: "Internamente c'è una persona che gestisce la sicurezza aziendale",
+        multiplier: 1.3
+      },
+      {
+        value: "consulente",
+        label: "Ho un consulente che si occupa di tutto",
+        multiplier: 1
+      },
+      {
+        value: "studi-multipli",
+        label: "Ho diversi studi professionali che si occupano ognuno di aspetti diversi",
+        multiplier: 1.2
+      }
+    ]
   },
   {
     id: "dipendenti",
@@ -85,11 +72,27 @@ const questions: Question[] = [
     subtitle: "Serve per calcoli personalizzati su costi formazione",
     type: "multiplier",
     options: [
-      { value: "1-5", label: "1-5 dipendenti", multiplier: 1 },
-      { value: "6-10", label: "6-10 dipendenti", multiplier: 1.5 },
-      { value: "11-20", label: "11-20 dipendenti", multiplier: 2 },
-      { value: ">20", label: "Oltre 20 dipendenti", multiplier: 2.5 },
-    ],
+      {
+        value: "1-5",
+        label: "1-5 dipendenti",
+        multiplier: 1
+      },
+      {
+        value: "6-10",
+        label: "6-10 dipendenti",
+        multiplier: 1.5
+      },
+      {
+        value: "11-20",
+        label: "11-20 dipendenti",
+        multiplier: 2
+      },
+      {
+        value: ">20",
+        label: "Oltre 20 dipendenti",
+        multiplier: 2.5
+      }
+    ]
   },
   {
     id: "settore",
@@ -97,49 +100,106 @@ const questions: Question[] = [
     subtitle: "Ogni settore ha frequenze di controllo e rischi diversi",
     type: "multiplier",
     options: [
-      { value: "edilizia", label: "Edilizia/Costruzioni", multiplier: 2 },
-      { value: "manifatturiero", label: "Manifatturiero/Produzione", multiplier: 1.6 },
-      { value: "alimentare", label: "Alimentare/Ristorazione", multiplier: 1.5 },
-      { value: "servizi", label: "Servizi/Consulenza", multiplier: 1.2 },
-      { value: "commercio", label: "Commercio/Retail", multiplier: 1.2 },
-      { value: "agricoltura", label: "Agricoltura/Allevamento", multiplier: 1.6 },
-    ],
+      {
+        value: "edilizia",
+        label: "Edilizia/Costruzioni",
+        multiplier: 2
+      },
+      {
+        value: "manifatturiero",
+        label: "Manifatturiero/Produzione",
+        multiplier: 1.6
+      },
+      {
+        value: "alimentare",
+        label: "Alimentare/Ristorazione",
+        multiplier: 1.5
+      },
+      {
+        value: "servizi",
+        label: "Servizi/Consulenza",
+        multiplier: 1.2
+      },
+      {
+        value: "commercio",
+        label: "Commercio/Retail",
+        multiplier: 1.2
+      },
+      {
+        value: "agricoltura",
+        label: "Agricoltura/Allevamento",
+        multiplier: 1.6
+      }
+    ]
   },
   {
     id: "sorveglianza",
-    title:
-      "Se l'ispettore controlla 3 dipendenti a caso, trovi tutti i giudizi di idoneità degli ultimi 2 anni?",
+    title: "L'ispettore controlla 3 dipendenti a caso, trovi tutti i giudizi di idoneità degli ultimi 2 anni?",
     subtitle: "Verifica completezza sorveglianza sanitaria",
     type: "score",
     options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 },
-    ],
+      {
+        value: "si",
+        label: "Sì",
+        weight: 0
+      },
+      {
+        value: "no",
+        label: "No",
+        weight: 2
+      },
+      {
+        value: "non-sicuro",
+        label: "Non sono sicuro",
+        weight: 1
+      }
+    ]
   },
   {
     id: "formazione",
-    title:
-      "L'ispettore controlla 3 dipendenti: trovi tutti gli attestati di formazione validi e non scaduti?",
+    title: "L'ispettore controlla 3 dipendenti: trovi tutti gli attestati di formazione validi e non scaduti?",
     subtitle: "Verifica standard: conformità formativa",
     type: "score",
     options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 },
-    ],
+      {
+        value: "si",
+        label: "Sì",
+        weight: 0
+      },
+      {
+        value: "no",
+        label: "No",
+        weight: 2
+      },
+      {
+        value: "non-sicuro",
+        label: "Non sono sicuro",
+        weight: 1
+      }
+    ]
   },
   {
     id: "dvr",
-    title:
-      "L'ispettore ti dice: \"Fammi vedere DVR aggiornato, nomine sicurezza e verbali riunioni\". Hai tutto pronto?",
+    title: "L'ispettore ti dice: \"Fammi vedere DVR aggiornato, nomine sicurezza e verbali riunioni\". Hai tutto pronto?",
     subtitle: "Check principale: documentazione base",
     type: "score",
     options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 },
-    ],
+      {
+        value: "si",
+        label: "Sì",
+        weight: 0
+      },
+      {
+        value: "no",
+        label: "No",
+        weight: 2
+      },
+      {
+        value: "non-sicuro",
+        label: "Non sono sicuro",
+        weight: 1
+      }
+    ]
   },
   {
     id: "nuovo-assunto",
@@ -147,34 +207,68 @@ const questions: Question[] = [
     subtitle: "Test critico: sequenza adempimenti (Visita, formazione, DPI)",
     type: "score",
     options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 },
-    ],
+      {
+        value: "si",
+        label: "Sì",
+        weight: 0
+      },
+      {
+        value: "no",
+        label: "No",
+        weight: 2
+      },
+      {
+        value: "non-sicuro",
+        label: "Non sono sicuro",
+        weight: 1
+      }
+    ]
   },
   {
     id: "emergenze",
-    title:
-      "L'ispettore chiede il piano emergenza e le nomine degli addetti primo soccorso e antincendio. Tutto in ordine?",
+    title: "L'ispettore chiede il piano emergenza e le nomine degli addetti primo soccorso e antincendio. Tutto in ordine?",
     subtitle: "Controllo critico: procedure emergenza",
     type: "score",
     options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 },
-    ],
+      {
+        value: "si",
+        label: "Sì",
+        weight: 0
+      },
+      {
+        value: "no",
+        label: "No",
+        weight: 2
+      },
+      {
+        value: "non-sicuro",
+        label: "Non sono sicuro",
+        weight: 1
+      }
+    ]
   },
   {
     id: "sostituto",
-    title:
-      "Se domani non ci sei, qualcun altro sa dove trovare tutta la documentazione per un'ispezione?",
+    title: "Se domani non ci sei, qualcun altro sa dove trovare tutta la documentazione per un'ispezione?",
     subtitle: "Controllo: autonomia operativa aziendale",
     type: "score",
     options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 },
-    ],
+      {
+        value: "si",
+        label: "Sì",
+        weight: 0
+      },
+      {
+        value: "no",
+        label: "No",
+        weight: 2
+      },
+      {
+        value: "non-sicuro",
+        label: "Non sono sicuro",
+        weight: 1
+      }
+    ]
   },
   {
     id: "click",
@@ -182,451 +276,718 @@ const questions: Question[] = [
     subtitle: "Verifica: efficienza documentale",
     type: "score",
     options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 },
-    ],
-  },
+      {
+        value: "si",
+        label: "Sì",
+        weight: 0
+      },
+      {
+        value: "no",
+        label: "No",
+        weight: 2
+      },
+      {
+        value: "non-sicuro",
+        label: "Non sono sicuro",
+        weight: 1
+      }
+    ]
+  }
 ];
 
-// Violations configuration (prioritized)
-const violations = {
-  dvr: {
-    text: "DVR non aggiornato",
-    min: 2894,
-    max: 7404,
-    consequences: [
-      "In caso di infortunio, rischi denuncia per lesioni o omicidio colposo",
-      "L'INAIL può rifiutare la copertura assicurativa",
-      "L'ASL può disporre la sospensione dell'attività",
-    ],
-    actions: [
-      "Aggiorna DVR e nomine RSPP/Addetti",
-      "Programma riunione periodica e verbalizza",
-    ],
-    fonte: "D.Lgs. 81/08, art. 18 e 29 (sanzioni rivalutate 2023)",
-    priority: { order: 1, urgency: "PRIMO", reason: "L'ispettore lo chiede SEMPRE per primo" },
-  },
-  formazione: {
-    text: "Formazione scaduta",
-    min: 1709,
-    max: 7404,
-    consequences: [
-      "Responsabilità penale diretta del datore in caso di infortunio",
-      "Nullità dell'incarico per lavoratori non formati",
-      "Rischio sospensione in caso di organico >5 o >10 non formato",
-    ],
-    actions: ["Verifica scadenze e rinnovi", "Iscrivi ai corsi (generale, specifica, addetti)"],
-    fonte: "D.Lgs. 81/08 art. 37 (sanzioni rivalutate 2023)",
-    priority: { order: 2, urgency: "SECONDO", reason: "Controlla 3 dipendenti a caso" },
-  },
-  sorveglianza: {
-    text: "Sorveglianza sanitaria incompleta",
-    min: 2316,
-    max: 7632,
-    consequences: [
-      "Se manca il giudizio medico, non puoi far lavorare il dipendente per legge",
-      "In caso di infortunio, rischi denuncia",
-      "L'INAIL può rifiutare la copertura",
-    ],
-    actions: [
-      "Nomina medico competente",
-      "Pianifica visite e giudizi idoneità per tutti gli esposti",
-    ],
-    fonte: "D.Lgs. 81/08, Titolo I e X; legge 203/2024",
-    priority: { order: 3, urgency: "TERZO", reason: "Verifica cartelle mediche" },
-  },
-  emergenze: {
-    text: "Procedure emergenza non conformi",
-    min: 1068,
-    max: 5695,
-    consequences: [
-      "Se c'è un'emergenza, puoi essere penalmente responsabile",
-      "Rischi arresto fino a 4 mesi se ci sono danni a persone",
-    ],
-    actions: [
-      "Aggiorna piano di emergenza ed evacuazione",
-      "Nomina e forma addetti primo soccorso/antincendio",
-    ],
-    fonte: "D.Lgs. 81/08, Titolo I e II",
-    priority: { order: 4, urgency: "QUARTO", reason: "Procedure emergenza" },
-  },
-  "nuovo-assunto": {
-    text: "Procedure assunzioni incomplete",
-    min: 3000,
-    max: 15000,
-    consequences: [
-      "Senza visita pre-assuntiva, il contratto può essere contestato",
-      "Rischi multe multiple per ogni obbligo non rispettato",
-    ],
-    actions: [
-      "Verifica sequenza: visita, formazione, DPI prima dell'avvio",
-      "Predisponi check-list di ingresso",
-    ],
-    fonte: "D.Lgs. 81/08; obblighi preassuntivi rafforzati 2024",
-    priority: { order: 5, urgency: "QUINTO", reason: "Sequenza assunzioni" },
-  },
-};
-
-type ViolationKey = keyof typeof violations;
-
-const sectorLabels: Record<string, string> = {
+const sectorMap: Record<string, string> = {
   edilizia: "Edilizia",
   alimentare: "Alimentare",
   manifatturiero: "Manifatturiero",
   servizi: "Servizi",
   commercio: "Commercio",
-  agricoltura: "Agricoltura",
+  agricoltura: "Agricoltura"
 };
 
+const sectorData: Record<string, { increase: number; total: string; irregularity: number }> = {
+  edilizia: { increase: 73, total: "41.106", irregularity: 82 },
+  manifatturiero: { increase: 23, total: "35.000+", irregularity: 71 },
+  alimentare: { increase: 15, total: "28.000+", irregularity: 76 },
+  servizi: { increase: 49, total: "66.221", irregularity: 68 },
+  commercio: { increase: 20, total: "45.000+", irregularity: 65 },
+  agricoltura: { increase: 18, total: "18.000+", irregularity: 79 }
+};
+
+function getEmployeeCount(range?: string): number {
+  const counts: Record<string, number> = {
+    "1-5": 3,
+    "6-10": 8,
+    "11-20": 15,
+    ">20": 25
+  };
+  return counts[range ?? "1-5"] ?? 3;
+}
+
+function calculateViolations(answers: Answers): Violation[] {
+  const config: Record<string, Violation> = {
+    dvr: {
+      key: "dvr",
+      text: "DVR non aggiornato",
+      min: 2894,
+      max: 7404,
+      consequences: [
+        "In caso di infortunio, rischi denuncia per lesioni o omicidio colposo",
+        "L'INAIL può rifiutare la copertura assicurativa",
+        "L'ASL può disporre la sospensione dell'attività",
+        "Il lavoratore può fare causa all'azienda"
+      ],
+      actions: ["Aggiorna DVR e nomine RSPP/Addetti", "Programma riunione periodica e verbalizza"],
+      fonte: "D.Lgs. 81/08, art. 18 e 29 (sanzioni rivalutate 2023)",
+      priority: { order: 1, urgency: "PRIMO", reason: "L'ispettore lo chiede SEMPRE per primo" }
+    },
+    formazione: {
+      key: "formazione",
+      text: "Formazione scaduta",
+      min: 1709,
+      max: 7404,
+      consequences: [
+        "Responsabilità penale diretta del datore in caso di infortunio",
+        "Nullità dell'incarico per lavoratori non formati (es. RLS, addetti antincendio, carrellisti, ecc.)",
+        "Rischio sospensione in caso di organico >5 o >10 non formato",
+        "Perdita di copertura assicurativa INAIL in caso di eventi gravi"
+      ],
+      actions: ["Verifica scadenze e rinnovi", "Iscrivi ai corsi (generale, specifica, addetti)"],
+      fonte: "D.Lgs. 81/08 art. 37 (sanzioni rivalutate 2023)",
+      priority: { order: 2, urgency: "SECONDO", reason: "Controlla 3 dipendenti a caso" }
+    },
+    sorveglianza: {
+      key: "sorveglianza",
+      text: "Sorveglianza sanitaria incompleta",
+      min: 2316,
+      max: 7632,
+      consequences: [
+        "Se manca il giudizio medico, non puoi far lavorare il dipendente per legge",
+        "In caso di infortunio, rischi denuncia per lesioni o omicidio colposo",
+        "L'INAIL può rifiutare la copertura assicurativa",
+        "L'ASL può disporre la sospensione dell'attività"
+      ],
+      actions: ["Nomina medico competente", "Pianifica visite e giudizi idoneità per tutti gli esposti"],
+      fonte: "D.Lgs. 81/08, Titolo I e X; legge 203/2024",
+      priority: { order: 3, urgency: "TERZO", reason: "Verifica cartelle mediche" }
+    },
+    emergenze: {
+      key: "emergenze",
+      text: "Procedure emergenza non conformi",
+      min: 1068,
+      max: 5695,
+      consequences: [
+        "Se c'è un'emergenza, puoi essere penalmente responsabile",
+        "Rischi arresto fino a 4 mesi se ci sono danni a persone",
+        "I clienti o visitatori coinvolti possono chiedere risarcimenti",
+        "In assenza di prove di evacuazione o nomine → sanzione immediata"
+      ],
+      actions: ["Aggiorna piano di emergenza ed evacuazione", "Nomina e forma addetti primo soccorso/antincendio"],
+      fonte: "D.Lgs. 81/08, Titolo I e II",
+      priority: { order: 4, urgency: "QUARTO", reason: "Procedure emergenza" }
+    },
+    "nuovo-assunto": {
+      key: "nuovo-assunto",
+      text: "Procedure assunzioni incomplete",
+      min: 3000,
+      max: 15000,
+      consequences: [
+        "Senza visita pre-assuntiva, il contratto può essere legalmente contestato",
+        "Rischi multe multiple per ogni obbligo non rispettato (DPI, formazione, ecc.)",
+        "Se il personale lavora senza idoneità → scatta la sospensione",
+        "Il lavoratore può contestare l'assunzione anche a distanza di anni"
+      ],
+      actions: ["Verifica sequenza: visita, formazione, DPI prima dell'avvio", "Predisponi check-list di ingresso"],
+      fonte: "D.Lgs. 81/08; obblighi preassuntivi rafforzati 2024",
+      priority: { order: 5, urgency: "QUINTO", reason: "Sequenza assunzioni" }
+    }
+  };
+  
+  const violations = Object.keys(config)
+    .filter(key => answers[key] === "no" || answers[key] === "non-sicuro")
+    .map(key => config[key])
+    .sort((a, b) => a.priority.order - b.priority.order);
+    
+  return violations;
+}
+
+function riskFromScore(baseScore: number, multiplier: number) {
+  const finalScore = baseScore * multiplier;
+  if (finalScore <= 4) return { level: "Basso" as const, finalScore };
+  if (finalScore <= 8) return { level: "Medio" as const, finalScore };
+  return { level: "Alto" as const, finalScore };
+}
+
+function riskBadgeVariant(level: string): "secondary" | "default" | "destructive" {
+  if (level === "Basso") return "secondary";
+  if (level === "Medio") return "default";
+  return "destructive";
+}
+
 const Index = () => {
-  const [state, dispatch] = useReducer(quizReducer, initialState);
-  const [testersCount, setTestersCount] = useState(514);
+  const [stage, setStage] = useState<"intro" | "quiz" | "loading" | "results">("intro");
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState<Answers>({});
+  const [baseScore, setBaseScore] = useState(0);
+  const [multiplier, setMultiplier] = useState(1);
+  
+  const question = questions[currentQuestion];
+  const progress = (currentQuestion + 1) / questions.length * 100;
+  const risk = useMemo(() => riskFromScore(baseScore, multiplier), [baseScore, multiplier]);
+  const violations = useMemo(() => calculateViolations(answers), [answers]);
+  const sanctionMin = violations.reduce((s, v) => s + v.min, 0);
+  const sanctionMax = violations.reduce((s, v) => s + v.max, 0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTestersCount((prev) => prev + Math.floor(Math.random() * 3));
-    }, 30000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const q = questions[state.currentQ];
-  const progress = ((state.currentQ + 1) / questions.length) * 100;
-
-  const risk = useMemo(() => {
-    const fs = state.score * state.mult;
-    return fs <= 4 ? "Basso" : fs <= 8 ? "Medio" : "Alto";
-  }, [state.score, state.mult]);
-
-  const userViolations = useMemo(() =>
-    Object.entries(violations)
-      .filter(([k]) => state.answers[k as ViolationKey] === "no" || state.answers[k as ViolationKey] === "non-sicuro")
-      .map(([k, v]) => ({ ...v, key: k }))
-      .sort((a, b) => a.priority.order - b.priority.order),
-  [state.answers]);
-
-  const sanctionMax = userViolations.reduce((s, v) => s + v.max, 0);
-  const sectorName = sectorLabels[state.answers.settore] || "Servizi";
-
-  const handleOption = useCallback((opt: any) => {
-    const newAnswers = { ...state.answers, [q.id]: opt.value } as Answers;
-    let newScore = state.score;
-    let newMult = state.mult;
-
-    if (q.type === "score") {
-      const weight = (opt as ScoreOption).weight || 0;
-      newScore = state.score + weight;
-    } else if (q.type === "multiplier") {
-      const mult = (opt as MultiplierOption).multiplier || 1;
-      newMult = state.mult * mult;
+    const baseTitle = "Test Sicurezza Aziendale | Spazio Impresa";
+    const resultsTitle = "Test Sicurezza Aziendale - Risultati | Spazio Impresa";
+    document.title = stage === "results" ? resultsTitle : baseTitle;
+    const desc = stage === "results" ? "Analisi personalizzata rischio sicurezza: sanzioni potenziali, impatto immediato e piano d'azione." : "Passeresti un'ispezione ASL oggi? Test gratuito e anonimo. Risultati in 90 secondi.";
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement("meta");
+      meta.setAttribute("name", "description");
+      document.head.appendChild(meta);
     }
+    meta.setAttribute("content", desc);
+  }, [stage]);
+  
+  const getSectorName = () => sectorMap[answers.settore] || "Servizi";
 
-    dispatch({ type: "SET_ANSWER", payload: { ...state, answers: newAnswers, score: newScore, mult: newMult } });
-
-    setTimeout(() => {
-      if (state.currentQ < questions.length - 1) {
-        dispatch({ type: "NEXT_Q" });
-      } else {
-        dispatch({ type: "SET_STAGE", payload: "loading" });
-        setTimeout(() => dispatch({ type: "SET_STAGE", payload: "results" }), 800);
-      }
-    }, 200);
-  }, [state, q]);
-
-  const getPersonalizedMessage = () => {
-    const management = state.answers.gestione;
-    const hasViolations = userViolations.length > 0;
-    const employees = state.answers.dipendenti;
-
-    if (management === "interno" && !hasViolations) {
-      return {
-        title: "Complimenti! Sei un esempio virtuoso",
-        text:
-          "Gestisci internamente e con attenzione: il tuo modello funziona. Hai mai pensato a certificarti come azienda sicura per ottenere vantaggi competitivi?",
-        cta: "Scopri i vantaggi della certificazione",
-      };
-    }
-
-    if (management === "consulente" && hasViolations) {
-      return {
-        title: "Attenzione: il tuo consulente ti sta deludendo",
-        text: `Nonostante la consulenza esterna, hai ${userViolations.length} rischi aperti. Chi ci mette la faccia sei tu, legalmente. È tempo di capire dove si inceppa la filiera della sicurezza.`,
-        cta: "Verifica l'operato del tuo consulente",
-      };
-    }
-
-    if (management === "gestisco-io" && employees === "1-5") {
-      return {
-        title: "Fai tutto tu? Rispetto!",
-        text:
-          "Ma sai che il D.Lgs 81 è cambiato 6 volte negli ultimi 2 anni? Un sistema che ti supporta senza toglierti il controllo potrebbe semplificarti la vita.",
-        cta: "Mantieni il controllo, riduci il carico",
-      };
-    }
-
-    return {
-      title: risk === "Alto" ? "Situazione critica" : risk === "Medio" ? "Margini di miglioramento" : "Buona situazione",
-      text: `Come imprenditore nel settore ${sectorName} con ${employees || "1-5"} dipendenti, la tua situazione richiede attenzione mirata.`,
-      cta: "Scopri il piano personalizzato",
+  const getSectorPriorities = () => {
+    const priorities = {
+      edilizia: [
+        "Cantieri e DPI anticaduta",
+        "Coordinatore sicurezza (CSP/CSE)",
+        "Formazione specifica macchine",
+        "Sorveglianza sanitaria operai"
+      ],
+      manifatturiero: [
+        "Macchine industriali e manutenzione",
+        "Sostanze chimiche/cancerogene",
+        "Rumore e vibrazioni misurati",
+        "Movimentazione carichi"
+      ],
+      alimentare: [
+        "HACCP e igiene alimentare",
+        "Formazione addetti alimentari",
+        "Temperatura e conservazione",
+        "Pulizia e sanificazione"
+      ],
+      servizi: [
+        "Videoterminali e postazioni",
+        "Vie di fuga e emergenze",
+        "Stress lavoro-correlato",
+        "Formazione generale"
+      ],
+      commercio: [
+        "Scaffalature e magazzini",
+        "Movimentazione manuale merci",
+        "Apertura al pubblico",
+        "Antincendio e primo soccorso"
+      ],
+      agricoltura: [
+        "Trattori e macchine agricole",
+        "Prodotti fitosanitari",
+        "Lavoro stagionale",
+        "Alloggiamenti lavoratori"
+      ]
     };
+    return priorities[answers.settore] || priorities.servizi;
   };
 
-  const personalizedMsg = getPersonalizedMessage();
-  const whatsappText = encodeURIComponent(
-    `Ciao Spazio Impresa! Ho completato il test sicurezza. Rischio: ${risk}. Settore: ${sectorName}. ${userViolations.length} criticità rilevate. Vorrei un'analisi personalizzata.`
-  );
+  const getSectorIrregularities = () => {
+    const irregularities = {
+      edilizia: ["DVR non aggiornato (89%)", "Mancata formazione operai (76%)", "Assenza sorveglianza sanitaria (71%)"],
+      manifatturiero: ["DVR generico (72%)", "Manutenzione macchine (68%)", "Formazione specifica (61%)"],
+      alimentare: ["HACCP scaduto (65%)", "Temperature non registrate (52%)", "Sanificazioni incomplete (45%)"],
+      servizi: ["VDT non valutati (55%)", "Stress lavoro assente (48%)", "Formazione generale (42%)"],
+      commercio: ["DVR commercio generico (60%)", "Scaffalature non verificate (45%)", "Emergenze non testate (38%)"],
+      agricoltura: ["Macchine non certificate (75%)", "Fitosanitari non gestiti (68%)", "Formazione stagionali (62%)"]
+    };
+    return irregularities[answers.settore] || irregularities.servizi;
+  };
+
+  const getSectorDeficiencies = () => {
+    const deficiencies = {
+      edilizia: ["Mancanza CSP nominato", "DPI III categoria non certificati", "Ponteggi non a norma"],
+      manifatturiero: ["Libretto macchine mancante", "Schede sicurezza incomplete", "Misurazioni rumore datate"],
+      alimentare: ["Procedure HACCP non documentate", "Registri temperatura mancanti", "Sanificazioni non tracciate"],
+      servizi: ["Postazioni VDT non ergonomiche", "Valutazione carichi di lavoro assente", "Piano emergenza generico"],
+      commercio: ["Scaffalature non verificate", "Movimentazione non valutata", "Sicurezza clienti e visitatori"],
+      agricoltura: ["Macchine agricole non conformi", "Registro fitosanitari incompleto", "Documenti lavoratori stagionali incompleti"]
+    };
+    return deficiencies[answers.settore] || deficiencies.servizi;
+  };
+
+  const getSuggestionContent = () => {
+    const managementAnswer = answers.gestione;
+    const timeWasted = getEmployeeCount(answers.dipendenti) * 2;
+    const monthlyWaste = timeWasted * 25;
+    
+    const suggestions = {
+      "gestisco-io": {
+        text: `Gestire da solo scadenze, rinnovi, adempimenti, controlli, prenotazioni e aggiornamenti è un bel carico sulle spalle. E se ci fosse un Sistema semplice per risparmiare ore, avere tutto sott'occhio ed eliminare errori e dimenticanze?.`,
+        link: "Scopri come funziona"
+      },
+      "interno": {
+        text: `Anche ai migliori collaboratori possono sfuggire dettagli e aggiornamenti normativi importanti. Un Sistema integrato potrebbe aiutare il tuo team a ridurre errori, dimenticanze e il carico di lavoro.`,
+        link: "Guarda cosa può fare per la tua azienda"
+      },
+      "consulente": {
+        text: `Il tuo consulente è proattivo o ti tocca rincorrerlo per avere risposte concrete? Con un Sistema integrato, hai tutto sotto controllo in pochi click e ricevi avvisi su scadenze, rinnovi, novità e agevolazioni in largo anticipo.`,
+        link: "Scopri la differenza"
+      },
+      "studi-multipli": {
+        text: `Avere più specialisti a cui rivolgersi è ottimo, ma quanto tempo, stress e confusione costa? E se un unico Sistema coordinasse tutti i fornitori per te — in automatico?`,
+        link: "Guarda i vantaggi di un'unica regia"
+      }
+    };
+    return suggestions[managementAnswer] || suggestions["gestisco-io"];
+  };
+
+  const getCaseStudies = () => {
+    const caseStudies = [
+      {
+        sector: "Alimentare",
+        title: "Azienda Dolciaria - Bronte, 18 dipendenti",
+        problem: "Controllo ispettivo ASL improvviso",
+        consequence: "Rischio sanzioni per oltre €15.000 e possibile sospensione attività",
+        solution: "In 20-25 giorni abbiamo completato:",
+        actions: [
+          "Organizzato formazione Art. 37 con docente qualificato direttamente in azienda",
+          "Iscritto le figure aziendali ai corsi di sicurezza presso Ente Accreditato",
+          "Coordinato visite mediche immediate con il Medico Competente",
+          "Prodotto DVR, Piano Emergenza, organigramma e verbali necessari"
+        ],
+        result: "Azienda completamente in regola, controllo superato senza sanzioni"
+      },
+      {
+        sector: "Manifatturiero",
+        title: "PMI Metalmeccanica - 12 dipendenti",
+        problem: "Costi formazione sicurezza insostenibili",
+        consequence: "Budget insufficiente per adempimenti formativi obbligatori",
+        solution: "Attraverso l'iscrizione a Fondo Interprofessionale:",
+        actions: [
+          "Attivato formazione finanziata completamente gratuita",
+          "Erogato tutti i percorsi formativi obbligatori",
+          "Formato tutte le figure aziendali previste dal D.Lgs 81/08"
+        ],
+        result: "Risparmio di oltre €2.200, completa conformità normativa raggiunta"
+      },
+      {
+        sector: "Tessile",
+        title: "Azienda Confezioni - 25 dipendenti",
+        problem: "AUDIT esterno su sicurezza e salubrità ambienti",
+        consequence: "Rischio perdita certificazioni e commesse importanti",
+        solution: "Coordinamento team multidisciplinare:",
+        actions: [
+          "Interfaccia con tecnico per estintori, DPI e segnaletica",
+          "Collaborazione con Ingegnere per valutazioni tecniche",
+          "Produzione Piano Emergenza e DVR specifico per richieste AUDIT",
+          "Formazione mirata del personale"
+        ],
+        result: "AUDIT superato con valutazione eccellente, contratti mantenuti"
+      }
+    ];
+    
+    // Seleziona un caso studio basato sul settore dell'utente o uno random
+    const sectorCases = caseStudies.filter(c => 
+      c.sector.toLowerCase() === (answers.settore || "").toLowerCase()
+    );
+    
+    return sectorCases.length > 0 ? sectorCases[0] : caseStudies[0];
+  };
+
+  const getManagementAdvantages = () => {
+    const managementAnswer = answers.gestione;
+    const advantages = {
+      "gestisco-io": [
+        "Mantieni il controllo totale, ma con supporto tecnico specializzato",
+        "Sistema alert che ti avvisa 30gg prima delle scadenze (visite) e 60gg prima (corsi)",
+        "Piattaforma digitale 24/7 per consultare tutto in tempo reale",
+        "Coordinamento di tutte le figure SPP senza perdere la regia"
+      ],
+      "interno": [
+        "Il tuo responsabile interno diventa più efficace con strumenti professionali",
+        "Riduzione del carico di lavoro del team interno del 60%",
+        "Backup competenze: se il responsabile non c'è, il sistema funziona comunque",
+        "Formazione continua del team interno sulle novità normative"
+      ],
+      "consulente": [
+        "Verifica indipendente di cosa copre realmente il tuo consulente attuale",
+        "Integrazione con il consulente esistente o sostituzione trasparente",
+        "Controllo qualità: monitoraggio prestazioni con KPI misurabili",
+        "Nessuna interruzione: se il consulente non risponde, interveniamo noi"
+      ],
+      "studi-multipli": [
+        "Coordinamento automatico di tutti i tuoi fornitori attuali",
+        "Unica dashboard per monitorare Studio A + Studio B + Studio C",
+        "Eliminazione sovrapposizioni e buchi tra fornitori",
+        "Costi trasparenti: sai esattamente chi fa cosa e quanto costa"
+      ]
+    };
+    return advantages[managementAnswer] || advantages["gestisco-io"];
+  };
+
+  const selectOption = (q: Question, opt: Option) => {
+    setAnswers(prev => {
+      const prevVal = prev[q.id];
+      const next = { ...prev, [q.id]: opt.value };
+
+      if (q.type === "score") {
+        const prevOpt = q.options.find(o => o.value === prevVal);
+        const prevWeight = prevOpt?.weight || 0;
+        const newWeight = opt.weight || 0;
+        setBaseScore(s => s - prevWeight + newWeight);
+      } else if (q.type === "multiplier") {
+        const prevOpt = q.options.find(o => o.value === prevVal);
+        const prevMul = prevOpt?.multiplier || 1;
+        const newMul = opt.multiplier || 1;
+        setMultiplier(m => m / prevMul * newMul);
+      }
+      return next;
+    });
+
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(i => i + 1);
+      } else {
+        setStage("loading");
+        setTimeout(() => setStage("results"), 800);
+      }
+    }, 200);
+  };
+
+  const goBack = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      
+      const currentAnswer = answers[question.id];
+      if (currentAnswer) {
+        const currentOpt = question.options.find(o => o.value === currentAnswer);
+        if (question.type === "score" && currentOpt) {
+          setBaseScore(s => s - (currentOpt.weight || 0));
+        } else if (question.type === "multiplier" && currentOpt) {
+          setMultiplier(m => m / (currentOpt.multiplier || 1));
+        }
+        
+        setAnswers(prev => {
+          const next = { ...prev };
+          delete next[question.id];
+          return next;
+        });
+      }
+    }
+  };
+
+  const whatsappHref = useMemo(() => {
+    const text = encodeURIComponent(`Ciao Spazio Impresa! Ho completato il test sicurezza. Rischio: ${risk.level}. Settore: ${getSectorName()}. Vorrei maggiori informazioni sul piano di adeguamento.`);
+    return `https://wa.me/390955872480?text=${text}`;
+  }, [risk.level, answers.settore]);
+
+  const resetQuiz = () => {
+    setStage("intro");
+    setCurrentQuestion(0);
+    setAnswers({});
+    setBaseScore(0);
+    setMultiplier(1);
+  };
+
+  const suggestionContent = getSuggestionContent();
+  const caseStudy = getCaseStudies();
+  const managementAdvantages = getManagementAdvantages();
 
   return (
-    <div className="min-h-screen bg-gradient-soft text-foreground">
-      <Header />
-      <main className="container mx-auto max-w-4xl px-4 py-8">
-        {state.stage === "intro" && (
-          <section className="animate-enter">
-            <div className="text-center py-6">
-              <div className="inline-flex items-center gap-3 mb-4">
-                <Shield className="w-10 h-10 text-primary" />
-                <span className="text-2xl font-bold text-primary">SPAZIO IMPRESA</span>
-              </div>
-              <div className="inline-flex items-center gap-2 bg-secondary rounded-full px-4 py-2 text-sm">
-                <Users className="w-4 h-4 text-foreground" />
-                <span className="font-medium">{testersCount} imprenditori siciliani</span>
-                <span className="text-muted-foreground">hanno già testato la loro azienda</span>
-              </div>
+    <div className="min-h-screen bg-background text-foreground">
+      {(stage === "intro" || stage === "quiz") && (
+        <div className="fixed bottom-0 left-0 right-0 bg-black text-white p-2 text-center text-xs z-50">
+          D.Lgs 81/08 aggiornato 2025 • Sanzioni rivalutate +15,9% • Test basato su normativa vigente
+        </div>
+      )}
+
+      {stage === "intro" && (
+        <div className="px-4 py-8 max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <Shield className="w-10 h-10 text-red-600" />
+              <h1 className="text-2xl font-bold text-red-600">SPAZIO IMPRESA</h1>
             </div>
+            <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-2 inline-flex items-center gap-2 mb-6">
+              <Users className="w-4 h-4 text-green-600" />
+              <span className="text-green-700 font-medium">489 imprenditori siciliani</span>
+              <span className="text-green-600">hanno già testato la loro azienda</span>
+            </div>
+          </div>
 
-            <Card className="shadow-lg">
-              <CardContent className="p-8">
-                <h1 className="text-3xl sm:text-4xl font-bold text-center mb-2">
-                  Sei certo che la tua azienda è a norma?
-                </h1>
-                <p className="text-xl text-center text-muted-foreground mb-2">
-                  O ti affidi solo alla parola del consulente?
-                </p>
-
-                <div className="bg-accent border-l-4 border-primary p-4 mb-6">
-                  <p className="text-sm">
-                    <strong>Se hai un'impresa in Sicilia</strong> e ti affidi a un consulente esterno,
-                    questo test ti aprirà gli occhi su ciò che non ti dicono.
-                  </p>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4 mb-6">
-                  <div className="bg-accent rounded-lg p-4 border">
-                    <AlertTriangle className="w-6 h-6 text-destructive mb-2" />
-                    <p className="text-sm font-medium">Se ci sono rischi</p>
-                    <p className="text-xs text-muted-foreground">Scopri sanzioni fino a €15.000</p>
-                  </div>
-                  <div className="bg-accent rounded-lg p-4 border">
-                    <Shield className="w-6 h-6 text-primary mb-2" />
-                    <p className="text-sm font-medium">Se sei a norma</p>
-                    <p className="text-xs text-muted-foreground">Avrai la conferma che tutto fila liscio</p>
-                  </div>
-                </div>
-
-                <div className="rounded-lg p-3 mb-6 bg-secondary">
-                  <p className="text-xs text-center text-muted-foreground">
-                    <strong>ASP Catania 2024:</strong> 859 controlli, 811 violazioni contestate, €1.110 sanzione media
-                  </p>
-                </div>
-
-                <Button
-                  onClick={() => dispatch({ type: "SET_STAGE", payload: "quiz" })}
-                  size="lg"
-                  className="w-full bg-gradient-hero text-primary-foreground shadow-lg hover-scale"
-                >
-                  Inizia il Test Gratuito (2 minuti) →
-                </Button>
-
-                <p className="text-xs text-center text-muted-foreground mt-4">
-                  Test anonimo • Nessuna registrazione • Risultati immediati
-                </p>
-              </CardContent>
-            </Card>
-
-            <div className="mt-6 p-4 bg-card rounded-lg shadow text-center border">
-              <p className="text-sm text-muted-foreground italic">
-                "Marco, titolare di una PMI edile a Trapani, pensava di essere a posto. Poi è arrivato il controllo ASL..."
+          <Card className="shadow-xl mb-6">
+            <CardContent className="p-8">
+              <h2 className="text-3xl font-bold text-center mb-4">
+                Sei certo che la tua azienda è a norma?
+              </h2>
+              <p className="text-xl text-center text-muted-foreground mb-6">
+                O ti affidi solo alla parola del consulente?
               </p>
-              <p className="text-xs text-muted-foreground mt-2">Storia vera, nome di fantasia</p>
-            </div>
-          </section>
-        )}
 
-        {state.stage === "quiz" && (
-          <section className="space-y-6 animate-enter">
-            <Card className="max-w-3xl mx-auto shadow-lg">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle>
-                    Domanda {state.currentQ + 1} di {questions.length}
-                  </CardTitle>
-                  <Badge variant="outline">{Math.round(progress)}% completato</Badge>
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+                <p className="text-sm text-blue-800">
+                  <strong>Se hai un'impresa in Sicilia</strong> e ti affidi a un consulente esterno, 
+                  questo test ti aprirà gli occhi su ciò che non ti dicono.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+                  <AlertTriangle className="w-6 h-6 text-red-600 mb-2" />
+                  <p className="text-sm font-medium text-red-900">Se ci sono rischi</p>
+                  <p className="text-xs text-red-700">Scopri sanzioni fino a €15.000</p>
                 </div>
-              </CardHeader>
+                <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                  <Shield className="w-6 h-6 text-green-600 mb-2" />
+                  <p className="text-sm font-medium text-green-900">Se sei a norma</p>
+                  <p className="text-xs text-green-700">Avrai la conferma che tutto fila liscio</p>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 rounded-lg p-3 mb-6">
+                <p className="text-xs text-center text-yellow-800">
+                  <strong>ASP Catania 2024:</strong> 859 controlli, 811 violazioni contestate, €1.110 sanzione media
+                </p>
+              </div>
+
+              <Button 
+                onClick={() => setStage("quiz")} 
+                size="lg" 
+                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg"
+              >
+                Inizia il Test Gratuito (2 minuti) <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+
+              <p className="text-xs text-center text-muted-foreground mt-4">
+                Test anonimo • Nessuna registrazione • Risultati immediati
+              </p>
+            </CardContent>
+          </Card>
+
+          <div className="bg-white rounded-lg shadow p-4 text-center">
+            <p className="text-sm text-muted-foreground italic">
+              "Marco, titolare di una PMI edile a Trapani, pensava di essere a posto. 
+              Poi è arrivato il controllo ASL..."
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">Storia vera, nome di fantasia</p>
+          </div>
+        </div>
+      )}
+
+      {stage === "quiz" && (
+        <div className="px-4 py-8 max-w-3xl mx-auto">
+          <Card className="shadow-lg">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle>Domanda {currentQuestion + 1} di {questions.length}</CardTitle>
+                <Badge variant="outline">{Math.round(progress)}% completato</Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="h-2 w-full rounded bg-muted mb-6">
+                <div 
+                  className="h-2 rounded bg-gradient-to-r from-red-500 to-red-600 transition-all duration-300" 
+                  style={{width: `${progress}%`}} 
+                />
+              </div>
+              
+              <h2 className="text-xl font-semibold mb-2">{question.title}</h2>
+              {question.subtitle && <p className="text-sm text-muted-foreground mb-4">{question.subtitle}</p>}
+              
+              <div className="space-y-3">
+                {question.options.map(opt => (
+                  <button 
+                    key={opt.value} 
+                    onClick={() => selectOption(question, opt)} 
+                    className="flex items-center gap-3 rounded-lg border-2 p-4 text-left transition-all hover:border-red-400 hover:bg-red-50 w-full"
+                  >
+                    <div className="w-5 h-5 rounded-full border-2 border-muted-foreground" />
+                    <span className="flex-1">{opt.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {currentQuestion > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={goBack}
+                  className="mt-4"
+                >
+                  ← Torna indietro
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {stage === "loading" && (
+        <div className="min-h-screen flex items-center justify-center px-4">
+          <Card className="w-full max-w-md">
+            <CardContent className="p-10 text-center">
+              <div className="h-12 w-12 animate-spin rounded-full border-4 border-muted border-t-red-600 mx-auto mb-4" />
+              <h2 className="text-xl font-semibold mb-2">Analisi in corso...</h2>
+              <p className="text-muted-foreground">Stiamo calcolando il tuo profilo di rischio personalizzato</p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {stage === "results" && (
+        <div className="px-4 py-8 max-w-6xl mx-auto space-y-6">
+          {/* Header risultati */}
+          <Card className="shadow-xl">
+            <CardContent className="p-6">
+              <div className="text-center mb-6">
+                <Badge 
+                  variant={riskBadgeVariant(risk.level)}
+                  className="text-lg px-4 py-2 mb-4"
+                >
+                  Rischio {risk.level}
+                </Badge>
+                
+                <h2 className="text-2xl font-bold mb-2">
+                  {risk.level === "Alto" ? "🚨 Situazione critica" : 
+                   risk.level === "Medio" ? "⚡ Margini di miglioramento" : 
+                   "✅ Buona situazione"}
+                </h2>
+                <p className="text-muted-foreground">
+                  Settore {getSectorName()} • {answers.dipendenti || '1-5'} dipendenti
+                </p>
+              </div>
+
+              {violations.length > 0 && (
+                <div className="bg-red-50 border-2 border-red-600 rounded-lg p-6 text-center mb-6">
+                  <div className="text-4xl font-black text-red-600 mb-2">
+                    €{sanctionMax.toLocaleString("it-IT")}
+                  </div>
+                  <p className="font-semibold text-red-800 mb-3">
+                    Sanzione massima se ti controllano oggi
+                  </p>
+                  <p className="text-sm text-red-700 italic">
+                    "In tribunale ci vai TU, non il consulente o i dipendenti"
+                  </p>
+                </div>
+              )}
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Consulenza Gratuita WhatsApp
+                  </a>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={() => window.print()}
+                >
+                  <FileCheck className="w-4 h-4 mr-2" />
+                  Scarica Report PDF
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Violazioni */}
+          {violations.length > 0 && (
+            <Card>
               <CardContent className="p-6">
-                <div className="h-2 w-full rounded bg-muted mb-6">
-                  <div
-                    className="h-2 rounded bg-primary transition-all duration-300"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-
-                <h2 className="text-xl font-semibold mb-2">{q.title}</h2>
-                {q.subtitle && <p className="text-sm text-muted-foreground mb-4">{q.subtitle}</p>}
-
-                <div className="grid gap-3">
-                  {q.options.map((opt) => (
-                    <button
-                      key={opt.value}
-                      onClick={() => handleOption(opt)}
-                      className="flex items-center gap-3 rounded-lg border-2 p-4 text-left transition-all hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <div className="w-5 h-5 rounded-full border-2" />
-                      <span className="flex-1">{opt.label}</span>
-                    </button>
+                <h3 className="text-lg font-semibold mb-4">
+                  Le tue {violations.length} bombe ad orologeria:
+                </h3>
+                <div className="space-y-4">
+                  {violations.map((v, idx) => (
+                    <div key={v.key} className="bg-white rounded-lg border-l-4 border-red-500 p-4 shadow">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <span className="bg-black text-white px-2 py-1 rounded text-xs font-bold mr-2">
+                            {v.priority.urgency}
+                          </span>
+                          <span className="font-medium">{v.text}</span>
+                        </div>
+                        <span className="text-red-600 font-bold whitespace-nowrap">
+                          fino a €{v.max.toLocaleString("it-IT")}
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-2">{v.priority.reason}</p>
+                      
+                      <details className="text-sm">
+                        <summary className="cursor-pointer font-medium text-muted-foreground hover:text-foreground">
+                          Perché controlla questo
+                        </summary>
+                        <ul className="mt-2 ml-4 space-y-1 text-muted-foreground">
+                          {v.consequences.slice(0,2).map((c, i) => <li key={i}>• {c}</li>)}
+                        </ul>
+                      </details>
+                      
+                      <details className="text-sm mt-2">
+                        <summary className="cursor-pointer font-medium text-muted-foreground hover:text-foreground">
+                          Cosa puoi fare subito
+                        </summary>
+                        <ul className="mt-2 ml-4 space-y-1 text-muted-foreground">
+                          {v.actions.map((a, i) => <li key={i}>• {a}</li>)}
+                        </ul>
+                      </details>
+                    </div>
                   ))}
                 </div>
-
-                {state.currentQ > 0 && (
-                  <Button variant="ghost" size="sm" onClick={() => dispatch({ type: "PREV_Q" })} className="mt-4">
-                    ← Torna indietro
-                  </Button>
-                )}
               </CardContent>
             </Card>
-          </section>
-        )}
+          )}
 
-        {state.stage === "loading" && (
-          <section className="min-h-[60vh] flex items-center justify-center animate-enter">
-            <Card className="w-full max-w-md">
-              <CardContent className="p-10 text-center">
-                <div className="h-12 w-12 animate-spin rounded-full border-4 border-muted border-t-primary mx-auto mb-4" />
-                <h2 className="text-xl font-semibold mb-2">Analisi in corso...</h2>
-                <p className="text-muted-foreground">Stiamo calcolando il tuo profilo di rischio personalizzato</p>
-              </CardContent>
-            </Card>
-          </section>
-        )}
+          {/* Sistema suggerimento */}
+          <Card>
+            <CardContent className="p-6">
+              <div className="bg-yellow-50 border border-yellow-400 rounded-lg p-4">
+                <h3 className="font-medium text-yellow-900 mb-2">
+                  💡 {suggestionContent.text}
+                </h3>
+                <Button variant="outline" size="sm" className="mt-2">
+                  {suggestionContent.link}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
-        {state.stage === "results" && (
-          <section className="space-y-6 animate-enter">
-            <Card className="shadow-xl">
-              <CardContent className="p-6">
-                <div className="text-center mb-6">
-                  <Badge
-                    className={`text-lg px-4 py-2 text-primary-foreground ${
-                      risk === "Alto"
-                        ? "bg-destructive"
-                        : risk === "Medio"
-                        ? "bg-secondary"
-                        : "bg-accent"
-                    }`}
-                  >
-                    Rischio {risk}
-                  </Badge>
+          {/* Caso studio */}
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="text-lg font-semibold mb-4">Caso Studio Reale</h3>
+              <div className="bg-blue-50 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-900 mb-2">{caseStudy.title}</h4>
+                <p className="text-sm text-blue-800 mb-2"><strong>Problema:</strong> {caseStudy.problem}</p>
+                <p className="text-sm text-blue-800 mb-2"><strong>Rischio:</strong> {caseStudy.consequence}</p>
+                <p className="text-sm text-blue-800 mb-2"><strong>Soluzione:</strong> {caseStudy.solution}</p>
+                <ul className="text-sm text-blue-700 ml-4 mb-2">
+                  {caseStudy.actions.map((action, i) => (
+                    <li key={i}>• {action}</li>
+                  ))}
+                </ul>
+                <p className="text-sm font-medium text-blue-900">
+                  <strong>Risultato:</strong> {caseStudy.result}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
-                  <h2 className="text-2xl font-bold mt-4 mb-2">{personalizedMsg.title}</h2>
-                  <p className="text-muted-foreground">{personalizedMsg.text}</p>
-                </div>
-
-                {userViolations.length > 0 && (
-                  <div className="bg-accent border-2 border-primary rounded-lg p-6 text-center mb-6">
-                    <div className="text-4xl font-black text-primary mb-2">€{sanctionMax.toLocaleString("it-IT")}</div>
-                    <p className="font-semibold mb-3">Sanzione massima se ti controllano oggi</p>
-                    <p className="text-sm text-muted-foreground italic">
-                      "In tribunale ci vai TU, non il consulente o i dipendenti"
-                    </p>
-                  </div>
-                )}
-
-                {userViolations.length > 0 ? (
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold">Le tue {userViolations.length} priorità da chiudere subito:</h3>
-                    {userViolations.map((v: any) => (
-                      <div key={v.key} className="bg-card rounded-lg border-l-4 p-4 shadow border">
-                        <div className="flex justify-between items-start mb-2">
-                          <div>
-                            <span className="bg-foreground text-primary-foreground px-2 py-1 rounded text-xs font-bold mr-2">
-                              {v.priority.urgency}
-                            </span>
-                            <span className="font-medium">{v.text}</span>
-                          </div>
-                          <span className="text-primary font-bold whitespace-nowrap">
-                            fino a €{v.max.toLocaleString("it-IT")}
-                          </span>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-2">{v.priority.reason}</p>
-
-                        <details className="text-sm">
-                          <summary className="cursor-pointer font-medium">Perché controlla questo</summary>
-                          <ul className="mt-2 ml-4 space-y-1 text-muted-foreground">
-                            {v.consequences.slice(0, 2).map((c: string, i: number) => (
-                              <li key={i}>• {c}</li>
-                            ))}
-                          </ul>
-                        </details>
-
-                        <details className="text-sm mt-2">
-                          <summary className="cursor-pointer font-medium">Cosa puoi fare subito</summary>
-                          <ul className="mt-2 ml-4 space-y-1 text-muted-foreground">
-                            {v.actions.map((a: string, i: number) => (
-                              <li key={i}>• {a}</li>
-                            ))}
-                          </ul>
-                        </details>
-                      </div>
-                    ))}
-
-                    <div className="bg-secondary rounded-lg p-4 mt-4">
-                      <p className="text-sm font-medium mb-2">Suggerimento rapido</p>
-                      <p className="text-sm text-muted-foreground">
-                        Un sistema integrato riduce errori e ritardi. Centralizza scadenze e documenti per azzerare il rischio di sanzioni multiple.
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="bg-accent border rounded-lg p-6 text-center">
-                    <h3 className="text-2xl font-bold mb-2">Ottimo lavoro! Zero criticità urgenti</h3>
-                    <p className="text-muted-foreground">
-                      Sei tra i pochi imprenditori siciliani realmente in regola. Ma ricorda: le normative cambiano continuamente.
-                    </p>
-                  </div>
-                )}
-
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <a
-                    href={`https://wa.me/390955872480?text=${whatsappText}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button className="w-full bg-gradient-hero text-primary-foreground hover-scale">
-                      Contattaci su WhatsApp (risposta in 2 ore)
-                    </Button>
-                  </a>
-                  <Button variant="outline" className="w-full" onClick={() => window.print()}>
-                    Scarica Report PDF
-                  </Button>
-                </div>
-
-                <div className="mt-6 text-center">
-                  <Button variant="ghost" onClick={() => dispatch({ type: "RESET" })}>Ripeti il test</Button>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
-        {state.stage !== "intro" && (
-          <div className="mt-10 flex justify-between">
-            <Button variant="ghost" onClick={() => dispatch({ type: "RESET" })}>Ricomincia</Button>
-            {state.stage === "quiz" && (
-              <div className="text-sm text-muted-foreground">Domande totali: {questions.length}</div>
-            )}
+          {/* Reset */}
+          <div className="text-center">
+            <Button variant="outline" onClick={resetQuiz}>
+              Rifai il Test
+            </Button>
           </div>
-        )}
-      </main>
-      <Footer />
+        </div>
+      )}
     </div>
   );
 };
