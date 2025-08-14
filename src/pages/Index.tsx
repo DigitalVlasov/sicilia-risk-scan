@@ -706,76 +706,70 @@ const Index = () => {
       )}
 
       {stage === "intro" && (
-        <div className="px-4 py-8 max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Shield className="w-10 h-10 text-red-600" />
-              <h1 className="text-2xl font-bold text-red-600">SPAZIO IMPRESA</h1>
-            </div>
-            <div className="bg-green-50 border border-green-200 rounded-lg px-4 py-2 inline-flex items-center gap-2 mb-6">
-              <Users className="w-4 h-4 text-green-600" />
-              <span className="text-green-700 font-medium">489 imprenditori siciliani</span>
-              <span className="text-green-600">hanno già testato la loro azienda</span>
+        <section aria-labelledby="intro-title">
+          <div className="text-center py-8">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                SI
+              </div>
+              <span className="text-2xl font-bold text-red-600">SPAZIO IMPRESA</span>
             </div>
           </div>
-
-          <Card className="shadow-xl mb-6">
-            <CardContent className="p-8">
-              <h2 className="text-3xl font-bold text-center mb-4">
-                Sei certo che la tua azienda è a norma?
-              </h2>
-              <p className="text-xl text-center text-muted-foreground mb-6">
-                O ti affidi solo alla parola del consulente?
-              </p>
-
-              <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
-                <p className="text-sm text-blue-800">
-                  <strong>Se hai un'impresa in Sicilia</strong> e ti affidi a un consulente esterno, 
-                  questo test ti aprirà gli occhi su ciò che non ti dicono.
-                </p>
+          
+          <Card>
+            <CardContent className="p-8 text-center">
+              <h1 id="intro-title" className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+                Passeresti un'ispezione ASL oggi?
+              </h1>
+              <p className="text-xl text-muted-foreground mb-6">Test gratuito e anonimo • Risultati in 90 secondi</p>
+              
+              {/* Sezione: Cosa ottieni facendo il quiz */}
+              <div className="mb-6 max-w-xl mx-auto text-left">
+                <h2 className="text-lg font-semibold mb-3 text-center">💡 Cosa ottieni facendo il quiz</h2>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold mt-1">✓</span>
+                    <span className="text-sm">Scopri in meno di 2 minuti se rischi multe o sospensioni</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold mt-1">✓</span>
+                    <span className="text-sm">Ricevi un report con le violazioni più probabili</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold mt-1">✓</span>
+                    <span className="text-sm">Ottieni consigli pratici su cosa fare (senza impegno)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-green-600 font-bold mt-1">✓</span>
+                    <span className="text-sm">Confrontati con benchmark reali di aziende simili</span>
+                  </li>
+                </ul>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4 mb-6">
-                <div className="bg-red-50 rounded-lg p-4 border border-red-200">
-                  <AlertTriangle className="w-6 h-6 text-red-600 mb-2" />
-                  <p className="text-sm font-medium text-red-900">Se ci sono rischi</p>
-                  <p className="text-xs text-red-700">Scopri sanzioni fino a €15.000</p>
+              {/* Sezione: Perché farlo ora */}
+              <div className="mb-6 bg-red-50 border-2 border-red-600 rounded-lg p-4 max-w-xl mx-auto">
+                <h3 className="font-bold text-red-600 mb-2">⚠️ PERCHÉ FARLO ORA</h3>
+                <div className="text-sm text-left space-y-2 text-black">
+                  <p><strong>+59% controlli nel 2024:</strong> 139.680 verifiche totali in Italia (dati INL)</p>
+                  <p><strong>78,59% irregolarità in Sicilia:</strong> il tasso più alto d'Italia</p>
+                  <p><strong>Sanzioni +15,9%:</strong> rivalutate da settembre 2023, fino a €7.631 per singola violazione</p>
+                  <p><strong>859 sopralluoghi ASP Catania:</strong> 811 violazioni contestate solo nel 2024</p>
+                  <p className="text-red-600 font-semibold">📍 Sicilia: +24,6% morti sul lavoro (81 nel 2024 vs 65 nel 2023)</p>
                 </div>
-                <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-                  <Shield className="w-6 h-6 text-green-600 mb-2" />
-                  <p className="text-sm font-medium text-green-900">Se sei a norma</p>
-                  <p className="text-xs text-green-700">Avrai la conferma che tutto fila liscio</p>
-                </div>
               </div>
-
-              <div className="bg-yellow-50 rounded-lg p-3 mb-6">
-                <p className="text-xs text-center text-yellow-800">
-                  <strong>ASP Catania 2024:</strong> 859 controlli, 811 violazioni contestate, €1.110 sanzione media
-                </p>
+              
+              <div className="mb-6">
+                <Button onClick={() => setStage("quiz")} size="lg" className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-3 text-lg">
+                  Inizia il Test Gratuito →
+                </Button>
               </div>
-
-              <Button 
-                onClick={() => setStage("quiz")} 
-                size="lg" 
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white shadow-lg"
-              >
-                Inizia il Test Gratuito (2 minuti) <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-
-              <p className="text-xs text-center text-muted-foreground mt-4">
-                Test anonimo • Nessuna registrazione • Risultati immediati
-              </p>
+              <div className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-sm">
+                ✅
+                <strong>unisciti a 500+ PMI siciliane</strong> che hanno già fatto il test
+              </div>
             </CardContent>
           </Card>
-
-          <div className="bg-white rounded-lg shadow p-4 text-center">
-            <p className="text-sm text-muted-foreground italic">
-              "Marco, titolare di una PMI edile a Trapani, pensava di essere a posto. 
-              Poi è arrivato il controllo ASL..."
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">Storia vera, nome di fantasia</p>
-          </div>
-        </div>
+        </section>
       )}
 
       {stage === "quiz" && (
