@@ -521,8 +521,6 @@ const Index = () => {
 
   const getSuggestionContent = () => {
     const managementAnswer = answers.gestione;
-    const timeWasted = getEmployeeCount(answers.dipendenti) * 2;
-    const monthlyWaste = timeWasted * 25;
     
     const suggestions = {
       "gestisco-io": {
@@ -545,7 +543,7 @@ const Index = () => {
     return suggestions[managementAnswer] || suggestions["gestisco-io"];
   };
 
-  const getCaseStudies = () => {
+  const getSectorCaseStudies = () => {
     const caseStudies = [
       {
         sector: "Alimentare",
@@ -562,7 +560,7 @@ const Index = () => {
         result: "Azienda completamente in regola, controllo superato senza sanzioni"
       },
       {
-        sector: "Manifatturiero",
+        sector: "Manifatturiero", 
         title: "PMI Metalmeccanica - 12 dipendenti",
         problem: "Costi formazione sicurezza insostenibili",
         consequence: "Budget insufficiente per adempimenti formativi obbligatori",
@@ -576,7 +574,7 @@ const Index = () => {
       },
       {
         sector: "Tessile",
-        title: "Azienda Confezioni - 25 dipendenti",
+        title: "Azienda Confezioni - 25 dipendenti", 
         problem: "AUDIT esterno su sicurezza e salubrità ambienti",
         consequence: "Rischio perdita certificazioni e commesse importanti",
         solution: "Coordinamento team multidisciplinare:",
@@ -694,7 +692,7 @@ const Index = () => {
   };
 
   const suggestionContent = getSuggestionContent();
-  const caseStudy = getCaseStudies();
+  const caseStudy = getSectorCaseStudies();
   const managementAdvantages = getManagementAdvantages();
 
   return (
@@ -704,284 +702,422 @@ const Index = () => {
           D.Lgs 81/08 aggiornato 2025 • Sanzioni rivalutate +15,9% • Test basato su normativa vigente
         </div>
       )}
-
-      {stage === "intro" && (
-        <section aria-labelledby="intro-title">
-          <div className="text-center py-8">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                SI
+      
+      <main className="container mx-auto max-w-3xl px-4 pb-16">
+        {stage === "intro" && (
+          <section aria-labelledby="intro-title">
+            <div className="text-center py-8">
+              <div className="inline-flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                  SI
+                </div>
+                <span className="text-2xl font-bold text-red-600">SPAZIO IMPRESA</span>
               </div>
-              <span className="text-2xl font-bold text-red-600">SPAZIO IMPRESA</span>
             </div>
-          </div>
-          
-          <Card>
-            <CardContent className="p-8 text-center">
-              <h1 id="intro-title" className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
-                Passeresti un'ispezione ASL oggi?
-              </h1>
-              <p className="text-xl text-muted-foreground mb-6">Test gratuito e anonimo • Risultati in 90 secondi</p>
-              
-              {/* Sezione: Cosa ottieni facendo il quiz */}
-              <div className="mb-6 max-w-xl mx-auto text-left">
-                <h2 className="text-lg font-semibold mb-3 text-center">💡 Cosa ottieni facendo il quiz</h2>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✓</span>
-                    <span className="text-sm">Scopri in meno di 2 minuti se rischi multe o sospensioni</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✓</span>
-                    <span className="text-sm">Ricevi un report con le violazioni più probabili</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✓</span>
-                    <span className="text-sm">Ottieni consigli pratici su cosa fare (senza impegno)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✓</span>
-                    <span className="text-sm">Confrontati con benchmark reali di aziende simili</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Sezione: Perché farlo ora */}
-              <div className="mb-6 bg-red-50 border-2 border-red-600 rounded-lg p-4 max-w-xl mx-auto">
-                <h3 className="font-bold text-red-600 mb-2">⚠️ PERCHÉ FARLO ORA</h3>
-                <div className="text-sm text-left space-y-2 text-black">
-                  <p><strong>+59% controlli nel 2024:</strong> 139.680 verifiche totali in Italia (dati INL)</p>
-                  <p><strong>78,59% irregolarità in Sicilia:</strong> il tasso più alto d'Italia</p>
-                  <p><strong>Sanzioni +15,9%:</strong> rivalutate da settembre 2023, fino a €7.631 per singola violazione</p>
-                  <p><strong>859 sopralluoghi ASP Catania:</strong> 811 violazioni contestate solo nel 2024</p>
-                  <p className="text-red-600 font-semibold">📍 Sicilia: +24,6% morti sul lavoro (81 nel 2024 vs 65 nel 2023)</p>
-                </div>
-              </div>
-              
-              <div className="mb-6">
-                <Button onClick={() => setStage("quiz")} size="lg" className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-3 text-lg">
-                  Inizia il Test Gratuito →
-                </Button>
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-sm">
-                ✅
-                <strong>unisciti a 500+ PMI siciliane</strong> che hanno già fatto il test
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-      )}
-
-      {stage === "quiz" && (
-        <div className="px-4 py-8 max-w-3xl mx-auto">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle>Domanda {currentQuestion + 1} di {questions.length}</CardTitle>
-                <Badge variant="outline">{Math.round(progress)}% completato</Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="p-6">
-              <div className="h-2 w-full rounded bg-muted mb-6">
-                <div 
-                  className="h-2 rounded bg-gradient-to-r from-red-500 to-red-600 transition-all duration-300" 
-                  style={{width: `${progress}%`}} 
-                />
-              </div>
-              
-              <h2 className="text-xl font-semibold mb-2">{question.title}</h2>
-              {question.subtitle && <p className="text-sm text-muted-foreground mb-4">{question.subtitle}</p>}
-              
-              <div className="space-y-3">
-                {question.options.map(opt => (
-                  <button 
-                    key={opt.value} 
-                    onClick={() => selectOption(question, opt)} 
-                    className="flex items-center gap-3 rounded-lg border-2 p-4 text-left transition-all hover:border-red-400 hover:bg-red-50 w-full"
-                  >
-                    <div className="w-5 h-5 rounded-full border-2 border-muted-foreground" />
-                    <span className="flex-1">{opt.label}</span>
-                  </button>
-                ))}
-              </div>
-
-              {currentQuestion > 0 && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={goBack}
-                  className="mt-4"
-                >
-                  ← Torna indietro
-                </Button>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {stage === "loading" && (
-        <div className="min-h-screen flex items-center justify-center px-4">
-          <Card className="w-full max-w-md">
-            <CardContent className="p-10 text-center">
-              <div className="h-12 w-12 animate-spin rounded-full border-4 border-muted border-t-red-600 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Analisi in corso...</h2>
-              <p className="text-muted-foreground">Stiamo calcolando il tuo profilo di rischio personalizzato</p>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {stage === "results" && (
-        <div className="px-4 py-8 max-w-6xl mx-auto space-y-6">
-          {/* Header risultati */}
-          <Card className="shadow-xl">
-            <CardContent className="p-6">
-              <div className="text-center mb-6">
-                <Badge 
-                  variant={riskBadgeVariant(risk.level)}
-                  className="text-lg px-4 py-2 mb-4"
-                >
-                  Rischio {risk.level}
-                </Badge>
-                
-                <h2 className="text-2xl font-bold mb-2">
-                  {risk.level === "Alto" ? "🚨 Situazione critica" : 
-                   risk.level === "Medio" ? "⚡ Margini di miglioramento" : 
-                   "✅ Buona situazione"}
-                </h2>
-                <p className="text-muted-foreground">
-                  Settore {getSectorName()} • {answers.dipendenti || '1-5'} dipendenti
-                </p>
-              </div>
-
-              {violations.length > 0 && (
-                <div className="bg-red-50 border-2 border-red-600 rounded-lg p-6 text-center mb-6">
-                  <div className="text-4xl font-black text-red-600 mb-2">
-                    €{sanctionMax.toLocaleString("it-IT")}
-                  </div>
-                  <p className="font-semibold text-red-800 mb-3">
-                    Sanzione massima se ti controllano oggi
-                  </p>
-                  <p className="text-sm text-red-700 italic">
-                    "In tribunale ci vai TU, non il consulente o i dipendenti"
-                  </p>
-                </div>
-              )}
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                >
-                  <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Consulenza Gratuita WhatsApp
-                  </a>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => window.print()}
-                >
-                  <FileCheck className="w-4 h-4 mr-2" />
-                  Scarica Report PDF
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Violazioni */}
-          {violations.length > 0 && (
+            
             <Card>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-4">
-                  Le tue {violations.length} bombe ad orologeria:
-                </h3>
-                <div className="space-y-4">
-                  {violations.map((v, idx) => (
-                    <div key={v.key} className="bg-white rounded-lg border-l-4 border-red-500 p-4 shadow">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <span className="bg-black text-white px-2 py-1 rounded text-xs font-bold mr-2">
-                            {v.priority.urgency}
-                          </span>
-                          <span className="font-medium">{v.text}</span>
-                        </div>
-                        <span className="text-red-600 font-bold whitespace-nowrap">
-                          fino a €{v.max.toLocaleString("it-IT")}
-                        </span>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-2">{v.priority.reason}</p>
-                      
-                      <details className="text-sm">
-                        <summary className="cursor-pointer font-medium text-muted-foreground hover:text-foreground">
-                          Perché controlla questo
-                        </summary>
-                        <ul className="mt-2 ml-4 space-y-1 text-muted-foreground">
-                          {v.consequences.slice(0,2).map((c, i) => <li key={i}>• {c}</li>)}
-                        </ul>
-                      </details>
-                      
-                      <details className="text-sm mt-2">
-                        <summary className="cursor-pointer font-medium text-muted-foreground hover:text-foreground">
-                          Cosa puoi fare subito
-                        </summary>
-                        <ul className="mt-2 ml-4 space-y-1 text-muted-foreground">
-                          {v.actions.map((a, i) => <li key={i}>• {a}</li>)}
-                        </ul>
-                      </details>
-                    </div>
-                  ))}
+              <CardContent className="p-8 text-center">
+                <h1 id="intro-title" className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+                  Passeresti un'ispezione ASL oggi?
+                </h1>
+                <p className="text-xl text-muted-foreground mb-6">Test gratuito e anonimo • Risultati in 90 secondi</p>
+                
+                {/* Sezione: Cosa ottieni facendo il quiz */}
+                <div className="mb-6 max-w-xl mx-auto text-left">
+                  <h2 className="text-lg font-semibold mb-3 text-center">💡 Cosa ottieni facendo il quiz</h2>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span className="text-sm">Scopri in meno di 2 minuti se rischi multe o sospensioni</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span className="text-sm">Ricevi un report con le violazioni più probabili</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span className="text-sm">Ottieni consigli pratici su cosa fare (senza impegno)</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
+                      <span className="text-sm">Confrontati con benchmark reali di aziende simili</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Sezione: Perché farlo ora */}
+                <div className="mb-6 bg-red-50 border-2 border-red-600 rounded-lg p-4 max-w-xl mx-auto">
+                  <h3 className="font-bold text-red-600 mb-2">⚠️ PERCHÉ FARLO ORA</h3>
+                  <div className="text-sm text-left space-y-2 text-black">
+                    <p><strong>+59% controlli nel 2024:</strong> 139.680 verifiche totali in Italia (dati INL)</p>
+                    <p><strong>78,59% irregolarità in Sicilia:</strong> il tasso più alto d'Italia</p>
+                    <p><strong>Sanzioni +15,9%:</strong> rivalutate da settembre 2023, fino a €7.631 per singola violazione</p>
+                    <p><strong>859 sopralluoghi ASP Catania:</strong> 811 violazioni contestate solo nel 2024</p>
+                    <p className="text-red-600 font-semibold">📍 Sicilia: +24,6% morti sul lavoro (81 nel 2024 vs 65 nel 2023)</p>
+                  </div>
+                </div>
+                
+                <div className="mb-6">
+                  <Button onClick={() => setStage("quiz")} size="lg" className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-3 text-lg">
+                    Inizia il Test Gratuito →
+                  </Button>
+                </div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-sm">
+                  ✅
+                  <strong>unisciti a 500+ PMI siciliane</strong> che hanno già fatto il test
                 </div>
               </CardContent>
             </Card>
-          )}
+          </section>
+        )}
 
-          {/* Sistema suggerimento */}
-          <Card>
-            <CardContent className="p-6">
-              <div className="bg-yellow-50 border border-yellow-400 rounded-lg p-4">
-                <h3 className="font-medium text-yellow-900 mb-2">
-                  💡 {suggestionContent.text}
-                </h3>
-                <Button variant="outline" size="sm" className="mt-2">
-                  {suggestionContent.link}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+        {stage === "quiz" && (
+          <section aria-labelledby="quiz-title" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle id="quiz-title">Quiz sicurezza</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <div className="h-2 w-full rounded bg-muted">
+                    <div className="h-2 rounded bg-red-600" style={{ width: `${progress}%` }} />
+                  </div>
+                  <p className="mt-2 text-center text-sm text-muted-foreground">
+                    Domanda {currentQuestion + 1} di {questions.length}
+                  </p>
+                </div>
 
-          {/* Caso studio */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-4">Caso Studio Reale</h3>
-              <div className="bg-blue-50 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-900 mb-2">{caseStudy.title}</h4>
-                <p className="text-sm text-blue-800 mb-2"><strong>Problema:</strong> {caseStudy.problem}</p>
-                <p className="text-sm text-blue-800 mb-2"><strong>Rischio:</strong> {caseStudy.consequence}</p>
-                <p className="text-sm text-blue-800 mb-2"><strong>Soluzione:</strong> {caseStudy.solution}</p>
-                <ul className="text-sm text-blue-700 ml-4 mb-2">
-                  {caseStudy.actions.map((action, i) => (
-                    <li key={i}>• {action}</li>
-                  ))}
-                </ul>
-                <p className="text-sm font-medium text-blue-900">
-                  <strong>Risultato:</strong> {caseStudy.result}
+                <div>
+                  <h2 className="text-xl font-semibold">{question.title}</h2>
+                  {question.subtitle && <p className="mt-1 text-sm text-muted-foreground">{question.subtitle}</p>}
+
+                  <div className="mt-4 grid gap-3">
+                    {question.options.map(opt => {
+                      const selected = answers[question.id] === opt.value;
+                      return (
+                        <button 
+                          key={opt.value} 
+                          onClick={() => selectOption(question, opt)} 
+                          className={`flex w-full items-center gap-3 rounded-md border p-4 text-left transition hover:bg-accent hover:text-accent-foreground ${
+                            selected ? "border-red-600 bg-accent" : "border-input"
+                          }`}
+                        >
+                          <div className={`inline-flex h-5 w-5 items-center justify-center rounded-full border ${
+                            selected ? "border-red-600 bg-red-600 text-primary-foreground" : "border-muted"
+                          }`}>
+                            {selected ? "✓" : ""}
+                          </div>
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="flex justify-start">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={goBack}
+                disabled={currentQuestion === 0}
+                className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white disabled:opacity-30 disabled:border-muted disabled:text-muted-foreground"
+              >
+                ← Indietro
+              </Button>
+            </div>
+          </section>
+        )}
+
+        {stage === "loading" && (
+          <section aria-live="polite">
+            <Card>
+              <CardContent className="p-10 text-center">
+                <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-muted border-t-primary" />
+                <h2 className="text-xl font-semibold">Analisi in corso...</h2>
+                <p className="text-muted-foreground">Stiamo calcolando il tuo livello di rischio</p>
+              </CardContent>
+            </Card>
+          </section>
+        )}
+
+        {stage === "results" && (
+          <section aria-labelledby="results-title" className="space-y-6">
+            <Card>
+              <CardContent className="p-6">
+                <div className="text-center">
+                  <Badge variant={riskBadgeVariant(risk.level)} className="mb-4 text-lg px-4 py-2">
+                    Rischio {risk.level}
+                  </Badge>
+                  <h2 id="results-title" className="text-2xl font-bold">
+                    La tua analisi personalizzata
+                  </h2>
+                </div>
+
+                {violations.length > 0 ? (
+                  <>
+                    <div className="mt-6 flex justify-center">
+                      <div className="w-full max-w-2xl">
+                        <div className="rounded-lg border-2 border-black bg-white p-6 text-center shadow-lg">
+                          <div className="text-4xl font-black text-red-600 mb-3">€{sanctionMax.toLocaleString("it-IT")}</div>
+                          <div className="text-black font-semibold mb-4">Sanzione massima se ti controllano oggi</div>
+                          
+                          <details className="mt-3">
+                            <summary className="cursor-pointer text-sm font-medium text-red-600 hover:text-red-800">
+                              📋 Come abbiamo calcolato questa cifra ↓
+                            </summary>
+                            <div className="mt-3 text-sm text-black leading-relaxed text-left bg-gray-50 p-3 rounded border">
+                              <div className="space-y-2">
+                                <p><strong>Base di calcolo:</strong> {violations.length} potenziali violazioni rilevate nel tuo test</p>
+                                <p><strong>Principio normativo:</strong> D.Lgs. 81/08 - Art. 18 (sanzioni rivalutate +15,9% nel 2023)</p>
+                                <p><strong>Metodo:</strong> Ogni violazione ha un range - prendiamo il massimo possibile</p>
+                                <p><strong>Cumulo sanzioni:</strong> Si sommano tra loro (non puoi scegliere quale pagare)</p>
+                                <p><strong>Responsabilità:</strong> In tribunale ci vai TU, non consulenti/dipendenti</p>
+                                <p><strong>Contesto territoriale:</strong> Sicilia - irregolarità superiori alla media nazionale</p>
+                              </div>
+                            </div>
+                          </details>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 rounded-lg bg-black p-4 text-white">
+                      <div className="font-semibold text-red-500 mb-2">💡 Realtà Check</div>
+                      <p className="text-sm mb-2">
+                        {answers.gestione === "consulente" 
+                          ? `Nelle tue ${violations.length} potenziali violazioni, ${Math.min(Math.ceil(violations.length * 0.7), violations.length)} doveva seguirle il tuo consulente. O non sa, o non fa. In entrambi i casi, forse conviene valutare un'alternativa.`
+                          : suggestionContent.text
+                        }
+                      </p>
+                      <button 
+                        onClick={() => document.getElementById('cta-section')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="text-red-400 hover:text-red-300 underline text-sm font-medium"
+                      >
+                        {suggestionContent.link} →
+                      </button>
+                    </div>
+
+                    <div className="mt-6 rounded-lg border-2 border-red-600 bg-red-50 p-4">
+                      <h3 className="mb-4 text-lg font-semibold text-black text-center">🎯 COSA CONTROLLA L'ISPETTORE (nell'ordine)</h3>
+                      <div className="divide-y">
+                        {violations.map((v, index) => (
+                          <article key={v.key} className="py-3">
+                            <div className="flex items-center justify-between gap-3 rounded-md border border-red-300 bg-white p-4 border-l-4 border-l-red-600">
+                              <div className="flex items-center gap-3">
+                                <span className="bg-black text-white px-2 py-1 rounded text-sm font-bold">
+                                  {v.priority.urgency}
+                                </span>
+                                <div>
+                                  <div className="font-medium text-black">{v.text}</div>
+                                  <div className="text-sm text-red-600">⚡ {v.priority.reason}</div>
+                                </div>
+                              </div>
+                              <div className="text-red-600 font-semibold whitespace-nowrap">
+                                €{v.min.toLocaleString("it-IT")} – €{v.max.toLocaleString("it-IT")}
+                              </div>
+                            </div>
+                            
+                            <details className="mt-2">
+                              <summary className="cursor-pointer text-sm font-medium text-black">🔍 Perché controlla questo</summary>
+                              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">
+                                {v.consequences.map((c, i) => <li key={i}>{c}</li>)}
+                              </ul>
+                            </details>
+                            
+                            <details className="mt-2">
+                              <summary className="cursor-pointer text-sm font-medium text-black">🔧 Dettagli e azioni</summary>
+                              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">
+                                {v.actions.map((a, i) => <li key={i}>{a}</li>)}
+                                <li>
+                                  <div className="font-medium text-black">Fonte: </div>
+                                  {v.fonte}
+                                </li>
+                              </ul>
+                            </details>
+                          </article>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="mt-6 rounded-lg border-2 border-black bg-white p-6 text-center shadow-lg">
+                      <div className="text-3xl font-bold text-red-600 mb-3">✅ Ottimo lavoro!</div>
+                      <p className="text-lg font-medium text-black mb-2">Nessuna criticità urgente rilevata</p>
+                      <p className="text-sm text-gray-600">Continua così e mantieni questo standard di eccellenza</p>
+                    </div>
+
+                    <div className="mt-4 rounded-lg bg-black p-4 text-white">
+                      <div className="font-semibold text-red-500 mb-2">💡 Realtà Check</div>
+                      <p className="text-sm mb-2">
+                        {answers.gestione === "gestisco-io" 
+                          ? "Gestire tutto da solo è un bel carico sulle spalle. Sapevi che negli ultimi 2 anni il D.Lgs 81 è cambiato almeno 6 volte? Perché non valutare un Sistema che ti semplifica la vita?"
+                          : suggestionContent.text
+                        }
+                      </p>
+                      <button 
+                        onClick={() => document.getElementById('benchmark-section')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="text-red-400 hover:text-red-300 underline text-sm font-medium"
+                      >
+                        Scopri come funziona →
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                <div id="benchmark-section" className="mt-6 rounded-lg border-2 border-black bg-white p-4">
+                  <h3 className="mb-4 text-lg font-semibold text-center flex items-center justify-center gap-2">
+                    <span>🔍</span>
+                    <span>Cosa controllano gli ispettori nel {getSectorName()} (Sicilia 2024)</span>
+                  </h3>
+                  
+                  <div className="mb-4">
+                    <div className="bg-red-50 border-2 border-red-600 rounded p-3 mb-3">
+                      <h4 className="font-semibold text-black mb-2 flex items-center gap-2">
+                        <span>🎯</span>
+                        <span>Priorità controlli ispettivi</span>
+                      </h4>
+                      <ol className="text-sm space-y-1">
+                        {getSectorPriorities().map((priority, index) => (
+                          <li key={index} className="text-black">
+                            <span className="font-medium">{index + 1}°</span> {priority}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-red-50 border border-red-600 rounded p-3">
+                        <h5 className="font-semibold text-red-600 text-sm mb-2">IRREGOLARITÀ FREQUENTI</h5>
+                        <ul className="text-xs space-y-1">
+                          {getSectorIrregularities().map((irreg, index) => (
+                            <li key={index} className="text-black">• {irreg}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="bg-gray-50 border border-black rounded p-3">
+                        <h5 className="font-semibold text-black text-sm mb-2">CONTROLLI REALI 2024</h5>
+                        <div className="text-xs space-y-1">
+                          <p className="text-black"><strong>859</strong> sopralluoghi ASP Catania (dati ufficiali)</p>
+                          <p className="text-black"><strong>811</strong> violazioni contestate</p>
+                          <p className="text-red-600"><strong>€1.110</strong> sanzione media effettiva</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-red-50 border border-red-600 rounded p-3 mb-3">
+                    <h4 className="font-semibold text-black mb-2 flex items-center gap-2">
+                      <span>❌</span>
+                      <span>CARENZE PIÙ COMUNI RILEVATE</span>
+                    </h4>
+                    <ul className="text-sm space-y-1">
+                      {getSectorDeficiencies().map((deficiency, index) => (
+                        <li key={index} className="text-black">• {deficiency}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="text-center border-t-2 border-black pt-3">
+                    <div className="text-lg font-bold text-red-600 mb-1">
+                      Fonte: ASP Catania 2024 (dati ufficiali SPRESAL)
+                    </div>
+                    <div className="text-xs text-gray-600">
+                      859 sopralluoghi • 811 violazioni • €900.000 sanzioni totali
+                    </div>
+                  </div>
+                  
+                  {violations.length === 0 && (
+                    <div className="mt-3 bg-white border-2 border-red-600 rounded p-3 text-center">
+                      <p className="text-sm text-black">
+                        <strong>La tua situazione:</strong> Sei tra i pochi con zero criticità immediate
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-6 rounded-lg border bg-card p-4">
+                  <h3 className="mb-3 text-lg font-semibold">💼 CHI CE L'HA FATTA (anonimizzato ma vero)</h3>
+                  <div className="rounded-md border bg-background p-4 text-sm">
+                    <div className="font-medium text-green-600 mb-2">{caseStudy.title}</div>
+                    <div className="mb-2">
+                      <strong>SITUAZIONE:</strong> <span className="italic">"{caseStudy.problem}"</span>
+                    </div>
+                    <div className="mb-2">
+                      <strong>CONSEGUENZA:</strong> {caseStudy.consequence}
+                    </div>
+                    <div className="mb-2">
+                      <strong>SOLUZIONE:</strong> {caseStudy.solution}
+                      <ul className="mt-1 list-none space-y-1 pl-0">
+                        {caseStudy.actions.map((action, i) => <li key={i}>✅ {action}</li>)}
+                      </ul>
+                    </div>
+                    <div className="font-medium text-green-700">
+                      <strong>RISULTATO:</strong> {caseStudy.result}
+                    </div>
+                  </div>
+                </div>
+
+                <div id="cta-section" className="mt-6 rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-blue-50 p-6 text-center shadow-lg">
+                  <h3 className="text-xl font-bold text-green-700">🎯 TRASFORMA IL RISCHIO IN SICUREZZA</h3>
+                  <p className="text-green-600 mb-4">Prima Analisi Gratuita della Tua Situazione Reale<br/>
+                  <span className="text-sm">(Non consulenza generica - Verifica specifica delle TUE {violations.length} violazioni)</span></p>
+                  
+                  <div className="my-4 p-4 bg-white rounded border text-sm">
+                    <div className="font-semibold mb-2">📞 PRENOTA ENTRO 48 ORE:</div>
+                    <ul className="text-left space-y-1">
+                      <li>✅ Sopralluogo gratuito nella tua azienda</li>
+                      <li>✅ Check-list personalizzata con priorità</li>
+                      <li>✅ Simulazione costi reali per metterti in regola</li>
+                      <li>✅ Piano operativo con date precise</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
+                    <a href={whatsappHref} target="_blank" rel="noreferrer">
+                      <Button className="bg-green-600 hover:bg-green-700">
+                        💬 Scrivici su WhatsApp
+                      </Button>
+                    </a>
+                    <a href="tel:0955872480">
+                      <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white">
+                        📞 095 587 2480
+                      </Button>
+                    </a>
+                  </div>
+                  
+                  <p className="text-sm text-green-600 mb-2">🔒 Solo per aziende siciliane | Agenda limitata: 5 slot/settimana</p>
+                  <p className="text-xs text-muted-foreground">Risposta garantita entro 2 ore • Attivi dal lunedì al venerdì 9:00-18:00</p>
+                </div>
+
+                <div className="mt-6 rounded-lg border bg-blue-50 p-4">
+                  <h3 className="mb-3 text-lg font-semibold text-center">🎯 VANTAGGI SPAZIO IMPRESA PER LA TUA SITUAZIONE</h3>
+                  <div className="space-y-2">
+                    {managementAdvantages.map((advantage, index) => (
+                      <div key={index} className="flex items-start gap-2">
+                        <span className="text-blue-600 font-bold">✓</span>
+                        <span className="text-sm">{advantage}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 text-center">
+                  <Button variant="ghost" onClick={resetQuiz} className="text-xs">
+                    Rifai il test
+                  </Button>
+                </div>
+
+                <p className="mt-4 text-center text-xs text-muted-foreground">
+                  Test basato su D.Lgs 81/08 aggiornato al 2025 • Dati anonimi • Risultati immediati
                 </p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Reset */}
-          <div className="text-center">
-            <Button variant="outline" onClick={resetQuiz}>
-              Rifai il Test
-            </Button>
-          </div>
-        </div>
-      )}
+              </CardContent>
+            </Card>
+          </section>
+        )}
+      </main>
     </div>
   );
 };
