@@ -705,67 +705,153 @@ const Index = () => {
       
       <main className="container mx-auto max-w-3xl px-4 pb-16">
         {stage === "intro" && (
-          <section aria-labelledby="intro-title">
-            <div className="text-center py-8">
-              <div className="inline-flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                  SI
-                </div>
-                <span className="text-2xl font-bold text-red-600">SPAZIO IMPRESA</span>
+          <section aria-labelledby="intro-title" className="space-y-6">
+            {/* Logo Section */}
+            <div className="text-center pt-5">
+              <div className="w-20 h-20 mx-auto mb-5 border-2 border-red-600 rounded-full flex items-center justify-center bg-white">
+                <img 
+                  src="/lovable-uploads/53e4bec6-be78-459e-a5a5-a2b8ae560a04.png" 
+                  alt="Spazio Impresa Logo" 
+                  className="w-16 h-16 object-contain"
+                />
               </div>
             </div>
-            
-            <Card>
-              <CardContent className="p-8 text-center">
-                <h1 id="intro-title" className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
-                  Passeresti un'ispezione ASL oggi?
-                </h1>
-                <p className="text-xl text-muted-foreground mb-6">Test gratuito e anonimo • Risultati in 90 secondi</p>
-                
-                {/* Sezione: Cosa ottieni facendo il quiz */}
-                <div className="mb-6 max-w-xl mx-auto text-left">
-                  <h2 className="text-lg font-semibold mb-3 text-center">💡 Cosa ottieni facendo il quiz</h2>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
-                      <span className="text-sm">Scopri in meno di 2 minuti se rischi multe o sospensioni</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
-                      <span className="text-sm">Ricevi un report con le violazioni più probabili</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
-                      <span className="text-sm">Ottieni consigli pratici su cosa fare (senza impegno)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-green-600 font-bold mt-1">✓</span>
-                      <span className="text-sm">Confrontati con benchmark reali di aziende simili</span>
-                    </li>
-                  </ul>
-                </div>
 
-                {/* Sezione: Perché farlo ora */}
-                <div className="mb-6 bg-red-50 border-2 border-red-600 rounded-lg p-4 max-w-xl mx-auto">
-                  <h3 className="font-bold text-red-600 mb-2">⚠️ PERCHÉ FARLO ORA</h3>
-                  <div className="text-sm text-left space-y-2 text-black">
-                    <p><strong>+59% controlli nel 2024:</strong> 139.680 verifiche totali in Italia (dati INL)</p>
-                    <p><strong>78,59% irregolarità in Sicilia:</strong> il tasso più alto d'Italia</p>
-                    <p><strong>Sanzioni +15,9%:</strong> rivalutate da settembre 2023, fino a €7.631 per singola violazione</p>
-                    <p><strong>859 sopralluoghi ASP Catania:</strong> 811 violazioni contestate solo nel 2024</p>
-                    <p className="text-red-600 font-semibold">📍 Sicilia: +24,6% morti sul lavoro (81 nel 2024 vs 65 nel 2023)</p>
-                  </div>
-                </div>
+            {/* Block 1: Main Headline */}
+            <Card className="border-2 border-red-600">
+              <CardContent className="p-6 text-center bg-white">
+                <h1 id="intro-title" className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-black">
+                  Passeresti un'ispezione ASL domani mattina?
+                </h1>
+                <p className="text-lg text-gray-600 mb-6">
+                  Scopri in meno di 90 secondi se rischi multe, blocchi, conseguenze legali o se è tutto ok.
+                </p>
                 
-                <div className="mb-6">
-                  <Button onClick={() => setStage("quiz")} size="lg" className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-3 text-lg">
-                    Inizia il Test Gratuito →
-                  </Button>
-                </div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 text-sm">
-                  ✅
-                  <strong>unisciti a 500+ PMI siciliane</strong> che hanno già fatto il test
-                </div>
+                <Button 
+                  onClick={() => setStage("quiz")} 
+                  size="lg" 
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg mb-3"
+                >
+                  👉 Inizia il test gratuito →
+                </Button>
+                <p className="text-sm text-gray-500">100% anonimo - Risultati immediati</p>
+              </CardContent>
+            </Card>
+
+            {/* Block 2: What you get */}
+            <Card className="border-2 border-black">
+              <CardContent className="p-6 bg-white">
+                <h2 className="text-lg font-semibold mb-4 text-center text-black">
+                  🔍 Cosa ottieni in 90 secondi:
+                </h2>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-lg">✅</span>
+                    <span className="text-sm text-black">Scopri se rischi multe, blocchi o il penale</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-lg">✅</span>
+                    <span className="text-sm text-black">Ricevi un report con le violazioni più probabili</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-lg">✅</span>
+                    <span className="text-sm text-black">Ottieni consigli pratici su normative aggiornate</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-green-600 font-bold text-lg">✅</span>
+                    <span className="text-sm text-black">Confronta la tua azienda con realtà simili</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Block 3: Why now */}
+            <Card className="bg-black text-white border-2 border-black">
+              <CardContent className="p-6">
+                <h3 className="font-bold text-red-500 mb-4 text-center">⚠️ Perché farlo adesso</h3>
+                <ul className="space-y-2 text-sm">
+                  <li>• Nuovi obblighi su DVR, Formazione e Cantieri</li>
+                  <li>• +59% ispezioni INL mirate nel 2025</li>
+                  <li>• +15,9% inasprimento sanzioni dal 2023</li>
+                  <li>• +7% infortuni mortali nel primo semestre 2025</li>
+                  <li className="text-red-400 font-semibold">• Sicilia osservata speciale con 78,59% irregolarità</li>
+                </ul>
+                <p className="text-xs text-gray-400 mt-4">
+                  Fonti: Legge 56/2024, DPCM 11/01/2024, Accordo Stato-Regioni 2025, dati INL
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Block 4: Target audience */}
+            <Card className="border-2 border-red-600">
+              <CardContent className="p-6 bg-white">
+                <h3 className="font-bold text-black mb-4 text-center">✋ È per te se:</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-start gap-2">
+                    <span>•</span>
+                    <span className="text-black">Hai un'impresa in Sicilia</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span>•</span>
+                    <span className="text-black">Operi in settori a rischio</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span>•</span>
+                    <span className="text-black">Sei già seguito, ma vuoi un secondo parere</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span>•</span>
+                    <span className="text-black">Vuoi evitare multe, blocchi o figuracce con l'ASL</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Block 5: Second CTA */}
+            <Card className="border-2 border-black">
+              <CardContent className="p-6 bg-white text-center">
+                <h3 className="text-2xl font-bold text-black mb-4">
+                  🎯 Ti bastano 90 secondi per capire se qualcosa può andare storto e come evitarlo.
+                </h3>
+                <Button 
+                  onClick={() => setStage("quiz")} 
+                  size="lg" 
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg"
+                >
+                  👉 Fai il test gratuito adesso
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Block 6: Guarantee */}
+            <Card className="bg-black text-white border-2 border-black">
+              <CardContent className="p-6 text-center">
+                <h3 className="font-bold text-white mb-4">🔐 Nessun rischio, nessun impegno.</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center justify-center gap-2">
+                    <span className="text-green-400 font-bold">✔️</span>
+                    <span>Test anonimo</span>
+                  </li>
+                  <li className="flex items-center justify-center gap-2">
+                    <span className="text-green-400 font-bold">✔️</span>
+                    <span>Nessun dato sensibile richiesto</span>
+                  </li>
+                  <li className="flex items-center justify-center gap-2">
+                    <span className="text-green-400 font-bold">✔️</span>
+                    <span>Solo risposte chiare e su misura</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Block 7: Footer */}
+            <Card className="border-2 border-gray-300">
+              <CardContent className="p-4 bg-gray-50 text-center">
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  Test basato su D.Lgs 81/08 aggiornato 2025<br/>
+                  Fonti ufficiali: INAIL – INL – ASP Sicilia<br/>
+                  Creato da esperti in sicurezza sul lavoro
+                </p>
               </CardContent>
             </Card>
           </section>
@@ -891,7 +977,7 @@ const Index = () => {
                         }
                       </p>
                       <button 
-                        onClick={() => document.getElementById('cta-section')?.scrollIntoView({ behavior: 'smooth' })}
+                        onClick={() => document.getElementById('advantages-section')?.scrollIntoView({ behavior: 'smooth' })}
                         className="text-red-400 hover:text-red-300 underline text-sm font-medium"
                       >
                         {suggestionContent.link} →
@@ -957,7 +1043,7 @@ const Index = () => {
                         }
                       </p>
                       <button 
-                        onClick={() => document.getElementById('benchmark-section')?.scrollIntoView({ behavior: 'smooth' })}
+                        onClick={() => document.getElementById('advantages-section')?.scrollIntoView({ behavior: 'smooth' })}
                         className="text-red-400 hover:text-red-300 underline text-sm font-medium"
                       >
                         Scopri come funziona →
@@ -1092,7 +1178,7 @@ const Index = () => {
                   <p className="text-xs text-muted-foreground">Risposta garantita entro 2 ore • Attivi dal lunedì al venerdì 9:00-18:00</p>
                 </div>
 
-                <div className="mt-6 rounded-lg border bg-blue-50 p-4">
+                <div id="advantages-section" className="mt-6 rounded-lg border bg-blue-50 p-4">
                   <h3 className="mb-3 text-lg font-semibold text-center">🎯 VANTAGGI SPAZIO IMPRESA PER LA TUA SITUAZIONE</h3>
                   <div className="space-y-2">
                     {managementAdvantages.map((advantage, index) => (
@@ -1101,6 +1187,78 @@ const Index = () => {
                         <span className="text-sm">{advantage}</span>
                       </div>
                     ))}
+                  </div>
+                </div>
+
+                <div className="mt-6 rounded-lg border-2 border-green-600 bg-green-50 p-6">
+                  <h3 className="mb-4 text-xl font-semibold text-center text-green-800">
+                    Chiedi come Ottenere Accesso Immediato a:
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-white rounded-lg border border-green-200 p-4">
+                      <h4 className="font-semibold text-green-700 mb-2 flex items-center gap-2">
+                        <span>🔔</span>
+                        <span>Sistema Proattivo di Alert</span>
+                      </h4>
+                      <ul className="text-sm space-y-1 text-black">
+                        <li>✓ Promemoria 30gg prima per visite mediche</li>
+                        <li>✓ Alert 60gg prima per scadenze formazione</li>
+                        <li>✓ Gestione nuovi dipendenti in max 7gg</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-white rounded-lg border border-green-200 p-4">
+                      <h4 className="font-semibold text-green-700 mb-2 flex items-center gap-2">
+                        <span>📋</span>
+                        <span>Documentazione Sempre Pronta</span>
+                      </h4>
+                      <ul className="text-sm space-y-1 text-black">
+                        <li>✓ DVR in aggiornamento continuo</li>
+                        <li>✓ Piattaforma digitale 24/7</li>
+                        <li>✓ Verbali e nomine automatizzati</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-white rounded-lg border border-green-200 p-4">
+                      <h4 className="font-semibold text-green-700 mb-2 flex items-center gap-2">
+                        <span>💰</span>
+                        <span>Formazione Finanziata*</span>
+                      </h4>
+                      <ul className="text-sm space-y-1 text-black">
+                        <li>✓ Iscrizione fondo interprofessionale</li>
+                        <li>✓ Verifica accesso finanziamenti</li>
+                        <li>✓ Sconto 10% se non finanziabile</li>
+                      </ul>
+                      <p className="text-xs text-gray-600 mt-2">*Soggetto a verifica requisiti con ente formativo</p>
+                    </div>
+
+                    <div className="bg-white rounded-lg border border-green-200 p-4">
+                      <h4 className="font-semibold text-green-700 mb-2 flex items-center gap-2">
+                        <span>👥</span>
+                        <span>Supporto Completo</span>
+                      </h4>
+                      <ul className="text-sm space-y-1 text-black">
+                        <li>✓ Medico competente individuato</li>
+                        <li>✓ Analisi rischi continuativa</li>
+                        <li>✓ Aggiornamenti normativi inclusi</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 text-center">
+                    <div className="flex flex-wrap items-center justify-center gap-3">
+                      <a href={whatsappHref} target="_blank" rel="noreferrer">
+                        <Button className="bg-green-600 hover:bg-green-700 text-white">
+                          💬 Chiedi Info su WhatsApp
+                        </Button>
+                      </a>
+                      <a href="tel:0955872480">
+                        <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white">
+                          📞 095 587 2480
+                        </Button>
+                      </a>
+                    </div>
                   </div>
                 </div>
 
