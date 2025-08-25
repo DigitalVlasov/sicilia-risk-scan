@@ -1,1225 +1,662 @@
-import { useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import React, { useCallback, useReducer, useMemo, memo, useState, useEffect } from "react";
 
-// Tipi
-type Option = {
-  value: string;
-  label: string;
-  weight?: number;
-  multiplier?: number;
-};
+// ==================== TYPE DEFINITIONS ====================
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+  id?: string;
+}
 
-type Question = {
-  id: string;
-  title: string;
-  subtitle?: string;
-  type: "multiplier" | "score";
-  options: Option[];
-};
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "success";
+  size?: "sm" | "md" | "lg";
+  className?: string;
+  disabled?: boolean;
+}
 
-type Answers = Record<string, string>;
+interface BadgeProps {
+  children: React.ReactNode;
+  variant?: "default" | "secondary" | "destructive" | "warning" | "success";
+  className?: string;
+}
 
-type Violation = {
-  key: string;
-  text: string;
-  min: number;
-  max: number;
-  consequences: string[];
-  actions: string[];
-  fonte: string;
-  priority: {
-    order: number;
-    urgency: string;
-    reason: string;
-  };
-};
+interface IntroStageProps {
+  onStart: () => void;
+}
 
-const baseQuestions: Question[] = [
-  {
-    id: "gestione",
-    title: "Come gestisci attualmente la sicurezza aziendale?",
-    subtitle: "Scegli l'opzione più vicina alla tua situazione",
-    type: "multiplier",
-    options: [
-      {
-        value: "gestisco-io",
-        label: "Gestisco tutto io in prima persona",
-        multiplier: 1.5
-      },
-      {
-        value: "interno",
-        label: "Internamente c'è una persona che gestisce la sicurezza aziendale",
-        multiplier: 1.3
-      },
-      {
-        value: "consulente",
-        label: "Ho un consulente che si occupa di tutto",
-        multiplier: 1
-      },
-      {
-        value: "studi-multipli",
-        label: "Ho diversi studi professionali che si occupano ognuno di aspetti diversi",
-        multiplier: 1.2
-      }
-    ]
+interface QuizStageProps {
+  question: any;
+  currentQuestionIndex: number;
+  totalQuestions: number;
+  answers: any;
+  onSelectOption: (question: any, option: any) => void;
+  onGoBack: () => void;
+}
+
+interface ResultsStageProps {
+  risk: { level: string; finalScore: number };
+  violations: any[];
+  answers: any;
+  onReset: () => void;
+}
+
+// ==================== CONFIGURATION LAYER ====================
+const CONFIG = {
+  contact: {
+    phone: "0955872480",
+    whatsapp: "390955872480"
   },
-  {
-    id: "dipendenti",
-    title: "Quanti dipendenti ha la tua azienda?",
-    subtitle: "Serve per calcoli personalizzati su costi formazione",
-    type: "multiplier",
-    options: [
-      {
-        value: "1-5",
-        label: "1-5 dipendenti",
-        multiplier: 1
-      },
-      {
-        value: "6-10",
-        label: "6-10 dipendenti",
-        multiplier: 1.5
-      },
-      {
-        value: "11-20",
-        label: "11-20 dipendenti",
-        multiplier: 2
-      },
-      {
-        value: ">20",
-        label: "Oltre 20 dipendenti",
-        multiplier: 2.5
-      }
-    ]
-  },
-  {
-    id: "settore",
-    title: "In quale settore opera principalmente la tua azienda?",
-    subtitle: "Ogni settore ha frequenze di controllo e rischi diversi",
-    type: "multiplier",
-    options: [
-      {
-        value: "edilizia",
-        label: "Edilizia/Costruzioni",
-        multiplier: 2
-      },
-      {
-        value: "manifatturiero",
-        label: "Manifatturiero/Produzione",
-        multiplier: 1.6
-      },
-      {
-        value: "alimentare",
-        label: "Alimentare/Ristorazione",
-        multiplier: 1.5
-      },
-      {
-        value: "servizi",
-        label: "Servizi/Consulenza",
-        multiplier: 1.2
-      },
-      {
-        value: "commercio",
-        label: "Commercio/Retail",
-        multiplier: 1.2
-      },
-      {
-        value: "agricoltura",
-        label: "Agricoltura/Allevamento",
-        multiplier: 1.6
-      }
-    ]
-  },
-  {
-    id: "dvr",
-    title: "L'ispettore ti dice: 'Fammi vedere DVR aggiornato, nomine RSPP e verbali riunioni'. Hai tutto pronto?",
-    subtitle: "Primo controllo sempre richiesto - Fonte: Protocolli ASL/INL 2024",
-    type: "score",
-    options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-    ]
-  },
-  {
-    id: "formazione",
-    title: "L'ispettore controlla 3 dipendenti A CASO + il DATORE DI LAVORO: trovi tutti gli attestati validi?",
-    subtitle: "Include nuovo obbligo formazione datori 16 ore (Accordo Stato-Regioni 2025)",
-    type: "score",
-    options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-    ]
-  },
-  {
-    id: "sorveglianza",
-    title: "Sorveglianza sanitaria: giudizi idoneità ultimi 2 anni + protocollo medico competente aggiornato?",
-    subtitle: "Controllo cartelle mediche - Verifica protocolli MC",
-    type: "score",
-    options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-    ]
-  },
-  {
-    id: "emergenze",
-    title: "Piano emergenza, addetti primo soccorso/antincendio E registro infortuni: tutto a posto?",
-    subtitle: "Due controlli prioritari sempre verificati insieme",
-    type: "score",
-    options: [
-      { value: "si", label: "Sì", weight: 0 },
-      { value: "no", label: "No", weight: 2 },
-      { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-    ]
+  ui: {
+    loadingDelay: 800,
+    transitionDelay: 200
   }
+};
+
+// ==================== OPTIMIZED UI COMPONENTS ====================
+const Card = memo(({ children, className = "", id = "" }: CardProps) => (
+  <div id={id} className={`bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}>
+    {children}
+  </div>
+));
+
+const CardHeader = memo(({ children, className = "" }: Omit<CardProps, 'id'>) => (
+  <div className={`p-4 sm:p-6 border-b border-gray-200 ${className}`}>
+    {children}
+  </div>
+));
+
+const CardTitle = memo(({ children, className = "" }: Omit<CardProps, 'id'>) => (
+  <h2 className={`text-lg sm:text-xl font-bold tracking-tight ${className}`}>
+    {children}
+  </h2>
+));
+
+const CardContent = memo(({ children, className = "" }: Omit<CardProps, 'id'>) => (
+  <div className={`p-4 sm:p-6 ${className}`}>
+    {children}
+  </div>
+));
+
+const Button = memo(({ children, onClick, variant = "default", size = "md", className = "", disabled = false }: ButtonProps) => {
+  const baseClasses = "inline-flex items-center justify-center rounded-md font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
+  const sizeClasses = { sm: "px-3 py-1.5 text-sm", md: "px-4 py-2 text-base", lg: "px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg" };
+  const variantClasses = {
+    default: "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus:ring-red-500",
+    destructive: "bg-red-500 text-white hover:bg-red-600 active:bg-red-700 focus:ring-red-400",
+    outline: "border-2 border-green-600 bg-transparent text-green-600 hover:bg-green-600 hover:text-white active:bg-green-700 focus:ring-green-500",
+    secondary: "bg-gray-100 text-gray-800 hover:bg-gray-200 active:bg-gray-300 focus:ring-gray-300",
+    ghost: "hover:bg-gray-100 active:bg-gray-200 hover:text-gray-900",
+    success: "bg-green-600 text-white hover:bg-green-700 active:bg-green-800 focus:ring-green-500",
+  };
+  return (<button onClick={onClick} disabled={disabled} className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}>{children}</button>);
+});
+
+const Badge = memo(({ children, variant = "default", className = "" }: BadgeProps) => {
+  const baseClasses = "inline-flex items-center rounded-full border px-2 sm:px-3 py-1 text-xs sm:text-sm font-semibold";
+  const variantClasses = {
+    default: "border-transparent bg-gray-800 text-white",
+    secondary: "border-transparent bg-gray-200 text-gray-900",
+    destructive: "border-transparent bg-red-600 text-white",
+    warning: "border-transparent bg-yellow-500 text-black",
+    success: "border-transparent bg-green-600 text-white",
+  };
+  return (<span className={`${baseClasses} ${variantClasses[variant]} ${className}`}>{children}</span>);
+});
+
+// ==================== COMPLETE DATA LAYER (13 Questions) ====================
+const QUESTIONS = [
+  { id: "gestione", title: "Come gestisci attualmente la sicurezza aziendale?", subtitle: "La tua situazione attuale determina il livello di rischio", type: "multiplier", options: [{ value: "gestisco-io", label: "Gestisco io personalmente", multiplier: 1.5 },{ value: "interno", label: "Persona dedicata internamente", multiplier: 1.3 },{ value: "consulente", label: "Consulente specializzato", multiplier: 1 },{ value: "studi-multipli", label: "Diversi professionisti", multiplier: 1.2 }] },
+  { id: "dipendenti", title: "Quanti dipendenti ha la tua azienda?", subtitle: "Determina complessità normativa e frequenza controlli", type: "multiplier", options: [{ value: "1-5", label: "1-5 dipendenti", multiplier: 1 },{ value: "6-10", label: "6-10 dipendenti", multiplier: 1.3 },{ value: "11-20", label: "11-20 dipendenti", multiplier: 1.8 },{ value: ">20", label: "Oltre 20 dipendenti", multiplier: 2.2 }] },
+  { id: "settore", title: "In quale settore opera principalmente la tua azienda?", subtitle: "Ogni settore ha frequenze di controllo e rischi diversi", type: "multiplier", options: [{ value: "edilizia", label: "Edilizia/Costruzioni", multiplier: 2 },{ value: "manifatturiero", label: "Manifatturiero/Produzione", multiplier: 1.6 },{ value: "alimentare", label: "Alimentare/Ristorazione", multiplier: 1.5 },{ value: "servizi", label: "Servizi/Consulenza", multiplier: 1.2 },{ value: "commercio", label: "Commercio/Retail", multiplier: 1.2 },{ value: "agricoltura", label: "Agricoltura/Allevamento", multiplier: 1.6 }] },
+  { id: "dvr", title: "L'ispettore ti dice: «Fammi vedere DVR aggiornato, nomine RSPP e verbali riunioni». Hai tutto pronto?", subtitle: "Primo controllo sempre richiesto - Fonte: 859 ispezioni ASP Catania 2024", type: "score", options: [{ value: "si", label: "Sì, tutto pronto", weight: 0 },{ value: "no", label: "No, manca qualcosa", weight: 3 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 2 }] },
+  { id: "formazione", title: "L'ispettore controlla 3 dipendenti a caso + il datore di lavoro: trovi tutti gli attestati validi?", subtitle: "Novità 2025: include obbligo formazione datori 16 ore (Accordo Stato-Regioni)", type: "score", options: [{ value: "si", label: "Sì, attestati validi", weight: 0 },{ value: "no", label: "No, alcuni mancano", weight: 3 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 2 }] },
+  { id: "sorveglianza", title: "Sorveglianza sanitaria: giudizi idoneità ultimi 2 anni + protocollo medico competente aggiornato?", subtitle: "Controllo cartelle mediche sempre verificato", type: "score", options: [{ value: "si", label: "Sì, tutto aggiornato", weight: 0 },{ value: "no", label: "No, mancano visite", weight: 2 },{ value: "non-gestisco", label: "Non gestisco personalmente", weight: 1 }] },
+  { id: "emergenze", title: "Piano emergenza, addetti primo soccorso/antincendio e registro infortuni: tutto a posto?", subtitle: "Due controlli prioritari sempre verificati insieme", type: "score", options: [{ value: "si", label: "Sì, tutto organizzato", weight: 0 },{ value: "no", label: "No, mancano procedure", weight: 2 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 1 }] },
+  { id: "patente-cantieri", title: "Hai la patente a crediti cantieri con almeno 15 punti attivi?", subtitle: "Obbligatoria dal 1° ottobre 2024 - esclusione immediata senza", type: "score", conditional: { dependsOn: "settore", showFor: ["edilizia"] }, options: [{ value: "si", label: "Sì, ho la patente attiva", weight: 0 },{ value: "no", label: "No, non ce l'ho", weight: 4 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 3 }] },
+  { id: "nuovo-assunto", title: "Ultimo assunto: hai completato visita preventiva, formazione e DPI prima dell'inizio lavoro?", subtitle: "Sequenza obbligatoria pre-assuntiva - controllo prioritario", type: "score", conditional: { dependsOn: "settore", showFor: ["manifatturiero", "alimentare", "servizi", "commercio", "agricoltura"] }, options: [{ value: "si", label: "Sì, sequenza completa", weight: 0 },{ value: "no", label: "No, alcuni passaggi saltati", weight: 2 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 1 }] },
+  { id: "verifiche-inail", title: "Hai i verbali delle verifiche periodiche INAIL/ARPAV per impianti e attrezzature?", subtitle: "Sollevamento, pressione, messa a terra - D.Lgs 81/08 Allegato VII", type: "score", conditional: { dependsOn: "settore", showFor: ["manifatturiero"] }, options: [{ value: "si", label: "Sì, tutto verificato", weight: 0 },{ value: "no", label: "No, verifiche scadute", weight: 2 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 1 }] },
+  { id: "attrezzature", title: "Attrezzature di lavoro: hai libretto uso/manutenzione e registro controlli aggiornati?", subtitle: "Manutenzione programmata e tracciabilità interventi", type: "score", conditional: { dependsOn: "settore", showFor: ["alimentare", "servizi", "commercio", "agricoltura", "edilizia", "manifatturiero"] }, options: [{ value: "si", label: "Sì, tutto documentato", weight: 0 },{ value: "no", label: "No, documentazione incompleta", weight: 1 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 1 }] },
+  { id: "rischio-chimico", title: "Libro Unico Lavoro aggiornato + schede sicurezza sostanze e valutazione rischio chimico?", subtitle: "Controllo standard + specifico settoriale", type: "score", conditional: { dependsOn: "settore", showFor: ["manifatturiero", "alimentare"] }, options: [{ value: "si", label: "Sì, tutto aggiornato", weight: 0 },{ value: "no", label: "No, documentazione mancante", weight: 2 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 1 }] },
+  { id: "procedure-operative", title: "Libro Unico Lavoro aggiornato + procedure operative scritte per mansioni a rischio?", subtitle: "Gestione amministrativa + procedure di sicurezza", type: "score", conditional: { dependsOn: "settore", showFor: ["servizi", "commercio", "agricoltura", "edilizia"] }, options: [{ value: "si", label: "Sì, tutto formalizzato", weight: 0 },{ value: "no", label: "No, procedure mancanti", weight: 1 },{ value: "non-sicuro", label: "Non sono sicuro", weight: 1 }] }
 ];
 
-const getConditionalQuestion8 = (answers: Answers): Question => {
-  if (answers.settore === 'edilizia') {
-    return {
-      id: "patente-crediti",
-      title: "Hai la patente a crediti cantieri con almeno 15 punti attivi?",
-      subtitle: "OBBLIGATORIA dal 1° ottobre 2024 - Esclusione immediata senza",
-      type: "score",
-      options: [
-        { value: "si", label: "Sì", weight: 0 },
-        { value: "no", label: "No", weight: 3 },
-        { value: "non-sicuro", label: "Non sono sicuro", weight: 2 }
-      ]
-    };
-  } else {
-    return {
-      id: "sequenza-assunzioni",
-      title: "Ultimo assunto: hai completato visita preventiva, formazione e DPI PRIMA dell'inizio lavoro?",
-      subtitle: "Sequenza obbligatoria pre-assuntiva - Controllo prioritario",
-      type: "score",
-      options: [
-        { value: "si", label: "Sì", weight: 0 },
-        { value: "no", label: "No", weight: 2 },
-        { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-      ]
-    };
-  }
+const VIOLATIONS_CONFIG = {
+  dvr: { key: "dvr", text: "DVR e Nomine Fondamentali", min: 2894, max: 7404, consequences: ["Sospensione immediata dell'attività in caso di controllo.", "In caso di infortunio, rischi una denuncia per lesioni o omicidio colposo.", "L'INAIL può negare la copertura assicurativa."], actions: ["Redigere/aggiornare il DVR con un tecnico qualificato.", "Nominare formalmente RSPP e altre figure obbligatorie.", "Verbalizzare la riunione periodica annuale."], fonte: "D.Lgs. 81/08, art. 18 e 29 (sanzioni rivalutate 2025)", priority: { order: 1, urgency: "CRITICITÀ #1" } },
+  formazione: { key: "formazione", text: "Formazione (Lavoratori o Datore di Lavoro)", min: 1709, max: 7404, consequences: ["Responsabilità penale diretta in caso di infortunio.", "Nullità di incarichi chiave (RLS, addetti antincendio, etc.).", "Dal 2025, la mancata formazione del Datore di Lavoro è violazione grave."], actions: ["Verificare immediatamente lo stato di tutti gli attestati.", "Iscrivere il personale ai corsi di aggiornamento.", "Pianificare il nuovo corso obbligatorio di 16 ore per il Datore di Lavoro."], fonte: "D.Lgs. 81/08 art. 37 + Nuovo Accordo Stato-Regioni 2025", priority: { order: 2, urgency: "CRITICITÀ #2" } },
+  sorveglianza: { key: "sorveglianza", text: "Sorveglianza Sanitaria", min: 2316, max: 7632, consequences: ["Un dipendente senza giudizio di idoneità valido non può legalmente lavorare.", "Rischio di denuncia se un infortunio è correlato a una condizione non monitorata.", "L'ASL può disporre la sospensione dell'attività."], actions: ["Nominare (o verificare) il Medico Competente.", "Pianificare le visite mediche periodiche.", "Assicurarsi che il protocollo sanitario sia aggiornato ai rischi del DVR."], fonte: "D.Lgs. 81/08, Titolo I e X; Legge 203/2024", priority: { order: 3, urgency: "CRITICITÀ #3" } },
+  emergenze: { key: "emergenze", text: "Gestione Emergenze", min: 1068, max: 5695, consequences: ["In caso di incendio o infortunio, la mancata organizzazione ti rende penalmente responsabile.", "Rischi l'arresto fino a 4 mesi se ci sono danni a persone.", "Sanzioni immediate in assenza di nomine e prove di evacuazione."], actions: ["Aggiornare il piano di emergenza.", "Nominare e formare addetti antincendio e primo soccorso.", "Tenere un registro infortuni aggiornato."], fonte: "D.Lgs. 81/08, Titolo I e II", priority: { order: 4, urgency: "CRITICITÀ #4" } },
+  "patente-cantieri": { key: "patente-cantieri", text: "Patente a Crediti", min: 6000, max: 12000, consequences: ["Impossibilità di operare in qualsiasi cantiere.", "Esclusione automatica da gare e appalti.", "Sanzione min. €6.000 e blocco immediato dell'attività."], actions: ["Richiedere la patente all'Ispettorato del Lavoro.", "Verificare di avere almeno 15 crediti attivi.", "Frequentare corsi per recuperare eventuali crediti persi."], fonte: "D.L. 19/2024 (Decreto PNRR 4)", priority: { order: 1, urgency: "BLOCCANTE" } },
+  "nuovo-assunto": { key: "nuovo-assunto", text: "Sequenza Pre-Assuntiva", min: 1474, max: 5926, consequences: ["Un neoassunto senza formazione non può lavorare legalmente.", "Responsabilità penale in caso di infortunio nei primi giorni.", "Ispettori verificano sempre le procedure di inserimento."], actions: ["Stabilire una checklist pre-assuntiva standard.", "Organizzare visita medica prima dell'inizio.", "Completare formazione generale e specifica entro i termini."], fonte: "D.Lgs. 81/08, art. 18, 37 e 41", priority: { order: 5, urgency: "FREQUENTE" } },
+  "verifiche-inail": { key: "verifiche-inail", text: "Verifiche Periodiche Impianti", min: 1842, max: 7368, consequences: ["Uso di impianti non verificati comporta sanzioni e responsabilità penale.", "In caso di incidente, assicurazione può non coprire i danni.", "INAIL può sospendere l'attività fino alle verifiche."], actions: ["Programmare le verifiche con INAIL/ARPAV.", "Tenere registro manutenzioni aggiornato.", "Non utilizzare attrezzature con verifiche scadute."], fonte: "D.Lgs. 81/08, Allegato VII", priority: { order: 6, urgency: "TECNICO" } },
+  attrezzature: { key: "attrezzature", text: "Manutenzione Attrezzature", min: 842, max: 4388, consequences: ["Attrezzature non manutenute sono causa frequente di infortuni.", "Responsabilità penale se l'infortunio dipende da mancata manutenzione.", "Sanzioni per ogni attrezzatura non documentata."], actions: ["Creare un registro delle manutenzioni.", "Pianificare controlli periodici.", "Documentare tutti gli interventi effettuati."], fonte: "D.Lgs. 81/08, Titolo III", priority: { order: 7, urgency: "STANDARD" } },
+  "rischio-chimico": { key: "rischio-chimico", text: "Gestione Rischio Chimico", min: 1895, max: 7579, consequences: ["L'uso di sostanze chimiche senza valutazione è grave violazione.", "Rischi per la salute dei lavoratori non monitorati.", "Possibili sanzioni penali per danni da esposizione."], actions: ["Aggiornare la valutazione del rischio chimico.", "Raccogliere tutte le schede di sicurezza.", "Formare il personale sulle sostanze utilizzate."], fonte: "D.Lgs. 81/08, Titolo IX", priority: { order: 8, urgency: "SETTORIALE" } },
+  "procedure-operative": { key: "procedure-operative", text: "Procedure Operative", min: 632, max: 3158, consequences: ["Lavorazioni senza procedure scritte comportano responsabilità in caso di infortunio.", "Difficoltà a dimostrare l'organizzazione aziendale all'ispettore.", "Impossibilità di formare correttamente i nuovi dipendenti."], actions: ["Redigere procedure per ogni mansione a rischio.", "Formare il personale sulle procedure.", "Aggiornare il Libro Unico del Lavoro."], fonte: "D.Lgs. 81/08, art. 18", priority: { order: 9, urgency: "ORGANIZZATIVO" } }
 };
 
-const getConditionalQuestion9 = (answers: Answers): Question => {
-  if (['manifatturiero', 'edilizia'].includes(answers.settore)) {
-    return {
-      id: "verifiche-periodiche",
-      title: "Hai i verbali delle verifiche periodiche INAIL/ARPAV per impianti e attrezzature?",
-      subtitle: "Sollevamento, pressione, messa a terra - D.Lgs 81/08 Allegato VII",
-      type: "score",
-      options: [
-        { value: "si", label: "Sì", weight: 0 },
-        { value: "no", label: "No", weight: 2 },
-        { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-      ]
-    };
-  } else {
-    return {
-      id: "attrezzature-lavoro",
-      title: "Attrezzature di lavoro: hai libretto uso/manutenzione e registro controlli aggiornati?",
-      subtitle: "Manutenzione programmata e tracciabilità interventi",
-      type: "score",
-      options: [
-        { value: "si", label: "Sì", weight: 0 },
-        { value: "no", label: "No", weight: 2 },
-        { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-      ]
-    };
-  }
-};
+const caseStudies = [
+    { id: 1, sector: "Alimentare", title: "Azienda Dolciaria - Provincia Catania", situation: "Controllo ispettivo in corso", challenge: "L'azienda ha ricevuto un controllo ispettivo e necessitava di adeguarsi rapidamente alla normativa sulla sicurezza aziendale.", solution: "Abbiamo organizzato corsi di formazione Art. 37 presso la sede, formato le figure aziendali tramite Ente Accreditato, coordinato visite mediche immediate e prodotto DVR, Piano Emergenza e verbali richiesti.", result: "In 20-25 giorni l'azienda ha presentato tutti i documenti richiesti ai funzionari", icon: "🍰" },
+    { id: 2, sector: "Manifatturiero", title: "PMI Metalmeccanica - Provincia Siracusa", situation: "Necessità formazione senza budget", challenge: "L'azienda doveva formare tutto il personale sulla sicurezza ma non aveva budget disponibile per i corsi obbligatori.", solution: "Attraverso l'iscrizione a Fondi Interprofessionali, abbiamo erogato gratuitamente tutti i percorsi formativi necessari sulla sicurezza aziendale.", result: "Risparmio di oltre €2.200 sui costi di formazione standard", icon: "⚙️" },
+    { id: 3, sector: "Tessile", title: "Azienda Confezioni - Provincia Messina", situation: "AUDIT esterno imminente", challenge: "L'azienda doveva superare un AUDIT di consulenti esterni su sicurezza e salubrità ambienti, con richieste molto specifiche.", solution: "Coordinato team di specialisti (tecnico DPI/estintori, Ingegnere formatore, Medico Competente), prodotto Piano Emergenza e DVR personalizzato secondo richieste AUDIT.", result: "Superamento dell'AUDIT con valutazione positiva", icon: "👔" }
+];
 
-const getConditionalQuestion10 = (answers: Answers): Question => {
-  if (['manifatturiero', 'alimentare'].includes(answers.settore)) {
-    return {
-      id: "lul-chimici",
-      title: "Libro Unico Lavoro aggiornato + schede sicurezza sostanze e valutazione rischio chimico?",
-      subtitle: "Controllo standard + specifico settoriale",
-      type: "score",
-      options: [
-        { value: "si", label: "Sì", weight: 0 },
-        { value: "no", label: "No", weight: 2 },
-        { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-      ]
-    };
-  } else {
-    return {
-      id: "lul-procedure",
-      title: "Libro Unico Lavoro aggiornato + procedure operative scritte per mansioni a rischio?",
-      subtitle: "Gestione amministrativa + procedure di sicurezza",
-      type: "score",
-      options: [
-        { value: "si", label: "Sì", weight: 0 },
-        { value: "no", label: "No", weight: 2 },
-        { value: "non-sicuro", label: "Non sono sicuro", weight: 1 }
-      ]
-    };
-  }
-};
+// ==================== HELPER FUNCTIONS ====================
+// Business logic functions for calculations and dynamic content generation.
 
-const violationsConfig: Record<string, Violation> = {
-  dvr: {
-    key: "dvr",
-    text: "DVR non aggiornato o mancante",
-    min: 2894,
-    max: 7404,
-    consequences: [
-      "Primo controllo sempre richiesto - presente nel 100% delle 859 ispezioni ASP Catania",
-      "Arresto 3-6 mesi + responsabilità penale diretta del datore",
-      "Base per tutte le altre violazioni - senza DVR tutto è irregolare",
-      "Sospensione attività se combinato con altre gravi violazioni"
-    ],
-    actions: ["Aggiorna DVR e nomine RSPP/Addetti", "Programma riunione periodica e verbalizza"],
-    fonte: "D.Lgs. 81/08 Art. 17, 18, 28 - Sanzioni rivalutate +15,9% (2023)",
-    priority: { order: 1, urgency: "PRIMO", reason: "Controllato nel 100% delle ispezioni - base di tutto" }
-  },
-  formazione: {
-    key: "formazione",
-    text: "Formazione non conforme o scaduta",
-    min: 1709,
-    max: 7404,
-    consequences: [
-      "27,1% delle violazioni totali rilevate nelle 83.330 violazioni nazionali 2024",
-      "Include NUOVO obbligo formazione datori 16 ore (Accordo Stato-Regioni 2025)",
-      "Responsabilità penale se infortunio su lavoratore non formato",
-      "Sanzioni raddoppiate oltre 5 dipendenti, triplicate oltre 10"
-    ],
-    actions: ["Verifica formazione datori (16 ore + 6 ore cantieri)", "Aggiorna attestati lavoratori con verifica finale"],
-    fonte: "D.Lgs. 81/08 Art. 37 + Accordo Stato-Regioni 17/04/2025",
-    priority: { order: 2, urgency: "SECONDO", reason: "Secondo controllo per frequenza - nuovo obbligo datori" }
-  },
-  sorveglianza: {
-    key: "sorveglianza",
-    text: "Sorveglianza sanitaria incompleta",
-    min: 2316,
-    max: 7632,
-    consequences: [
-      "Se manca il giudizio medico, non puoi far lavorare il dipendente per legge",
-      "In caso di infortunio, rischi denuncia per lesioni o omicidio colposo",
-      "L'INAIL può rifiutare la copertura assicurativa",
-      "L'ASL può disporre la sospensione dell'attività"
-    ],
-    actions: ["Nomina medico competente", "Pianifica visite e giudizi idoneità per tutti gli esposti"],
-    fonte: "D.Lgs. 81/08, Titolo I e X; legge 203/2024",
-    priority: { order: 3, urgency: "TERZO", reason: "Verifica cartelle mediche" }
-  },
-  emergenze: {
-    key: "emergenze",
-    text: "Procedure emergenza non conformi",
-    min: 1068,
-    max: 5695,
-    consequences: [
-      "Se c'è un'emergenza, puoi essere penalmente responsabile",
-      "Rischi arresto fino a 4 mesi se ci sono danni a persone",
-      "I clienti o visitatori coinvolti possono chiedere risarcimenti",
-      "In assenza di prove di evacuazione o nomine → sanzione immediata"
-    ],
-    actions: ["Aggiorna piano di emergenza ed evacuazione", "Nomina e forma addetti primo soccorso/antincendio"],
-    fonte: "D.Lgs. 81/08, Titolo I e II",
-    priority: { order: 4, urgency: "QUARTO", reason: "Procedure emergenza" }
-  },
-  "patente-crediti": {
-    key: "patente-crediti",
-    text: "Patente crediti cantieri mancante o punti insufficienti",
-    min: 0,
-    max: 0,
-    consequences: [
-      "🚫 STOP LAVORI immediato - non è una sanzione, è ESCLUSIONE totale",
-      "Impossibilità accesso a qualsiasi cantiere pubblico o privato",
-      "Obbligo committenti verificare possesso - responsabilità solidale",
-      "Reintegro crediti solo tramite formazione aggiuntiva specifica"
-    ],
-    actions: [
-      "Richiesta immediata patente crediti INL se mancante",
-      "Verifica punteggio attuale (minimo 15 per operare)",
-      "Corsi recupero crediti se necessario"
-    ],
-    fonte: "D.L. 48/2023 conv. L. 85/2023 Art. 29-bis - Operativa 1° ottobre 2024",
-    priority: { order: 1, urgency: "BLOCCANTE", reason: "Senza patente = ZERO possibilità di lavorare" }
-  },
-  "sequenza-assunzioni": {
-    key: "sequenza-assunzioni",
-    text: "Procedure assunzioni incomplete",
-    min: 3000,
-    max: 15000,
-    consequences: [
-      "Senza visita pre-assuntiva, il contratto può essere legalmente contestato",
-      "Rischi multe multiple per ogni obbligo non rispettato (DPI, formazione, ecc.)",
-      "Se il personale lavora senza idoneità → scatta la sospensione",
-      "Il lavoratore può contestare l'assunzione anche a distanza di anni"
-    ],
-    actions: ["Verifica sequenza: visita, formazione, DPI prima dell'avvio", "Predisponi check-list di ingresso"],
-    fonte: "D.Lgs. 81/08; obblighi preassuntivi rafforzati 2024",
-    priority: { order: 5, urgency: "QUINTO", reason: "Sequenza assunzioni" }
-  },
-  "verifiche-periodiche": {
-    key: "verifiche-periodiche",
-    text: "Verifiche periodiche INAIL/ARPAV mancanti",
-    min: 2000,
-    max: 8000,
-    consequences: [
-      "Attrezzature non verificate = divieto utilizzo immediato",
-      "Responsabilità penale per infortuni su attrezzature non conformi",
-      "Multe crescenti per ogni attrezzatura non verificata",
-      "Possibile sequestro preventivo delle attrezzature"
-    ],
-    actions: ["Programmazione verifiche con enti abilitati", "Aggiornamento registro controlli"],
-    fonte: "D.Lgs. 81/08 Allegato VII - Verifiche periodiche obbligatorie",
-    priority: { order: 6, urgency: "STANDARD", reason: "Controllo tecnico attrezzature" }
-  },
-  "attrezzature-lavoro": {
-    key: "attrezzature-lavoro",
-    text: "Manutenzione attrezzature non documentata",
-    min: 1500,
-    max: 6000,
-    consequences: [
-      "Mancanza registri = presunzione mancata manutenzione",
-      "Responsabilità per infortuni da guasti prevenibili",
-      "Obbligo dimostrare idoneità tecnica delle attrezzature",
-      "Sanzioni per ogni attrezzatura priva di documentazione"
-    ],
-    actions: ["Creazione registro manutenzioni", "Programmazione controlli periodici"],
-    fonte: "D.Lgs. 81/08 Art. 71 - Attrezzature di lavoro",
-    priority: { order: 7, urgency: "STANDARD", reason: "Sicurezza attrezzature" }
-  },
-  "lul-chimici": {
-    key: "lul-chimici",
-    text: "Libro Unico Lavoro + rischio chimico non gestiti",
-    min: 2500,
-    max: 12000,
-    consequences: [
-      "Prima richiesta in TUTTE le 811 violazioni ASP Catania - controllo standard",
-      "Presunzione lavoro nero per dipendenti non registrati",
-      "Maxisanzione INPS/INAIL €2.500-€12.000 per dipendente irregolare",
-      "Mancanza schede sicurezza = sanzioni multiple per sostanza"
-    ],
-    actions: [
-      "Aggiornamento immediato registrazioni giornaliere",
-      "Acquisizione schede sicurezza aggiornate",
-      "Valutazione rischio chimico specifica"
-    ],
-    fonte: "D.Lgs. 81/2008 Art. 18 + Titolo IX rischio chimico",
-    priority: { order: 6, urgency: "STANDARD", reason: "Controllo amministrativo + rischio chimico" }
-  },
-  "lul-procedure": {
-    key: "lul-procedure",
-    text: "Libro Unico Lavoro + procedure mancanti",
-    min: 1548,
-    max: 9296,
-    consequences: [
-      "Prima richiesta in TUTTE le 811 violazioni ASP Catania - controllo standard",
-      "Presunzione lavoro nero per dipendenti non registrati",
-      "Maxisanzione INPS/INAIL €2.500-€12.000 per dipendente irregolare",
-      "Mancanza procedure = impossibilità dimostrare formazione adeguata"
-    ],
-    actions: [
-      "Aggiornamento immediato registrazioni giornaliere",
-      "Redazione procedure operative per mansioni",
-      "Verifica posizioni contributive INPS/INAIL dipendenti"
-    ],
-    fonte: "D.Lgs. 81/2008 Art. 18 + L. 92/2012 - Sempre verificato",
-    priority: { order: 6, urgency: "STANDARD", reason: "Controllo amministrativo sempre effettuato" }
-  }
-};
-
-const sectorMap: Record<string, string> = {
-  edilizia: "Edilizia",
-  alimentare: "Alimentare",
-  manifatturiero: "Manifatturiero",
-  servizi: "Servizi",
-  commercio: "Commercio",
-  agricoltura: "Agricoltura"
-};
-
-function getEmployeeCount(range?: string): number {
-  const counts: Record<string, number> = {
-    "1-5": 3,
-    "6-10": 8,
-    "11-20": 15,
-    ">20": 25
-  };
-  return counts[range ?? "1-5"] ?? 3;
-}
-
-function calculateViolationsConditional(answers: Answers): Violation[] {
-  const baseViolations = [];
-  const settore = answers.settore;
-  
-  // Controlli base esistenti
-  Object.keys(answers).forEach(questionId => {
-    if (['dvr', 'formazione', 'sorveglianza', 'emergenze'].includes(questionId)) {
-      if (answers[questionId] === 'no' || answers[questionId] === 'non-sicuro') {
-        baseViolations.push(violationsConfig[questionId]);
+function calculateViolations(answers) {
+  return Object.keys(VIOLATIONS_CONFIG)
+    .filter(key => {
+      const question = QUESTIONS.find(q => q.id === key);
+      if (!question) return false;
+      const isAnsweredNegative = ["no", "non-sicuro", "non-gestisco"].includes(answers[key]);
+      if (!isAnsweredNegative) return false;
+      if (question.conditional) {
+        const dependentAnswer = answers[question.conditional.dependsOn];
+        return dependentAnswer && question.conditional.showFor.includes(dependentAnswer);
       }
-    }
-  });
-  
-  // Controlli condizionali settoriali
-  if (settore === 'edilizia' && (answers['patente-crediti'] === 'no' || answers['patente-crediti'] === 'non-sicuro')) {
-    baseViolations.push(violationsConfig['patente-crediti']);
-  }
-  
-  if (answers['sequenza-assunzioni'] === 'no' || answers['sequenza-assunzioni'] === 'non-sicuro') {
-    baseViolations.push(violationsConfig['sequenza-assunzioni']);
-  }
-  
-  if (answers['verifiche-periodiche'] === 'no' || answers['verifiche-periodiche'] === 'non-sicuro') {
-    baseViolations.push(violationsConfig['verifiche-periodiche']);
-  }
-  
-  if (answers['attrezzature-lavoro'] === 'no' || answers['attrezzature-lavoro'] === 'non-sicuro') {
-    baseViolations.push(violationsConfig['attrezzature-lavoro']);
-  }
-  
-  if (answers['lul-chimici'] === 'no' || answers['lul-chimici'] === 'non-sicuro') {
-    baseViolations.push(violationsConfig['lul-chimici']);
-  }
-  
-  if (answers['lul-procedure'] === 'no' || answers['lul-procedure'] === 'non-sicuro') {
-    baseViolations.push(violationsConfig['lul-procedure']);
-  }
-  
-  return baseViolations.sort((a, b) => a.priority.order - b.priority.order);
+      return true;
+    })
+    .map(key => VIOLATIONS_CONFIG[key])
+    .sort((a, b) => a.priority.order - b.priority.order);
 }
 
-function riskFromScore(baseScore: number, multiplier: number) {
+function calculateRisk(baseScore, multiplier) {
   const finalScore = baseScore * multiplier;
-  if (finalScore <= 4) return { level: "Basso" as const, finalScore };
-  if (finalScore <= 8) return { level: "Medio" as const, finalScore };
-  return { level: "Alto" as const, finalScore };
+  if (finalScore <= 4) return { level: "Basso", finalScore };
+  if (finalScore <= 10) return { level: "Medio", finalScore };
+  return { level: "Alto", finalScore };
 }
 
-function riskBadgeVariant(level: string): "secondary" | "default" | "destructive" {
-  if (level === "Basso") return "secondary";
-  if (level === "Medio") return "default";
+function riskBadgeVariant(level) {
+  if (level === "Basso") return "success";
+  if (level === "Medio") return "warning";
   return "destructive";
 }
 
-const PriorityBadge = ({ urgency, children }: { urgency: string; children: React.ReactNode }) => {
-  const variants: Record<string, string> = {
-    'BLOCCANTE': 'bg-red-600 text-white',
-    'PRIMO': 'bg-black text-white', 
-    'SECONDO': 'bg-gray-800 text-white',
-    'TERZO': 'bg-gray-700 text-white',
-    'QUARTO': 'bg-gray-600 text-white',
-    'QUINTO': 'bg-gray-500 text-white',
-    'STANDARD': 'bg-gray-600 text-white'
+function generateDynamicInsight(answers, violations) {
+  const managementStyle = answers.gestione;
+  const sector = answers.settore;
+  const employees = answers.dipendenti;
+  let urgency = "low";
+  if (violations.length > 3 || employees === ">20") urgency = "high";
+  else if (violations.length > 1 || employees === "11-20") urgency = "medium";
+  const sectorInsights = {
+    edilizia: { risk: "Il settore edile ha il 42% di probabilità di controllo annuale.", focus: "patente a crediti e formazione cantieri" },
+    manifatturiero: { risk: "Il manifatturiero è sotto osservazione per infortuni e verifiche impianti.", focus: "verifiche INAIL e rischio chimico" },
+    alimentare: { risk: "L'alimentare ha controlli congiunti ASL-NAS nel 68% dei casi.", focus: "HACCP e sorveglianza sanitaria" },
+    default: { risk: "Il tuo settore ha controlli mirati basati su analisi del rischio.", focus: "documentazione base e formazione" }
   };
-  
-  return (
-    <span className={`px-2 py-1 rounded text-sm font-bold ${variants[urgency] || 'bg-gray-600 text-white'}`}>
-      {children}
-    </span>
-  );
+  const sectorInfo = sectorInsights[sector] || sectorInsights.default;
+  if (violations.length === 0) {
+    return { title: "📊 Ottimo risultato, ma non abbassare la guardia", text: `Sei conforme alle verifiche principali. ${sectorInfo.risk} Mantieni questo standard con un sistema di monitoraggio continuo.`, urgency: "low" };
+  }
+  const insights = {
+    'gestisco-io': { title: "⚡ Gestisci tutto da solo: ammirevole ma rischioso", text: `Con ${violations.length} criticità rilevate e ${sectorInfo.risk}, il carico è troppo per una persona sola. Hai bisogno di un sistema che automatizzi i controlli, soprattutto su ${sectorInfo.focus}.` },
+    'interno': { title: "👥 Il tuo team interno è sotto pressione", text: `${violations.length} non conformità mostrano che il carico supera le capacità interne. ${sectorInfo.risk} Un supporto specializzato alleggerisce il team su ${sectorInfo.focus}.` },
+    'consulente': { title: "🔍 Il tuo consulente sta coprendo tutto?", text: `Nonostante il consulente, hai ${violations.length} criticità. ${sectorInfo.risk} Serve un sistema proattivo che preveda i problemi, non solo che li risolva. Focus: ${sectorInfo.focus}.` },
+    'studi-multipli': { title: "🔄 Troppi professionisti, poca coordinazione", text: `${violations.length} criticità indicano mancanza di coordinamento tra i tuoi consulenti. ${sectorInfo.risk} Serve una regia unica, specialmente per ${sectorInfo.focus}.` }
+  };
+  const insight = insights[managementStyle] || { title: "⚠️ Il tuo sistema ha delle falle", text: `${violations.length} non conformità rilevate. ${sectorInfo.risk} È il momento di ripensare l'approccio alla sicurezza, partendo da ${sectorInfo.focus}.` };
+  return { ...insight, urgency };
+}
+
+function generatePersonalizedAdvantages(answers) {
+  const managementStyle = answers.gestione;
+  const baseAdvantages = {
+    "gestisco-io": ["🎯 Mantieni il controllo totale con supporto tecnico invisibile", "📱 Piattaforma digitale 24/7 per consultare tutta la documentazione", "🔄 Coordinamento automatico figure SPP senza perdere la regia", "💰 Accesso esclusivo a fondi interprofessionali e bonus fiscali"],
+    "interno": ["💪 Potenziamento del team con strumenti professionali", "📊 Riduzione 70% carico amministrativo interno", "🛡️ Sistema backup: continuità anche in assenza del responsabile", "🚀 Risposte prioritarie dalla rete di specialisti certificati"],
+    "consulente": ["✅ Audit indipendente di copertura del consulente attuale", "🤝 Integrazione trasparente o transizione guidata", "📈 KPI misurabili per monitorare le prestazioni", "⏰ Alert automatici 30-60 giorni prima di ogni scadenza"],
+    "studi-multipli": ["🎭 Regia unica per coordinare tutti i fornitori", "📋 Monitoraggio centralizzato scadenze e standard", "🔗 Eliminazione sovrapposizioni e buchi operativi", "📱 Piattaforma digitale 24/7 sempre accessibile"]
+  };
+  let advantages = [...(baseAdvantages[managementStyle] || baseAdvantages["gestisco-io"])];
+  const addedFeatures = new Set(advantages.map(a => a.substring(0, 2)));
+  if (!addedFeatures.has("⏰")) { advantages.push("⏰ Alert automatici 30-60 giorni prima delle scadenze"); }
+  if (!addedFeatures.has("📱") && managementStyle !== "gestisco-io" && managementStyle !== "studi-multipli") { advantages.push("📱 Piattaforma 24/7 sempre accessibile"); }
+  if (!addedFeatures.has("🚀") && managementStyle !== "interno") { advantages.push("🚀 Rete specialisti con risposte prioritarie"); }
+  if (!addedFeatures.has("💰") && managementStyle !== "gestisco-io") { advantages.push("💰 Accesso a fondi e agevolazioni disponibili"); }
+  return advantages.slice(0, 5);
+}
+
+function calculateSanctionDetails(answers, violations) {
+  const noAnswers = Object.values(answers).filter(a => a === "no").length;
+  const unsureAnswers = Object.values(answers).filter(a => a === "non-sicuro" || a === "non-gestisco").length;
+  const totalQuestions = Object.keys(answers).length;
+  return {
+    violations: violations.length,
+    noAnswers,
+    unsureAnswers,
+    totalAnswered: totalQuestions,
+    sanctionBreakdown: violations.map(v => ({ name: v.text, max: v.max }))
+  };
+}
+
+const filterQuestions = (answers) => {
+  return QUESTIONS.filter(q => {
+    if (!q.conditional) return true;
+    const dependentAnswer = answers[q.conditional.dependsOn];
+    return dependentAnswer && q.conditional.showFor.includes(dependentAnswer);
+  });
 };
 
-const Index = () => {
-  const [stage, setStage] = useState<"intro" | "quiz" | "loading" | "results">("intro");
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Answers>({});
-  const [baseScore, setBaseScore] = useState(0);
-  const [multiplier, setMultiplier] = useState(1);
-  const [questions, setQuestions] = useState<Question[]>(baseQuestions);
-  
-  const question = questions[currentQuestion];
-  const progress = (currentQuestion + 1) / questions.length * 100;
-  const risk = useMemo(() => riskFromScore(baseScore, multiplier), [baseScore, multiplier]);
-  const violations = useMemo(() => calculateViolationsConditional(answers), [answers]);
-  const sanctionMin = violations.reduce((s, v) => s + v.min, 0);
-  const sanctionMax = violations.reduce((s, v) => s + v.max, 0);
+// ==================== STATE MANAGEMENT ====================
+const initialState = {
+  stage: "intro",
+  currentQuestionIndex: 0,
+  answers: {},
+  baseScore: 0,
+  multiplier: 1
+};
 
-  useEffect(() => {
-    const baseTitle = "Test Sicurezza Aziendale | Spazio Impresa";
-    const resultsTitle = "Test Sicurezza Aziendale - Risultati | Spazio Impresa";
-    document.title = stage === "results" ? resultsTitle : baseTitle;
-    const desc = stage === "results" ? "Analisi personalizzata rischio sicurezza: sanzioni potenziali, impatto immediato e piano d'azione." : "Passeresti un'ispezione ASL domani mattina? Test gratuito e anonimo. Risultati in 90 secondi.";
-    let meta = document.querySelector('meta[name="description"]');
-    if (!meta) {
-      meta = document.createElement("meta");
-      meta.setAttribute("name", "description");
-      document.head.appendChild(meta);
+const quizReducer = (state, action) => {
+  switch (action.type) {
+    case 'START_QUIZ': return { ...state, stage: "quiz" };
+    case 'SELECT_OPTION': {
+      const { question, option } = action;
+      const newAnswers = { ...state.answers, [question.id]: option.value };
+      let newBaseScore = state.baseScore;
+      let newMultiplier = state.multiplier;
+      if (question.type === "score") {
+        const prevOption = question.options.find(o => o.value === state.answers[question.id]);
+        newBaseScore = state.baseScore - (prevOption?.weight || 0) + (option.weight || 0);
+      } else if (question.type === "multiplier") {
+        const prevOption = question.options.find(o => o.value === state.answers[question.id]);
+        const prevMul = prevOption?.multiplier || 1;
+        newMultiplier = (state.multiplier / prevMul) * (option.multiplier || 1);
+      }
+      return { ...state, answers: newAnswers, baseScore: newBaseScore, multiplier: newMultiplier };
     }
-    meta.setAttribute("content", desc);
-  }, [stage]);
+    case 'NEXT_QUESTION': return { ...state, currentQuestionIndex: state.currentQuestionIndex + 1 };
+    case 'GO_BACK': return { ...state, currentQuestionIndex: Math.max(0, state.currentQuestionIndex - 1) };
+    case 'START_LOADING': return { ...state, stage: "loading" };
+    case 'SHOW_RESULTS': return { ...state, stage: "results" };
+    case 'RESET': return initialState;
+    default: return state;
+  }
+};
 
-  // Aggiorna le domande quando abbiamo le risposte per settore
-  useEffect(() => {
-    if (currentQuestion >= 7 && answers.settore) {
-      const newQuestions = [...baseQuestions];
-      
-      if (currentQuestion === 7) {
-        newQuestions.push(getConditionalQuestion8(answers));
-      } else if (currentQuestion === 8) {
-        newQuestions.push(getConditionalQuestion8(answers));
-        newQuestions.push(getConditionalQuestion9(answers));
-      } else if (currentQuestion === 9) {
-        newQuestions.push(getConditionalQuestion8(answers));
-        newQuestions.push(getConditionalQuestion9(answers));
-        newQuestions.push(getConditionalQuestion10(answers));
-      }
-      
-      setQuestions(newQuestions);
-    }
-  }, [currentQuestion, answers.settore]);
-  
-  const getSectorName = () => sectorMap[answers.settore] || "Servizi";
+// ==================== STAGE COMPONENTS ====================
 
-  const getSuggestionContent = () => {
-    const managementAnswer = answers.gestione;
-    
-    const suggestions = {
-      "gestisco-io": {
-        text: `Gestire da solo scadenze, rinnovi, adempimenti, controlli, prenotazioni e aggiornamenti è un bel carico sulle spalle. E se ci fosse un Sistema semplice per risparmiare ore, avere tutto sott'occhio ed eliminare errori e dimenticanze?`,
-        link: "Scopri come funziona"
-      },
-      "interno": {
-        text: `Anche ai migliori collaboratori possono sfuggire dettagli e aggiornamenti normativi importanti. Un Sistema integrato potrebbe aiutare il tuo team a ridurre errori, dimenticanze e il carico di lavoro.`,
-        link: "Guarda cosa può fare per la tua azienda"
-      },
-      "consulente": {
-        text: `Il tuo consulente è proattivo o ti tocca rincorrerlo per avere risposte concrete? Con un Sistema integrato, hai tutto sotto controllo in pochi click e ricevi avvisi su scadenze, rinnovi, novità e agevolazioni in largo anticipo.`,
-        link: "Scopri la differenza"
-      },
-      "studi-multipli": {
-        text: `Avere più specialisti a cui rivolgersi è ottimo, ma quanto tempo, stress e confusione costa? E se un unico Sistema coordinasse tutti i fornitori per te — in automatico?`,
-        link: "Guarda i vantaggi di un'unica regia"
-      }
-    };
-    return suggestions[managementAnswer] || suggestions["gestisco-io"];
-  };
-
-  const getManagementAdvantages = () => {
-    const managementAnswer = answers.gestione;
-    const advantages = {
-      "gestisco-io": [
-        "Mantieni il controllo totale, ma con supporto tecnico specializzato",
-        "Sistema alert che ti avvisa 30gg prima delle scadenze (visite) e 60gg prima (corsi)",
-        "Piattaforma digitale 24/7 per consultare tutto in tempo reale",
-        "Coordinamento di tutte le figure SPP senza perdere la regia"
-      ],
-      "interno": [
-        "Il tuo responsabile interno diventa più efficace con strumenti professionali",
-        "Riduzione del carico di lavoro del team interno del 60%",
-        "Backup competenze: se il responsabile non c'è, il sistema funziona comunque",
-        "Formazione continua del team interno sulle novità normative"
-      ],
-      "consulente": [
-        "Verifica indipendente di cosa copre realmente il tuo consulente attuale",
-        "Integrazione con il consulente esistente o sostituzione trasparente",
-        "Controllo qualità: monitoraggio prestazioni con KPI misurabili",
-        "Nessuna interruzione: se il consulente non risponde, interveniamo noi"
-      ],
-      "studi-multipli": [
-        "Coordinamento automatico di tutti i tuoi fornitori attuali",
-        "Unica dashboard per monitorare Studio A + Studio B + Studio C",
-        "Eliminazione sovrapposizioni e buchi tra fornitori",
-        "Costi trasparenti: sai esattamente chi fa cosa e quanto costa"
-      ]
-    };
-    return advantages[managementAnswer] || advantages["gestisco-io"];
-  };
-
-  // Casi studio settoriali
-  const getSectorCaseStudies = () => {
-    const caseStudies = {
-      edilizia: {
-        title: "Impresa Edile - Catania, 22 dipendenti",
-        problem: "Controllo cantiere ASL con patente crediti scaduta",
-        results: [
-          "Riattivazione patente crediti in 10 giorni lavorativi",
-          "Formazione coordinatori CSP/CSE completata",
-          "DVR cantieri specifici per 3 commesse attive"
-        ],
-        quote: "Ci hanno salvato da una multa che poteva chiudere l'azienda"
-      },
-      manifatturiero: {
-        title: "PMI Metalmeccanica - 12 dipendenti",
-        problem: "Costi formazione sicurezza insostenibili",
-        results: [
-          "Formazione finanziata completamente gratuita tramite fondo",
-          "Risparmio di oltre €2.200 su budget annuale",
-          "Verifiche periodiche INAIL coordinate"
-        ],
-        quote: "Non sapevamo nemmeno dell'esistenza dei fondi interprofessionali"
-      },
-      alimentare: {
-        title: "Azienda Dolciaria - Bronte, 18 dipendenti",
-        problem: "Controllo ispettivo ASL improvviso",
-        results: [
-          "HACCP e temperatura sotto controllo in 15 giorni",
-          "Formazione alimentare completata per tutto il personale",
-          "Procedure sanificazione documentate"
-        ],
-        quote: "Professionalità e velocità che non avevamo mai visto"
-      },
-      default: {
-        title: "Azienda Servizi - 15 dipendenti",
-        problem: "Gestione sicurezza frammentata tra più fornitori",
-        results: [
-          "Coordinamento unico di tutti gli adempimenti",
-          "Riduzione costi del 30% eliminando sovrapposizioni",
-          "Sistema di monitoraggio proattivo attivato"
-        ],
-        quote: "Finalmente qualcuno che coordina tutto senza farci impazzire"
-      }
-    };
-    
-    return caseStudies[answers.settore] || caseStudies.default;
-  };
-
-  const selectOption = (q: Question, opt: Option) => {
-    setAnswers(prev => {
-      const prevVal = prev[q.id];
-      const next = { ...prev, [q.id]: opt.value };
-
-      if (q.type === "score") {
-        const prevOpt = q.options.find(o => o.value === prevVal);
-        const prevWeight = prevOpt?.weight || 0;
-        const newWeight = opt.weight || 0;
-        setBaseScore(s => s - prevWeight + newWeight);
-      } else if (q.type === "multiplier") {
-        const prevOpt = q.options.find(o => o.value === prevVal);
-        const prevMul = prevOpt?.multiplier || 1;
-        const newMul = opt.multiplier || 1;
-        setMultiplier(m => m / prevMul * newMul);
-      }
-      return next;
-    });
-
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(i => i + 1);
-      } else {
-        setStage("loading");
-        setTimeout(() => setStage("results"), 800);
-      }
-    }, 200);
-  };
-
-  const goBack = () => {
-    if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
-      
-      const currentAnswer = answers[question.id];
-      if (currentAnswer) {
-        const currentOpt = question.options.find(o => o.value === currentAnswer);
-        if (question.type === "score" && currentOpt) {
-          setBaseScore(s => s - (currentOpt.weight || 0));
-        } else if (question.type === "multiplier" && currentOpt) {
-          setMultiplier(m => m / (currentOpt.multiplier || 1));
-        }
-        
-        setAnswers(prev => {
-          const next = { ...prev };
-          delete next[question.id];
-          return next;
-        });
-      }
-    }
-  };
-
-  const whatsappHref = useMemo(() => {
-    const text = encodeURIComponent(`Ciao Spazio Impresa! Ho completato il test sicurezza. Rischio: ${risk.level}. Settore: ${getSectorName()}. Vorrei maggiori informazioni sul piano di adeguamento.`);
-    return `https://wa.me/390955872480?text=${text}`;
-  }, [risk.level, answers.settore]);
-
-  const resetQuiz = () => {
-    setStage("intro");
-    setCurrentQuestion(0);
-    setAnswers({});
-    setBaseScore(0);
-    setMultiplier(1);
-    setQuestions(baseQuestions);
-  };
-
-  const suggestionContent = getSuggestionContent();
-  const caseStudy = getSectorCaseStudies();
-  const managementAdvantages = getManagementAdvantages();
-
+const IntroStage = memo(({ onStart }: IntroStageProps) => {
+  const [activeObjection, setActiveObjection] = useState(0);
+  const objections = [
+    { title: "È adatto a me?", icon: "🎯", content: "Il test è progettato per TUTTE le aziende siciliane, da 1 a 100+ dipendenti. Edilizia, alimentare, manifattura, servizi: ogni settore ha domande specifiche. In 2 minuti scopri esattamente cosa rischi TU." },
+    { title: "Non ho tempo", icon: "⏱️", content: "2 minuti ora vs settimane di chiusura dopo. Un controllo può bloccarti l'attività per 30 giorni. Il test richiede meno tempo di un caffè, ma può salvarti da mesi di problemi." },
+    { title: "Sono già coperto", icon: "✅", content: "Ottimo! Ma sei sicuro al 100%? Le norme cambiano ogni 6 mesi. Dal 2025 ci sono nuovi obblighi formativi. Un secondo parere gratuito non costa nulla, ma può rivelare sorprese costose." },
+    { title: "Non mi controllano", icon: "🔍", content: "Nel 2024: 158.000 controlli, 74% aziende irregolari. Con i nuovi 'Piani Mirati di Prevenzione', i controlli non sono più casuali. Se hai dipendenti, sei già in una lista." }
+  ];
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {(stage === "intro" || stage === "quiz") && (
-        <div className="fixed bottom-0 left-0 right-0 bg-black text-white p-2 text-center text-xs z-50">
-          D.Lgs 81/08 aggiornato 2025 • Sanzioni rivalutate +15,9% • Test basato su normativa vigente
+    <section aria-labelledby="intro-title">
+      <div className="text-center py-4 sm:py-6">
+        <div className="inline-flex items-center gap-2 sm:gap-3 mb-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-tech rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-glow border border-glow">SI</div>
+          <span className="text-xl sm:text-2xl font-bold tracking-wide text-neon">Spazio Impresa</span>
         </div>
-      )}
-      
-      <main className="container mx-auto max-w-3xl px-4 pb-16">
-        {stage === "intro" && (
-          <section aria-labelledby="intro-title">
-            {/* Logo Header */}
-            <div className="text-center pt-5 pb-5">
-              <div className="w-[75px] h-[75px] mx-auto mb-5 rounded-full border-2 border-red-600 flex items-center justify-center bg-white">
-                <img 
-                  src="/lovable-uploads/53e4bec6-be78-459e-a5a5-a2b8ae560a04.png" 
-                  alt="Spazio Impresa Logo" 
-                  className="w-12 h-12 object-contain"
-                />
+      </div>
+      <Card className="border-2 border-red-600 shadow-2xl">
+        <CardContent className="p-4 sm:p-6">
+          <h1 id="intro-title" className="text-3xl sm:text-4xl md:text-5xl font-black text-center mb-4 leading-tight">
+            <span className="text-red-600">L'ISPETTORE ASL</span><br />
+            <span className="text-black">ARRIVA DOMANI</span>
+          </h1>
+          <div className="text-center mb-4 sm:mb-6">
+            <p className="text-lg sm:text-xl font-bold text-red-600 mb-3">Sei pronto? O rischi di finire nel 74% di aziende sanzionate?</p>
+            <div className="inline-block bg-yellow-400 text-black px-3 sm:px-4 py-2 rounded-lg text-base sm:text-lg font-semibold border-2 border-black">
+              ⚡ TEST GRATUITO • 2 MINUTI • ZERO IMPEGNO
+            </div>
+          </div>
+          <div className="text-center mb-6 sm:mb-8">
+            <Button onClick={onStart} size="lg" className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white shadow-lg transform hover:scale-105 transition-all">
+              🎯 SCOPRI I TUOI PUNTI DEBOLI →
+            </Button>
+            <p className="text-xs sm:text-sm text-gray-600 mt-2">
+              <strong>847 titolari</strong> l'hanno già fatto • <strong>Completamente anonimo</strong>
+            </p>
+          </div>
+          <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
+            <h2 className="text-base sm:text-lg font-bold text-center mb-2 sm:mb-3 text-red-700">🚨 DATI UFFICIALI 2024-2025</h2>
+            <div className="grid grid-cols-3 gap-1 sm:gap-2 text-center">
+              <div className="bg-white p-2 sm:p-3 rounded border"><div className="text-xl sm:text-2xl font-black text-red-600">158K</div><div className="text-xs font-medium text-black">Controlli INL</div></div>
+              <div className="bg-white p-2 sm:p-3 rounded border"><div className="text-xl sm:text-2xl font-black text-red-600">74%</div><div className="text-xs font-medium text-black">Aziende Irregolari</div></div>
+              <div className="bg-white p-2 sm:p-3 rounded border"><div className="text-xl sm:text-2xl font-black text-red-600">€900K</div><div className="text-xs font-medium text-black">Sanzioni CT</div></div>
+            </div>
+            <p className="text-center text-xs text-red-600 mt-2 font-medium">Fonte: INL 2024 + ASP Catania SPRESAL</p>
+          </div>
+          <div className="bg-gray-900 rounded-lg p-4 mb-6">
+            <div className="flex flex-wrap gap-2 mb-3">
+              {objections.map((obj, idx) => (
+                <button key={idx} onClick={() => setActiveObjection(idx)} className={`px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all ${activeObjection === idx ? "bg-yellow-400 text-black" : "bg-gray-700 text-gray-300 hover:bg-gray-600"}`}>
+                  {obj.icon} {obj.title}
+                </button>
+              ))}
+            </div>
+            <div className="bg-black text-white p-3 rounded">
+              <div className="font-bold text-yellow-400 mb-2">{objections[activeObjection].icon} {objections[activeObjection].title}</div>
+              <p className="text-sm">{objections[activeObjection].content}</p>
+            </div>
+          </div>
+          <div className="text-center">
+            <Button onClick={onStart} variant="outline" className="w-full sm:w-auto border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
+              Fai il test ora (è gratis)
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </section>
+  );
+});
+
+const QuizStage = memo(({ question, currentQuestionIndex, totalQuestions, answers, onSelectOption, onGoBack }: QuizStageProps) => {
+  const progress = totalQuestions > 0 ? ((currentQuestionIndex + 1) / totalQuestions) * 100 : 0;
+  return (
+    <section aria-labelledby="quiz-title" className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle id="quiz-title">Test di conformità 2025/2026</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 sm:space-y-6">
+          <div>
+            <div className="h-3 w-full rounded bg-gray-200 overflow-hidden">
+              <div className="h-3 rounded bg-gradient-to-r from-red-600 to-red-800 transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
+            </div>
+             <p className="mt-2 text-center text-xs sm:text-sm text-gray-500">
+              Domanda {currentQuestionIndex + 1} di {totalQuestions}
+            </p>
+          </div>
+          {question && (
+            <div>
+              <h2 className="text-lg sm:text-xl font-semibold">{question.title}</h2>
+              {question.subtitle && (<p className="mt-1 text-xs sm:text-sm text-gray-500">{question.subtitle}</p>)}
+              <div className="mt-4 grid gap-2 sm:gap-3">
+                {question.options.map(opt => {
+                  const selected = answers[question.id] === opt.value;
+                  return (
+                    <button key={opt.value} onClick={() => onSelectOption(question, opt)} className={`flex w-full items-center gap-3 rounded-md border-2 p-3 sm:p-4 text-left transition-all hover:shadow-md active:scale-[0.98] ${selected ? "border-red-600 bg-red-50 shadow-md" : "border-gray-300 hover:border-red-400 hover:bg-red-50/50"}`}>
+                      <div className={`flex h-5 w-5 items-center justify-center rounded-full border-2 text-white transition-all ${selected ? "border-red-600 bg-red-600 scale-110" : "border-gray-400"}`}>
+                        {selected && "✓"}
+                      </div>
+                      <span className="text-sm sm:text-base">{opt.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
-            
-            {/* Block 1: Headline */}
-            <Card className="mb-6 border-2 border-red-600">
-              <CardContent className="p-8 text-center">
-                <h1 id="intro-title" className="text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
-                  Passeresti un'ispezione ASL domani mattina?
-                </h1>
-                <p className="text-xl text-muted-foreground mb-6">
-                  Test basato sui protocolli ispettivi reali ASL/SPRESAL/INL 2024-2025.<br/>
-                  Scopri in 90 secondi se la tua azienda supererebbe i controlli prioritari<br/>
-                  effettivamente utilizzati negli 859 sopralluoghi ASP Catania.
-                </p>
-                
-                <div className="mb-6">
-                  <Button onClick={() => setStage("quiz")} size="lg" className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-3 text-lg">
-                    👉 Inizia il test gratuito →
-                  </Button>
-                </div>
-                <div className="text-sm text-green-600 font-medium">
-                  100% anonimo - Risultati immediati
-                </div>
-              </CardContent>
-            </Card>
+          )}
+        </CardContent>
+      </Card>
+      <div className="flex justify-start">
+        <Button variant="ghost" size="sm" onClick={onGoBack} disabled={currentQuestionIndex === 0}>
+          ← Indietro
+        </Button>
+      </div>
+    </section>
+  );
+});
 
-            {/* Block 2: Metodologia Validata */}
-            <Card className="mb-6 bg-white border-2 border-black">
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold mb-3 text-center">🔍 METODOLOGIA VALIDATA:</h2>
-                <ul className="space-y-2">
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✅</span>
-                    <span className="text-sm">Basato su 859 sopralluoghi reali ASP Catania 2024</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✅</span>
-                    <span className="text-sm">Sequenza ispettiva documentata INL/SPRESAL (139.680 controlli nazionali)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✅</span>
-                    <span className="text-sm">Sanzioni aggiornate D.Lgs 81/08 (+15,9% rivalutazione 2023)</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✅</span>
-                    <span className="text-sm">811 violazioni reali analizzate - sanzione media €1.110 effettiva</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-green-600 font-bold mt-1">✅</span>
-                    <span className="text-sm">Logica condizionale per settori specifici (edilizia, manifatturiero, alimentare)</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+const LoadingStage = memo(() => (
+  <section aria-live="polite">
+    <Card>
+      <CardContent className="p-8 sm:p-10 text-center">
+        <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-red-600" />
+        <h2 className="text-lg sm:text-xl font-semibold">Analisi in corso...</h2>
+        <p className="text-sm sm:text-base text-gray-500">Confrontiamo le tue risposte con i protocolli ispettivi 2025/2026</p>
+      </CardContent>
+    </Card>
+  </section>
+));
 
-            {/* Block 3: Dati Allarmanti */}
-            <Card className="mb-6 bg-red-50 border-2 border-red-600">
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold mb-3 text-center text-red-600">📊 DATI UFFICIALI ALLARMANTI 2024-2025:</h2>
-                <ul className="space-y-2 text-black">
-                  <li><strong>+59% ispezioni INL</strong> programmate (139.680 controlli totali)</li>
-                  <li><strong>74% tasso irregolarità nazionale</strong> (78,59% in Sicilia)</li>
-                  <li><strong>+127% violazioni sicurezza</strong> rilevate (83.330 vs 36.680)</li>
-                  <li><strong>Sicilia: +24,6% morti bianche</strong> (81 vs 65 del 2023)</li>
-                  <li><strong>Sanzioni rivalutate +15,9%:</strong> ora €2.315-€7.631 per violazione</li>
-                </ul>
-                
-                <div className="mt-4 p-3 bg-white border border-red-400 rounded">
-                  <h3 className="font-semibold text-red-600 mb-2">🎯 CONTROLLI MIRATI PER SETTORE:</h3>
-                  <ul className="text-sm space-y-1 text-black">
-                    <li>• <strong>Edilizia:</strong> 41.106 ispezioni (+73%) - Patente crediti obbligatoria</li>
-                    <li>• <strong>Manifatturiero:</strong> Focus verifiche periodiche + sostanze chimiche</li>
-                    <li>• <strong>Alimentare:</strong> HACCP integrato + controlli temperatura</li>
-                    <li>• <strong>Tutti:</strong> Libro Unico Lavoro sempre verificato (prima richiesta)</li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
+const ResultsStage = memo(({ risk, violations, answers, onReset }: ResultsStageProps) => {
+  const [showCalculation, setShowCalculation] = useState(false);
+  const [currentCaseStudy, setCurrentCaseStudy] = useState(0);
+  const sanctionMax = violations.reduce((total, v) => total + v.max, 0);
+  const getSectorName = () => (answers.settore && {
+    edilizia: "Edilizia",
+    alimentare: "Alimentare",
+    manifatturiero: "Manifatturiero",
+    servizi: "Servizi",
+    commercio: "Commercio",
+    agricoltura: "Agricoltura"
+  }[answers.settore]) || "Servizi";
+  const sanctionDetails = useMemo(() => calculateSanctionDetails(answers, violations), [answers, violations]);
+  const dynamicInsight = useMemo(() => generateDynamicInsight(answers, violations), [answers, violations]);
+  const personalizedAdvantages = useMemo(() => generatePersonalizedAdvantages(answers), [answers]);
+  const whatsappHref = useMemo(() => {
+    const text = encodeURIComponent(`Ciao Spazio Impresa! Ho completato il test (rischio ${risk.level}). Vorrei prenotare la mia Analisi Strategica Gratuita per la mia azienda nel settore ${getSectorName()}.`);
+    return `https://wa.me/${CONFIG.contact.whatsapp}?text=${text}`;
+  }, [risk.level, answers.settore]);
 
-            {/* Block 4: È per te se */}
-            <Card className="mb-6 bg-black text-white">
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold mb-3 text-center text-white">✋ È per te se:</h2>
-                <ul className="space-y-2">
-                  <li>• <strong>Hai un'impresa in Sicilia</strong></li>
-                  <li>• <strong>Operi in settori a rischio</strong></li>
-                  <li>• <strong>Sei già seguito, ma vuoi un secondo parere</strong></li>
-                  <li>• <strong>Vuoi evitare multe, blocchi o figuracce con l'ASL</strong></li>
-                </ul>
-              </CardContent>
-            </Card>
+  // FIX: Anchor link handler
+  const handleScrollTo = (e, targetId) => {
+    e.preventDefault();
+    document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-            {/* Block 5: Headline Intermedia */}
-            <Card className="mb-6 border-2 border-red-600">
-              <CardContent className="p-6 text-center">
-                <h2 className="text-2xl font-bold mb-4">🎯 Ti bastano 90 secondi per capire se qualcosa può andare storto e come evitarlo.</h2>
-                <Button onClick={() => setStage("quiz")} size="lg" className="bg-gradient-to-r from-green-600 to-green-800 hover:from-green-700 hover:to-green-900 text-white px-8 py-3 text-lg">
-                  👉 Fai il test gratuito adesso
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Block 6: Garanzia */}
-            <Card className="mb-6 bg-white border-2 border-black">
-              <CardContent className="p-6 text-center">
-                <h2 className="text-lg font-semibold mb-3">🔐 Nessun rischio, nessun impegno.</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="text-green-600 font-bold">✔️</div>
-                    <div className="text-sm font-medium">Test anonimo</div>
+  return (
+    <section aria-labelledby="results-title" className="space-y-4 sm:space-y-6">
+      <Card className="border-2 border-red-600 shadow-lg">
+        <CardContent className="p-4 sm:p-6">
+          <div className="text-center">
+            <Badge variant={riskBadgeVariant(risk.level)} className="mb-3 sm:mb-4 text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2">
+              Rischio {risk.level}
+            </Badge>
+            <h1 id="results-title" className="text-2xl sm:text-3xl font-bold">Report Rischio Aziendale</h1>
+          </div>
+          {violations.length > 0 ? (
+            <div className="mt-4 sm:mt-6">
+              <div className="rounded-lg border-2 border-black bg-white p-4 sm:p-6 text-center shadow-inner">
+                <div className="text-3xl sm:text-5xl font-black text-red-600 mb-2 sm:mb-3">€{sanctionMax.toLocaleString("it-IT")}</div>
+                <div className="text-sm sm:text-base text-black font-semibold">È la sanzione massima che rischi OGGI se l'ispettore suona il campanello.</div>
+                <button onClick={() => setShowCalculation(!showCalculation)} className="mt-3 text-xs sm:text-sm text-gray-600 hover:text-black font-medium flex items-center justify-center gap-1 mx-auto transition-colors">
+                  <span>Come abbiamo ottenuto questa cifra?</span>
+                  <span className={`transition-transform ${showCalculation ? 'rotate-180' : ''}`}>▼</span>
+                </button>
+                {showCalculation && (
+                  <div className="mt-3 p-3 bg-gray-50 rounded border text-left text-xs sm:text-sm">
+                    <h4 className="font-bold mb-2">📊 Base di calcolo:</h4>
+                    <ul className="space-y-1 text-gray-700">
+                      <li>• <strong>{sanctionDetails.violations} criticità rilevate</strong> dalle tue risposte</li>
+                      <li>• {sanctionDetails.noAnswers} risposte "No" (non conformità certe)</li>
+                      <li>• {sanctionDetails.unsureAnswers} risposte "Non sono sicuro" (rischi probabili)</li>
+                      <li>• Su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
+                    </ul>
+                    {sanctionDetails.sanctionBreakdown.length > 0 && (
+                      <>
+                        <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
+                        <ul className="space-y-1">
+                          {sanctionDetails.sanctionBreakdown.map((item, idx) => (
+                            <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a €{item.max.toLocaleString('it-IT')}</span></li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                    <p className="mt-3 text-xs text-gray-600">* Sanzioni cumulative secondo D.Lgs. 81/08, rivalutate +15,9% dal 06/10/2023</p>
                   </div>
-                  <div className="text-center">
-                    <div className="text-green-600 font-bold">✔️</div>
-                    <div className="text-sm font-medium">Nessun dato sensibile richiesto</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-green-600 font-bold">✔️</div>
-                    <div className="text-sm font-medium">Solo risposte chiare e su misura</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Block 7: Footer */}
-            <Card className="bg-gray-50 border border-gray-300">
-              <CardContent className="p-4 text-center">
-                <div className="text-sm text-gray-600">
-                  <div className="font-medium mb-1">Test basato su D.Lgs 81/08 aggiornato 2025</div>
-                  <div>Fonti ufficiali: INAIL – INL – ASP Sicilia</div>
-                  <div>Creato da esperti in sicurezza sul lavoro</div>
-                </div>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
-        {/* Quiz Section */}
-        {stage === "quiz" && (
-          <section aria-labelledby="quiz-title" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle id="quiz-title">Quiz sicurezza</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <div className="h-2 w-full rounded bg-muted">
-                    <div className="h-2 rounded bg-red-600" style={{ width: `${progress}%` }} />
-                  </div>
-                  <p className="mt-2 text-center text-sm text-muted-foreground">
-                    Domanda {currentQuestion + 1} di {questions.length}
-                  </p>
-                </div>
-
-                <div>
-                  <h2 className="text-xl font-semibold">{question.title}</h2>
-                  {question.subtitle && <p className="mt-1 text-sm text-muted-foreground">{question.subtitle}</p>}
-
-                  <div className="mt-4 grid gap-3">
-                    {question.options.map(opt => {
-                      const selected = answers[question.id] === opt.value;
-                      return (
-                        <button 
-                          key={opt.value} 
-                          onClick={() => selectOption(question, opt)} 
-                          className={`flex w-full items-center gap-3 rounded-md border p-4 text-left transition hover:bg-accent hover:text-accent-foreground ${
-                            selected ? "border-red-600 bg-accent" : "border-input"
-                          }`}
-                        >
-                          <div className={`inline-flex h-5 w-5 items-center justify-center rounded-full border ${
-                            selected ? "border-red-600 bg-red-600 text-primary-foreground" : "border-muted"
-                          }`}>
-                            {selected ? "✓" : ""}
-                          </div>
-                          {opt.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="flex justify-start">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={goBack}
-                disabled={currentQuestion === 0}
-                className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white disabled:opacity-30 disabled:border-muted disabled:text-muted-foreground"
-              >
-                ← Indietro
-              </Button>
-            </div>
-          </section>
-        )}
-
-        {stage === "loading" && (
-          <section aria-live="polite">
-            <Card>
-              <CardContent className="p-10 text-center">
-                <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-muted border-t-primary" />
-                <h2 className="text-xl font-semibold">Analisi in corso...</h2>
-                <p className="text-muted-foreground">Stiamo calcolando il tuo livello di rischio</p>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
-        {stage === "results" && (
-          <section aria-labelledby="results-title" className="space-y-6">
-            <Card>
-              <CardContent className="p-6">
-                <div className="text-center">
-                  <Badge variant={riskBadgeVariant(risk.level)} className="mb-4 text-lg px-4 py-2">
-                    Rischio {risk.level}
-                  </Badge>
-                  <h2 id="results-title" className="text-2xl font-bold">
-                    La tua analisi personalizzata
-                  </h2>
-                </div>
-
-                {violations.length === 0 ? (
-                  <>
-                    <div className="mt-6 text-center bg-gradient-to-br from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-500">
-                      <div className="text-4xl font-bold text-green-700 mb-3">🏆 ECCELLENTE!</div>
-                      <h2 className="text-2xl font-bold text-black mb-2">Zero criticità immediate rilevate</h2>
-                      <p className="text-lg text-green-600 mb-4">
-                        La tua azienda supererebbe i controlli prioritari ASL/SPRESAL con il nostro protocollo testato
-                      </p>
-                      
-                      <div className="bg-white rounded border-2 border-green-200 p-4 text-center">
-                        <div className="text-lg font-medium text-black">
-                          🎯 Sei nel <span className="text-green-700 font-bold">TOP 26%</span> delle aziende siciliane
-                        </div>
-                        <p className="text-sm text-gray-600 mt-2">
-                          ASP Catania 2024: Solo 26% aziende senza irregolarità immediate (189/811 violazioni evitate)
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6 rounded-lg bg-blue-50 border-2 border-blue-600 p-4">
-                      <div className="font-semibold text-blue-700 mb-2">🔍 Mantenimento Standard di Eccellenza</div>
-                      <p className="text-sm mb-3 text-black">
-                        {answers.gestione === "gestisco-io" 
-                          ? "Complimenti! Gestire tutto da solo mantenendo questo standard è notevole. Sapevi che il D.Lgs 81/08 ha subito 6 modifiche negli ultimi 2 anni? Un Sistema di monitoraggio proattivo ti garantirebbe di restare sempre al vertice."
-                          : "Il tuo consulente sta facendo un buon lavoro! Per mantenere questo standard nel tempo, molte aziende top affiancano un Sistema di monitoraggio continuo."
-                        }
-                      </p>
-                      
-                      <button className="text-blue-600 hover:text-blue-800 underline text-sm font-medium">
-                        Scopri il Sistema per Aziende Top Performer →
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="mt-6 flex justify-center">
-                      <div className="w-full max-w-2xl">
-                        <div className="rounded-lg border-2 border-black bg-white p-6 text-center shadow-lg">
-                          <div className="text-4xl font-black text-red-600 mb-3">€{sanctionMax.toLocaleString("it-IT")}</div>
-                          <div className="text-black font-semibold mb-4">Sanzione massima se ti controllano oggi</div>
-                          
-                          <details className="mt-3">
-                            <summary className="cursor-pointer text-sm font-medium text-red-600 hover:text-red-800">
-                              📋 Come abbiamo calcolato questa cifra ↓
-                            </summary>
-                            <div className="mt-3 text-sm text-black leading-relaxed text-left bg-gray-50 p-3 rounded border">
-                              <div className="space-y-2">
-                                <p><strong>Base di calcolo:</strong> {violations.length} potenziali violazioni rilevate nel tuo test</p>
-                                <p><strong>Principio normativo:</strong> D.Lgs. 81/08 - Art. 18 (sanzioni rivalutate +15,9% nel 2023)</p>
-                                <p><strong>Metodo:</strong> Ogni violazione ha un range - prendiamo il massimo possibile</p>
-                                <p><strong>Cumulo sanzioni:</strong> Si sommano tra loro (non puoi scegliere quale pagare)</p>
-                                <p><strong>Responsabilità:</strong> In tribunale ci vai TU, non consulenti/dipendenti</p>
-                                <p><strong>Contesto territoriale:</strong> Sicilia - irregolarità superiori alla media nazionale</p>
-                              </div>
-                            </div>
-                          </details>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 rounded-lg bg-black p-4 text-white">
-                      <div className="font-semibold text-red-500 mb-2">💡 Realtà Check</div>
-                      <p className="text-sm mb-2">
-                        {answers.gestione === "consulente" 
-                          ? `Nelle tue ${violations.length} potenziali violazioni, ${Math.min(Math.ceil(violations.length * 0.7), violations.length)} doveva seguirle il tuo consulente. O non sa, o non fa. In entrambi i casi, forse conviene valutare un'alternativa.`
-                          : suggestionContent.text
-                        }
-                      </p>
-                      <button 
-                        onClick={() => document.getElementById('advantages-section')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="text-red-400 hover:text-red-300 underline text-sm font-medium"
-                      >
-                        {suggestionContent.link} →
-                      </button>
-                    </div>
-
-                    <div className="mt-6 rounded-lg border-2 border-red-600 bg-red-50 p-4">
-                      <h3 className="mb-4 text-lg font-semibold text-center text-black">
-                        🎯 CONTROLLI PRIORITARI - ORDINE ISPETTIVO REALE
-                      </h3>
-                      
-                      <div className="divide-y">
-                        {violations.map((v, index) => (
-                          <article key={v.key} className="py-3">
-                            <div className="flex items-center justify-between gap-3 rounded-md border border-red-300 bg-white p-4 border-l-4 border-l-red-600 hover:shadow-md transition-shadow">
-                              <div className="flex items-center gap-3">
-                                <PriorityBadge urgency={v.priority.urgency}>
-                                  {v.priority.urgency}
-                                </PriorityBadge>
-                                <div>
-                                  <div className="font-medium text-black">{v.text}</div>
-                                  <div className="text-sm text-red-600">⚡ {v.priority.reason}</div>
-                                  {v.key === 'patente-crediti' && (
-                                    <div className="mt-2 bg-red-100 border border-red-400 rounded p-2">
-                                      <span className="text-red-800 font-semibold text-sm">
-                                        🚫 BLOCCANTE: Esclusione immediata dal cantiere
-                                      </span>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                              <div className="text-red-600 font-semibold whitespace-nowrap">
-                                {v.max === 0 ? (
-                                  <span className="text-red-800 font-bold bg-red-200 px-2 py-1 rounded">STOP LAVORI</span>
-                                ) : (
-                                  <span>€{v.min.toLocaleString("it-IT")} – €{v.max.toLocaleString("it-IT")}</span>
-                                )}
-                              </div>
-                            </div>
-                            
-                            <details className="mt-2">
-                              <summary className="cursor-pointer text-sm font-medium text-black">
-                                🔍 Perché è prioritario (dati reali)
-                              </summary>
-                              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">
-                                {v.consequences.map((c, i) => <li key={i}>{c}</li>)}
-                              </ul>
-                            </details>
-                            
-                            <details className="mt-2">
-                              <summary className="cursor-pointer text-sm font-medium text-black">🔧 Dettagli e azioni</summary>
-                              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">
-                                {v.actions.map((a, i) => <li key={i}>{a}</li>)}
-                                <li>
-                                  <div className="font-medium text-black">Fonte: {v.fonte}</div>
-                                </li>
-                              </ul>
-                            </details>
-                          </article>
-                        ))}
-                      </div>
-                    </div>
-                  </>
                 )}
-
-                <div className="mt-6 rounded-lg border bg-card p-4">
-                  <h3 className="mb-3 text-lg font-semibold">💼 CHI CE L'HA FATTA (anonimizzato ma vero)</h3>
-                  <div className="rounded-md border bg-background p-4 text-sm">
-                    <div className="font-medium text-green-600 mb-2">{caseStudy.title}</div>
-                    <div className="mb-2">
-                      <strong>SITUAZIONE:</strong> <span className="italic">"{caseStudy.problem}"</span>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-4 sm:mt-6 rounded-lg border-2 border-green-500 bg-green-50 p-4 sm:p-6 text-center">
+              <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">🎯 COMPLIMENTI!</div>
+              <div className="text-sm sm:text-base text-green-800 font-semibold">Sulla base delle tue risposte, la tua azienda appare conforme ai controlli ispettivi più frequenti.</div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      
+      <div className={`rounded-lg p-4 sm:p-6 text-center shadow-lg ${dynamicInsight.urgency === "high" ? "bg-red-900 text-white" : dynamicInsight.urgency === "medium" ? "bg-yellow-500 text-black" : "bg-gray-800 text-white"}`}>
+        <h2 className="text-xl sm:text-2xl font-bold mb-2">{dynamicInsight.title}</h2>
+        <p className="text-sm sm:text-base max-w-2xl mx-auto opacity-90">{dynamicInsight.text}</p>
+        <a href="#vantaggi-spazio-impresa" onClick={(e) => handleScrollTo(e, 'vantaggi-spazio-impresa')} className="inline-block mt-4 text-sm font-semibold underline hover:no-underline">Scopri come Spazio Impresa può aiutarti →</a>
+      </div>
+      
+      {violations.length > 0 && (
+        <Card>
+          <CardHeader className="pb-2 sm:pb-4">
+            <CardTitle>Dettaglio Rischi e Soluzioni</CardTitle>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">(clicca sulle opzioni per approfondire)</p>
+          </CardHeader>
+          <CardContent className="space-y-2 sm:space-y-3">
+            {violations.map((v, index) => (
+              <details key={v.key} className="group bg-gray-50 rounded-lg border border-gray-200 overflow-hidden transition-all hover:shadow-md">
+                <summary className="p-3 sm:p-4 cursor-pointer flex justify-between items-center hover:bg-gray-100 transition-colors">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">{index + 1}</span>
+                    <span className="font-semibold text-sm sm:text-base truncate">{v.text}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="destructive" className="text-xs flex-shrink-0">{v.priority.urgency}</Badge>
+                    <span className="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+                  </div>
+                </summary>
+                <div className="p-3 sm:p-4 border-t bg-white">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="bg-red-50 border-l-4 border-red-500 p-3 rounded">
+                      <h4 className="font-bold text-sm mb-2">⚠️ Rischi</h4>
+                      <ul className="text-xs sm:text-sm space-y-1">{v.consequences.map((c, i) => (<li key={i} className="flex items-start"><span className="text-red-500 mr-1">•</span><span>{c}</span></li>))}</ul>
                     </div>
-                    <div className="mb-2">
-                      <strong>RISULTATO:</strong>
-                      <ul className="mt-1 list-none space-y-1 pl-0">
-                        {caseStudy.results.map((result, i) => <li key={i}>✅ {result}</li>)}
-                      </ul>
-                    </div>
-                    <div className="italic text-green-700 text-sm">
-                      <strong>QUOTE:</strong> "{caseStudy.quote}"
+                    <div className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                      <h4 className="font-bold text-sm mb-2">✅ Azioni</h4>
+                      <ul className="text-xs sm:text-sm space-y-1">{v.actions.map((a, i) => (<li key={i} className="flex items-start"><span className="text-green-500 mr-1">•</span><span>{a}</span></li>))}</ul>
                     </div>
                   </div>
+                  <div className="text-xs text-gray-600 pt-2 mt-3 border-t"><strong>📖 Normativa:</strong> {v.fonte}</div>
                 </div>
-
-                <div id="advantages-section" className="mt-6 rounded-lg border bg-blue-50 p-4">
-                  <h3 className="mb-3 text-lg font-semibold text-center">🎯 VANTAGGI SPAZIO IMPRESA PER LA TUA SITUAZIONE</h3>
-                  <div className="space-y-2">
-                    {managementAdvantages.map((advantage, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <span className="text-blue-600 font-bold">✓</span>
-                        <span className="text-sm">{advantage}</span>
+              </details>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+      
+      <Card id="vantaggi-spazio-impresa" className="bg-gradient-to-br from-gray-900 to-black text-white">
+        <CardHeader><CardTitle className="text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle></CardHeader>
+        <CardContent>
+          <div className="grid gap-3 sm:gap-4">
+            {personalizedAdvantages.map((advantage, index) => (
+              <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors">
+                <span className="text-lg sm:text-xl">{advantage.substring(0, 2)}</span>
+                <span className="text-sm sm:text-base">{advantage.substring(2)}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      
+      <Card>
+        <CardHeader><CardTitle>Casi di successo</CardTitle></CardHeader>
+        <CardContent>
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div className="flex transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${currentCaseStudy * 100}%)` }}>
+                {caseStudies.map((study, idx) => (
+                  <div key={idx} className="w-full flex-shrink-0 px-2">
+                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4">
+                      <div className="flex items-center gap-3 mb-3">
+                        <span className="text-3xl">{study.icon}</span>
+                        <div><h3 className="font-bold text-sm">{study.title}</h3><p className="text-xs text-gray-600">{study.situation}</p></div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-blue-50 p-6 text-center shadow-lg">
-                  <h3 className="text-xl font-bold text-green-700">Chiedi come Ottenere Accesso Immediato a:</h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 text-left">
-                    <div className="bg-white rounded border p-3">
-                      <h4 className="font-semibold text-green-600 mb-2">🔔 Sistema Proattivo di Alert</h4>
-                      <ul className="text-sm space-y-1">
-                        <li>✓ Promemoria 30gg prima per visite mediche</li>
-                        <li>✓ Alert 60gg prima per scadenze formazione</li>
-                        <li>✓ Gestione nuovi dipendenti in max 7gg</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-white rounded border p-3">
-                      <h4 className="font-semibold text-green-600 mb-2">📋 Documentazione Sempre Pronta</h4>
-                      <ul className="text-sm space-y-1">
-                        <li>✓ DVR in aggiornamento continuo</li>
-                        <li>✓ Piattaforma digitale 24/7</li>
-                        <li>✓ Verbali e nomine automatizzati</li>
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-white rounded border p-3">
-                      <h4 className="font-semibold text-green-600 mb-2">💰 Formazione Finanziata*</h4>
-                      <ul className="text-sm space-y-1">
-                        <li>✓ Iscrizione fondo interprofessionale</li>
-                        <li>✓ Verifica accesso finanziamenti</li>
-                        <li>✓ Sconto 10% se non finanziabile</li>
-                      </ul>
-                      <p className="text-xs text-gray-600 mt-1">*Soggetto a verifica requisiti con ente formativo</p>
-                    </div>
-                    
-                    <div className="bg-white rounded border p-3">
-                      <h4 className="font-semibold text-green-600 mb-2">👥 Supporto Completo</h4>
-                      <ul className="text-sm space-y-1">
-                        <li>✓ Medico competente individuato</li>
-                        <li>✓ Analisi rischi continuativa</li>
-                        <li>✓ Aggiornamenti normativi inclusi</li>
-                      </ul>
+                      <div className="space-y-2 text-xs sm:text-sm">
+                        <div className="bg-white p-2 rounded"><strong className="text-red-600">Sfida:</strong><p className="mt-1 text-gray-700">{study.challenge}</p></div>
+                        <div className="bg-white p-2 rounded"><strong className="text-blue-600">Soluzione:</strong><p className="mt-1 text-gray-700">{study.solution}</p></div>
+                        <div className="bg-green-50 border border-green-200 p-2 rounded"><strong className="text-green-700">✅ Risultato:</strong><p className="mt-1 font-semibold text-green-800">{study.result}</p></div>
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="flex flex-wrap items-center justify-center gap-3 mb-4">
-                    <a href={whatsappHref} target="_blank" rel="noreferrer">
-                      <Button className="bg-green-600 hover:bg-green-700">
-                        💬 Scrivici su WhatsApp
-                      </Button>
-                    </a>
-                    <a href="tel:0955872480">
-                      <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white">
-                        📞 095 587 2480
-                      </Button>
-                    </a>
-                  </div>
-                  <p className="text-sm text-green-600 mb-2">🔒 Solo per aziende siciliane | Agenda limitata: 5 slot/settimana</p>
-                  <p className="text-xs text-muted-foreground">Risposta garantita entro 2 ore • Attivi dal lunedì al venerdì 9:00-18:00</p>
-                </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-center gap-2 mt-4">
+              {caseStudies.map((_, idx) => (<button key={idx} onClick={() => setCurrentCaseStudy(idx)} className={`w-2 h-2 rounded-full transition-all ${currentCaseStudy === idx ? "w-8 bg-red-600" : "bg-gray-300 hover:bg-gray-400"}`} aria-label={`Vai al caso studio ${idx + 1}`} />))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-                <div className="mt-6 text-center">
-                  <Button variant="ghost" onClick={resetQuiz} className="text-xs">
-                    Rifai il test
-                  </Button>
-                </div>
+      <Card>
+        <CardHeader><CardTitle>Cosa include il Sistema di Spazio Impresa:</CardTitle></CardHeader>
+        <CardContent>
+            <ul className="space-y-2 text-sm sm:text-base">
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze mediche e corsi</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Coordinamento figure SPP</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Archivio digitale 24/7 con documentazione</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Alert automatici personalizzati</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Supporto per controlli ispettivi</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Analisi fondi interprofessionali</span></li>
+            </ul>
+        </CardContent>
+      </Card>
+      
+      <div className="rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 text-center shadow-xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-black mb-3">Trasforma il rischio in tranquillità</h2>
+        <p className="text-sm sm:text-lg text-gray-700 mb-4 max-w-xl mx-auto">Prenota la tua <strong>Analisi Strategica Gratuita</strong>. 30 minuti, zero impegno, piano d'azione personalizzato.</p>
+        <div className="my-6 p-4 bg-white rounded border text-left text-sm max-w-md mx-auto">
+          <h4 className="font-bold text-center mb-3">Cosa otterrai (gratuitamente):</h4>
+          <ul className="space-y-2">
+            <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Check-up Conformità 2025-2026:</strong> La tua posizione rispetto ai nuovi obblighi normativi.</span></li>
+            <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Mappatura Scadenze Critiche:</strong> Le date da cerchiare in rosso sul calendario.</span></li>
+            <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Analisi Formazione Agevolata:</strong> Verifica opportunità fondi interprofessionali.</span></li>
+          </ul>
+        </div>
+        <div className="space-y-3 sm:space-y-0 sm:flex sm:gap-4 sm:justify-center">
+          <a href={whatsappHref} target="_blank" rel="noreferrer" className="block"><Button size="lg" variant="success" className="w-full">💬 Prenota via WhatsApp</Button></a>
+          <a href={`tel:${CONFIG.contact.phone}`} className="block"><Button size="lg" variant="outline" className="w-full">📞 Chiama {CONFIG.contact.phone}</Button></a>
+        </div>
+        <p className="text-xs text-gray-600 mt-4"><strong>🏠 Riservato ad aziende siciliane</strong> • Risposta entro 2h in orario di lavoro</p>
+      </div>
+      
+      <div className="text-center mt-6">
+        <Button variant="ghost" onClick={onReset}>Rifai il test per un'altra azienda</Button>
+      </div>
+    </section>
+  );
+});
 
-                <p className="mt-4 text-center text-xs text-muted-foreground">
-                  Test basato su D.Lgs 81/08 aggiornato al 2025 • Dati anonimi • Risultati immediati
-                </p>
-              </CardContent>
-            </Card>
-          </section>
-        )}
+//  MAIN APP COMPONENT =
+export default function OptimizedQuizApp() {
+  const [state, dispatch] = useReducer(quizReducer, initialState);
+  const { stage, currentQuestionIndex, answers, baseScore, multiplier } = state;
+  const filteredQuestions = useMemo(() => filterQuestions(answers), [answers]);
+  const currentQuestion = filteredQuestions[currentQuestionIndex];
+  const risk = useMemo(() => calculateRisk(baseScore, multiplier), [baseScore, multiplier]);
+  const violations = useMemo(() => calculateViolations(answers), [answers]);
+  const totalQuestionsForDisplay = useMemo(() => {
+    if (answers.settore) {
+      return filteredQuestions.length;
+    }
+    return 10; // Default to 10 for a better initial UX
+  }, [answers.settore, filteredQuestions.length]);
+  const handleStart = useCallback(() => dispatch({ type: 'START_QUIZ' }), []);
+  const handleGoBack = useCallback(() => dispatch({ type: 'GO_BACK' }), []);
+  const handleReset = useCallback(() => dispatch({ type: 'RESET' }), []);
+  const handleSelectOption = useCallback((question, option) => {
+    dispatch({ type: 'SELECT_OPTION', question, option });
+    setTimeout(() => {
+      const newAnswers = { ...answers, [question.id]: option.value };
+      const nextFiltered = filterQuestions(newAnswers);
+      if (currentQuestionIndex < nextFiltered.length - 1) {
+        dispatch({ type: 'NEXT_QUESTION' });
+      } else {
+        dispatch({ type: 'START_LOADING' });
+        setTimeout(() => dispatch({ type: 'SHOW_RESULTS' }), CONFIG.ui.loadingDelay);
+      }
+    }, CONFIG.ui.transitionDelay);
+  }, [currentQuestionIndex, answers]);
+  const renderStage = () => {
+    switch (stage) {
+      case "quiz": return <QuizStage question={currentQuestion} currentQuestionIndex={currentQuestionIndex} totalQuestions={totalQuestionsForDisplay} answers={answers} onSelectOption={handleSelectOption} onGoBack={handleGoBack} />;
+      case "loading": return <LoadingStage />;
+      case "results": return <ResultsStage risk={risk} violations={violations} answers={answers} onReset={handleReset} />;
+      case "intro":
+      default: return <IntroStage onStart={handleStart} />;
+    }
+  };
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+      <div className="fixed bottom-0 left-0 right-0 bg-black text-white p-2 text-center text-xs z-50">
+        Test basato su D.Lgs. 81/08 aggiornato 2025 e protocolli ispettivi INL/ASP/SPRESAL Sicilia 2024-25
+      </div>
+      <main className="container mx-auto max-w-3xl px-4 py-6 sm:py-8 pb-16">
+        {renderStage()}
       </main>
     </div>
   );
-};
-
-export default Index;
+}
