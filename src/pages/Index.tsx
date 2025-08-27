@@ -288,10 +288,12 @@ const IntroStage = memo(({ onStart }: IntroStageProps) => {
   return (
     <section aria-labelledby="intro-title">
       <div className="text-center py-4 sm:py-6">
-        <div className="inline-flex items-center gap-2 sm:gap-3 mb-4">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-tech rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-glow border border-glow">SI</div>
-          <span className="text-xl sm:text-2xl font-bold tracking-wide text-neon">Spazio Impresa</span>
-        </div>
+         <div className="inline-flex items-center gap-2 sm:gap-3 mb-4">
+           <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white border-2 border-red-600 rounded-full flex items-center justify-center shadow-lg overflow-hidden">
+             <img src="/lovable-uploads/53e4bec6-be78-459e-a5a5-a2b8ae560a04.png" alt="Spazio Impresa Logo" className="w-full h-full object-contain p-1" />
+           </div>
+           <span className="text-xl sm:text-2xl font-bold tracking-wide text-neon">Spazio Impresa</span>
+         </div>
       </div>
       <Card className="border-2 border-red-600 shadow-2xl">
         <CardContent className="p-4 sm:p-6">
