@@ -67,8 +67,8 @@ const CardHeader = memo(({ children, className = "" }: Omit<CardProps, 'id'>) =>
   </div>
 ));
 
-const CardTitle = memo(({ children, className = "" }: Omit<CardProps, 'id'>) => (
-  <h2 className={`text-lg sm:text-xl font-bold tracking-tight ${className}`}>
+const CardTitle = memo(({ children, className = "", id }: { children: React.ReactNode; className?: string; id?: string }) => (
+  <h2 id={id} className={`text-lg sm:text-xl font-bold tracking-tight ${className}`}>
     {children}
   </h2>
 ));
