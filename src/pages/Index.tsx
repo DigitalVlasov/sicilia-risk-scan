@@ -300,7 +300,7 @@ const IntroStage = memo(({ onStart }: IntroStageProps) => {
           <div className="text-center mb-4 sm:mb-6">
             <p className="text-lg sm:text-xl font-bold text-black mb-3">Sei pronto? O <span className="text-red-600">rischi multe e guai legali</span> come il 74% dei colleghi siciliani che si sentivano coperti?</p>
             <div className="text-center mb-3">
-              <Button onClick={onStart} size="lg" className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white shadow-lg animate-[pulse_3s_ease-in-out_infinite] hover:scale-105 transition-all duration-300">
+              <Button onClick={onStart} size="lg" className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white shadow-lg hover:scale-105 transition-all duration-300">
                 SCOPRI ORA SE È TUTTO OK →
               </Button>
             </div>
