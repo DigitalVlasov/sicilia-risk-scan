@@ -295,8 +295,8 @@ const IntroStage = memo(({ onStart }: IntroStageProps) => {
       <Card className="border-2 border-red-600 shadow-2xl">
         <CardContent className="p-4 sm:p-6">
           <h1 id="intro-title" className="text-3xl sm:text-4xl md:text-5xl font-black text-center mb-4 leading-tight">
-            <span className="text-red-600">L'ISPETTORE ASL</span><br />
-            <span className="text-black">ARRIVA DOMANI</span>
+            <span className="text-black">SE DOMANI BUSSA</span><br />
+            <span className="text-red-600">L'ISPETTORE</span>
           </h1>
           <div className="text-center mb-4 sm:mb-6">
             <p className="text-lg sm:text-xl font-bold text-red-600 mb-3">Sei pronto? O rischi di finire nel 74% di aziende sanzionate?</p>
