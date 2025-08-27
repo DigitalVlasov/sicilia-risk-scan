@@ -300,17 +300,17 @@ const IntroStage = memo(({ onStart }: IntroStageProps) => {
           </h1>
           <div className="text-center mb-4 sm:mb-6">
             <p className="text-lg sm:text-xl font-bold text-red-600 mb-3">Sei pronto? O rischi di finire nel 74% di aziende sanzionate?</p>
+            <div className="text-center mb-4">
+              <Button onClick={onStart} size="lg" className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white shadow-lg transform hover:scale-105 transition-all">
+                SCOPRI ORA SE È TUTTO OK →
+              </Button>
+              <p className="text-xs sm:text-sm text-gray-600 mt-2">
+                <strong>847 titolari</strong> l'hanno già fatto • <strong>Completamente anonimo</strong>
+              </p>
+            </div>
             <div className="inline-block bg-yellow-400 text-black px-3 sm:px-4 py-2 rounded-lg text-base sm:text-lg font-semibold border-2 border-black">
               ⚡ TEST GRATUITO • 2 MINUTI • ZERO IMPEGNO
             </div>
-          </div>
-          <div className="text-center mb-6 sm:mb-8">
-            <Button onClick={onStart} size="lg" className="w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white shadow-lg transform hover:scale-105 transition-all">
-              🎯 SCOPRI I TUOI PUNTI DEBOLI →
-            </Button>
-            <p className="text-xs sm:text-sm text-gray-600 mt-2">
-              <strong>847 titolari</strong> l'hanno già fatto • <strong>Completamente anonimo</strong>
-            </p>
           </div>
           <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
             <h2 className="text-base sm:text-lg font-bold text-center mb-2 sm:mb-3 text-red-700">🚨 DATI UFFICIALI 2024-2025</h2>
