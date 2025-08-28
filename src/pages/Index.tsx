@@ -304,7 +304,7 @@ const IntroStage = memo(({ onStart }: IntroStageProps) => {
                 SCOPRI ORA SE È TUTTO OK →
               </Button>
             </div>
-            <div className="inline-block bg-yellow-400 text-black px-2 py-1 rounded text-xs font-semibold border border-black mb-2">
+            <div className="inline-block bg-yellow-400 text-black px-2 py-1 rounded text-[10px] font-semibold border border-black mb-2">
               ⚡ QUIZ GRATUITO • 2 MINUTI • RISULTATI IMMEDIATI
             </div>
             <p className="text-xs text-gray-600">
