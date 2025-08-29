@@ -175,7 +175,7 @@ const QUESTIONS = [{
   type: "multiplier",
   options: [{
     value: "edilizia",
-    label: "Edilizia/Costruzioni",
+    label: "Edilizia/Impiantistica",
     multiplier: 2
   }, {
     value: "manifatturiero",
@@ -183,20 +183,24 @@ const QUESTIONS = [{
     multiplier: 1.6
   }, {
     value: "alimentare",
-    label: "Alimentare/Ristorazione",
+    label: "Alloggio/Ristorazione",
     multiplier: 1.5
   }, {
-    value: "servizi",
-    label: "Servizi/Consulenza",
-    multiplier: 1.2
+    value: "agricoltura",
+    label: "Agricoltura/Allevamento",
+    multiplier: 1.6
+  }, {
+    value: "trasporto",
+    label: "Trasporto/Magazzinaggio",
+    multiplier: 1.7
   }, {
     value: "commercio",
     label: "Commercio/Retail",
     multiplier: 1.2
   }, {
-    value: "agricoltura",
-    label: "Agricoltura/Allevamento",
-    multiplier: 1.6
+    value: "servizi",
+    label: "Servizi/Consulenza",
+    multiplier: 1.2
   }]
 }, {
   id: "dvr",
@@ -299,7 +303,7 @@ const QUESTIONS = [{
   type: "score",
   conditional: {
     dependsOn: "settore",
-    showFor: ["manifatturiero", "alimentare", "servizi", "commercio", "agricoltura"]
+    showFor: ["manifatturiero", "alimentare", "servizi", "commercio", "agricoltura", "trasporto"]
   },
   options: [{
     value: "si",
@@ -321,7 +325,7 @@ const QUESTIONS = [{
   type: "score",
   conditional: {
     dependsOn: "settore",
-    showFor: ["manifatturiero"]
+    showFor: ["manifatturiero", "trasporto"]
   },
   options: [{
     value: "si",
@@ -343,7 +347,7 @@ const QUESTIONS = [{
   type: "score",
   conditional: {
     dependsOn: "settore",
-    showFor: ["alimentare", "servizi", "commercio", "agricoltura", "edilizia", "manifatturiero"]
+    showFor: ["alimentare", "servizi", "commercio", "agricoltura", "edilizia", "manifatturiero", "trasporto"]
   },
   options: [{
     value: "si",
@@ -387,7 +391,7 @@ const QUESTIONS = [{
   type: "score",
   conditional: {
     dependsOn: "settore",
-    showFor: ["servizi", "commercio", "agricoltura", "edilizia"]
+    showFor: ["servizi", "commercio", "agricoltura", "edilizia", "trasporto"]
   },
   options: [{
     value: "si",
@@ -618,6 +622,10 @@ function generateDynamicInsight(answers, violations) {
     alimentare: {
       risk: "L'alimentare ha controlli congiunti ASL-NAS nel 68% dei casi.",
       focus: "HACCP e sorveglianza sanitaria"
+    },
+    trasporto: {
+      risk: "Il trasporto e magazzinaggio hanno controlli mirati su sicurezza stradale e movimentazione.",
+      focus: "verifiche INAIL e procedure operative"
     },
     default: {
       risk: "Il tuo settore ha controlli mirati basati su analisi del rischio.",
@@ -918,11 +926,12 @@ const ResultsStage = memo(({
   const sanctionMax = violations.reduce((total, v) => total + v.max, 0);
   const getSectorName = () => answers.settore && {
     edilizia: "Edilizia",
-    alimentare: "Alimentare",
+    alimentare: "Alloggio/Ristorazione",
     manifatturiero: "Manifatturiero",
     servizi: "Servizi",
     commercio: "Commercio",
-    agricoltura: "Agricoltura"
+    agricoltura: "Agricoltura",
+    trasporto: "Trasporto/Magazzinaggio"
   }[answers.settore] || "Servizi";
   const sanctionDetails = useMemo(() => calculateSanctionDetails(answers, violations), [answers, violations]);
   const dynamicInsight = useMemo(() => generateDynamicInsight(answers, violations), [answers, violations]);
