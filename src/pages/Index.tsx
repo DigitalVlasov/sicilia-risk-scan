@@ -946,7 +946,7 @@ const ResultsStage = memo(({
             <Badge variant={riskBadgeVariant(risk.level)} className="mb-3 sm:mb-4 text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2">
               Rischio {risk.level}
             </Badge>
-            <h1 id="results-title" className="text-2xl sm:text-3xl font-bold">Report Rischio Aziendale</h1>
+            
           </div>
           {violations.length > 0 ? <div className="mt-4 sm:mt-6">
               <div className="rounded-lg border-2 border-black bg-white p-4 sm:p-6 text-center shadow-inner">
