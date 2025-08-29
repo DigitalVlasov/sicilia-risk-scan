@@ -349,9 +349,6 @@ const QuizStage = memo(({ question, currentQuestionIndex, totalQuestions, answer
   return (
     <section aria-labelledby="quiz-title" className="space-y-4">
       <Card>
-        <CardHeader>
-          <CardTitle id="quiz-title">Test di conformità 2025/2026</CardTitle>
-        </CardHeader>
         <CardContent className="space-y-4 sm:space-y-6">
           <div>
             <div className="h-3 w-full rounded bg-gray-200 overflow-hidden">
