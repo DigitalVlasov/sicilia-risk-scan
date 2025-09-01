@@ -258,7 +258,7 @@ const QUESTIONS = [{
   }]
 }, {
   id: "emergenze",
-  title: "Piano emergenza, addetti primo soccorso/antincendio e registro infortuni: tutto a posto?",
+  title: "Piano Emergenza ed Evacuazione, nomine figure aziendali sulla sicurezza: tutto a posto?",
   subtitle: "Due controlli prioritari sempre verificati insieme",
   type: "score",
   options: [{
