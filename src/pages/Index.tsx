@@ -1007,10 +1007,7 @@ const ResultsStage = memo(({
                 {showCalculation && <div className="mt-3 p-3 bg-gray-50 rounded border text-left text-xs sm:text-sm">
                     <h4 className="font-bold mb-2">📊 Base di calcolo:</h4>
                      <ul className="space-y-1 text-gray-700">
-                       <li>• <strong>{getCriticitaText(sanctionDetails.violations)}</strong> dalle tue risposte</li>
-                       <li>• {sanctionDetails.noAnswers} risposte "No" (non conformità certe)</li>
-                       <li>• {sanctionDetails.unsureAnswers} risposte "Non sono sicuro" (rischi probabili)</li>
-                       <li>• Su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
+                       <li>• <strong>{getCriticitaText(sanctionDetails.violations)}</strong> su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
                      </ul>
                     {sanctionDetails.sanctionBreakdown.length > 0 && <>
                         <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
