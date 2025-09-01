@@ -692,29 +692,33 @@ function generateDynamicInsight(answers, violations) {
     };
   }
   
-  // Phase 1: Neutral recognition
-  const recognitionPhase = `Dall'analisi emergono ${violations.length} ${violations.length === 1 ? 'area che richiede' : 'aree che richiedono'} attenzione nel settore ${getSectorDisplayName(sector)}.`;
+  // Phase 1: Direct risk exposure
+  const riskPhase = violations.length > 2 
+    ? `Situazione critica: ${violations.length} aree non conformi rilevate nel settore ${getSectorDisplayName(sector)}.`
+    : `${violations.length} ${violations.length === 1 ? 'criticità rilevata' : 'criticità rilevate'} nel settore ${getSectorDisplayName(sector)}.`;
   
-  // Phase 2: Contextualization 
-  const contextPhase = `Questo scenario è frequente: il ${currentSector.rate} delle aziende del settore presenta simili gap alla prima valutazione. ${currentSector.context}.`;
+  // Phase 2: Immediate consequences context
+  const consequencePhase = violations.length > 2
+    ? `Con questa configurazione, una verifica ispettiva comporterebbe quasi certamente sanzioni multiple e possibili sospensioni.`
+    : `Il ${currentSector.rate} delle aziende del settore presenta simili gap, ma questo non riduce il rischio sanzionatorio.`;
   
   // Phase 3: Logical pathway based on management style
   const pathwayInsights = {
     'gestisco-io': {
-      title: "📋 Gestione diretta rilevata",
-      pathway: "La gestione diretta offre controllo totale, ma richiede un sistema organizzato per non perdere scadenze critiche. Le prossime azioni dipendono dalla tua disponibilità di tempo per strutturare processi standardizzati."
+      title: "⚠️ Gestione diretta a rischio",
+      pathway: "Serve strutturare rapidamente un sistema di controllo per evitare sanzioni."
     },
     'interno': {
-      title: "👥 Team interno coinvolto", 
-      pathway: "Il team interno può gestire efficacemente la conformità con gli strumenti giusti. L'approccio ottimale è distribuire le responsabilità e creare checklist per evitare sovraccarichi operativi."
+      title: "⚠️ Gap nel team interno", 
+      pathway: "Il team necessita di strumenti specifici per colmare le lacune emerse."
     },
     'consulente': {
-      title: "🤝 Consulenza specializzata attiva",
-      pathway: "Con un consulente specializzato già coinvolto, l'obiettivo è ottimizzare il coordinamento. Serve definire responsabilità chiare e monitoraggio proattivo delle scadenze per prevenire i gap emersi."
+      title: "⚠️ Consulenza insufficiente",
+      pathway: "L'attuale supporto presenta evidenti lacune che richiedono intervento immediato."
     },
     'studi-multipli': {
-      title: "🔄 Rete di professionisti",
-      pathway: "La collaborazione con più professionisti richiede coordinamento centralizzato. Il focus è eliminare sovrapposizioni e garantire che ogni aspetto sia coperto senza lacune operative."
+      title: "⚠️ Coordinamento carente",
+      pathway: "La frammentazione sta creando pericolosi buchi nella copertura normativa."
     }
   };
   
@@ -722,7 +726,7 @@ function generateDynamicInsight(answers, violations) {
   
   return {
     title: currentPathway.title,
-    text: `${recognitionPhase} ${contextPhase} ${currentPathway.pathway}`,
+    text: `${riskPhase} ${consequencePhase} ${currentPathway.pathway}`,
     urgency,
     type: "analysis"
   };
@@ -1067,13 +1071,18 @@ const ResultsStage = memo(({
       
       <Card className="border-l-4 border-blue-600 bg-gradient-to-r from-blue-50 to-white shadow-lg">
         <CardContent className="p-4 sm:p-6">
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
-              i
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 w-6 h-6 bg-danger text-white rounded-full flex items-center justify-center text-xs font-bold">
+              !
             </div>
             <div className="flex-1">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">{dynamicInsight.title}</h2>
-              <p className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">{dynamicInsight.text}</p>
+              <h2 className="text-lg font-bold text-foreground mb-2">{dynamicInsight.title}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-3">{dynamicInsight.text}</p>
+              <div className="text-sm">
+                <a href="#vantaggi-completi" className="text-primary hover:text-primary/80 font-medium underline">
+                  → Scopri i vantaggi per la tua situazione specifica
+                </a>
+              </div>
               <div className="flex items-center gap-2">
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                   dynamicInsight.urgency === "high" ? "bg-red-100 text-red-700" : 
