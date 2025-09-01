@@ -204,7 +204,7 @@ const QUESTIONS = [{
   }]
 }, {
   id: "dvr",
-  title: "L'ispettore ti dice: «Fammi vedere DVR aggiornato, nomine RSPP e verbali riunioni». Hai tutto pronto?",
+  title: "L'ispettore ti dice: «Fammi vedere DVR aggiornato, nomine SPP e verbali riunioni». Hai tutto pronto?",
   subtitle: "Primo controllo sempre richiesto - Fonte: 859 ispezioni ASP Catania 2024",
   type: "score",
   options: [{
