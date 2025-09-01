@@ -276,7 +276,7 @@ const QUESTIONS = [{
   }]
 }, {
   id: "patente-cantieri",
-  title: "Hai la patente a crediti cantieri con almeno 15 punti attivi?",
+  title: "Hai la patente a punti o crediti nei cantieri edili, con almeno 15 punti attivi?",
   subtitle: "Obbligatoria dal 1° ottobre 2024 - esclusione immediata senza",
   type: "score",
   conditional: {
