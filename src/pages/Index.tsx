@@ -1110,7 +1110,7 @@ const ResultsStage = memo(({
             <ul className="space-y-2 text-sm sm:text-base">
                 <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze visite mediche e attestati di formazione</span></li>
                 <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Archivio documentale digitale 24/7</span></li>
-                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Alert automatici personalizzati</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Analisi Formazione Finanziata: Verifica opportunità formative gratuite con i Fondi Interprofessionali</span></li>
                 <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Supporto in caso di controlli ispettivi</span></li>
                 <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Erogazione corsi tramite i Fondi Interprofessionali</span></li>
             </ul>
