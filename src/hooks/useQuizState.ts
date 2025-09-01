@@ -1,5 +1,5 @@
 import { useReducer, useCallback, useMemo } from "react";
-import { QuizState, QuizAnswers, QuizQuestion } from "../types/quiz";
+import { QuizState, QuizAnswers, QuizQuestion } from "../types";
 import { APP_CONFIG } from "../constants/quiz-config";
 
 // ==================== STATE MANAGEMENT ====================

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
-import { DynamicInsight } from "../../types/quiz";
+import { DynamicInsight } from "../../types";
 import { UNIFIED_STYLES } from "../../constants/design-tokens";
 
 interface InsightBoxProps {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-import { QuizQuestion, QuizAnswers } from "../../types/quiz";
+import { QuizQuestion, QuizAnswers } from "../../types";
 import { UNIFIED_STYLES, DESIGN_TOKENS } from "../../constants/design-tokens";
 
 interface QuizStageProps {

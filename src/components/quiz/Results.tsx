@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { Risk, Violation, QuizAnswers } from "../../types/quiz";
+import { Risk, Violation, QuizAnswers } from "../../types";
 import { InsightBox } from "./InsightBox";
 import { CaseStudyCarousel } from "./CaseStudyCarousel";
 import { ContactCTA } from "./ContactCTA";

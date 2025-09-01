@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { CaseStudy } from "../../types/quiz";
+import { CaseStudy } from "../../types";
 import { CASE_STUDIES } from "../../constants/quiz-config";
 import { UNIFIED_STYLES, DESIGN_TOKENS } from "../../constants/design-tokens";
 

@@ -59,8 +59,8 @@ All colors MUST be HSL.
     --input: 217.2 32.6% 17.5%;
     --ring: 0 84% 55%;
   }
-}
 
+  :root {
     /* Tech sidebar colors */
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 90%;

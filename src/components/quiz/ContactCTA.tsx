@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { Risk } from "../../types/quiz";
+import { Risk } from "../../types";
 import { APP_CONFIG } from "../../constants/quiz-config";
 import { getSectorName } from "../../utils/quiz-helpers";
 import { UNIFIED_STYLES } from "../../constants/design-tokens";

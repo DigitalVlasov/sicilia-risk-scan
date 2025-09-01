@@ -1,4 +1,4 @@
-import { QuizQuestion, Violation, CaseStudy } from "../types/quiz";
+import { QuizQuestion, Violation, CaseStudy } from "../types";
 
 // ==================== UNIFIED CONFIGURATION ====================
 export const APP_CONFIG = {
