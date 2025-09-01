@@ -1,263 +1,199 @@
-export type CaseStudy = {
-  sector: string;
-  challenge: string;
-  solution: string;
-  result: string;
-  quote: string;
-};
-
-export type CriticalArea = {
-  name: string;
-  sanction?: string;
-  details?: string;
-};
+import React, { useState, useMemo } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { Risk, Violation, QuizAnswers } from "../../types/quiz";
+import { InsightBox } from "./InsightBox";
+import { CaseStudyCarousel } from "./CaseStudyCarousel";
+import { ContactCTA } from "./ContactCTA";
+import { 
+  generateDynamicInsight, 
+  generatePersonalizedAdvantages, 
+  calculateSanctionDetails,
+  riskBadgeVariant 
+} from "../../utils/quiz-helpers";
+import { UNIFIED_STYLES } from "../../constants/design-tokens";
 
 interface ResultsProps {
-  minRisk: number;
-  maxRisk: number;
-  criticalAreas: CriticalArea[];
-  sector?: string;
+  risk: Risk;
+  violations: Violation[];
+  answers: QuizAnswers;
+  onReset: () => void;
 }
 
-const currency = (n: number) => new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(n);
+export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onReset }) => {
+  const [showCalculation, setShowCalculation] = useState(false);
+  
+  const sanctionMax = violations.reduce((total, v) => total + v.max, 0);
+  const sanctionDetails = useMemo(() => calculateSanctionDetails(answers, violations), [answers, violations]);
+  const dynamicInsight = useMemo(() => generateDynamicInsight(answers, violations), [answers, violations]);
+  const personalizedAdvantages = useMemo(() => generatePersonalizedAdvantages(answers), [answers]);
 
-export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProps) => {
-  const cases: CaseStudy[] = [
-    {
-      sector: "Ristorazione (CT)",
-      challenge: "Formazione non aggiornata e DVR incompleto",
-      solution: "Audit rapido, piano formativo e aggiornamento DVR in 72h",
-      result: "Revocato provvedimento sospensivo, -65% rischio sanzioni",
-      quote: "Ci hanno rimesso in regola in tre giorni. – Titolare"
-    },
-    {
-      sector: "Edilizia (PA)",
-      challenge: "Sorveglianza sanitaria carente",
-      solution: "Nomina medico competente e visite preassuntive",
-      result: "Azzerate le non conformità in cantiere",
-      quote: "Processi finalmente chiari e documentati."
-    },
-    {
-      sector: "Manifatturiero (ME)",
-      challenge: "Gestione emergenze e addestramento",
-      solution: "Procedure di emergenza e prove di evacuazione",
-      result: "Migliorata la prontezza operativa, nessuna sanzione",
-      quote: "Squadra formata e tempi di risposta dimezzati."
-    },
-  ];
+  const getCriticitaText = (count: number) => {
+    return count === 1 ? `${count} criticità rilevata` : `${count} criticità rilevate`;
+  };
 
   return (
-    <section className="space-y-10 animate-enter">
-      <header>
-        <h2 className="text-3xl font-semibold">La tua Analisi Personalizzata</h2>
-        <p className="mt-2 text-muted-foreground">
-          Stima basata sulle tue risposte, aggiornamenti normativi 2024-2025 e fonti ufficiali (D.Lgs. 81/2008, L. 203/2024). In Sicilia i controlli sono in forte aumento e l'irregolarità media supera il 70%.
-        </p>
-      </header>
-
-      <article className="rounded-lg p-6 bg-card border border-primary/20 shadow-lg">
-        <div className="text-sm font-medium text-primary mb-2">⚠️ Stima del rischio economico</div>
-        <div className="text-3xl font-bold text-foreground mb-3">{currency(minRisk)} - {currency(maxRisk)}</div>
-        <p className="text-sm text-muted-foreground mb-4">Attivi su tutto il territorio Siciliano • Interventi rapidi e documentati</p>
-        <div className="flex gap-2 text-xs">
-          <span className="px-2 py-1 bg-primary/10 text-primary rounded">Analisi completata</span>
-          <span className="px-2 py-1 bg-muted text-muted-foreground rounded">Basata su 13 parametri</span>
-        </div>
-      </article>
-
-      <article className="space-y-4">
-        <h3 className="text-2xl font-semibold">Aree critiche da sistemare urgentemente</h3>
-        {criticalAreas.length === 0 ? (
-          <p className="text-muted-foreground">Ottimo! Non risultano aree critiche maggiori dalle risposte fornite.</p>
-        ) : (
-          <ul className="grid gap-3 sm:grid-cols-2">
-            {criticalAreas.map((c, i) => (
-              <li key={i} className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-                <div className="font-semibold text-foreground flex items-center gap-2">
-                  <span className="w-2 h-2 bg-primary rounded-full"></span>
-                  {c.name}
-                </div>
-                {c.sanction && <div className="text-sm text-primary mt-2 font-medium">💰 {c.sanction}</div>}
-                {c.details && <p className="mt-2 text-sm text-muted-foreground">{c.details}</p>}
-                <div className="mt-3 pt-3 border-t border-border">
-                  <button className="text-xs text-primary hover:underline">
-                    → Scopri come risolvere
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </article>
-
-      <article className="space-y-4">
-        <h3 className="text-2xl font-semibold">Perché Spazio Impresa?</h3>
-        <div className="overflow-hidden rounded-lg border border-primary/20 bg-card shadow-sm">
-          <div className="grid grid-cols-2 bg-secondary">
-            <div className="p-4 font-semibold text-secondary-foreground">Mercato standard</div>
-            <div className="p-4 font-semibold text-secondary-foreground bg-primary text-primary-foreground">Spazio Impresa</div>
+    <section aria-labelledby="results-title" className="space-y-4 sm:space-y-6">
+      <Card className="border-2 border-red-600 shadow-lg">
+        <CardContent className="p-4 sm:p-6">
+          <div className="text-center">
+            <Badge variant={riskBadgeVariant(risk.level)} className="mb-3 sm:mb-4 text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2">
+              Rischio {risk.level}
+            </Badge>
           </div>
-          <div className="grid grid-cols-2 divide-x divide-border">
-            <div className="p-4 text-sm text-muted-foreground">❌ Tempi 15-30 gg, costi variabili</div>
-            <div className="p-4 text-sm font-medium">✅ Avvio in 72h, piano chiaro e finanziamenti attivabili</div>
-            <div className="p-4 text-sm text-muted-foreground">❌ Formazione frammentata</div>
-            <div className="p-4 text-sm font-medium">✅ Catalogo e-learning + aula, tracciamento e attestati</div>
-            <div className="p-4 text-sm text-muted-foreground">❌ DVR lenti e generici</div>
-            <div className="p-4 text-sm font-medium">✅ DVR su misura, aggiornamenti rapidi</div>
-          </div>
-        </div>
-      </article>
-
-      <article className="space-y-3">
-        <h3 className="text-2xl font-semibold">Casi studio rilevanti per te</h3>
-        <div className="flex gap-4 overflow-x-auto pb-2">
-          {cases.map((cs, i) => (
-            <div key={i} className="min-w-[16rem] rounded-lg border p-4 bg-primary/5">
-              <div className="text-sm text-muted-foreground">{cs.sector}</div>
-              <div className="mt-1 font-medium">{cs.challenge}</div>
-              <div className="mt-2 text-sm">{cs.solution}</div>
-              <div className="mt-2 text-sm text-primary">{cs.result}</div>
-              <div className="mt-2 text-xs italic text-muted-foreground">“{cs.quote}”</div>
+          
+          {violations.length > 0 ? (
+            <div className="mt-4 sm:mt-6">
+              <div className="rounded-lg border-2 border-black bg-white p-4 sm:p-6 text-center shadow-inner">
+                <div className="text-3xl sm:text-5xl font-black text-red-600 mb-2 sm:mb-3">
+                  €{sanctionMax.toLocaleString("it-IT")}
+                </div>
+                <div className="text-sm sm:text-base text-black font-semibold">
+                  È la sanzione massima che rischi OGGI se l'ispettore suona il campanello.
+                </div>
+                <button 
+                  onClick={() => setShowCalculation(!showCalculation)} 
+                  className="mt-3 text-xs sm:text-sm text-gray-600 hover:text-black font-medium flex items-center justify-center gap-1 mx-auto transition-colors"
+                >
+                  <span>Come abbiamo ottenuto questa cifra?</span>
+                  <span className={`transition-transform ${showCalculation ? 'rotate-180' : ''}`}>▼</span>
+                </button>
+                {showCalculation && (
+                  <div className="mt-3 p-3 bg-gray-50 rounded border text-left text-xs sm:text-sm">
+                    <h4 className="font-bold mb-2">📊 Base di calcolo:</h4>
+                    <ul className="space-y-1 text-gray-700">
+                      <li>• <strong>{getCriticitaText(sanctionDetails.violations)}</strong> su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
+                    </ul>
+                    {sanctionDetails.sanctionBreakdown.length > 0 && (
+                      <>
+                        <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
+                        <ul className="space-y-1">
+                          {sanctionDetails.sanctionBreakdown.map((item, idx) => (
+                            <li key={idx} className="flex justify-between">
+                              <span>{item.name}:</span>
+                              <span className="font-semibold">fino a € {item.max.toLocaleString('it-IT')}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                    <p className="mt-3 text-xs text-gray-600">
+                      * Sanzioni cumulative secondo D.Lgs. 81/08, rivalutate +15,9% dal 06/10/2023
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
-          ))}
-        </div>
-      </article>
-
-      <article className="space-y-3">
-        <h3 className="text-2xl font-semibold">Il tuo Piano d’Azione immediato</h3>
-        <ul className="grid gap-3 sm:grid-cols-2">
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">📋 Audit iniziale e verifica documentale</div>
-            <div className="text-sm text-muted-foreground mt-1">(DVR, nomine, formazione)</div>
-          </li>
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">🎯 Piano formativo mirato</div>
-            <div className="text-sm text-muted-foreground mt-1">e-learning e aula</div>
-          </li>
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">👨‍⚕️ Nomina medico competente</div>
-            <div className="text-sm text-muted-foreground mt-1">calendario sorveglianza sanitaria</div>
-          </li>
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">🚨 Procedure di emergenza</div>
-            <div className="text-sm text-muted-foreground mt-1">prove di evacuazione con report</div>
-          </li>
-        </ul>
-      </article>
-
-      <article className="space-y-3">
-        <h3 className="text-2xl font-semibold">Aree scoperte per Coordinatore</h3>
-        {sector?.toLowerCase().includes("edilizia") ? (
-          <p className="text-muted-foreground">Per cantieri edili è spesso necessario il Coordinatore per la Sicurezza (CSP/CSE). Valutiamo caso per caso e predisponiamo PSC/POS.</p>
-        ) : (
-          <p className="text-muted-foreground">Non richiesto per il settore selezionato, salvo casi specifici.</p>
-        )}
-      </article>
-
-      <article className="space-y-3">
-        <h3 className="text-2xl font-semibold">Benchmark per il tuo settore</h3>
-        <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-          <SectorBenchmark sector={sector} />
-        </div>
-      </article>
-
-      <article className="space-y-3">
-        <h3 className="text-2xl font-semibold">Vantaggi completi</h3>
-        <ul className="grid gap-3 sm:grid-cols-2">
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">📦 Pacchetto unico completo</div>
-            <div className="text-sm text-muted-foreground mt-1">documenti, formazione, visite</div>
-          </li>
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">📱 Tracciamento digitale</div>
-            <div className="text-sm text-muted-foreground mt-1">attestati e scadenze</div>
-          </li>
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">🛡️ Supporto durante ispezioni</div>
-            <div className="text-sm text-muted-foreground mt-1">assistenza ispettive</div>
-          </li>
-          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-            <div className="font-medium text-foreground">🔄 Aggiornamenti inclusi</div>
-            <div className="text-sm text-muted-foreground mt-1">normative 2024-2025</div>
-          </li>
-        </ul>
-      </article>
-
-      <Benefits minRisk={minRisk} maxRisk={maxRisk} />
-
-      <aside className="rounded-lg border-2 border-cta p-6 bg-gradient-to-br from-cta/5 to-cta/10">
-        <h3 className="text-xl font-semibold text-foreground">🚀 Pianifica la tua sicurezza adesso</h3>
-        <p className="mt-2 text-muted-foreground">Attivi su tutto il territorio Siciliano. Richiedi un assessment gratuito e scopri come ridurre il rischio e i costi.</p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <a href="tel:0955872480" className="inline-flex items-center px-4 py-2 bg-cta text-cta-foreground rounded-lg font-medium hover:bg-cta-light transition-colors">
-            📞 Chiamaci ora: 095 587 2480
-          </a>
-          <a href="https://wa.me/390955872480" target="_blank" rel="noreferrer" className="inline-flex items-center px-4 py-2 bg-cta text-cta-foreground rounded-lg font-medium hover:bg-cta-light transition-colors">
-            💬 Scrivici su WhatsApp
-          </a>
-        </div>
-      </aside>
+          ) : (
+            <div className="mt-4 sm:mt-6 rounded-lg border-2 border-green-500 bg-green-50 p-4 sm:p-6 text-center">
+              <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">🎯 COMPLIMENTI!</div>
+              <div className="text-sm sm:text-base text-green-800 font-semibold">
+                Sulla base delle tue risposte, la tua azienda appare conforme ai controlli ispettivi più frequenti.
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      
+      <InsightBox insight={dynamicInsight} ctaTarget="#vantaggi-completi" />
+      
+      {violations.length > 0 && (
+        <Card>
+          <CardHeader className="pb-2 sm:pb-4">
+            <CardTitle>Dettaglio Rischi e Soluzioni</CardTitle>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">(clicca sulle opzioni per approfondire)</p>
+          </CardHeader>
+          <CardContent className="space-y-2 sm:space-y-3">
+            {violations.map((v, index) => (
+              <details key={v.key} className="group bg-gray-50 rounded-lg border border-gray-200 overflow-hidden transition-all hover:shadow-md">
+                <summary className="p-3 sm:p-4 cursor-pointer flex justify-between items-center hover:bg-gray-100 transition-colors">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">
+                      {index + 1}
+                    </span>
+                    <span className="font-semibold text-sm sm:text-base truncate">{v.text}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="destructive" className="text-xs flex-shrink-0">{v.priority.urgency}</Badge>
+                    <span className="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+                  </div>
+                </summary>
+                <div className="p-3 sm:p-4 border-t bg-white">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="bg-red-50 border-l-4 border-red-500 p-3 rounded">
+                      <h4 className="font-bold text-sm mb-2">⚠️ Rischi</h4>
+                      <ul className="text-xs sm:text-sm space-y-1">
+                        {v.consequences.map((c, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-red-500 mr-1">•</span>
+                            <span>{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="bg-green-50 border-l-4 border-green-500 p-3 rounded">
+                      <h4 className="font-bold text-sm mb-2">✅ Azioni</h4>
+                      <ul className="text-xs sm:text-sm space-y-1">
+                        {v.actions.map((a, i) => (
+                          <li key={i} className="flex items-start">
+                            <span className="text-green-500 mr-1">•</span>
+                            <span>{a}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-600 pt-2 mt-3 border-t">
+                    <strong>📖 Normativa:</strong> {v.fonte}
+                  </div>
+                </div>
+              </details>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+      
+      <Card id="vantaggi-completi" className="bg-gradient-to-br from-gray-900 to-black text-white">
+        <CardHeader>
+          <CardTitle className="text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-3 sm:gap-4">
+            {personalizedAdvantages.map((advantage, index) => (
+              <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors">
+                <span className="text-lg sm:text-xl">{advantage.substring(0, 2)}</span>
+                <span className="text-sm sm:text-base">{advantage.substring(2)}</span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      
+      <CaseStudyCarousel />
+      
+      <Card>
+        <CardHeader>
+          <CardTitle>Cosa include il Sistema Organizzativo di Spazio Impresa:</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-2 text-sm sm:text-base">
+            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze visite mediche e attestati di formazione</span></li>
+            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Archivio documentale digitale 24/7</span></li>
+            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Alert automatici personalizzati</span></li>
+            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Supporto in caso di controlli ispettivi</span></li>
+            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Erogazione corsi tramite i Fondi Interprofessionali</span></li>
+          </ul>
+        </CardContent>
+      </Card>
+      
+      <ContactCTA risk={risk} sector={answers.settore} />
+      
+      <div className="text-center mt-6">
+        <Button variant="ghost" onClick={onReset}>
+          Rifai il test per un'altra azienda
+        </Button>
+      </div>
     </section>
-  );
-};
-
-const SectorBenchmark = ({ sector }: { sector?: string }) => {
-  const s = (sector || "").toLowerCase();
-  const data = s.includes("edil")
-    ? { controlli: "Intensi (cantieri)", irregolarita: "70-80%", focus: "PSC/POS, coordinamento, emergenze" }
-    : s.includes("ristor")
-    ? { controlli: "Medio-alti", irregolarita: "60-75%", focus: "Formazione, HACCP, emergenze" }
-    : s.includes("manif") || s.includes("logist")
-    ? { controlli: "Alti", irregolarita: "65-80%", focus: "Sorveglianza, macchine, DPI" }
-    : s.includes("serviz") || s.includes("uffici")
-    ? { controlli: "Medi", irregolarita: "55-70%", focus: "DVR, videoterminali, formazione" }
-    : s.includes("agric")
-    ? { controlli: "Variabili", irregolarita: "65-85%", focus: "Macchine agricole, sorveglianza" }
-    : { controlli: "Medi", irregolarita: "60-75%", focus: "Formazione, DVR, emergenze" };
-
-  return (
-    <div className="grid gap-3 sm:grid-cols-3">
-      <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-        <div className="text-sm text-muted-foreground">Controlli annuali stimati</div>
-        <div className="mt-1 font-semibold text-foreground">{data.controlli}</div>
-      </div>
-      <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-        <div className="text-sm text-muted-foreground">Irregolarità medie</div>
-        <div className="mt-1 font-semibold text-primary">{data.irregolarita}</div>
-      </div>
-      <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-        <div className="text-sm text-muted-foreground">Focus ispezioni</div>
-        <div className="mt-1 font-medium text-foreground">{data.focus}</div>
-      </div>
-    </div>
-  );
-};
-
-const Benefits = ({ minRisk, maxRisk }: { minRisk: number; maxRisk: number }) => {
-  const fundsMin = Math.round(minRisk * 0.18);
-  const fundsMax = Math.round(maxRisk * 0.35);
-  const timeMin = Math.min(24, Math.max(8, Math.round(minRisk / 5000)));
-  const timeMax = Math.min(32, Math.max(timeMin + 4, Math.round(maxRisk / 4000)));
-  const riskMin = 35;
-  const riskMax = 65;
-
-  return (
-    <article className="space-y-3">
-      <h3 className="text-2xl font-semibold">Benefici stimati</h3>
-      <ul className="grid gap-3 sm:grid-cols-3">
-        <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-          <div className="text-sm text-muted-foreground">💰 Fondi recuperabili</div>
-          <div className="mt-1 font-semibold text-primary">{currency(fundsMin)} - {currency(fundsMax)}</div>
-        </li>
-        <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-          <div className="text-sm text-muted-foreground">⏰ Tempo risparmiato</div>
-          <div className="mt-1 font-semibold text-foreground">{timeMin}-{timeMax} ore/mese</div>
-        </li>
-        <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
-          <div className="text-sm text-muted-foreground">📉 Riduzione rischio</div>
-          <div className="mt-1 font-semibold text-primary">{riskMin}% - {riskMax}%</div>
-        </li>
-      </ul>
-    </article>
   );
 };

@@ -44,9 +44,9 @@ export const calculateViolations = (answers: QuizAnswers): Violation[] => {
 };
 
 // Get badge variant based on risk level
-export const riskBadgeVariant = (level: string): "success" | "warning" | "destructive" => {
-  if (level === "Basso") return "success";
-  if (level === "Medio") return "warning";
+export const riskBadgeVariant = (level: string): "default" | "destructive" | "outline" | "secondary" => {
+  if (level === "Basso") return "secondary";
+  if (level === "Medio") return "outline";
   return "destructive";
 };
 
