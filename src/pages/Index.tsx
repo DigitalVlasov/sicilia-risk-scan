@@ -1084,7 +1084,7 @@ const ResultsStage = memo(({
       </Card>
 
       <Card>
-        <CardHeader><CardTitle>Cosa include il Sistema di Spazio Impresa:</CardTitle></CardHeader>
+        <CardHeader><CardTitle>Cosa include il Sistema Organizzativo di Spazio Impresa:</CardTitle></CardHeader>
         <CardContent>
             <ul className="space-y-2 text-sm sm:text-base">
                 <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze mediche e corsi</span></li>
