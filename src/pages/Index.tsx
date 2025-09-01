@@ -298,7 +298,7 @@ const QUESTIONS = [{
   }]
 }, {
   id: "nuovo-assunto",
-  title: "Ultimo assunto: hai completato visita preventiva, formazione e DPI prima dell'inizio lavoro?",
+  title: "Ultimo assunto: hai completato visita preventiva, formazione, informazione e consegna DPI prima dell'inizio lavoro?",
   subtitle: "Sequenza obbligatoria pre-assuntiva - controllo prioritario",
   type: "score",
   conditional: {
