@@ -571,6 +571,23 @@ const caseStudies = [{
 // ==================== HELPER FUNCTIONS ====================
 // Business logic functions for calculations and dynamic content generation.
 
+// Grammar helper functions for Italian concordance
+function getCriticitaText(count) {
+  return count === 1 ? `${count} criticità rilevata` : `${count} criticità rilevate`;
+}
+
+function getNonConformitaText(count) {
+  return count === 1 ? `${count} non conformità rilevata` : `${count} non conformità rilevate`;
+}
+
+function getCriticitaVerb(count) {
+  return count === 1 ? 'indica' : 'indicano';
+}
+
+function getNonConformitaVerb(count) {
+  return count === 1 ? 'mostra' : 'mostrano';
+}
+
 function calculateViolations(answers) {
   return Object.keys(VIOLATIONS_CONFIG).filter(key => {
     const question = QUESTIONS.find(q => q.id === key);
@@ -643,24 +660,24 @@ function generateDynamicInsight(answers, violations) {
   const insights = {
     'gestisco-io': {
       title: "⚡ Gestisci tutto da solo: ammirevole ma rischioso",
-      text: `Con ${violations.length} criticità rilevate e ${sectorInfo.risk}, il carico è troppo per una persona sola. Hai bisogno di un sistema che automatizzi i controlli, soprattutto su ${sectorInfo.focus}.`
+      text: `Con ${getCriticitaText(violations.length)} e ${sectorInfo.risk}, il carico è troppo per una persona sola. Hai bisogno di un sistema che automatizzi i controlli, soprattutto su ${sectorInfo.focus}.`
     },
     'interno': {
       title: "👥 Il tuo team interno è sotto pressione",
-      text: `${violations.length} non conformità mostrano che il carico supera le capacità interne. ${sectorInfo.risk} Un supporto specializzato alleggerisce il team su ${sectorInfo.focus}.`
+      text: `${getNonConformitaText(violations.length)} ${getNonConformitaVerb(violations.length)} che il carico supera le capacità interne. ${sectorInfo.risk} Un supporto specializzato alleggerisce il team su ${sectorInfo.focus}.`
     },
     'consulente': {
       title: "🔍 Il tuo consulente sta coprendo tutto?",
-      text: `Nonostante il consulente, hai ${violations.length} criticità. ${sectorInfo.risk} Serve un sistema proattivo che preveda i problemi, non solo che li risolva. Focus: ${sectorInfo.focus}.`
+      text: `Nonostante il consulente, hai ${getCriticitaText(violations.length)}. ${sectorInfo.risk} Serve un sistema proattivo che preveda i problemi, non solo che li risolva. Focus: ${sectorInfo.focus}.`
     },
     'studi-multipli': {
       title: "🔄 Troppi professionisti, poca coordinazione",
-      text: `${violations.length} criticità indicano mancanza di coordinamento tra i tuoi consulenti. ${sectorInfo.risk} Serve una regia unica, specialmente per ${sectorInfo.focus}.`
+      text: `${getCriticitaText(violations.length)} ${getCriticitaVerb(violations.length)} mancanza di coordinamento tra i tuoi consulenti. ${sectorInfo.risk} Serve una regia unica, specialmente per ${sectorInfo.focus}.`
     }
   };
   const insight = insights[managementStyle] || {
     title: "⚠️ Il tuo sistema ha delle falle",
-    text: `${violations.length} non conformità rilevate. ${sectorInfo.risk} È il momento di ripensare l'approccio alla sicurezza, partendo da ${sectorInfo.focus}.`
+    text: `${getNonConformitaText(violations.length)}. ${sectorInfo.risk} È il momento di ripensare l'approccio alla sicurezza, partendo da ${sectorInfo.focus}.`
   };
   return {
     ...insight,
@@ -989,12 +1006,12 @@ const ResultsStage = memo(({
                 </button>
                 {showCalculation && <div className="mt-3 p-3 bg-gray-50 rounded border text-left text-xs sm:text-sm">
                     <h4 className="font-bold mb-2">📊 Base di calcolo:</h4>
-                    <ul className="space-y-1 text-gray-700">
-                      <li>• <strong>{sanctionDetails.violations} criticità rilevate</strong> dalle tue risposte</li>
-                      <li>• {sanctionDetails.noAnswers} risposte "No" (non conformità certe)</li>
-                      <li>• {sanctionDetails.unsureAnswers} risposte "Non sono sicuro" (rischi probabili)</li>
-                      <li>• Su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
-                    </ul>
+                     <ul className="space-y-1 text-gray-700">
+                       <li>• <strong>{getCriticitaText(sanctionDetails.violations)}</strong> dalle tue risposte</li>
+                       <li>• {sanctionDetails.noAnswers} risposte "No" (non conformità certe)</li>
+                       <li>• {sanctionDetails.unsureAnswers} risposte "Non sono sicuro" (rischi probabili)</li>
+                       <li>• Su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
+                     </ul>
                     {sanctionDetails.sanctionBreakdown.length > 0 && <>
                         <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
                         <ul className="space-y-1">
