@@ -39,29 +39,29 @@ class InsightService {
     urgency: "low" | "medium" | "high"
   ): { title: string; text: string } {
     
-    // Caples-style headlines with Sicilian directness
+    // Titoli diretti e chiari
     const titles = {
-      high: "⚠️ Situazione critica rilevata",
-      medium: "🔍 Attenzione: gap normativi individuati", 
-      low: "✅ Situazione sotto controllo"
+      high: "⚠️ Hai problemi seri",
+      medium: "🔍 Hai alcuni problemi", 
+      low: "✅ Vai bene così"
     };
 
-    // Context-aware insights
+    // Riconoscimento diretto della situazione
     const managementInsights = {
-      "gestisco-io": "Gestisci tutto da solo: ammirevole ma rischioso",
-      "interno": "Hai risorse interne: ottima base per migliorare",
-      "consulente": "Hai già supporto esterno: verifichiamo l'efficacia",
-      "studi-multipli": "Coordinamento multiplo: serve standardizzazione"
+      "gestisco-io": "Fai tutto tu: bravo, ma rischi grosso",
+      "interno": "Hai gente che ti aiuta: buona cosa",
+      "consulente": "Hai già un consulente: vediamo se funziona",
+      "studi-multipli": "Hai più consulenti: serve mettere ordine"
     };
 
     const sectorContext = {
-      edilizia: "Nel settore edile, anche piccoli gap possono costare caro",
-      manifatturiero: "Industria manifatturiera: sicurezza = produttività",
-      alimentare: "Settore alimentare: doppia conformità HACCP + 81/08",
-      trasporto: "Trasporti: responsabilità estese su flotte e autisti",
-      agricoltura: "Agricoltura: stagionalità complica compliance",
-      commercio: "Commercio: clienti = testimoni potenziali",
-      servizi: "Servizi: rischi sottovalutati ma presenti"
+      edilizia: "In edilizia anche un piccolo errore ti costa caro",
+      manifatturiero: "In fabbrica la sicurezza fa guadagnare di più",
+      alimentare: "Con il cibo hai due tipi di controlli da rispettare",
+      trasporto: "Con i camion rispondi anche per gli autisti",
+      agricoltura: "In campagna i controlli cambiano con le stagioni",
+      commercio: "Nel negozio i clienti vedono tutto",
+      servizi: "Negli uffici pensi di essere sicuro ma non è così"
     };
 
     const baseText = managementInsights[management as keyof typeof managementInsights] || "Situazione da analizzare";
@@ -75,11 +75,11 @@ class InsightService {
 
   private getActionableAdvice(violationCount: number): string {
     if (violationCount === 0) {
-      return "Mantieni questo standard e monitora le evoluzioni normative.";
+      return "Continua così e tieni d'occhio le nuove regole.";
     } else if (violationCount <= 2) {
-      return "Pochi aggiustamenti mirati possono eliminare i rischi residui.";
+      return "Con poche mosse sistemi tutto.";
     } else {
-      return "Serve un piano strutturato per sanare le criticità in ordine di priorità.";
+      return "Serve un piano per sistemare tutto per gradi.";
     }
   }
 
@@ -89,32 +89,32 @@ class InsightService {
     const employees = answers.dipendenti;
 
     const baseAdvantages = [
-      "🛡️ Protezione legale completa con supporto ispettivo in tempo reale",
-      "📊 Sistema digitale che elimina dimenticanze e scadenze mancate",
-      "💰 ROI positivo: investimento minimo vs rischio sanzioni massime"
+      "🛡️ Ti copriamo le spalle se arrivano i controlli",
+      "📊 Non dimentichi più scadenze e carte da fare",
+      "💰 Spendi poco ora, eviti multe grosse dopo"
     ];
 
-    // Add sector-specific advantages
+    // Vantaggi specifici per settore
     const sectorAdvantages = {
-      edilizia: "🏗️ Integrazione con pratiche cantiere e coordinamento PSC",
-      manifatturiero: "⚙️ Ottimizzazione produttiva attraverso sicurezza sistematica",
-      alimentare: "🥘 Gestione unificata HACCP + sicurezza lavoro",
-      trasporto: "🚛 Controllo flotte e formazione autisti centralizzata",
-      agricoltura: "🌾 Gestione stagionalità e lavoratori temporanei",
-      commercio: "🏪 Conformità punti vendita e customer safety",
-      servizi: "💼 Protezione responsabilità professionale estesa"
+      edilizia: "🏗️ Tutto collegato: cantiere, carte e controlli",
+      manifatturiero: "⚙️ Più sicurezza = più produzione",
+      alimentare: "🥘 Un solo sistema per cibo e sicurezza sul lavoro",
+      trasporto: "🚛 Controlli tutti i camion e gli autisti da un posto solo",
+      agricoltura: "🌾 Gestisci stagionali e fissi senza problemi",
+      commercio: "🏪 Negozio sicuro = clienti tranquilli",
+      servizi: "💼 Anche in ufficio hai responsabilità che non sai"
     };
 
     if (sectorAdvantages[sector]) {
       baseAdvantages.push(sectorAdvantages[sector]);
     }
 
-    // Add management-specific advantage
+    // Vantaggi per tipo di gestione
     const managementAdvantages = {
-      "gestisco-io": "⏰ Liberi tempo per concentrarti sul business principale",
-      "interno": "🤝 Potenziamo le tue risorse interne con tools professionali",
-      "consulente": "🔧 Upgrade del sistema attuale con tecnologia avanzata",
-      "studi-multipli": "🎯 Unifichiamo e standardizziamo tutti gli approcci"
+      "gestisco-io": "⏰ Hai più tempo per fare il tuo lavoro vero",
+      "interno": "🤝 La tua gente diventa più brava con i nostri strumenti",
+      "consulente": "🔧 Miglioriamo quello che hai già",
+      "studi-multipli": "🎯 Mettiamo tutti d'accordo con un sistema solo"
     };
 
     const managementAdvantage = managementAdvantages[management as keyof typeof managementAdvantages];
@@ -122,11 +122,11 @@ class InsightService {
       baseAdvantages.push(managementAdvantage);
     }
 
-    // Add company size advantage
+    // Vantaggio per dimensione azienda
     if (employees === ">20") {
-      baseAdvantages.push("👥 Scalabilità garantita per organizzazioni complesse");
+      baseAdvantages.push("👥 Funziona anche se hai tanta gente");
     } else {
-      baseAdvantages.push("🎯 Soluzione agile per piccole-medie imprese");
+      baseAdvantages.push("🎯 Fatto su misura per aziende come la tua");
     }
 
     return baseAdvantages;
