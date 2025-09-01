@@ -84,15 +84,11 @@ export const useQuizState = (filteredQuestions: QuizQuestion[]) => {
     dispatch({ type: 'RESET' });
   }, []);
   
-  const handleSelectOption = useCallback((question: QuizQuestion, option: any) => {
+  const handleSelectOption = useCallback((question: QuizQuestion, option: any, currentFilteredQuestions: QuizQuestion[]) => {
     dispatch({ type: 'SELECT_OPTION', question, option });
     
     setTimeout(() => {
-      const newAnswers = { ...state.answers, [question.id]: option.value };
-      // Import filterQuestions from utils to avoid circular dependency
-      const nextFiltered = filteredQuestions; // This will be handled by parent component
-      
-      if (state.currentQuestionIndex < nextFiltered.length - 1) {
+      if (state.currentQuestionIndex < currentFilteredQuestions.length - 1) {
         dispatch({ type: 'NEXT_QUESTION' });
       } else {
         dispatch({ type: 'START_LOADING' });
@@ -101,7 +97,7 @@ export const useQuizState = (filteredQuestions: QuizQuestion[]) => {
         }, APP_CONFIG.ui.loadingDelay);
       }
     }, APP_CONFIG.ui.transitionDelay);
-  }, [state.currentQuestionIndex, state.answers, filteredQuestions]);
+  }, [state.currentQuestionIndex]);
   
   return {
     state,

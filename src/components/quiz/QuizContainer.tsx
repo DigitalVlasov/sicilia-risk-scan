@@ -36,7 +36,7 @@ export const QuizContainer: React.FC = () => {
             currentQuestionIndex={currentQuestionIndex}
             totalQuestions={totalQuestionsForDisplay}
             answers={answers}
-            onSelectOption={handleSelectOption}
+            onSelectOption={(question, option) => handleSelectOption(question, option, currentFilteredQuestions)}
             onGoBack={handleGoBack}
           />
         );
