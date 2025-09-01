@@ -672,22 +672,34 @@ function generatePersonalizedAdvantages(answers) {
   const baseAdvantages = {
     "gestisco-io": ["🎯 Mantieni il controllo totale con supporto tecnico invisibile", "📱 Piattaforma digitale 24/7 per consultare tutta la documentazione", "🔄 Coordinamento automatico figure SPP senza perdere la regia", "💰 Accesso esclusivo a fondi interprofessionali e bonus fiscali"],
     "interno": ["💪 Potenziamento del team con strumenti professionali", "📊 Riduzione 70% carico amministrativo interno", "🛡️ Sistema backup: continuità anche in assenza del responsabile", "🚀 Risposte prioritarie dalla rete di specialisti certificati"],
-    "consulente": ["✅ Audit indipendente di copertura del consulente attuale", "🤝 Integrazione trasparente o transizione guidata", "📈 KPI misurabili per monitorare le prestazioni", "⏰ Alert automatici 30-60 giorni prima di ogni scadenza"],
+    "consulente": ["✅ Audit indipendente di copertura del consulente attuale", "🤝 Integrazione trasparente o transizione guidata", "📈 KPI misurabili per monitorare le prestazioni", "⏰ Alert automatici 30-60 giorni prima delle scadenze"],
     "studi-multipli": ["🎭 Regia unica per coordinare tutti i fornitori", "📋 Monitoraggio centralizzato scadenze e standard", "🔗 Eliminazione sovrapposizioni e buchi operativi", "📱 Piattaforma digitale 24/7 sempre accessibile"]
   };
   let advantages = [...(baseAdvantages[managementStyle] || baseAdvantages["gestisco-io"])];
-  const addedFeatures = new Set(advantages.map(a => a.substring(0, 2)));
-  if (!addedFeatures.has("⏰")) {
-    advantages.push("⏰ Alert automatici 30-60 giorni prima delle scadenze");
+  
+  // Create a set of advantage texts to check for duplicates (not just emojis)
+  const existingTexts = new Set(advantages.map(a => a.trim()));
+  
+  const alertText = "⏰ Alert automatici 30-60 giorni prima delle scadenze";
+  const platformText = "📱 Piattaforma 24/7 sempre accessibile";
+  const specialistsText = "🚀 Rete specialisti con risposte prioritarie";
+  const fundsText = "💰 Accesso a fondi e agevolazioni disponibili";
+  
+  if (!existingTexts.has(alertText)) {
+    advantages.push(alertText);
+    existingTexts.add(alertText);
   }
-  if (!addedFeatures.has("📱") && managementStyle !== "gestisco-io" && managementStyle !== "studi-multipli") {
-    advantages.push("📱 Piattaforma 24/7 sempre accessibile");
+  if (!existingTexts.has(platformText) && managementStyle !== "gestisco-io" && managementStyle !== "studi-multipli") {
+    advantages.push(platformText);
+    existingTexts.add(platformText);
   }
-  if (!addedFeatures.has("🚀") && managementStyle !== "interno") {
-    advantages.push("🚀 Rete specialisti con risposte prioritarie");
+  if (!existingTexts.has(specialistsText) && managementStyle !== "interno") {
+    advantages.push(specialistsText);
+    existingTexts.add(specialistsText);
   }
-  if (!addedFeatures.has("💰") && managementStyle !== "gestisco-io") {
-    advantages.push("💰 Accesso a fondi e agevolazioni disponibili");
+  if (!existingTexts.has(fundsText) && managementStyle !== "gestisco-io") {
+    advantages.push(fundsText);
+    existingTexts.add(fundsText);
   }
   return advantages.slice(0, 5);
 }
