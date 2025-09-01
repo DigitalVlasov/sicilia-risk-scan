@@ -1012,7 +1012,7 @@ const ResultsStage = memo(({
                     {sanctionDetails.sanctionBreakdown.length > 0 && <>
                         <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
                         <ul className="space-y-1">
-                          {sanctionDetails.sanctionBreakdown.map((item, idx) => <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a €{item.max.toLocaleString('it-IT')}</span></li>)}
+                          {sanctionDetails.sanctionBreakdown.map((item, idx) => <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a € {item.max.toLocaleString('it-IT')}</span></li>)}
                         </ul>
                       </>}
                     <p className="mt-3 text-xs text-gray-600">* Sanzioni cumulative secondo D.Lgs. 81/08, rivalutate +15,9% dal 06/10/2023</p>
