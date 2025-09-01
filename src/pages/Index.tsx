@@ -978,9 +978,9 @@ const ResultsStage = memo(({
                 {showCalculation && <div className="mt-3 p-3 bg-gray-50 rounded border text-left text-xs sm:text-sm">
                     <h4 className="font-bold mb-2">📊 Base di calcolo:</h4>
                     <ul className="space-y-1 text-gray-700">
-                      <li>• <strong>{sanctionDetails.violations} criticità rilevate</strong> dalle tue risposte</li>
-                      <li>• {sanctionDetails.noAnswers} risposte "No" (non conformità certe)</li>
-                      <li>• {sanctionDetails.unsureAnswers} risposte "Non sono sicuro" (rischi probabili)</li>
+                      <li>• <strong>{sanctionDetails.violations} criticità {sanctionDetails.violations === 1 ? 'rilevata' : 'rilevate'}</strong> dalle tue risposte</li>
+                      <li>• {sanctionDetails.noAnswers} {sanctionDetails.noAnswers === 1 ? 'risposta' : 'risposte'} "No" (non conformità {sanctionDetails.noAnswers === 1 ? 'certa' : 'certe'})</li>
+                      <li>• {sanctionDetails.unsureAnswers} {sanctionDetails.unsureAnswers === 1 ? 'risposta' : 'risposte'} "Non sono sicuro" (rischi {sanctionDetails.unsureAnswers === 1 ? 'probabili' : 'probabili'})</li>
                       <li>• Su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
                     </ul>
                     {sanctionDetails.sanctionBreakdown.length > 0 && <>
