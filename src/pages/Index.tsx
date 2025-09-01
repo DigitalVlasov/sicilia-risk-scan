@@ -439,7 +439,7 @@ const VIOLATIONS_CONFIG = {
     text: "Sorveglianza Sanitaria",
     min: 2316,
     max: 7632,
-    consequences: ["Un dipendente senza giudizio di idoneità valido non può legalmente lavorare.", "Rischio di denuncia se un infortunio è correlato a una condizione non monitorata.", "L'ASL può disporre la sospensione dell'attività."],
+    consequences: ["Un dipendente senza giudizio di idoneità valido non può legalmente lavorare.", "Rischio di denuncia se un infortunio è correlato a una condizione non monitorata.", "L'ASP può disporre la sospensione dell'attività."],
     actions: ["Nominare (o verificare) il Medico Competente.", "Pianificare le visite mediche periodiche.", "Assicurarsi che il protocollo sanitario sia aggiornato ai rischi del DVR."],
     fonte: "D.Lgs. 81/08, Titolo I e X; Legge 203/2024",
     priority: {
@@ -620,7 +620,7 @@ function generateDynamicInsight(answers, violations) {
       focus: "verifiche INAIL e rischio chimico"
     },
     alimentare: {
-      risk: "L'alimentare ha controlli congiunti ASL-NAS nel 68% dei casi.",
+      risk: "L'alimentare ha controlli congiunti ASP-NAS nel 68% dei casi.",
       focus: "HACCP e sorveglianza sanitaria"
     },
     trasporto: {
