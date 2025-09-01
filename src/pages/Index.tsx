@@ -936,11 +936,11 @@ const ResultsStage = memo(({
   const [showCalculation, setShowCalculation] = useState(false);
   const [currentCaseStudy, setCurrentCaseStudy] = useState(0);
   
-  // Auto-scroll case studies every 2.5 seconds
+  // Auto-scroll case studies every 3.5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentCaseStudy(prev => (prev + 1) % caseStudies.length);
-    }, 2500);
+    }, 3500);
     
     return () => clearInterval(interval);
   }, []);
@@ -1072,28 +1072,25 @@ const ResultsStage = memo(({
               transform: `translateX(-${currentCaseStudy * 100}%)`
             }}>
                 {caseStudies.map((study, idx) => <div key={idx} className="w-full flex-shrink-0 px-2">
-                    <div className="bg-gradient-to-br from-white via-red-50 to-gray-100 rounded-xl p-6 shadow-lg border-2 border-red-200 hover:border-red-400 transition-all duration-300 hover:shadow-xl animate-fade-in">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="text-4xl bg-black text-white rounded-full w-16 h-16 flex items-center justify-center shadow-md">
-                          {study.icon}
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-lg text-black">{study.title}</h3>
-                          <p className="text-sm text-red-600 font-semibold bg-red-100 px-2 py-1 rounded-full inline-block mt-1">{study.situation}</p>
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-300">
+                      <div className="mb-5">
+                        <h3 className="font-bold text-lg text-black mb-2">{study.title}</h3>
+                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-50 border border-red-200">
+                          <span className="text-sm font-medium text-red-600">{study.situation}</span>
                         </div>
                       </div>
-                      <div className="space-y-3 text-sm">
-                        <div className="bg-white p-4 rounded-lg border-l-4 border-red-500 shadow-sm">
-                          <strong className="text-red-700 font-bold text-base">🎯 Sfida:</strong>
-                          <p className="mt-2 text-gray-800 leading-relaxed">{study.challenge}</p>
+                      <div className="space-y-4">
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-semibold text-red-600 text-sm mb-2">SFIDA</h4>
+                          <p className="text-sm text-gray-700 leading-relaxed">{study.challenge}</p>
                         </div>
-                        <div className="bg-white p-4 rounded-lg border-l-4 border-black shadow-sm">
-                          <strong className="text-black font-bold text-base">⚡ Soluzione:</strong>
-                          <p className="mt-2 text-gray-800 leading-relaxed">{study.solution}</p>
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-semibold text-black text-sm mb-2">SOLUZIONE</h4>
+                          <p className="text-sm text-gray-700 leading-relaxed">{study.solution}</p>
                         </div>
-                        <div className="bg-gradient-to-r from-red-600 to-black text-white p-4 rounded-lg shadow-md">
-                          <strong className="font-bold text-base">✅ Risultato:</strong>
-                          <p className="mt-2 font-semibold text-lg">{study.result}</p>
+                        <div className="bg-red-600 rounded-lg p-4">
+                          <h4 className="font-semibold text-white text-sm mb-2">RISULTATO</h4>
+                          <p className="text-sm font-medium text-white">{study.result}</p>
                         </div>
                       </div>
                     </div>
