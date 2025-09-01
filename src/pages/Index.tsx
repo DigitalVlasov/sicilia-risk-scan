@@ -1125,7 +1125,7 @@ const ResultsStage = memo(({
           <ul className="space-y-2">
             <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Check-up Conformità 2025-2026:</strong> La tua posizione rispetto ai nuovi obblighi normativi.</span></li>
             <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Mappatura Scadenze Critiche:</strong> Le date da cerchiare in rosso sul calendario.</span></li>
-            <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Analisi Formazione Agevolata:</strong> Verifica opportunità fondi interprofessionali.</span></li>
+            <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Analisi Formazione Finanziata:</strong> Verifica opportunità formative gratuite con i Fondi Interprofessionali.</span></li>
           </ul>
         </div>
         <div className="space-y-3 sm:space-y-0 sm:flex sm:gap-4 sm:justify-center">
