@@ -821,7 +821,7 @@ const IntroStage = memo(({
   const objections = [{
     title: "È adatto a me?",
     icon: "🎯",
-    content: "Il test è progettato per TUTTE le aziende siciliane, da 1 a 100+ dipendenti. Edilizia, alimentare, manifattura, servizi: ogni settore ha domande specifiche. In 2 minuti scopri esattamente cosa rischi TU."
+    content: "Il Test è Specifico per aziende con Sede Legale in Sicilia. Le domande e i risultati sono personalizzate per settore. In 2 minuti scopri esattamente cosa rischi TU e poi decidi liberamente se contattarci o risolvere da solo."
   }, {
     title: "Non ho tempo",
     icon: "⏱️",
