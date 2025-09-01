@@ -935,6 +935,16 @@ const ResultsStage = memo(({
 }: ResultsStageProps) => {
   const [showCalculation, setShowCalculation] = useState(false);
   const [currentCaseStudy, setCurrentCaseStudy] = useState(0);
+  
+  // Auto-scroll case studies every 2.5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCaseStudy(prev => (prev + 1) % caseStudies.length);
+    }, 2500);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
   const sanctionMax = violations.reduce((total, v) => total + v.max, 0);
   const getSectorName = () => answers.settore && {
     edilizia: "Edilizia",
@@ -1058,26 +1068,40 @@ const ResultsStage = memo(({
         <CardContent>
           <div className="relative">
             <div className="overflow-hidden">
-              <div className="flex transition-transform duration-300 ease-in-out" style={{
+              <div className="flex transition-transform duration-500 ease-in-out" style={{
               transform: `translateX(-${currentCaseStudy * 100}%)`
             }}>
                 {caseStudies.map((study, idx) => <div key={idx} className="w-full flex-shrink-0 px-2">
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-3">
-                        <span className="text-3xl">{study.icon}</span>
-                        <div><h3 className="font-bold text-sm">{study.title}</h3><p className="text-xs text-gray-600">{study.situation}</p></div>
+                    <div className="bg-gradient-to-br from-white via-red-50 to-gray-100 rounded-xl p-6 shadow-lg border-2 border-red-200 hover:border-red-400 transition-all duration-300 hover:shadow-xl animate-fade-in">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="text-4xl bg-black text-white rounded-full w-16 h-16 flex items-center justify-center shadow-md">
+                          {study.icon}
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-black">{study.title}</h3>
+                          <p className="text-sm text-red-600 font-semibold bg-red-100 px-2 py-1 rounded-full inline-block mt-1">{study.situation}</p>
+                        </div>
                       </div>
-                      <div className="space-y-2 text-xs sm:text-sm">
-                        <div className="bg-white p-2 rounded"><strong className="text-red-600">Sfida:</strong><p className="mt-1 text-gray-700">{study.challenge}</p></div>
-                        <div className="bg-white p-2 rounded"><strong className="text-blue-600">Soluzione:</strong><p className="mt-1 text-gray-700">{study.solution}</p></div>
-                        <div className="bg-green-50 border border-green-200 p-2 rounded"><strong className="text-green-700">✅ Risultato:</strong><p className="mt-1 font-semibold text-green-800">{study.result}</p></div>
+                      <div className="space-y-3 text-sm">
+                        <div className="bg-white p-4 rounded-lg border-l-4 border-red-500 shadow-sm">
+                          <strong className="text-red-700 font-bold text-base">🎯 Sfida:</strong>
+                          <p className="mt-2 text-gray-800 leading-relaxed">{study.challenge}</p>
+                        </div>
+                        <div className="bg-white p-4 rounded-lg border-l-4 border-black shadow-sm">
+                          <strong className="text-black font-bold text-base">⚡ Soluzione:</strong>
+                          <p className="mt-2 text-gray-800 leading-relaxed">{study.solution}</p>
+                        </div>
+                        <div className="bg-gradient-to-r from-red-600 to-black text-white p-4 rounded-lg shadow-md">
+                          <strong className="font-bold text-base">✅ Risultato:</strong>
+                          <p className="mt-2 font-semibold text-lg">{study.result}</p>
+                        </div>
                       </div>
                     </div>
                   </div>)}
               </div>
             </div>
-            <div className="flex justify-center gap-2 mt-4">
-              {caseStudies.map((_, idx) => <button key={idx} onClick={() => setCurrentCaseStudy(idx)} className={`w-2 h-2 rounded-full transition-all ${currentCaseStudy === idx ? "w-8 bg-red-600" : "bg-gray-300 hover:bg-gray-400"}`} aria-label={`Vai al caso studio ${idx + 1}`} />)}
+            <div className="flex justify-center gap-3 mt-6">
+              {caseStudies.map((_, idx) => <button key={idx} onClick={() => setCurrentCaseStudy(idx)} className={`transition-all duration-300 rounded-full border-2 ${currentCaseStudy === idx ? "w-10 h-4 bg-gradient-to-r from-red-600 to-black border-red-600 shadow-lg" : "w-4 h-4 bg-white border-gray-400 hover:border-red-400 hover:bg-red-50"}`} aria-label={`Vai al caso studio ${idx + 1}`} />)}
             </div>
           </div>
         </CardContent>
