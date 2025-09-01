@@ -240,7 +240,7 @@ const QUESTIONS = [{
   }]
 }, {
   id: "sorveglianza",
-  title: "Sorveglianza sanitaria: giudizi idoneità ultimi 2 anni + protocollo medico competente aggiornato?",
+  title: "Sorveglianza sanitaria: Riesci a reperire i Giudizi di Idoneità ultimi 2 anni, Protocollo Sanitario e Nomina del Medico Competente aggiornata?",
   subtitle: "Controllo cartelle mediche sempre verificato",
   type: "score",
   options: [{
