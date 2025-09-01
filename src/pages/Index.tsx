@@ -277,7 +277,7 @@ const QUESTIONS = [{
 }, {
   id: "patente-cantieri",
   title: "Hai la patente a punti o crediti nei cantieri edili, con almeno 15 punti attivi?",
-  subtitle: "Obbligatoria dal 1° ottobre 2024 - esclusione immediata senza",
+  subtitle: "Obbligatoria dal 1° ottobre 2024 – in caso di mancanza si rischia sanzione amministrativa ed esclusione dalla partecipazione a lavori pubblici",
   type: "score",
   conditional: {
     dependsOn: "settore",
@@ -571,6 +571,23 @@ const caseStudies = [{
 // ==================== HELPER FUNCTIONS ====================
 // Business logic functions for calculations and dynamic content generation.
 
+// Grammar helper functions for Italian concordance
+function getCriticitaText(count) {
+  return count === 1 ? `${count} criticità rilevata` : `${count} criticità rilevate`;
+}
+
+function getNonConformitaText(count) {
+  return count === 1 ? `${count} non conformità rilevata` : `${count} non conformità rilevate`;
+}
+
+function getCriticitaVerb(count) {
+  return count === 1 ? 'indica' : 'indicano';
+}
+
+function getNonConformitaVerb(count) {
+  return count === 1 ? 'mostra' : 'mostrano';
+}
+
 function calculateViolations(answers) {
   return Object.keys(VIOLATIONS_CONFIG).filter(key => {
     const question = QUESTIONS.find(q => q.id === key);
@@ -643,24 +660,24 @@ function generateDynamicInsight(answers, violations) {
   const insights = {
     'gestisco-io': {
       title: "⚡ Gestisci tutto da solo: ammirevole ma rischioso",
-      text: `Con ${violations.length} criticità rilevate e ${sectorInfo.risk}, il carico è troppo per una persona sola. Hai bisogno di un sistema che automatizzi i controlli, soprattutto su ${sectorInfo.focus}.`
+      text: `Con ${getCriticitaText(violations.length)} e ${sectorInfo.risk}, il carico è troppo per una persona sola. Hai bisogno di un sistema che automatizzi i controlli, soprattutto su ${sectorInfo.focus}.`
     },
     'interno': {
       title: "👥 Il tuo team interno è sotto pressione",
-      text: `${violations.length} non conformità mostrano che il carico supera le capacità interne. ${sectorInfo.risk} Un supporto specializzato alleggerisce il team su ${sectorInfo.focus}.`
+      text: `${getNonConformitaText(violations.length)} ${getNonConformitaVerb(violations.length)} che il carico supera le capacità interne. ${sectorInfo.risk} Un supporto specializzato alleggerisce il team su ${sectorInfo.focus}.`
     },
     'consulente': {
       title: "🔍 Il tuo consulente sta coprendo tutto?",
-      text: `Nonostante il consulente, hai ${violations.length} criticità. ${sectorInfo.risk} Serve un sistema proattivo che preveda i problemi, non solo che li risolva. Focus: ${sectorInfo.focus}.`
+      text: `Nonostante il consulente, hai ${getCriticitaText(violations.length)}. ${sectorInfo.risk} Serve un sistema proattivo che preveda i problemi, non solo che li risolva. Focus: ${sectorInfo.focus}.`
     },
     'studi-multipli': {
       title: "🔄 Troppi professionisti, poca coordinazione",
-      text: `${violations.length} criticità indicano mancanza di coordinamento tra i tuoi consulenti. ${sectorInfo.risk} Serve una regia unica, specialmente per ${sectorInfo.focus}.`
+      text: `${getCriticitaText(violations.length)} ${getCriticitaVerb(violations.length)} mancanza di coordinamento tra i tuoi consulenti. ${sectorInfo.risk} Serve una regia unica, specialmente per ${sectorInfo.focus}.`
     }
   };
   const insight = insights[managementStyle] || {
     title: "⚠️ Il tuo sistema ha delle falle",
-    text: `${violations.length} non conformità rilevate. ${sectorInfo.risk} È il momento di ripensare l'approccio alla sicurezza, partendo da ${sectorInfo.focus}.`
+    text: `${getNonConformitaText(violations.length)}. ${sectorInfo.risk} È il momento di ripensare l'approccio alla sicurezza, partendo da ${sectorInfo.focus}.`
   };
   return {
     ...insight,
@@ -676,13 +693,15 @@ function generatePersonalizedAdvantages(answers) {
     "studi-multipli": ["🎭 Regia unica per coordinare tutti i fornitori", "📋 Monitoraggio centralizzato scadenze e standard", "🔗 Eliminazione sovrapposizioni e buchi operativi", "📱 Piattaforma digitale 24/7 sempre accessibile"]
   };
   let advantages = [...(baseAdvantages[managementStyle] || baseAdvantages["gestisco-io"])];
-
+  
   // Create a set of advantage texts to check for duplicates (not just emojis)
   const existingTexts = new Set(advantages.map(a => a.trim()));
+  
   const alertText = "⏰ Alert automatici 30-60 giorni prima delle scadenze";
   const platformText = "📱 Piattaforma 24/7 sempre accessibile";
   const specialistsText = "🚀 Rete specialisti con risposte prioritarie";
   const fundsText = "💰 Accesso a fondi e agevolazioni disponibili";
+  
   if (!existingTexts.has(alertText)) {
     advantages.push(alertText);
     existingTexts.add(alertText);
@@ -802,7 +821,7 @@ const IntroStage = memo(({
   const objections = [{
     title: "È adatto a me?",
     icon: "🎯",
-    content: "Il test è progettato per TUTTE le aziende siciliane, da 1 a 100+ dipendenti. Edilizia, alimentare, manifattura, servizi: ogni settore ha domande specifiche. In 2 minuti scopri esattamente cosa rischi TU."
+    content: "Il Test è Specifico per aziende con Sede Legale in Sicilia. Le domande e i risultati sono personalizzate per settore. In 2 minuti scopri esattamente cosa rischi TU e poi decidi liberamente se contattarci o risolvere da solo."
   }, {
     title: "Non ho tempo",
     icon: "⏱️",
@@ -933,6 +952,16 @@ const ResultsStage = memo(({
 }: ResultsStageProps) => {
   const [showCalculation, setShowCalculation] = useState(false);
   const [currentCaseStudy, setCurrentCaseStudy] = useState(0);
+  
+  // Auto-scroll case studies every 3.5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCaseStudy(prev => (prev + 1) % caseStudies.length);
+    }, 3500);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
   const sanctionMax = violations.reduce((total, v) => total + v.max, 0);
   const getSectorName = () => answers.settore && {
     edilizia: "Edilizia",
@@ -977,14 +1006,11 @@ const ResultsStage = memo(({
                 </button>
                 {showCalculation && <div className="mt-3 p-3 bg-gray-50 rounded border text-left text-xs sm:text-sm">
                     <h4 className="font-bold mb-2">📊 Base di calcolo:</h4>
-                    <ul className="space-y-1 text-gray-700">
-                      <li>• <strong>{sanctionDetails.violations} criticità rilevate</strong> dalle tue risposte</li>
-                      <li>• {sanctionDetails.noAnswers} risposte "No" (non conformità certe)</li>
-                      <li>• {sanctionDetails.unsureAnswers} risposte "Non sono sicuro" (rischi probabili)</li>
-                      <li>• Su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
-                    </ul>
+                     <ul className="space-y-1 text-gray-700">
+                       <li>• <strong>{getCriticitaText(sanctionDetails.violations)}</strong> su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
+                     </ul>
                     {sanctionDetails.sanctionBreakdown.length > 0 && <>
-                        <h4 className="font-bold mt-3 mb-2">fino a € 7.404</h4>
+                        <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
                         <ul className="space-y-1">
                           {sanctionDetails.sanctionBreakdown.map((item, idx) => <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a €{item.max.toLocaleString('it-IT')}</span></li>)}
                         </ul>
@@ -1002,18 +1028,12 @@ const ResultsStage = memo(({
       <div className={`rounded-lg p-4 sm:p-6 text-center shadow-lg ${dynamicInsight.urgency === "high" ? "bg-red-900 text-white" : dynamicInsight.urgency === "medium" ? "bg-yellow-500 text-black" : "bg-gray-800 text-white"}`}>
         <h2 className="text-xl sm:text-2xl font-bold mb-2">{dynamicInsight.title}</h2>
         <p className="text-sm sm:text-base max-w-2xl mx-auto opacity-90">{dynamicInsight.text}</p>
-        <a href="#vantaggi-spazio-impresa" onClick={e => handleScrollTo(e, 'vantaggi-spazio-impresa')} className="inline-block mt-4 text-sm font-semibold underline hover:no-underline">📊 Base di calcolo:
-• 1 criticità rilevata su 11 controlli verificati per il tuo settore
-💰 Dettaglio sanzioni:
-DVR e Nomine Fondamentali:
-fino a € 7.404
-
-* Sanzioni cumulative secondo D.Lgs. 81/08, rivalutate +15,9% dal 06/10/2023</a>
+        <a href="#vantaggi-spazio-impresa" onClick={e => handleScrollTo(e, 'vantaggi-spazio-impresa')} className="inline-block mt-4 text-sm font-semibold underline hover:no-underline">Scopri come Spazio Impresa può aiutarti →</a>
       </div>
       
       {violations.length > 0 && <Card>
           <CardHeader className="pb-2 sm:pb-4">
-            <CardTitle>• 1 risposta "Non sono sicuro" (rischi probabili)</CardTitle>
+            <CardTitle>Dettaglio Rischi e Soluzioni</CardTitle>
             <p className="text-xs sm:text-sm text-gray-500 mt-1">(clicca sulle opzioni per approfondire)</p>
           </CardHeader>
           <CardContent className="space-y-2 sm:space-y-3">
@@ -1062,26 +1082,37 @@ fino a € 7.404
         <CardContent>
           <div className="relative">
             <div className="overflow-hidden">
-              <div className="flex transition-transform duration-300 ease-in-out" style={{
+              <div className="flex transition-transform duration-500 ease-in-out" style={{
               transform: `translateX(-${currentCaseStudy * 100}%)`
             }}>
                 {caseStudies.map((study, idx) => <div key={idx} className="w-full flex-shrink-0 px-2">
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-4">
-                      <div className="flex items-center gap-3 mb-3">
-                        <span className="text-3xl">{study.icon}</span>
-                        <div><h3 className="font-bold text-sm">{study.title}</h3><p className="text-xs text-gray-600">{study.situation}</p></div>
+                    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-300">
+                      <div className="mb-5">
+                        <h3 className="font-bold text-lg text-black mb-2">{study.title}</h3>
+                        <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-50 border border-red-200">
+                          <span className="text-sm font-medium text-red-600">{study.situation}</span>
+                        </div>
                       </div>
-                      <div className="space-y-2 text-xs sm:text-sm">
-                        <div className="bg-white p-2 rounded"><strong className="text-red-600">Sfida:</strong><p className="mt-1 text-gray-700">{study.challenge}</p></div>
-                        <div className="bg-white p-2 rounded"><strong className="text-blue-600">Soluzione:</strong><p className="mt-1 text-gray-700">{study.solution}</p></div>
-                        <div className="bg-green-50 border border-green-200 p-2 rounded"><strong className="text-green-700">✅ Risultato:</strong><p className="mt-1 font-semibold text-green-800">{study.result}</p></div>
+                      <div className="space-y-4">
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-semibold text-red-600 text-sm mb-2">SFIDA</h4>
+                          <p className="text-sm text-gray-700 leading-relaxed">{study.challenge}</p>
+                        </div>
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <h4 className="font-semibold text-black text-sm mb-2">SOLUZIONE</h4>
+                          <p className="text-sm text-gray-700 leading-relaxed">{study.solution}</p>
+                        </div>
+                        <div className="bg-red-600 rounded-lg p-4">
+                          <h4 className="font-semibold text-white text-sm mb-2">RISULTATO</h4>
+                          <p className="text-sm font-medium text-white">{study.result}</p>
+                        </div>
                       </div>
                     </div>
                   </div>)}
               </div>
             </div>
-            <div className="flex justify-center gap-2 mt-4">
-              {caseStudies.map((_, idx) => <button key={idx} onClick={() => setCurrentCaseStudy(idx)} className={`w-2 h-2 rounded-full transition-all ${currentCaseStudy === idx ? "w-8 bg-red-600" : "bg-gray-300 hover:bg-gray-400"}`} aria-label={`Vai al caso studio ${idx + 1}`} />)}
+            <div className="flex justify-center gap-3 mt-6">
+              {caseStudies.map((_, idx) => <button key={idx} onClick={() => setCurrentCaseStudy(idx)} className={`transition-all duration-300 rounded-full border-2 ${currentCaseStudy === idx ? "w-10 h-4 bg-gradient-to-r from-red-600 to-black border-red-600 shadow-lg" : "w-4 h-4 bg-white border-gray-400 hover:border-red-400 hover:bg-red-50"}`} aria-label={`Vai al caso studio ${idx + 1}`} />)}
             </div>
           </div>
         </CardContent>
@@ -1091,12 +1122,11 @@ fino a € 7.404
         <CardHeader><CardTitle>Cosa include il Sistema Organizzativo di Spazio Impresa:</CardTitle></CardHeader>
         <CardContent>
             <ul className="space-y-2 text-sm sm:text-base">
-                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze mediche e corsi</span></li>
-                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Coordinamento figure SPP</span></li>
-                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Archivio digitale 24/7 con documentazione</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze visite mediche e attestati di formazione</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Archivio documentale digitale 24/7</span></li>
                 <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Alert automatici personalizzati</span></li>
-                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Supporto per controlli ispettivi</span></li>
-                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Analisi fondi interprofessionali</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Supporto in caso di controlli ispettivi</span></li>
+                <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Erogazione corsi tramite i Fondi Interprofessionali</span></li>
             </ul>
         </CardContent>
       </Card>
@@ -1109,7 +1139,7 @@ fino a € 7.404
           <ul className="space-y-2">
             <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Check-up Conformità 2025-2026:</strong> La tua posizione rispetto ai nuovi obblighi normativi.</span></li>
             <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Mappatura Scadenze Critiche:</strong> Le date da cerchiare in rosso sul calendario.</span></li>
-            <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Analisi Formazione Agevolata:</strong> Verifica opportunità fondi interprofessionali.</span></li>
+            <li className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span><span><strong>Analisi Formazione Finanziata:</strong> Verifica opportunità formative gratuite con i Fondi Interprofessionali.</span></li>
           </ul>
         </div>
         <div className="space-y-3 sm:space-y-0 sm:flex sm:gap-4 sm:justify-center">
