@@ -626,66 +626,59 @@ function generateDynamicInsight(answers, violations) {
   const sector = answers.settore;
   const employees = answers.dipendenti;
   let urgency = "low";
-  if (violations.length > 3 || employees === ">20") urgency = "high";
-  else if (violations.length > 1 || employees === "11-20") urgency = "medium";
-  
+  if (violations.length > 3 || employees === ">20") urgency = "high";else if (violations.length > 1 || employees === "11-20") urgency = "medium";
   const sectorInsights = {
     edilizia: {
-      risk: "Il settore edile presenta il 42% di probabilità di controllo ispettivo annuale",
+      risk: "Il settore edile ha il 42% di probabilità di controllo annuale.",
       focus: "patente a crediti e formazione cantieri"
     },
     manifatturiero: {
-      risk: "Il settore manifatturiero è sotto particolare attenzione per infortuni e verifiche impianti",
-      focus: "verifiche INAIL e gestione rischio chimico"
+      risk: "Il manifatturiero è sotto osservazione per infortuni e verifiche impianti.",
+      focus: "verifiche INAIL e rischio chimico"
     },
     alimentare: {
-      risk: "Il settore alimentare registra controlli congiunti ASP-NAS nel 68% dei casi",
+      risk: "L'alimentare ha controlli congiunti ASP-NAS nel 68% dei casi.",
       focus: "HACCP e sorveglianza sanitaria"
     },
     trasporto: {
-      risk: "Trasporto e magazzinaggio sono sotto osservazione per sicurezza stradale e movimentazione",
+      risk: "Il trasporto e magazzinaggio hanno controlli mirati su sicurezza stradale e movimentazione.",
       focus: "verifiche INAIL e procedure operative"
     },
     default: {
-      risk: "Il tuo settore presenta controlli mirati basati su analisi del rischio",
+      risk: "Il tuo settore ha controlli mirati basati su analisi del rischio.",
       focus: "documentazione base e formazione"
     }
   };
-  
   const sectorInfo = sectorInsights[sector] || sectorInsights.default;
-  
   if (violations.length === 0) {
     return {
-      title: "Risultato positivo",
-      text: `La tua azienda appare conforme ai controlli ispettivi più frequenti. ${sectorInfo.risk}. Mantieni questo standard con un sistema di monitoraggio continuo per evitare future non conformità.`,
+      title: "📊 Ottimo risultato, ma non abbassare la guardia",
+      text: `Sei conforme alle verifiche principali. ${sectorInfo.risk} Mantieni questo standard con un sistema di monitoraggio continuo.`,
       urgency: "low"
     };
   }
-  
   const insights = {
     'gestisco-io': {
-      title: "Gestione autonoma: un carico eccessivo",
-      text: `Abbiamo rilevato ${getCriticitaText(violations.length)} nella tua organizzazione. ${sectorInfo.risk}. Il carico amministrativo e normativo è diventato troppo complesso per essere gestito efficacemente da una sola persona. È necessario un sistema che automatizzi i controlli, con particolare attenzione a: ${sectorInfo.focus}.`
+      title: "⚡ Gestisci tutto da solo: ammirevole ma rischioso",
+      text: `Con ${getCriticitaText(violations.length)} e ${sectorInfo.risk}, il carico è troppo per una persona sola. Hai bisogno di un sistema che automatizzi i controlli, soprattutto su ${sectorInfo.focus}.`
     },
     'interno': {
-      title: "Team interno sotto pressione",
-      text: `Le ${getNonConformitaText(violations.length)} rilevate ${getNonConformitaVerb(violations.length)} che il carico operativo supera le capacità del team interno. ${sectorInfo.risk}. Un supporto specializzato può alleggerire significativamente il carico di lavoro, soprattutto per: ${sectorInfo.focus}.`
+      title: "👥 Il tuo team interno è sotto pressione",
+      text: `${getNonConformitaText(violations.length)} ${getNonConformitaVerb(violations.length)} che il carico supera le capacità interne. ${sectorInfo.risk} Un supporto specializzato alleggerisce il team su ${sectorInfo.focus}.`
     },
     'consulente': {
-      title: "Lacune nel supporto consulenziale",
-      text: `Nonostante l'affidamento a un consulente, persistono ${getCriticitaText(violations.length)} significative. ${sectorInfo.risk}. Serve un approccio più proattivo che preveda i problemi prima che si manifestino, con focus specifico su: ${sectorInfo.focus}.`
+      title: "🔍 Il tuo consulente sta coprendo tutto?",
+      text: `Nonostante il consulente, hai ${getCriticitaText(violations.length)}. ${sectorInfo.risk} Serve un sistema proattivo che preveda i problemi, non solo che li risolva. Focus: ${sectorInfo.focus}.`
     },
     'studi-multipli': {
-      title: "Mancanza di coordinamento",
-      text: `Le ${getCriticitaText(violations.length)} evidenziate ${getCriticitaVerb(violations.length)} una mancanza di coordinamento tra i diversi professionisti coinvolti. ${sectorInfo.risk}. È necessaria una regia unica per evitare sovrapposizioni e garantire copertura completa, specialmente per: ${sectorInfo.focus}.`
+      title: "🔄 Troppi professionisti, poca coordinazione",
+      text: `${getCriticitaText(violations.length)} ${getCriticitaVerb(violations.length)} mancanza di coordinamento tra i tuoi consulenti. ${sectorInfo.risk} Serve una regia unica, specialmente per ${sectorInfo.focus}.`
     }
   };
-  
   const insight = insights[managementStyle] || {
-    title: "Sistema organizzativo da rivedere",
-    text: `Le ${getNonConformitaText(violations.length)} rilevate indicano la necessità di ripensare l'approccio alla sicurezza aziendale. ${sectorInfo.risk}. È il momento di implementare un sistema più strutturato, partendo da: ${sectorInfo.focus}.`
+    title: "⚠️ Il tuo sistema ha delle falle",
+    text: `${getNonConformitaText(violations.length)}. ${sectorInfo.risk} È il momento di ripensare l'approccio alla sicurezza, partendo da ${sectorInfo.focus}.`
   };
-  
   return {
     ...insight,
     urgency
@@ -1032,32 +1025,11 @@ const ResultsStage = memo(({
         </CardContent>
       </Card>
       
-      <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200">
-        <CardContent className="p-6">
-          <div className="mb-4">
-            <h2 className="text-xl font-bold text-gray-900 mb-3">{dynamicInsight.title}</h2>
-            <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
-              dynamicInsight.urgency === "high" 
-                ? "bg-red-100 text-red-700 border border-red-200" 
-                : dynamicInsight.urgency === "medium" 
-                ? "bg-yellow-100 text-yellow-800 border border-yellow-200" 
-                : "bg-green-100 text-green-700 border border-green-200"
-            }`}>
-              {dynamicInsight.urgency === "high" ? "PRIORITÀ ALTA" : 
-               dynamicInsight.urgency === "medium" ? "ATTENZIONE RICHIESTA" : "MONITORAGGIO"}
-            </div>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-4 mb-4">
-            <p className="text-sm text-gray-700 leading-relaxed">{dynamicInsight.text}</p>
-          </div>
-          <div className="text-center">
-            <a href="#vantaggi-spazio-impresa" onClick={e => handleScrollTo(e, 'vantaggi-spazio-impresa')} className="inline-flex items-center text-sm font-semibold text-red-600 hover:text-red-700 transition-colors">
-              Scopri le nostre soluzioni
-              <span className="ml-1">→</span>
-            </a>
-          </div>
-        </CardContent>
-      </Card>
+      <div className={`rounded-lg p-4 sm:p-6 text-center shadow-lg ${dynamicInsight.urgency === "high" ? "bg-red-900 text-white" : dynamicInsight.urgency === "medium" ? "bg-yellow-500 text-black" : "bg-gray-800 text-white"}`}>
+        <h2 className="text-xl sm:text-2xl font-bold mb-2">{dynamicInsight.title}</h2>
+        <p className="text-sm sm:text-base max-w-2xl mx-auto opacity-90">{dynamicInsight.text}</p>
+        <a href="#vantaggi-spazio-impresa" onClick={e => handleScrollTo(e, 'vantaggi-spazio-impresa')} className="inline-block mt-4 text-sm font-semibold underline hover:no-underline">Scopri come Spazio Impresa può aiutarti →</a>
+      </div>
       
       {violations.length > 0 && <Card>
           <CardHeader className="pb-2 sm:pb-4">
