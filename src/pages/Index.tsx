@@ -998,7 +998,7 @@ const ResultsStage = memo(({
           </div>
           {violations.length > 0 ? <div className="mt-4 sm:mt-6">
               <div className="rounded-lg border-2 border-black bg-white p-4 sm:p-6 text-center shadow-inner">
-                <div className="text-3xl sm:text-5xl font-black text-red-600 mb-2 sm:mb-3">€{sanctionMax.toLocaleString("it-IT")}</div>
+                <div className="text-3xl sm:text-5xl font-black text-red-600 mb-2 sm:mb-3">€ {sanctionMax.toLocaleString("it-IT")}</div>
                 <div className="text-sm sm:text-base text-black font-semibold">È la sanzione massima che rischi OGGI se l'ispettore suona il campanello.</div>
                 <button onClick={() => setShowCalculation(!showCalculation)} className="mt-3 text-xs sm:text-sm text-gray-600 hover:text-black font-medium flex items-center justify-center gap-1 mx-auto transition-colors">
                   <span>Come abbiamo ottenuto questa cifra?</span>
@@ -1012,7 +1012,7 @@ const ResultsStage = memo(({
                     {sanctionDetails.sanctionBreakdown.length > 0 && <>
                         <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
                         <ul className="space-y-1">
-                          {sanctionDetails.sanctionBreakdown.map((item, idx) => <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a €{item.max.toLocaleString('it-IT')}</span></li>)}
+                          {sanctionDetails.sanctionBreakdown.map((item, idx) => <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a € {item.max.toLocaleString('it-IT')}</span></li>)}
                         </ul>
                       </>}
                     <p className="mt-3 text-xs text-gray-600">* Sanzioni cumulative secondo D.Lgs. 81/08, rivalutate +15,9% dal 06/10/2023</p>
