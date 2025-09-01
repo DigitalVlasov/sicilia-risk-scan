@@ -1,44 +1,4 @@
-import React, { useCallback, useReducer, useMemo, memo, useState, useEffect } from "react";
-
-// ==================== TYPE DEFINITIONS ====================
-interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-  id?: string;
-}
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "success";
-  size?: "sm" | "md" | "lg";
-  className?: string;
-  disabled?: boolean;
-}
-interface BadgeProps {
-  children: React.ReactNode;
-  variant?: "default" | "secondary" | "destructive" | "warning" | "success";
-  className?: string;
-}
-interface IntroStageProps {
-  onStart: () => void;
-}
-interface QuizStageProps {
-  question: any;
-  currentQuestionIndex: number;
-  totalQuestions: number;
-  answers: any;
-  onSelectOption: (question: any, option: any) => void;
-  onGoBack: () => void;
-}
-interface ResultsStageProps {
-  risk: {
-    level: string;
-    finalScore: number;
-  };
-  violations: any[];
-  answers: any;
-  onReset: () => void;
-}
+import { QuizContainer } from "../components/quiz/QuizContainer";
 
 // ==================== CONFIGURATION LAYER ====================
 const CONFIG = {
@@ -1202,7 +1162,10 @@ const ResultsStage = memo(({
 });
 
 //  MAIN APP COMPONENT =
+import { QuizContainer } from "../components/quiz/QuizContainer";
+
 export default function OptimizedQuizApp() {
+  return <QuizContainer />;
   const [state, dispatch] = useReducer(quizReducer, initialState);
   const {
     stage,
