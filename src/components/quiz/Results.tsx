@@ -55,10 +55,14 @@ export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProp
         </p>
       </header>
 
-      <article className="rounded-lg p-6 bg-gradient-hero text-background border-none shadow-md">
-        <div className="text-sm/6 opacity-90">Stima del rischio economico</div>
-        <div className="mt-1 text-3xl font-bold">{currency(minRisk)} - {currency(maxRisk)}</div>
-        <p className="mt-2 text-sm/6 opacity-90">Attivi su tutto il territorio Siciliano • Interventi rapidi e documentati</p>
+      <article className="rounded-lg p-6 bg-card border border-primary/20 shadow-lg">
+        <div className="text-sm font-medium text-primary mb-2">⚠️ Stima del rischio economico</div>
+        <div className="text-3xl font-bold text-foreground mb-3">{currency(minRisk)} - {currency(maxRisk)}</div>
+        <p className="text-sm text-muted-foreground mb-4">Attivi su tutto il territorio Siciliano • Interventi rapidi e documentati</p>
+        <div className="flex gap-2 text-xs">
+          <span className="px-2 py-1 bg-primary/10 text-primary rounded">Analisi completata</span>
+          <span className="px-2 py-1 bg-muted text-muted-foreground rounded">Basata su 13 parametri</span>
+        </div>
       </article>
 
       <article className="space-y-4">
@@ -68,10 +72,18 @@ export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProp
         ) : (
           <ul className="grid gap-3 sm:grid-cols-2">
             {criticalAreas.map((c, i) => (
-              <li key={i} className="rounded-lg border p-4 bg-card">
-                <div className="font-medium">{c.name}</div>
-                {c.sanction && <div className="text-sm text-primary mt-1">Sanzione stimata: {c.sanction}</div>}
+              <li key={i} className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+                <div className="font-semibold text-foreground flex items-center gap-2">
+                  <span className="w-2 h-2 bg-primary rounded-full"></span>
+                  {c.name}
+                </div>
+                {c.sanction && <div className="text-sm text-primary mt-2 font-medium">💰 {c.sanction}</div>}
                 {c.details && <p className="mt-2 text-sm text-muted-foreground">{c.details}</p>}
+                <div className="mt-3 pt-3 border-t border-border">
+                  <button className="text-xs text-primary hover:underline">
+                    → Scopri come risolvere
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
@@ -80,18 +92,18 @@ export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProp
 
       <article className="space-y-4">
         <h3 className="text-2xl font-semibold">Perché Spazio Impresa?</h3>
-        <div className="overflow-hidden rounded-lg border">
-          <div className="grid grid-cols-2 bg-muted/50">
-            <div className="p-3 font-medium">Mercato standard</div>
-            <div className="p-3 font-medium text-primary">Spazio Impresa</div>
+        <div className="overflow-hidden rounded-lg border border-primary/20 bg-card shadow-sm">
+          <div className="grid grid-cols-2 bg-secondary">
+            <div className="p-4 font-semibold text-secondary-foreground">Mercato standard</div>
+            <div className="p-4 font-semibold text-secondary-foreground bg-primary text-primary-foreground">Spazio Impresa</div>
           </div>
           <div className="grid grid-cols-2 divide-x divide-border">
-            <div className="p-3 text-sm text-muted-foreground">Tempi 15-30 gg, costi variabili</div>
-            <div className="p-3 text-sm">Avvio in 72h, piano chiaro e finanziamenti attivabili</div>
-            <div className="p-3 text-sm text-muted-foreground">Formazione frammentata</div>
-            <div className="p-3 text-sm">Catalogo e-learning + aula, tracciamento e attestati</div>
-            <div className="p-3 text-sm text-muted-foreground">DVR lenti e generici</div>
-            <div className="p-3 text-sm">DVR su misura, aggiornamenti rapidi</div>
+            <div className="p-4 text-sm text-muted-foreground">❌ Tempi 15-30 gg, costi variabili</div>
+            <div className="p-4 text-sm font-medium">✅ Avvio in 72h, piano chiaro e finanziamenti attivabili</div>
+            <div className="p-4 text-sm text-muted-foreground">❌ Formazione frammentata</div>
+            <div className="p-4 text-sm font-medium">✅ Catalogo e-learning + aula, tracciamento e attestati</div>
+            <div className="p-4 text-sm text-muted-foreground">❌ DVR lenti e generici</div>
+            <div className="p-4 text-sm font-medium">✅ DVR su misura, aggiornamenti rapidi</div>
           </div>
         </div>
       </article>
@@ -114,10 +126,22 @@ export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProp
       <article className="space-y-3">
         <h3 className="text-2xl font-semibold">Il tuo Piano d’Azione immediato</h3>
         <ul className="grid gap-3 sm:grid-cols-2">
-          <li className="rounded-lg border p-4 bg-card">Audit iniziale e verifica documentale (DVR, nomine, formazione)</li>
-          <li className="rounded-lg border p-4 bg-card">Piano formativo mirato con e-learning e aula</li>
-          <li className="rounded-lg border p-4 bg-card">Nomina medico competente e calendario sorveglianza sanitaria</li>
-          <li className="rounded-lg border p-4 bg-card">Procedure di emergenza e prove di evacuazione con report</li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">📋 Audit iniziale e verifica documentale</div>
+            <div className="text-sm text-muted-foreground mt-1">(DVR, nomine, formazione)</div>
+          </li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">🎯 Piano formativo mirato</div>
+            <div className="text-sm text-muted-foreground mt-1">e-learning e aula</div>
+          </li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">👨‍⚕️ Nomina medico competente</div>
+            <div className="text-sm text-muted-foreground mt-1">calendario sorveglianza sanitaria</div>
+          </li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">🚨 Procedure di emergenza</div>
+            <div className="text-sm text-muted-foreground mt-1">prove di evacuazione con report</div>
+          </li>
         </ul>
       </article>
 
@@ -132,7 +156,7 @@ export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProp
 
       <article className="space-y-3">
         <h3 className="text-2xl font-semibold">Benchmark per il tuo settore</h3>
-        <div className="rounded-lg border p-4 bg-card">
+        <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
           <SectorBenchmark sector={sector} />
         </div>
       </article>
@@ -140,21 +164,37 @@ export const Results = ({ minRisk, maxRisk, criticalAreas, sector }: ResultsProp
       <article className="space-y-3">
         <h3 className="text-2xl font-semibold">Vantaggi completi</h3>
         <ul className="grid gap-3 sm:grid-cols-2">
-          <li className="rounded-lg border p-4 bg-card">Pacchetto unico con gestione completa (documenti, formazione, visite)</li>
-          <li className="rounded-lg border p-4 bg-card">Tracciamento digitale attestati e scadenze</li>
-          <li className="rounded-lg border p-4 bg-card">Supporto durante eventuali ispezioni ispettive</li>
-          <li className="rounded-lg border p-4 bg-card">Aggiornamenti 2024-2025 sempre inclusi</li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">📦 Pacchetto unico completo</div>
+            <div className="text-sm text-muted-foreground mt-1">documenti, formazione, visite</div>
+          </li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">📱 Tracciamento digitale</div>
+            <div className="text-sm text-muted-foreground mt-1">attestati e scadenze</div>
+          </li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">🛡️ Supporto durante ispezioni</div>
+            <div className="text-sm text-muted-foreground mt-1">assistenza ispettive</div>
+          </li>
+          <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+            <div className="font-medium text-foreground">🔄 Aggiornamenti inclusi</div>
+            <div className="text-sm text-muted-foreground mt-1">normative 2024-2025</div>
+          </li>
         </ul>
       </article>
 
       <Benefits minRisk={minRisk} maxRisk={maxRisk} />
 
-      <aside className="rounded-lg border p-6 bg-card">
-        <h3 className="text-xl font-semibold">Pianifica la tua sicurezza adesso</h3>
+      <aside className="rounded-lg border-2 border-cta p-6 bg-gradient-to-br from-cta/5 to-cta/10">
+        <h3 className="text-xl font-semibold text-foreground">🚀 Pianifica la tua sicurezza adesso</h3>
         <p className="mt-2 text-muted-foreground">Attivi su tutto il territorio Siciliano. Richiedi un assessment gratuito e scopri come ridurre il rischio e i costi.</p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <a href="tel:0955872480" className="story-link text-primary">Chiamaci ora: 095 587 2480</a>
-          <a href="https://wa.me/390955872480" target="_blank" rel="noreferrer" className="story-link text-primary">Scrivici su WhatsApp</a>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <a href="tel:0955872480" className="inline-flex items-center px-4 py-2 bg-cta text-cta-foreground rounded-lg font-medium hover:bg-cta-light transition-colors">
+            📞 Chiamaci ora: 095 587 2480
+          </a>
+          <a href="https://wa.me/390955872480" target="_blank" rel="noreferrer" className="inline-flex items-center px-4 py-2 bg-cta text-cta-foreground rounded-lg font-medium hover:bg-cta-light transition-colors">
+            💬 Scrivici su WhatsApp
+          </a>
         </div>
       </aside>
     </section>
@@ -177,17 +217,17 @@ const SectorBenchmark = ({ sector }: { sector?: string }) => {
 
   return (
     <div className="grid gap-3 sm:grid-cols-3">
-      <div className="rounded-lg border p-4 bg-card">
+      <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
         <div className="text-sm text-muted-foreground">Controlli annuali stimati</div>
-        <div className="mt-1 font-medium">{data.controlli}</div>
+        <div className="mt-1 font-semibold text-foreground">{data.controlli}</div>
       </div>
-      <div className="rounded-lg border p-4 bg-card">
+      <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
         <div className="text-sm text-muted-foreground">Irregolarità medie</div>
-        <div className="mt-1 font-medium">{data.irregolarita}</div>
+        <div className="mt-1 font-semibold text-primary">{data.irregolarita}</div>
       </div>
-      <div className="rounded-lg border p-4 bg-card">
+      <div className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
         <div className="text-sm text-muted-foreground">Focus ispezioni</div>
-        <div className="mt-1 font-medium">{data.focus}</div>
+        <div className="mt-1 font-medium text-foreground">{data.focus}</div>
       </div>
     </div>
   );
@@ -205,17 +245,17 @@ const Benefits = ({ minRisk, maxRisk }: { minRisk: number; maxRisk: number }) =>
     <article className="space-y-3">
       <h3 className="text-2xl font-semibold">Benefici stimati</h3>
       <ul className="grid gap-3 sm:grid-cols-3">
-        <li className="rounded-lg border p-4 bg-card">
-          <div className="text-sm text-muted-foreground">Fondi recuperabili</div>
-          <div className="mt-1 font-medium">{currency(fundsMin)} - {currency(fundsMax)}</div>
+        <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+          <div className="text-sm text-muted-foreground">💰 Fondi recuperabili</div>
+          <div className="mt-1 font-semibold text-primary">{currency(fundsMin)} - {currency(fundsMax)}</div>
         </li>
-        <li className="rounded-lg border p-4 bg-card">
-          <div className="text-sm text-muted-foreground">Tempo risparmiato</div>
-          <div className="mt-1 font-medium">{timeMin}-{timeMax} ore/mese</div>
+        <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+          <div className="text-sm text-muted-foreground">⏰ Tempo risparmiato</div>
+          <div className="mt-1 font-semibold text-foreground">{timeMin}-{timeMax} ore/mese</div>
         </li>
-        <li className="rounded-lg border p-4 bg-card">
-          <div className="text-sm text-muted-foreground">Riduzione rischio</div>
-          <div className="mt-1 font-medium">{riskMin}% - {riskMax}%</div>
+        <li className="rounded-lg border border-primary/20 p-4 bg-card shadow-sm">
+          <div className="text-sm text-muted-foreground">📉 Riduzione rischio</div>
+          <div className="mt-1 font-semibold text-primary">{riskMin}% - {riskMax}%</div>
         </li>
       </ul>
     </article>
