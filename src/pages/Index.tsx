@@ -978,15 +978,15 @@ const ResultsStage = memo(({
                 {showCalculation && <div className="mt-3 p-3 bg-gray-50 rounded border text-left text-xs sm:text-sm">
                     <h4 className="font-bold mb-2">📊 Base di calcolo:</h4>
                     <ul className="space-y-1 text-gray-700">
-                      <li>• <strong>{sanctionDetails.violations} criticità {sanctionDetails.violations === 1 ? 'rilevata' : 'rilevate'}</strong> dalle tue risposte</li>
-                      <li>• {sanctionDetails.noAnswers} {sanctionDetails.noAnswers === 1 ? 'risposta' : 'risposte'} "No" (non conformità certe)</li>
-                      <li>• {sanctionDetails.unsureAnswers} {sanctionDetails.unsureAnswers === 1 ? 'risposta' : 'risposte'} "Non sono sicuro" (rischi probabili)</li>
+                      <li>• <strong>{sanctionDetails.violations} criticità rilevate</strong> dalle tue risposte</li>
+                      <li>• {sanctionDetails.noAnswers} risposte "No" (non conformità certe)</li>
+                      <li>• {sanctionDetails.unsureAnswers} risposte "Non sono sicuro" (rischi probabili)</li>
                       <li>• Su {sanctionDetails.totalAnswered} controlli verificati per il tuo settore</li>
                     </ul>
                     {sanctionDetails.sanctionBreakdown.length > 0 && <>
-                        <h4 className="font-bold mt-3 mb-2">💰 Dettaglio sanzioni:</h4>
+                        <h4 className="font-bold mt-3 mb-2">fino a € 7.404</h4>
                         <ul className="space-y-1">
-                          {sanctionDetails.sanctionBreakdown.map((item, idx) => <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a € {item.max.toLocaleString('it-IT')}</span></li>)}
+                          {sanctionDetails.sanctionBreakdown.map((item, idx) => <li key={idx} className="flex justify-between"><span>{item.name}:</span><span className="font-semibold">fino a €{item.max.toLocaleString('it-IT')}</span></li>)}
                         </ul>
                       </>}
                     <p className="mt-3 text-xs text-gray-600">* Sanzioni cumulative secondo D.Lgs. 81/08, rivalutate +15,9% dal 06/10/2023</p>
