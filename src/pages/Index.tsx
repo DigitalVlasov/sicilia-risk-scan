@@ -685,48 +685,42 @@ function generateDynamicInsight(answers, violations) {
   
   if (violations.length === 0) {
     return {
-      title: "✅ Conformità verificata",
-      text: `Sulla base delle tue risposte, non emergono criticità immediate. Nel settore ${getSectorDisplayName(sector)}, il ${currentSector.rate} delle aziende presenta irregolarità alla prima verifica. Mantieni questo standard con monitoraggio periodico delle scadenze.`,
+      title: "Sei il tipo che ha tutto sotto controllo",
+      text: `Lo sappiamo entrambi: nel settore ${getSectorDisplayName(sector)} sai già che serve stare attenti. Dalle tue risposte non emergono criticità immediate. Continua così, ma tieni d'occhio le scadenze come fai con tutto il resto.`,
       urgency: "low",
       type: "success"
     };
   }
   
-  // Phase 1: Direct risk exposure
-  const riskPhase = violations.length > 2 
-    ? `Situazione critica: ${violations.length} aree non conformi rilevate nel settore ${getSectorDisplayName(sector)}.`
-    : `${violations.length} ${violations.length === 1 ? 'criticità rilevata' : 'criticità rilevate'} nel settore ${getSectorDisplayName(sector)}.`;
-  
-  // Phase 2: Immediate consequences context
-  const consequencePhase = violations.length > 2
-    ? `Con questa configurazione, una verifica ispettiva comporterebbe quasi certamente sanzioni multiple e possibili sospensioni.`
-    : `Il ${currentSector.rate} delle aziende del settore presenta simili gap, ma questo non riduce il rischio sanzionatorio.`;
-  
-  // Phase 3: Logical pathway based on management style
-  const pathwayInsights = {
+  // Recognition patterns based on management style
+  const recognitionPatterns = {
     'gestisco-io': {
-      title: "⚠️ Gestione diretta a rischio",
-      pathway: "Serve strutturare rapidamente un sistema di controllo per evitare sanzioni."
+      recognition: "Sei il tipo che preferisce tenere tutto sotto controllo diretto.",
+      problem: `Lo sappiamo entrambi che gestire tutto personalmente ha i suoi vantaggi, ma con ${violations.length} ${violations.length === 1 ? 'area scoperta' : 'aree scoperte'} nel settore ${getSectorDisplayName(sector)} rischi di trovarti impreparato quando suona il campanello.`,
+      solution: "Hai bisogno di un sistema che ti dia controllo totale ma senza perdere tempo prezioso."
     },
     'interno': {
-      title: "⚠️ Gap nel team interno", 
-      pathway: "Il team necessita di strumenti specifici per colmare le lacune emerse."
+      recognition: "Hai ragione a fidarti del tuo team interno.",
+      problem: `Ma anche le persone più brave hanno bisogno degli strumenti giusti. Con ${violations.length} ${violations.length === 1 ? 'lacuna emersa' : 'lacune emerse'} nel settore ${getSectorDisplayName(sector)}, il tuo team sta facendo quello che può con quello che ha.`,
+      solution: "Serve dare loro gli strumenti per non dover più improvvisare."
     },
     'consulente': {
-      title: "⚠️ Consulenza insufficiente",
-      pathway: "L'attuale supporto presenta evidenti lacune che richiedono intervento immediato."
+      recognition: "Sai già che affidarsi a un consulente è la scelta giusta.",
+      problem: `Il problema non è il consulente, ma che nemmeno il migliore può coprire tutto. Le ${violations.length} ${violations.length === 1 ? 'lacuna emersa' : 'lacune emerse'} nel settore ${getSectorDisplayName(sector)} sono la prova che servono specialisti dedicati.`,
+      solution: "Ti serve chi ha già risolto questi specifici problemi per gente come te."
     },
     'studi-multipli': {
-      title: "⚠️ Coordinamento carente",
-      pathway: "La frammentazione sta creando pericolosi buchi nella copertura normativa."
+      recognition: "Hai ragione a diversificare i fornitori per non dipendere da uno solo.",
+      problem: `Il problema è che senza un coordinamento centrale, nascono buchi come questi ${violations.length} emersi nel settore ${getSectorDisplayName(sector)}. Ognuno fa la sua parte, ma chi tiene insieme il quadro?`,
+      solution: "Serve una regia unica che coordini tutto senza sostituire nessuno."
     }
   };
   
-  const currentPathway = pathwayInsights[managementStyle] || pathwayInsights['gestisco-io'];
+  const currentPattern = recognitionPatterns[managementStyle] || recognitionPatterns['gestisco-io'];
   
   return {
-    title: currentPathway.title,
-    text: `${riskPhase} ${consequencePhase} ${currentPathway.pathway}`,
+    title: currentPattern.recognition,
+    text: `${currentPattern.problem} ${currentPattern.solution}`,
     urgency,
     type: "analysis"
   };
@@ -1069,31 +1063,15 @@ const ResultsStage = memo(({
         </CardContent>
       </Card>
       
-      <Card className="border-l-4 border-blue-600 bg-gradient-to-r from-blue-50 to-white shadow-lg">
+      <Card className="bg-gray-900 text-white border border-gray-800 shadow-xl">
         <CardContent className="p-4 sm:p-6">
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-6 h-6 bg-danger text-white rounded-full flex items-center justify-center text-xs font-bold">
-              !
-            </div>
-            <div className="flex-1">
-              <h2 className="text-lg font-bold text-foreground mb-2">{dynamicInsight.title}</h2>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-3">{dynamicInsight.text}</p>
-              <div className="text-sm">
-                <a href="#vantaggi-completi" className="text-primary hover:text-primary/80 font-medium underline">
-                  → Scopri i vantaggi per la tua situazione specifica
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  dynamicInsight.urgency === "high" ? "bg-red-100 text-red-700" : 
-                  dynamicInsight.urgency === "medium" ? "bg-yellow-100 text-yellow-700" : 
-                  "bg-green-100 text-green-700"
-                }`}>
-                  {dynamicInsight.urgency === "high" ? "Attenzione prioritaria" :
-                   dynamicInsight.urgency === "medium" ? "Da monitorare" : 
-                   "Situazione standard"}
-                </span>
-              </div>
+          <div className="space-y-3">
+            <h2 className="text-lg font-bold text-white mb-2">{dynamicInsight.title}</h2>
+            <p className="text-sm text-gray-300 leading-relaxed">{dynamicInsight.text}</p>
+            <div className="pt-2 border-t border-gray-800">
+              <a href="#vantaggi-completi" className="text-red-400 hover:text-red-300 font-medium text-sm transition-colors">
+                → Scopri come funziona per la tua situazione specifica
+              </a>
             </div>
           </div>
         </CardContent>
