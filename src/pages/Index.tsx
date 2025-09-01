@@ -410,7 +410,7 @@ const QUESTIONS = [{
 const VIOLATIONS_CONFIG = {
   dvr: {
     key: "dvr",
-    text: "DVR e Nomine Fondamentali",
+    text: "DVR e Nomine",
     min: 2894,
     max: 7404,
     consequences: ["Sospensione immediata dell'attività in caso di controllo.", "In caso di infortunio, rischi una denuncia per lesioni o omicidio colposo.", "L'INAIL può negare la copertura assicurativa."],
@@ -423,7 +423,7 @@ const VIOLATIONS_CONFIG = {
   },
   formazione: {
     key: "formazione",
-    text: "Formazione (Lavoratori o Datore di Lavoro)",
+    text: "Formazione Aggiornata",
     min: 1709,
     max: 7404,
     consequences: ["Responsabilità penale diretta in caso di infortunio.", "Nullità di incarichi chiave (RLS, addetti antincendio, etc.).", "Dal 2025, la mancata formazione del Datore di Lavoro è violazione grave."],
@@ -488,7 +488,7 @@ const VIOLATIONS_CONFIG = {
   },
   "verifiche-inail": {
     key: "verifiche-inail",
-    text: "Verifiche Periodiche Impianti",
+    text: "Verifiche Impianti",
     min: 1842,
     max: 7368,
     consequences: ["Uso di impianti non verificati comporta sanzioni e responsabilità penale.", "In caso di incidente, assicurazione può non coprire i danni.", "INAIL può sospendere l'attività fino alle verifiche."],
