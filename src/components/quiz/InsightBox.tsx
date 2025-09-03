@@ -22,23 +22,6 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
             {insight.text}
           </p>
           
-          {insight.benefits && insight.benefits.length > 0 && (
-            <>
-              <div className="pt-3 border-t border-gray-200">
-                <h3 className="text-base sm:text-lg font-bold text-black mb-3">
-                  Come possiamo aiutarti:
-                </h3>
-                <ul className="space-y-2">
-                  {insight.benefits.map((benefit, index) => (
-                    <li key={index} className="text-sm sm:text-base text-gray-700 font-medium">
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </>
-          )}
-          
           <div className="pt-3 border-t border-gray-200">
             <a 
               href={ctaTarget} 

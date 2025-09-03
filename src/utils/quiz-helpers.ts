@@ -60,11 +60,6 @@ export const generateDynamicInsight = (answers: QuizAnswers, violations: Violati
   return insightService.generateDynamicInsight(answers, violations);
 };
 
-// Generate personalized advantages based on answers
-export const generatePersonalizedAdvantages = (answers: QuizAnswers): string[] => {
-  return insightService.generatePersonalizedAdvantages(answers);
-};
-
 // Calculate sanction details for display
 export const calculateSanctionDetails = (answers: QuizAnswers, violations: Violation[]) => {
   return quizService.calculateSanctionDetails(answers, violations);

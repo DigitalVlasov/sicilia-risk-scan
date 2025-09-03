@@ -214,57 +214,6 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
       benefits: template.benefits
     };
   }
-
-
-
-  public generatePersonalizedAdvantages(answers: QuizAnswers): string[] {
-    const sector = answers.settore as Sector;
-    const management = answers.gestione;
-    const employees = answers.dipendenti;
-
-    const baseAdvantages = [
-      "🛡️ Ti copriamo le spalle se arrivano i controlli",
-      "📊 Non dimentichi più scadenze e carte da fare",
-      "💰 Spendi poco ora, eviti multe grosse dopo"
-    ];
-
-    // Vantaggi specifici per settore
-    const sectorAdvantages = {
-      edilizia: "🏗️ Tutto collegato: cantiere, carte e controlli",
-      manifatturiero: "⚙️ Più sicurezza = più produzione",
-      alimentare: "🥘 Un solo sistema per cibo e sicurezza sul lavoro",
-      trasporto: "🚛 Controlli tutti i camion e gli autisti da un posto solo",
-      agricoltura: "🌾 Gestisci stagionali e fissi senza problemi",
-      commercio: "🏪 Negozio sicuro = clienti tranquilli",
-      servizi: "💼 Anche in ufficio hai responsabilità che non sai"
-    };
-
-    if (sectorAdvantages[sector]) {
-      baseAdvantages.push(sectorAdvantages[sector]);
-    }
-
-    // Vantaggi per tipo di gestione
-    const managementAdvantages = {
-      "gestisco-io": "⏰ Hai più tempo per fare il tuo lavoro vero",
-      "interno": "🤝 La tua gente diventa più brava con i nostri strumenti",
-      "consulente": "🔧 Miglioriamo quello che hai già",
-      "studi-multipli": "🎯 Mettiamo tutti d'accordo con un sistema solo"
-    };
-
-    const managementAdvantage = managementAdvantages[management as keyof typeof managementAdvantages];
-    if (managementAdvantage) {
-      baseAdvantages.push(managementAdvantage);
-    }
-
-    // Vantaggio per dimensione azienda
-    if (employees === ">20") {
-      baseAdvantages.push("👥 Funziona anche se hai tanta gente");
-    } else {
-      baseAdvantages.push("🎯 Fatto su misura per aziende come la tua");
-    }
-
-    return baseAdvantages;
-  }
 }
 
 export const insightService = InsightService.getInstance();

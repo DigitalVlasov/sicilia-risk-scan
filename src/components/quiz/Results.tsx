@@ -8,7 +8,6 @@ import { CaseStudyCarousel } from "./CaseStudyCarousel";
 import { ContactCTA } from "./ContactCTA";
 import { 
   generateDynamicInsight, 
-  generatePersonalizedAdvantages, 
   calculateSanctionDetails,
   riskBadgeVariant 
 } from "../../utils/quiz-helpers";
@@ -27,7 +26,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
   const sanctionMax = violations.reduce((total, v) => total + v.max, 0);
   const sanctionDetails = useMemo(() => calculateSanctionDetails(answers, violations), [answers, violations]);
   const dynamicInsight = useMemo(() => generateDynamicInsight(answers, violations), [answers, violations]);
-  const personalizedAdvantages = useMemo(() => generatePersonalizedAdvantages(answers), [answers]);
 
   const getCriticitaText = (count: number) => {
     return count === 1 ? `${count} criticità rilevata` : `${count} criticità rilevate`;
@@ -157,22 +155,24 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </Card>
       )}
       
-      {/* Solutions Card - Premium Dark Theme */}
-      <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
-        <CardHeader className="border-b border-gray-700">
-          <CardTitle className="text-lg sm:text-xl font-bold text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 sm:p-6">
-          <div className="grid gap-3 sm:gap-4">
-            {personalizedAdvantages.map((advantage, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors border border-white/20">
-                <span className="text-lg sm:text-xl">{advantage.substring(0, 2)}</span>
-                <span className="text-sm sm:text-base">{advantage.substring(2)}</span>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* Solutions Card - Premium Dark Theme - Only show if violations exist */}
+      {violations.length > 0 && dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
+        <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
+          <CardHeader className="border-b border-gray-700">
+            <CardTitle className="text-lg sm:text-xl font-bold text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
+          </CardHeader>
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid gap-3 sm:gap-4">
+              {dynamicInsight.benefits.map((benefit, index) => (
+                <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors border border-white/20">
+                  <span className="text-lg sm:text-xl">•</span>
+                  <span className="text-sm sm:text-base">{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
       
       {/* Case Studies Carousel - Secondary Level */}
       <CaseStudyCarousel />
