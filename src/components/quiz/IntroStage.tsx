@@ -53,8 +53,8 @@ export const IntroStage: React.FC<IntroStageProps> = ({
               ⚡ Analisi rapida basata su {APP_CONFIG.legal.source}
             </div>
             
-            <p className={UNIFIED_STYLES.captionText}>
-              <strong>Risultati personalizzati per settore • Zero dati personali richiesti</strong>
+            <p className="text-xs text-gray-600 font-medium">
+              Risultati personalizzati per settore • Zero dati personali richiesti
             </p>
           </div>
           
