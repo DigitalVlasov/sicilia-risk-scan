@@ -52,10 +52,6 @@ export const IntroStage: React.FC<IntroStageProps> = ({
             <div className="inline-block bg-yellow-400 text-black px-2 py-1 rounded text-[10px] font-semibold border border-black mb-2">
               ⚡ Analisi rapida basata su {APP_CONFIG.legal.source}
             </div>
-            
-            <p className="text-[10px] text-gray-600 font-medium">
-              Risultati personalizzati per settore • Zero dati personali richiesti
-            </p>
           </div>
           
           <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
@@ -93,6 +89,10 @@ export const IntroStage: React.FC<IntroStageProps> = ({
             <Button onClick={onStart} variant="outline" className="w-full sm:w-auto border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
               Fai il test ora (è gratis)
             </Button>
+            
+            <p className="text-[10px] text-gray-600 font-medium mt-3">
+              Risultati personalizzati per settore • Zero dati personali richiesti
+            </p>
           </div>
         </CardContent>
       </Card>
