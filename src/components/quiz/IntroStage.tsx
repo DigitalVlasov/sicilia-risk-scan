@@ -3,41 +3,30 @@ import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { UNIFIED_STYLES, DESIGN_TOKENS } from "../../constants/design-tokens";
 import { APP_CONFIG } from "../../constants/quiz-config";
-
 interface IntroStageProps {
   onStart: () => void;
 }
-
-export const IntroStage: React.FC<IntroStageProps> = ({ onStart }) => {
+export const IntroStage: React.FC<IntroStageProps> = ({
+  onStart
+}) => {
   const [activeObjection, setActiveObjection] = useState(0);
-  
-  const objections = [
-    {
-      title: "È accurato?",
-      icon: "🎯",
-      content: `L'analisi è basata sui ${APP_CONFIG.legal.source}. Le domande replicano i controlli più frequenti. La metodologia è stata validata su oltre 800 verifiche reali in Sicilia.`
-    },
-    {
-      title: "Quanto tempo serve?", 
-      icon: "⏱️",
-      content: "2 minuti per completare il test, risultati immediati. Ogni domanda è formulata per decisioni rapide basate su situazioni concrete. Non richiede consultazione di documenti."
-    },
-    {
-      title: "Cosa ottengo?",
-      icon: "✅", 
-      content: "Analisi personalizzata per il tuo settore, identificazione delle priorità, stima realistica dei rischi e delle tempistiche. Tutto quello che serve per decidere i prossimi passi in modo informato."
-    }
-  ];
-
-  return (
-    <section aria-labelledby="intro-title">
+  const objections = [{
+    title: "È accurato?",
+    icon: "🎯",
+    content: `L'analisi è basata sui ${APP_CONFIG.legal.source}. Le domande replicano i controlli più frequenti. La metodologia è stata validata su oltre 800 verifiche reali in Sicilia.`
+  }, {
+    title: "Quanto tempo serve?",
+    icon: "⏱️",
+    content: "2 minuti per completare il test, risultati immediati. Ogni domanda è formulata per decisioni rapide basate su situazioni concrete. Non richiede consultazione di documenti."
+  }, {
+    title: "Cosa ottengo?",
+    icon: "✅",
+    content: "Analisi personalizzata per il tuo settore, identificazione delle priorità, stima realistica dei rischi e delle tempistiche. Tutto quello che serve per decidere i prossimi passi in modo informato."
+  }];
+  return <section aria-labelledby="intro-title">
       <div className="text-center py-5">
         <div className="w-20 h-20 bg-white border-2 border-red-600 rounded-full flex items-center justify-center shadow-lg overflow-hidden mx-auto">
-          <img 
-            src="/lovable-uploads/53e4bec6-be78-459e-a5a5-a2b8ae560a04.png" 
-            alt="Spazio Impresa Logo" 
-            className="w-full h-full object-contain p-1" 
-          />
+          <img src="/lovable-uploads/53e4bec6-be78-459e-a5a5-a2b8ae560a04.png" alt="Spazio Impresa Logo" className="w-full h-full object-contain p-1" />
         </div>
       </div>
       
@@ -55,11 +44,7 @@ export const IntroStage: React.FC<IntroStageProps> = ({ onStart }) => {
             </p>
             
             <div className="text-center mb-3">
-              <Button 
-                onClick={onStart} 
-                size="lg" 
-                className={`w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white shadow-lg hover:scale-105 ${DESIGN_TOKENS.animation.transition} ${DESIGN_TOKENS.animation.normal}`}
-              >
+              <Button onClick={onStart} size="lg" className={`w-full sm:w-auto bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white shadow-lg hover:scale-105 ${DESIGN_TOKENS.animation.transition} ${DESIGN_TOKENS.animation.normal}`}>
                 SCOPRI ORA SE È TUTTO OK →
               </Button>
             </div>
@@ -69,7 +54,7 @@ export const IntroStage: React.FC<IntroStageProps> = ({ onStart }) => {
             </div>
             
             <p className={UNIFIED_STYLES.captionText}>
-              <strong>13 verifiche standard • Risultati personalizzati per settore • Zero dati personali richiesti</strong>
+              <strong>Risultati personalizzati per settore • Zero dati personali richiesti</strong>
             </p>
           </div>
           
@@ -92,19 +77,9 @@ export const IntroStage: React.FC<IntroStageProps> = ({ onStart }) => {
           
           <div className="bg-gray-900 rounded-lg p-4 mb-6">
             <div className="flex flex-wrap gap-2 mb-3">
-              {objections.map((obj, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveObjection(idx)}
-                  className={`px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium ${DESIGN_TOKENS.animation.transition} ${
-                    activeObjection === idx 
-                      ? "bg-yellow-400 text-black" 
-                      : "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                  }`}
-                >
+              {objections.map((obj, idx) => <button key={idx} onClick={() => setActiveObjection(idx)} className={`px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium ${DESIGN_TOKENS.animation.transition} ${activeObjection === idx ? "bg-yellow-400 text-black" : "bg-gray-700 text-gray-300 hover:bg-gray-600"}`}>
                   {obj.icon} {obj.title}
-                </button>
-              ))}
+                </button>)}
             </div>
             <div className="bg-black text-white p-3 rounded">
               <div className="font-bold text-yellow-400 mb-2">
@@ -115,16 +90,11 @@ export const IntroStage: React.FC<IntroStageProps> = ({ onStart }) => {
           </div>
           
           <div className="text-center">
-            <Button 
-              onClick={onStart} 
-              variant="outline" 
-              className="w-full sm:w-auto border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
-            >
+            <Button onClick={onStart} variant="outline" className="w-full sm:w-auto border-red-600 text-red-600 hover:bg-red-600 hover:text-white">
               Fai il test ora (è gratis)
             </Button>
           </div>
         </CardContent>
       </Card>
-    </section>
-  );
+    </section>;
 };
