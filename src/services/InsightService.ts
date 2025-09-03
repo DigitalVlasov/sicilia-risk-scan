@@ -145,9 +145,20 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
 
     const sectorPercentage = sectorPercentages[sector] || "65%";
 
+    // Messaggi personalizzati per tipo di gestione
+    const explanationByManagement = {
+      "gestisco-io": "Il sistema normativo si aggiorna continuamente e con tutto quello che hai da fare è davvero complicato stare dietro a ogni dettaglio.",
+      "interno": "Anche con una risorsa dedicata, il sistema normativo è in continua evoluzione e non è sempre facile per chi lavora dentro l'azienda riuscire a seguire ogni aggiornamento mentre gestisce anche le attività quotidiane.",
+      "consulente": "Anche con un bravo consulente, a volte può capitare che alcuni aspetti sfuggano o che non ci sia il tempo di allineare tutto subito. Il sistema normativo è complesso e in continua evoluzione, e anche i professionisti più preparati a volte devono fare delle priorità.",
+      "studi-multipli": "Con più consulenti per aree diverse, a volte può succedere che qualche aspetto 'cada nel mezzo' o che non ci sia il tempo di coordinare tutto perfettamente. È normale quando si lavora con specialisti diversi."
+    };
+
+    const explanation = explanationByManagement[management as keyof typeof explanationByManagement] || 
+      "Il sistema normativo si aggiorna continuamente ed è complicato stare dietro a tutto.";
+
     const text = `Dalla tua analisi emergono ${violationText} per la tua azienda nel settore ${context.sectorName}. ${context.managementDescription} - ed è una scelta che rispettiamo completamente.
 
-Nel settore ${context.sectorName}, il ${sectorPercentage} delle aziende ha le tue stesse criticità. Questo può dipendere dal fatto che il sistema normativo si aggiorna continuamente e con tutte le cose che hai da fare è davvero complicato stare dietro a tutto.
+Nel settore ${context.sectorName}, il ${sectorPercentage} delle aziende ha le tue stesse criticità. ${explanation}
 
 Non è colpa tua né del modo in cui hai scelto di organizzarti. Se vuoi, possiamo aiutarti a semplificare la gestione, ridurre il rischio di dimenticanze ed errori, e permetterti di concentrarti sul tuo business principale.`;
 
