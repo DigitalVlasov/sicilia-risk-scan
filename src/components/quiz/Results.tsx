@@ -98,7 +98,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Personalized Insight Box - Primary Level */}
       <InsightBox insight={dynamicInsight} ctaTarget="#vantaggi-completi" />
       
-      {/* Violations Detail Card - Secondary Level */}
+      {/* Violations Detail Card - Secondary Level - Right after Insight Box */}
       {violations.length > 0 && (
         <Card className="border border-gray-300 shadow-lg bg-white">
           <CardHeader className="pb-2 sm:pb-4 border-b border-gray-200">
