@@ -19,18 +19,18 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
   }, [risk.level, sector]);
 
   return (
-    <div className={`${UNIFIED_STYLES.cardSuccess} text-center p-4 sm:p-6`}>
-      <h2 className={`${UNIFIED_STYLES.titlePrimary} mb-3`}>
+    <div className="rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 text-center shadow-xl">
+      <h2 className="text-lg sm:text-xl font-bold text-black mb-3">
         Trasforma il rischio in tranquillità
       </h2>
       
-      <p className={`${UNIFIED_STYLES.bodyText} mb-4 max-w-xl mx-auto`}>
+      <p className="text-sm sm:text-base text-gray-700 mb-4 max-w-xl mx-auto">
         Prenota la tua <strong>Analisi Strategica Gratuita</strong>. 
         30 minuti, zero impegno, piano d'azione personalizzato.
       </p>
       
-      <div className={`${UNIFIED_STYLES.contentBlock} text-left my-4 sm:my-6 max-w-md mx-auto bg-white`}>
-        <h4 className={`${UNIFIED_STYLES.titleSecondary} text-center mb-3`}>
+      <div className="my-4 sm:my-6 p-3 sm:p-4 bg-white rounded border text-left text-sm max-w-md mx-auto">
+        <h4 className="font-bold text-center mb-3 text-sm sm:text-base">
           Cosa otterrai (gratuitamente):
         </h4>
         <ul className="space-y-2">

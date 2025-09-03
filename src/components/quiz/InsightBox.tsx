@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "../ui/card";
 import { DynamicInsight } from "../../types";
-import { UNIFIED_STYLES } from "../../constants/design-tokens";
 
 interface InsightBoxProps {
   insight: DynamicInsight;
@@ -13,20 +12,20 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
   ctaTarget = "#vantaggi-completi" 
 }) => {
   return (
-    <Card className={UNIFIED_STYLES.cardAccent}>
+    <Card className="border-2 border-red-600 shadow-lg">
       <CardContent className="p-4 sm:p-6">
-        <div className={UNIFIED_STYLES.cardSpacing}>
-          <h2 className={`${UNIFIED_STYLES.titlePrimary} leading-tight`}>
+        <div className="space-y-3 sm:space-y-4">
+          <h2 className="text-lg sm:text-xl font-bold text-black leading-tight">
             Cosa emerge dalle risposte:
           </h2>
-          <p className={UNIFIED_STYLES.bodyText}>
+          <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
             {insight.text}
           </p>
           
-          <div className="pt-3 border-t border-red-100">
+          <div className="pt-3 border-t border-gray-200">
             <a 
               href={ctaTarget} 
-              className={`${UNIFIED_STYLES.linkPrimary} font-semibold inline-flex items-center gap-1`}
+              className="text-red-600 hover:text-red-800 font-semibold text-sm sm:text-base transition-colors duration-200 inline-flex items-center gap-1 hover:underline"
             >
               <span>Scopri come gestiamo questi aspetti per i nostri clienti</span>
               <span className="text-xs">↓</span>
