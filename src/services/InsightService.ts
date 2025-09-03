@@ -39,47 +39,48 @@ class InsightService {
     urgency: "low" | "medium" | "high"
   ): { title: string; text: string } {
     
-    // Titoli diretti e chiari
+    // Titoli psicologicamente calibrati per generare dubbio e curiosità
     const titles = {
-      high: "⚠️ Hai problemi seri",
-      medium: "🔍 Hai alcuni problemi", 
-      low: "✅ Vai bene così"
+      high: "Quello che non sai ti sta costando caro",
+      medium: "C'è qualcosa che sfugge al tuo controllo", 
+      low: "Stai facendo meglio del 60% delle aziende"
     };
 
-    // Riconoscimento diretto della situazione
+    // Insights che creano pattern interrupt e dubbio costruttivo
     const managementInsights = {
-      "gestisco-io": "Fai tutto tu: bravo, ma rischi grosso",
-      "interno": "Hai gente che ti aiuta: buona cosa",
-      "consulente": "Hai già un consulente: vediamo se funziona",
-      "studi-multipli": "Hai più consulenti: serve mettere ordine"
+      "gestisco-io": "Ti occupi di tutto personalmente - è la tua forza, ma anche il tuo tallone d'Achille",
+      "interno": "Hai delegato la sicurezza internamente - una scelta saggia che nasconde però alcune insidie",
+      "consulente": "Hai già un consulente - investimento intelligente che forse non sta rendendo quanto potrebbe",
+      "studi-multipli": "Hai più consulenti - approccio prudente che potrebbe creare sovrapposizioni costose"
     };
 
-    const sectorContext = {
-      edilizia: "In edilizia anche un piccolo errore ti costa caro",
-      manifatturiero: "In fabbrica la sicurezza fa guadagnare di più",
-      alimentare: "Con il cibo hai due tipi di controlli da rispettare",
-      trasporto: "Con i camion rispondi anche per gli autisti",
-      agricoltura: "In campagna i controlli cambiano con le stagioni",
-      commercio: "Nel negozio i clienti vedono tutto",
-      servizi: "Negli uffici pensi di essere sicuro ma non è così"
+    const sectorPsychology = {
+      edilizia: "Nel tuo settore, quello che sembra 'piccolo' agli occhi di un ispettore può trasformarsi in una valanga di costi",
+      manifatturiero: "La tua produzione dipende da equilibri invisibili che un controllo può spezzare in un momento",
+      alimentare: "Gestisci il doppio rischio: la salute delle persone e quella del tuo business",
+      trasporto: "Ogni tuo veicolo è un potenziale punto di controllo che può bloccare tutta l'attività",
+      agricoltura: "Le stagionalità che conosci bene per il raccolto valgono anche per i controlli - ma li conosci davvero?",
+      commercio: "I tuoi clienti vedono quello che vedranno anche gli ispettori - ma tu vedi quello che vedono loro?",
+      servizi: "Credi di essere al sicuro negli uffici, ma le normative si stanno stringendo anche per te"
     };
 
-    const baseText = managementInsights[management as keyof typeof managementInsights] || "Situazione da analizzare";
-    const contextText = sectorContext[sector] || "";
+    const psychologicalTrigger = this.getPsychologicalTrigger(violationCount, urgency);
+    const managementContext = managementInsights[management as keyof typeof managementInsights] || "La tua situazione merita un'analisi più approfondita";
+    const sectorTension = sectorPsychology[sector] || "Il tuo settore ha dinamiche specifiche che richiedono attenzione";
 
     return {
       title: titles[urgency],
-      text: `${baseText}. ${contextText}. ${this.getActionableAdvice(violationCount)}`
+      text: `${managementContext}. ${sectorTension}. ${psychologicalTrigger}`
     };
   }
 
-  private getActionableAdvice(violationCount: number): string {
+  private getPsychologicalTrigger(violationCount: number, urgency: "low" | "medium" | "high"): string {
     if (violationCount === 0) {
-      return "Continua così e tieni d'occhio le nuove regole.";
+      return "Ma quello che funziona oggi potrebbe non bastare domani - vale la pena verificare?";
     } else if (violationCount <= 2) {
-      return "Con poche mosse sistemi tutto.";
+      return "Pochi dettagli possono fare la differenza tra tranquillità e sorprese costose";
     } else {
-      return "Serve un piano per sistemare tutto per gradi.";
+      return "Ogni giorno che passa è un giorno in più di esposizione al rischio - ma esiste una via d'uscita";
     }
   }
 
