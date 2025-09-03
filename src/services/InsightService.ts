@@ -147,26 +147,26 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
 
     // Diagnosi specifica per ogni scenario di gestione
     const diagnosisByManagement = {
-      "gestisco-io": `Con il fatto che gestisci personalmente la sicurezza e le ${violationText} che sono emerse, qualcosa va rivisto nel tuo approccio attuale.`,
-      "interno": `Avendo una risorsa interna dedicata e considerando le ${violationText} presenti, c'è qualcosa da migliorare nell'organizzazione interna.`,
-      "consulente": `Pur affidandoti a un consulente esterno e con le ${violationText} che sono emerse, il sistema attuale presenta alcuni aspetti da perfezionare.`,
-      "studi-multipli": `Nonostante tu collabori con più professionisti specializzati e le ${violationText} riscontrate, l'coordinamento generale necessita di alcuni aggiustamenti.`
+      "gestisco-io": `Gestisci tutto personalmente e hai ${violationText} da sistemare - qualcosa nel tuo approccio attuale va migliorato.`,
+      "interno": `Hai una risorsa interna e ${violationText} sono emerse - c'è margine per ottimizzare l'organizzazione.`,
+      "consulente": `Ti appoggi a un consulente e hai ${violationText} - il sistema attuale ha alcuni punti da perfezionare.`,
+      "studi-multipli": `Lavori con più specialisti ma hai ${violationText} - serve migliorare il coordinamento generale.`
     };
 
     // Motivi unici determinanti per scenario
     const reasonsByManagement = {
-      "gestisco-io": "la normativa è complessa e cambia di continuo, mettendo in difficoltà anche i tecnici più preparati",
-      "interno": "è difficile per chi lavora quotidianamente in azienda rimanere sempre aggiornato su tutte le evoluzioni normative mentre gestisce anche le attività operative",
-      "consulente": "anche i professionisti più esperti devono spesso prioritizzare gli interventi e il sistema normativo è in continua evoluzione",
-      "studi-multipli": "con specialisti diversi per aree specifiche, alcuni aspetti possono rimanere scoperti o necessitare di un maggiore coordinamento"
+      "gestisco-io": "la normativa cambia continuamente e mette in difficoltà anche i tecnici più preparati",
+      "interno": "chi lavora in azienda fatica a seguire tutti gli aggiornamenti mentre gestisce le attività quotidiane",
+      "consulente": "anche i professionisti più bravi devono fare delle priorità quando la normativa evolve così velocemente",
+      "studi-multipli": "quando hai specialisti diversi, è facile che qualcosa cada nel mezzo"
     };
 
     // Soluzioni personalizzate per scenario
     const solutionsByManagement = {
-      "gestisco-io": "Se vuoi, possiamo aiutarti a semplificare la gestione quotidiana, automatizzare i controlli e permetterti di concentrarti sul tuo business principale senza perdere di vista la sicurezza.",
-      "interno": "Possiamo supportare la tua risorsa interna con strumenti più efficaci, formazione mirata e un sistema di controlli automatizzati che faciliti il suo lavoro quotidiano.",
-      "consulente": "Non si tratta di sostituire il tuo consulente, ma di offrirti un parere indipendente e strumenti di coordinamento che possano coprire eventuali parti scoperte e ottimizzare l'efficacia complessiva.",
-      "studi-multipli": "L'obiettivo non è sostituire i tuoi specialisti, ma fornire un punto di coordinamento centrale e una copertura completa per le aree che potrebbero rimanere scoperte nella gestione multi-consulente."
+      "gestisco-io": "Possiamo semplificarti la vita: controlli automatici, scadenze gestite e tu ti concentri sul business.",
+      "interno": "Diamo strumenti migliori alla tua risorsa: formazione, controlli automatici e un sistema che funziona davvero.",
+      "consulente": "Non sostituiamo nessuno. Ti diamo un parere indipendente e copriamo gli spazi vuoti per ottimizzare tutto.",
+      "studi-multipli": "Non tocchiamo i tuoi specialisti. Facciamo da 'direttore d'orchestra': coordiniamo tutto e copriamo gli spazi vuoti."
     };
 
     const diagnosis = diagnosisByManagement[management as keyof typeof diagnosisByManagement] || 
