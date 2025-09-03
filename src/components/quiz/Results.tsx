@@ -109,15 +109,15 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
             {violations.map((v, index) => (
               <details key={v.key} className="group bg-gray-50 rounded-lg border border-gray-200 overflow-hidden transition-all hover:shadow-md">
                 <summary className="p-3 sm:p-4 cursor-pointer flex justify-between items-center hover:bg-gray-100 transition-colors">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-1 min-w-0 overflow-hidden">
                     <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">
                       {index + 1}
                     </span>
-                    <span className="font-semibold text-sm sm:text-base truncate">{v.text}</span>
+                    <span className="font-semibold text-sm sm:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">{v.text}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="destructive" className="text-xs flex-shrink-0">{v.priority.urgency}</Badge>
-                    <span className="text-gray-400 group-open:rotate-180 transition-transform">▼</span>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <Badge variant="destructive" className="text-xs whitespace-nowrap">{v.priority.urgency}</Badge>
+                    <span className="text-gray-400 group-open:rotate-180 transition-transform flex-shrink-0">▼</span>
                   </div>
                 </summary>
                 <div className="p-3 sm:p-4 border-t bg-white">
