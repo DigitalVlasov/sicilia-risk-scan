@@ -34,7 +34,8 @@ class InsightService {
       text: insight.text,
       urgency,
       type: violations.length > 0 ? "analysis" : "success",
-      benefits: insight.benefits
+      benefits: insight.benefits,
+      ctaText: insight.ctaText
     };
   }
 
@@ -110,7 +111,7 @@ class InsightService {
     };
   }
 
-  private generateExcellenceInsight(sector: Sector, management: string, context: any): { title: string; text: string; benefits?: string[] } {
+  private generateExcellenceInsight(sector: Sector, management: string, context: any): { title: string; text: string; benefits?: string[]; ctaText?: string } {
     const titles = [
       "Complimenti, sei sulla strada giusta!",
       "La tua azienda è ben organizzata",
@@ -127,7 +128,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
     };
   }
 
-  private generateImprovementInsight(sector: Sector, management: string, violationCount: number, context: any): { title: string; text: string; benefits: string[] } {
+  private generateImprovementInsight(sector: Sector, management: string, violationCount: number, context: any): { title: string; text: string; benefits: string[]; ctaText: string } {
     const sectorPercentages = {
       edilizia: "68%",
       manifatturiero: "70%", 
@@ -153,10 +154,11 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
     const sectorPercentage = sectorPercentages[sector] || "65%";
     const sectorName = sectorNames[sector] || "del tuo settore";
 
-    // Template Hopkins-style per ogni tipo di gestione
+    // Template Hopkins-style per ogni tipo di gestione - Semanticamente corretti
     const templates = {
       "studi-multipli": {
-        text: `La tua analisi mostra ${violationCount} aree di rischio, le stesse che espongono a sanzioni il ${sectorPercentage} delle aziende ${sectorName}. Lavorare con più specialisti è un metodo valido, ma genera frammentazione. Quando le informazioni sono divise, il rischio di una scadenza mancata o di un documento non aggiornato aumenta. Il risultato è un sistema che ti espone a multe e ti fa perdere tempo. Esiste un metodo testato per centralizzare il controllo e trasformare questo rischio in un punto di forza.`,
+        text: `La tua analisi mostra ${violationCount} aree di rischio, le stesse che espongono a sanzioni il ${sectorPercentage} delle aziende ${sectorName}. Lavorare con più specialisti è un metodo valido, ma genera frammentazione. Quando le informazioni sono divise, il rischio di una scadenza mancata o di un documento non aggiornato aumenta. Il risultato è un sistema che ti espone a multe e ti fa perdere tempo. Noi creiamo una cabina di regia centralizzata che coordina tutti i professionisti coinvolti, mantenendo la specializzazione ma eliminando la frammentazione. Non sostituiamo i tuoi consulenti: diamo loro (e a te) un ambiente condiviso dove tutto è sotto controllo.`,
+        ctaText: "Scopri la cabina di regia per i tuoi consulenti",
         benefits: [
           "Unico sistema, zero frammentazione.",
           "Scadenze sotto controllo, rischio azzerato.",
@@ -166,7 +168,8 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
         ]
       },
       "consulente": {
-        text: `Dalle tue risposte emergono ${violationCount} criticità che il ${sectorPercentage} delle aziende ${sectorName} affronta. Affidarsi a un consulente esterno è la scelta corretta, ma anche il professionista migliore, senza un sistema di controllo centralizzato, può trovarsi a rincorrere le informazioni. Questo ti espone a ritardi e rischi inutili. Ecco come fornire al tuo tecnico uno strumento che garantisca a entrambi il pieno controllo, riducendo gli errori.`,
+        text: `Dalle tue risposte emergono ${violationCount} criticità che il ${sectorPercentage} delle aziende ${sectorName} affronta. Affidarsi a un consulente esterno è la scelta corretta, ma anche il professionista migliore, senza un sistema di controllo centralizzato, può trovarsi a rincorrere le informazioni. Questo ti espone a ritardi e rischi inutili. Noi configuriamo un sistema che fornisce al tuo tecnico uno strumento digitale dove tutto è automatizzato e sotto controllo, riducendo gli errori a zero. Non sostituiamo il tuo consulente: gli diamo (e ti diamo) una piattaforma che semplifica il suo lavoro e ti garantisce il pieno controllo.`,
+        ctaText: "Scopri lo spazio condiviso per te e il tuo consulente",
         benefits: [
           "Pieno controllo per te e il tuo consulente.",
           "Scadenze e adempimenti sempre rispettati.",
@@ -176,7 +179,8 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
         ]
       },
       "interno": {
-        text: `La tua azienda presenta ${violationCount} aree di rischio, comuni al ${sectorPercentage} delle aziende ${sectorName}. Avere una risorsa interna dedicata è un vantaggio, ma costringerla a monitorare manualmente un sistema normativo in continua evoluzione è inefficiente e rischioso. Si rischia di perdere aggiornamenti cruciali mentre si gestisce l'operatività quotidiana. Ecco come potenziare la tua risorsa interna con un sistema che automatizza i controlli e azzera le sviste.`,
+        text: `La tua azienda presenta ${violationCount} aree di rischio, comuni al ${sectorPercentage} delle aziende ${sectorName}. Avere una risorsa interna dedicata è un vantaggio, ma costringerla a monitorare manualmente un sistema normativo in continua evoluzione è inefficiente e rischioso. Si rischia di perdere aggiornamenti cruciali mentre si gestisce l'operatività quotidiana. Noi implementiamo una soluzione chiavi in mano che potenzia la tua risorsa interna con un sistema che automatizza i controlli e azzera le sviste. La tua persona continua a gestire tutto, ma con strumenti professionali che riducono il carico di lavoro dell'80%.`,
+        ctaText: "Scopri come potenziamo la tua risorsa interna",
         benefits: [
           "Meno burocrazia per la tua risorsa interna.",
           "Nessuna scadenza mancata, zero errori.",
@@ -186,7 +190,8 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
         ]
       },
       "gestisco-io": {
-        text: `La tua analisi evidenzia ${violationCount} criticità, le stesse che il ${sectorPercentage} delle aziende ${sectorName} non riesce a gestire efficacemente. Il tuo controllo diretto è un punto di forza, ma il tempo che dedichi a seguire la burocrazia della sicurezza è tempo che sottrai alla crescita del business. Ogni minuto speso a controllare scadenze e documenti è un minuto perso. Esiste un metodo per delegare questi compiti a un sistema automatico e riprendere il pieno controllo del tuo tempo.`,
+        text: `La tua analisi evidenzia ${violationCount} criticità, le stesse che il ${sectorPercentage} delle aziende ${sectorName} non riesce a gestire efficacemente. Il tuo controllo diretto è un punto di forza, ma il tempo che dedichi a seguire la burocrazia della sicurezza è tempo che sottrai alla crescita del business. Ogni minuto speso a controllare scadenze e documenti è un minuto perso. Noi installiamo un sistema automatico completamente configurato che ti permette di delegare questi compiti mantenendo il pieno controllo. Tu mantieni la supervisione, ma senza perdere tempo nella gestione quotidiana.`,
+        ctaText: "Scopri il sistema automatico personalizzato",
         benefits: [
           "Delega la burocrazia, recupera il tuo tempo.",
           "Scadenze sempre sotto controllo, zero stress.",
@@ -204,6 +209,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
       return {
         title: "Alcune aree necessitano attenzione",
         text: `Dalla tua analisi emergono ${violationCount} criticità per la tua azienda. Il sistema normativo è complesso e in continua evoluzione. Possiamo aiutarti a semplificare la gestione e ridurre i rischi.`,
+        ctaText: "Scopri come gestiamo questi aspetti per i nostri clienti",
         benefits: [
           "Sistema semplificato e centralizzato.",
           "Controllo completo su scadenze e documenti.",
@@ -215,6 +221,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
     return {
       title: "Cosa emerge dalle risposte:",
       text: template.text,
+      ctaText: template.ctaText,
       benefits: template.benefits
     };
   }

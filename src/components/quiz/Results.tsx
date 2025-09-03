@@ -160,6 +160,11 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
           <CardHeader className="border-b border-gray-700">
             <CardTitle className="text-lg sm:text-xl font-bold text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
+            {violations.length > 0 && (
+              <p className="text-sm text-gray-300 mt-2">
+                Cosa ottieni dopo l'attivazione (configuriamo tutto in 48h):
+              </p>
+            )}
           </CardHeader>
           <CardContent className="p-4 sm:p-6">
             <div className="grid gap-3 sm:gap-4">

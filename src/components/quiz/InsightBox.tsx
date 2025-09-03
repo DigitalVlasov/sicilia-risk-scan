@@ -27,7 +27,7 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
               href={ctaTarget} 
               className="text-red-600 hover:text-red-800 font-semibold text-sm sm:text-base transition-colors duration-200 inline-flex items-center gap-1 hover:underline"
             >
-              <span>Scopri come gestiamo questi aspetti per i nostri clienti</span>
+              <span>{insight.ctaText || "Scopri come gestiamo questi aspetti per i nostri clienti"}</span>
               <span className="text-xs">↓</span>
             </a>
           </div>

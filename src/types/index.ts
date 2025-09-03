@@ -55,6 +55,7 @@ export interface DynamicInsight {
   urgency: "low" | "medium" | "high";
   type: "success" | "analysis";
   benefits?: string[];
+  ctaText?: string;
 }
 
 export interface CaseStudy {
