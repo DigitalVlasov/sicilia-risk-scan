@@ -25,7 +25,7 @@ export const QuizStage: React.FC<QuizStageProps> = ({
   
   return (
     <section aria-labelledby="quiz-title" className="space-y-4">
-      <Card className={UNIFIED_STYLES.cardElevated}>
+      <Card className={UNIFIED_STYLES.cardPrimary}>
         <CardContent className={`space-y-4 sm:space-y-6 ${DESIGN_TOKENS.padding.card}`}>
           <div>
             <div className="h-3 w-full rounded bg-gray-200 overflow-hidden">
