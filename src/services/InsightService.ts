@@ -125,7 +125,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
   }
 
   private generateImprovementInsight(sector: Sector, management: string, violationCount: number, context: any): { title: string; text: string } {
-    const violationText = violationCount === 1 ? "1 aspetto da sistemare" : `${violationCount} aspetti da allineare`;
+    const violationText = violationCount === 1 ? "1 criticità" : `${violationCount} criticità`;
     
     const title = violationCount > 3 
       ? "Serve un po' di ordine, ma niente panico" 
@@ -145,22 +145,44 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
 
     const sectorPercentage = sectorPercentages[sector] || "65%";
 
-    // Messaggi personalizzati per tipo di gestione
-    const explanationByManagement = {
-      "gestisco-io": "Il sistema normativo si aggiorna continuamente e con tutto quello che hai da fare è davvero complicato stare dietro a ogni dettaglio.",
-      "interno": "Anche con una risorsa dedicata, il sistema normativo è in continua evoluzione e non è sempre facile per chi lavora dentro l'azienda riuscire a seguire ogni aggiornamento mentre gestisce anche le attività quotidiane.",
-      "consulente": "Anche con un bravo consulente, a volte può capitare che alcuni aspetti sfuggano o che non ci sia il tempo di allineare tutto subito. Il sistema normativo è complesso e in continua evoluzione, e anche i professionisti più preparati a volte devono fare delle priorità.",
-      "studi-multipli": "Con più consulenti per aree diverse, a volte può succedere che qualche aspetto 'cada nel mezzo' o che non ci sia il tempo di coordinare tutto perfettamente. È normale quando si lavora con specialisti diversi."
+    // Diagnosi specifica per ogni scenario di gestione
+    const diagnosisByManagement = {
+      "gestisco-io": `Con il fatto che gestisci personalmente la sicurezza e le ${violationText} che sono emerse, qualcosa va rivisto nel tuo approccio attuale.`,
+      "interno": `Avendo una risorsa interna dedicata e considerando le ${violationText} presenti, c'è qualcosa da migliorare nell'organizzazione interna.`,
+      "consulente": `Pur affidandoti a un consulente esterno e con le ${violationText} che sono emerse, il sistema attuale presenta alcuni aspetti da perfezionare.`,
+      "studi-multipli": `Nonostante tu collabori con più professionisti specializzati e le ${violationText} riscontrate, l'coordinamento generale necessita di alcuni aggiustamenti.`
     };
 
-    const explanation = explanationByManagement[management as keyof typeof explanationByManagement] || 
-      "Il sistema normativo si aggiorna continuamente ed è complicato stare dietro a tutto.";
+    // Motivi unici determinanti per scenario
+    const reasonsByManagement = {
+      "gestisco-io": "la normativa è complessa e cambia di continuo, mettendo in difficoltà anche i tecnici più preparati",
+      "interno": "è difficile per chi lavora quotidianamente in azienda rimanere sempre aggiornato su tutte le evoluzioni normative mentre gestisce anche le attività operative",
+      "consulente": "anche i professionisti più esperti devono spesso prioritizzare gli interventi e il sistema normativo è in continua evoluzione",
+      "studi-multipli": "con specialisti diversi per aree specifiche, alcuni aspetti possono rimanere scoperti o necessitare di un maggiore coordinamento"
+    };
 
-    const text = `Dalla tua analisi emergono ${violationText} per la tua azienda nel settore ${context.sectorName}. ${context.managementDescription} - ed è una scelta che rispettiamo completamente.
+    // Soluzioni personalizzate per scenario
+    const solutionsByManagement = {
+      "gestisco-io": "Se vuoi, possiamo aiutarti a semplificare la gestione quotidiana, automatizzare i controlli e permetterti di concentrarti sul tuo business principale senza perdere di vista la sicurezza.",
+      "interno": "Possiamo supportare la tua risorsa interna con strumenti più efficaci, formazione mirata e un sistema di controlli automatizzati che faciliti il suo lavoro quotidiano.",
+      "consulente": "Non si tratta di sostituire il tuo consulente, ma di offrirti un parere indipendente e strumenti di coordinamento che possano coprire eventuali parti scoperte e ottimizzare l'efficacia complessiva.",
+      "studi-multipli": "L'obiettivo non è sostituire i tuoi specialisti, ma fornire un punto di coordinamento centrale e una copertura completa per le aree che potrebbero rimanere scoperte nella gestione multi-consulente."
+    };
 
-Nel settore ${context.sectorName}, il ${sectorPercentage} delle aziende ha le tue stesse criticità. ${explanation}
+    const diagnosis = diagnosisByManagement[management as keyof typeof diagnosisByManagement] || 
+      `Con le ${violationText} emerse, c'è qualcosa da rivedere nell'approccio attuale.`;
+      
+    const reason = reasonsByManagement[management as keyof typeof reasonsByManagement] || 
+      "il sistema normativo è complesso e in continua evoluzione";
+      
+    const solution = solutionsByManagement[management as keyof typeof solutionsByManagement] || 
+      "Possiamo aiutarti a migliorare la gestione della sicurezza.";
 
-Non è colpa tua né del modo in cui hai scelto di organizzarti. Se vuoi, possiamo aiutarti a semplificare la gestione, ridurre il rischio di dimenticanze ed errori, e permetterti di concentrarti sul tuo business principale.`;
+    const text = `${diagnosis}
+
+Nel settore ${context.sectorName}, il ${sectorPercentage} delle aziende ha le tue stesse criticità. Con ${context.managementStyle}, capita perché ${reason}.
+
+${solution}`;
 
     return { title, text };
   }
