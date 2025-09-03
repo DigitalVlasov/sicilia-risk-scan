@@ -155,8 +155,8 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </Card>
       )}
       
-      {/* Solutions Card - Premium Dark Theme - Only show if violations exist */}
-      {violations.length > 0 && dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
+      {/* Solutions Card - Premium Dark Theme - Show for all scenarios */}
+      {dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
         <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
           <CardHeader className="border-b border-gray-700">
             <CardTitle className="text-lg sm:text-xl font-bold text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
