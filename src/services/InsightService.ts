@@ -33,7 +33,8 @@ class InsightService {
       title: insight.title,
       text: insight.text,
       urgency,
-      type: violations.length > 0 ? "analysis" : "success"
+      type: violations.length > 0 ? "analysis" : "success",
+      benefits: insight.benefits
     };
   }
 
@@ -107,7 +108,7 @@ class InsightService {
     };
   }
 
-  private generateExcellenceInsight(sector: Sector, management: string, context: any): { title: string; text: string } {
+  private generateExcellenceInsight(sector: Sector, management: string, context: any): { title: string; text: string; benefits?: string[] } {
     const titles = [
       "Complimenti, sei sulla strada giusta!",
       "La tua azienda è ben organizzata",
@@ -124,15 +125,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
     };
   }
 
-  private generateImprovementInsight(sector: Sector, management: string, violationCount: number, context: any): { title: string; text: string } {
-    const violationText = violationCount === 1 ? "1 aspetto da sistemare" : `${violationCount} aspetti da allineare`;
-    
-    const title = violationCount > 3 
-      ? "Serve un po' di ordine, ma niente panico" 
-      : violationCount > 1 
-        ? "Qualche dettaglio da sistemare" 
-        : "Solo un piccolo aggiustamento";
-
+  private generateImprovementInsight(sector: Sector, management: string, violationCount: number, context: any): { title: string; text: string; benefits: string[] } {
     const sectorPercentages = {
       edilizia: "68%",
       manifatturiero: "70%", 
@@ -143,26 +136,83 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
       servizi: "55%"
     };
 
-    const sectorPercentage = sectorPercentages[sector] || "65%";
-
-    // Messaggi personalizzati per tipo di gestione
-    const explanationByManagement = {
-      "gestisco-io": "Il sistema normativo si aggiorna continuamente e con tutto quello che hai da fare è davvero complicato stare dietro a ogni dettaglio.",
-      "interno": "Anche con una risorsa dedicata, il sistema normativo è in continua evoluzione e non è sempre facile per chi lavora dentro l'azienda riuscire a seguire ogni aggiornamento mentre gestisce anche le attività quotidiane.",
-      "consulente": "Anche con un bravo consulente, a volte può capitare che alcuni aspetti sfuggano o che non ci sia il tempo di allineare tutto subito. Il sistema normativo è complesso e in continua evoluzione, e anche i professionisti più preparati a volte devono fare delle priorità.",
-      "studi-multipli": "Con più consulenti per aree diverse, a volte può succedere che qualche aspetto 'cada nel mezzo' o che non ci sia il tempo di coordinare tutto perfettamente. È normale quando si lavora con specialisti diversi."
+    const sectorNames = {
+      edilizia: "edili",
+      manifatturiero: "manifatturiere", 
+      alimentare: "del settore alimentare",
+      trasporto: "di logistica",
+      agricoltura: "del settore agricolo",
+      commercio: "del commercio",
+      servizi: "dei servizi"
     };
 
-    const explanation = explanationByManagement[management as keyof typeof explanationByManagement] || 
-      "Il sistema normativo si aggiorna continuamente ed è complicato stare dietro a tutto.";
+    const sectorPercentage = sectorPercentages[sector] || "65%";
+    const sectorName = sectorNames[sector] || "del tuo settore";
 
-    const text = `Dalla tua analisi emergono ${violationText} per la tua azienda nel settore ${context.sectorName}. ${context.managementDescription} - ed è una scelta che rispettiamo completamente.
+    // Template Hopkins-style per ogni tipo di gestione
+    const templates = {
+      "studi-multipli": {
+        text: `La tua analisi mostra ${violationCount} aree di rischio, le stesse che espongono a sanzioni il ${sectorPercentage} delle aziende ${sectorName}. Lavorare con più specialisti è un metodo valido, ma genera frammentazione. Quando le informazioni sono divise, il rischio di una scadenza mancata o di un documento non aggiornato aumenta. Il risultato è un sistema che ti espone a multe e ti fa perdere tempo. Esiste un metodo testato per centralizzare il controllo e trasformare questo rischio in un punto di forza.`,
+        benefits: [
+          "Unico sistema, zero frammentazione.",
+          "Scadenze sotto controllo, rischio azzerato.",
+          "Documenti sempre pronti per i controlli.",
+          "Nuovi assunti subito a norma, senza sforzi.",
+          "Formazione finanziata, costi ottimizzati."
+        ]
+      },
+      "consulente": {
+        text: `Dalle tue risposte emergono ${violationCount} criticità che il ${sectorPercentage} delle aziende ${sectorName} affronta. Affidarsi a un consulente esterno è la scelta corretta, ma anche il professionista migliore, senza un sistema di controllo centralizzato, può trovarsi a rincorrere le informazioni. Questo ti espone a ritardi e rischi inutili. Ecco come fornire al tuo tecnico uno strumento che garantisca a entrambi il pieno controllo, riducendo gli errori.`,
+        benefits: [
+          "Pieno controllo per te e il tuo consulente.",
+          "Scadenze e adempimenti sempre rispettati.",
+          "Documentazione a prova di ispezione, 24/7.",
+          "Gestione del personale semplice e conforme.",
+          "Costi di formazione ridotti con i fondi."
+        ]
+      },
+      "interno": {
+        text: `La tua azienda presenta ${violationCount} aree di rischio, comuni al ${sectorPercentage} delle aziende ${sectorName}. Avere una risorsa interna dedicata è un vantaggio, ma costringerla a monitorare manualmente un sistema normativo in continua evoluzione è inefficiente e rischioso. Si rischia di perdere aggiornamenti cruciali mentre si gestisce l'operatività quotidiana. Ecco come potenziare la tua risorsa interna con un sistema che automatizza i controlli e azzera le sviste.`,
+        benefits: [
+          "Meno burocrazia per la tua risorsa interna.",
+          "Nessuna scadenza mancata, zero errori.",
+          "Verbali e documenti pronti all'uso.",
+          "Gestione di fissi e stagionali senza problemi.",
+          "Formazione obbligatoria a costi ottimizzati."
+        ]
+      },
+      "gestisco-io": {
+        text: `La tua analisi evidenzia ${violationCount} criticità, le stesse che il ${sectorPercentage} delle aziende ${sectorName} non riesce a gestire efficacemente. Il tuo controllo diretto è un punto di forza, ma il tempo che dedichi a seguire la burocrazia della sicurezza è tempo che sottrai alla crescita del business. Ogni minuto speso a controllare scadenze e documenti è un minuto perso. Esiste un metodo per delegare questi compiti a un sistema automatico e riprendere il pieno controllo del tuo tempo.`,
+        benefits: [
+          "Delega la burocrazia, recupera il tuo tempo.",
+          "Scadenze sempre sotto controllo, zero stress.",
+          "Documentazione centralizzata e accessibile.",
+          "Onboarding nuovi assunti: rapido e conforme.",
+          "Costi della formazione drasticamente ridotti."
+        ]
+      }
+    };
 
-Nel settore ${context.sectorName}, il ${sectorPercentage} delle aziende ha le tue stesse criticità. ${explanation}
+    const template = templates[management as keyof typeof templates];
+    
+    if (!template) {
+      // Fallback per gestioni non previste
+      return {
+        title: "Alcune aree necessitano attenzione",
+        text: `Dalla tua analisi emergono ${violationCount} criticità per la tua azienda. Il sistema normativo è complesso e in continua evoluzione. Possiamo aiutarti a semplificare la gestione e ridurre i rischi.`,
+        benefits: [
+          "Sistema semplificato e centralizzato.",
+          "Controllo completo su scadenze e documenti.",
+          "Riduzione dei rischi e delle sanzioni."
+        ]
+      };
+    }
 
-Non è colpa tua né del modo in cui hai scelto di organizzarti. Se vuoi, possiamo aiutarti a semplificare la gestione, ridurre il rischio di dimenticanze ed errori, e permetterti di concentrarti sul tuo business principale.`;
-
-    return { title, text };
+    return {
+      title: "Cosa emerge dalle risposte:",
+      text: template.text,
+      benefits: template.benefits
+    };
   }
 
 
