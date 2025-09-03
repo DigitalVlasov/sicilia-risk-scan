@@ -83,66 +83,67 @@ class InsightService {
     patterns: { mainGap: string; riskProfile: string; specificSituation: string }
   ): { title: string; text: string } {
     
-    // Titoli che richiamano direttamente la promessa dell'intro: "Se l'ispettore bussa domani?"
-    const urgencyTitles = {
+    // Headlines stile Hopkins: problema specifico + conseguenza emotiva
+    const directHeadlines = {
       high: patterns.riskProfile === "critico" ? 
-        "Se l'ispettore bussa domani, sei nei guai" : 
-        "L'ispettore ti troverebbe impreparato",
-      medium: "Qualcosa sfuggirebbe all'occhio dell'ispettore", 
-      low: "All'ispettore non sfuggirebbe molto, ma..."
+        "ATTENZIONE: Stai correndo un rischio GRAVE" : 
+        "Houston, abbiamo un problema",
+      medium: "Qualcosa di importante ti sta sfuggendo", 
+      low: "Sei sulla strada giusta, MA..."
     };
 
-    // Insight che rispecchiano ESATTAMENTE la situazione dalle risposte
-    const situationMirrors = {
-      dvr_mancante: "Non hai il DVR - è come non avere la patente quando guidi",
-      formazione: "La formazione dei tuoi dipendenti non è aggiornata secondo l'Accordo Stato-Regioni",
-      documentazione: "Hai delle lacune nella documentazione obbligatoria",
+    // Struttura sales letter: Problema + Agitazione + Soluzione
+    const problemStatements = {
+      dvr_mancante: "Non hai il DVR. È come guidare senza patente - prima o poi ti beccano",
+      formazione: "La formazione dei tuoi dipendenti non è aggiornata. E gli ispettori lo scoprono sempre",
+      documentazione: "Ti mancano carte importanti. E quando arriva il controllo, sono proprio quelle che ti chiedono",
     };
 
-    // Riconoscimento del management style con mirror specifico
-    const managementMirrors = {
-      "ok": "Gestisci tutto con un sistema strutturato - sei tra i pochi che lo fa bene",
-      "parziale": "Hai iniziato a organizzarti ma mancano ancora alcuni pezzi del puzzle",
-      "no": "Gestisci tutto 'a memoria' - funziona finché funziona, ma è rischioso"
+    // Agitazione: amplifica la conseguenza
+    const agitationPhrases = {
+      "ok": "Anche se hai un sistema, gli ispettori sanno dove guardare per trovare i dettagli che mancano",
+      "parziale": "Hai iniziato a organizzarti, ma le mezze misure con gli ispettori non funzionano",
+      "no": "Gestisci tutto 'a memoria'... ma la memoria non ti salva dalla multa"
     };
 
-    // Contexto settoriale che richiama i controlli specifici
-    const sectorRealities = {
-      edilizia: "In cantiere l'ispettore vede tutto: dalla formazione alle protezioni, dal DVR alle emergenze",
-      manifatturiero: "Nelle fabbriche i controlli sono sempre più frequenti e dettagliati - ogni documento conta",
-      alimentare: "Nel tuo settore hai doppi controlli: sicurezza sul lavoro E sicurezza alimentare",
-      trasporto: "Ogni mezzo è un punto di controllo potenziale - INAIL, Trasporti, Lavoro possono fermarti",
-      agricoltura: "I controlli in campagna stanno aumentando: lavoratori stagionali, macchine, sostanze chimiche",
-      commercio: "Anche nei negozi l'occhio si è fatto più attento: clienti e dipendenti devono essere protetti",
-      servizi: "Negli uffici pensavi di essere al sicuro? Le normative si stringono anche per il terziario"
+    // Contexto settoriale con tono di urgenza
+    const sectorUrgency = {
+      edilizia: "In cantiere ogni giorno che passa senza essere in regola è un giorno di rischio",
+      manifatturiero: "In fabbrica i controlli arrivano quando meno te lo aspetti - e sono sempre più severi",
+      alimentare: "Nel food devi essere perfetto su TUTTO: un errore e ti chiudono",
+      trasporto: "Con i mezzi ti possono fermare ovunque - strada, azienda, anche dai clienti",
+      agricoltura: "I controlli in campagna stanno esplodendo - lavoratori, macchine, fitofarmaci",
+      commercio: "Anche nei negozi gli ispettori ora guardano tutto con la lente d'ingrandimento",
+      servizi: "Negli uffici pensavi di essere al sicuro? Ti sbagli di grosso"
     };
 
-    const situationRecognition = situationMirrors[patterns.mainGap as keyof typeof situationMirrors] || 
-      `Le tue risposte mostrano ${patterns.specificSituation.replace(/ -$/, '')}`;
+    // Soluzione soft ma convincente
+    const solutionTeaser = this.getSolutionTeaser(violationCount, patterns.riskProfile);
+
+    const problemStatement = problemStatements[patterns.mainGap as keyof typeof problemStatements] || 
+      `Dalle tue risposte emerge che ${patterns.specificSituation.replace(/ -$/, '')}`;
     
-    const managementRecognition = managementMirrors[management as keyof typeof managementMirrors] || 
-      "La tua gestione della sicurezza ha margini di miglioramento";
+    const agitation = agitationPhrases[management as keyof typeof agitationPhrases] || 
+      "Le mezze misure con la sicurezza non pagano mai";
 
-    const sectorContext = sectorRealities[sector] || "Nel tuo settore i controlli sono sempre più rigorosi";
-
-    const psychologicalTrigger = this.getPsychologicalTrigger(violationCount, urgency, patterns.riskProfile);
+    const urgencyContext = sectorUrgency[sector] || "Nel tuo settore non puoi permetterti errori";
 
     return {
-      title: urgencyTitles[urgency],
-      text: `${situationRecognition}. ${managementRecognition}. ${sectorContext}. ${psychologicalTrigger}`
+      title: directHeadlines[urgency],
+      text: `${problemStatement}. ${agitation}. ${urgencyContext}. ${solutionTeaser}`
     };
   }
 
-  private getPsychologicalTrigger(violationCount: number, urgency: "low" | "medium" | "high", riskProfile?: string): string {
+  private getSolutionTeaser(violationCount: number, riskProfile?: string): string {
     if (violationCount === 0) {
-      return "Ma quello che funziona oggi potrebbe non bastare domani - non credi valga la pena verificare?";
+      return "Ma non abbassare la guardia: noi ti aiutiamo a restare sempre un passo avanti";
     } else if (violationCount <= 2) {
-      return "Pochi dettagli possono fare la differenza tra tranquillità e una brutta sorpresa costosa";
+      return "La buona notizia? Con le mosse giuste sistemi tutto rapidamente";
     } else {
       if (riskProfile === "critico") {
-        return "Ogni giorno che passa aumenta il rischio di controlli - ma c'è ancora tempo per sistemare tutto";
+        return "C'è ancora tempo per sistemare tutto - ma devi muoverti SUBITO";
       }
-      return "La situazione è gestibile, ma serve un piano preciso per mettersi in regola step by step";
+      return "Serve un piano preciso, step by step. E noi sappiamo esattamente da dove iniziare";
     }
   }
 
