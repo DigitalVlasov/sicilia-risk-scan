@@ -53,7 +53,8 @@ class InsightService {
       trasporto: "dei trasporti e logistica",
       agricoltura: "agricolo",
       commercio: "del commercio",
-      servizi: "dei servizi"
+      servizi: "dei servizi",
+      ristorazione: "dell'alloggio e ristorazione"
     };
 
     const managementStyles = {
@@ -82,7 +83,8 @@ class InsightService {
       trasporto: "Nel trasporto, la maggior parte delle aziende naviga a vista su alcune questioni - è tipico del settore",
       agricoltura: "In agricoltura, con tutte le normative che cambiano, è normale avere qualche aspetto da allineare",
       commercio: "Nel commercio, molti sottovalutano alcuni aspetti della sicurezza - capita spesso",
-      servizi: "Nei servizi, si pensa spesso di essere 'al sicuro' ma ci sono sempre dettagli che sfuggono"
+      servizi: "Nei servizi, si pensa spesso di essere 'al sicuro' ma ci sono sempre dettagli che sfuggono",
+      ristorazione: "Nel settore alloggio e ristorazione, tra orari prolungati e ritmi intensi, è normale che alcuni aspetti sfuggano"
     };
 
     const specificGaps = [];
@@ -133,7 +135,8 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
       trasporto: "72%",
       agricoltura: "60%",
       commercio: "58%",
-      servizi: "55%"
+      servizi: "55%",
+      ristorazione: "63%"
     };
 
     const sectorNames = {
@@ -143,7 +146,8 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
       trasporto: "di logistica",
       agricoltura: "del settore agricolo",
       commercio: "del commercio",
-      servizi: "dei servizi"
+      servizi: "dei servizi",
+      ristorazione: "dell'alloggio e ristorazione"
     };
 
     const sectorPercentage = sectorPercentages[sector] || "65%";

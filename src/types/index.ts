@@ -70,7 +70,7 @@ export interface CaseStudy {
 
 // ==================== DOMAIN TYPES ====================
 export type ManagementStyle = "gestisco-io" | "interno" | "consulente" | "studi-multipli";
-export type Sector = "edilizia" | "manifatturiero" | "alimentare" | "trasporto" | "agricoltura" | "commercio" | "servizi";
+export type Sector = "edilizia" | "manifatturiero" | "alimentare" | "trasporto" | "agricoltura" | "commercio" | "servizi" | "ristorazione";
 export type UrgencyLevel = "CRITICO" | "BLOCCANTE" | "ALTO" | "MEDIO" | "STANDARD" | "SETTORIALE" | "ORGANIZZATIVO";
 export type BadgeVariant = "destructive" | "warning" | "success";
 
