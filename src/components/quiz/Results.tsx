@@ -35,7 +35,8 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
 
   return (
     <section aria-labelledby="results-title" className="space-y-4 sm:space-y-6">
-      <Card className="border-2 border-red-600 shadow-lg">
+      {/* Primary Risk Card - Highest Visual Hierarchy */}
+      <Card className="border-2 border-red-600 shadow-xl bg-white">
         <CardContent className="p-4 sm:p-6">
           <div className="text-center">
             <Badge variant={riskBadgeVariant(risk.level)} className="mb-3 sm:mb-4 text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2">
@@ -96,15 +97,17 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </CardContent>
       </Card>
       
+      {/* Personalized Insight Box - Primary Level */}
       <InsightBox insight={dynamicInsight} ctaTarget="#vantaggi-completi" />
       
+      {/* Violations Detail Card - Secondary Level */}
       {violations.length > 0 && (
-        <Card>
-          <CardHeader className="pb-2 sm:pb-4">
-            <CardTitle>Dettaglio Rischi e Soluzioni</CardTitle>
+        <Card className="border border-gray-300 shadow-lg bg-white">
+          <CardHeader className="pb-2 sm:pb-4 border-b border-gray-200">
+            <CardTitle className="text-lg sm:text-xl font-bold text-black">Dettaglio Rischi e Soluzioni</CardTitle>
             <p className="text-xs sm:text-sm text-gray-500 mt-1">(clicca sulle opzioni per approfondire)</p>
           </CardHeader>
-          <CardContent className="space-y-2 sm:space-y-3">
+          <CardContent className="space-y-2 sm:space-y-3 p-4 sm:p-6">
             {violations.map((v, index) => (
               <details key={v.key} className="group bg-gray-50 rounded-lg border border-gray-200 overflow-hidden transition-all hover:shadow-md">
                 <summary className="p-3 sm:p-4 cursor-pointer flex justify-between items-center hover:bg-gray-100 transition-colors">
@@ -154,14 +157,15 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </Card>
       )}
       
-      <Card id="vantaggi-completi" className="bg-gradient-to-br from-gray-900 to-black text-white">
-        <CardHeader>
-          <CardTitle className="text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
+      {/* Solutions Card - Premium Dark Theme */}
+      <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
+        <CardHeader className="border-b border-gray-700">
+          <CardTitle className="text-lg sm:text-xl font-bold text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 sm:p-6">
           <div className="grid gap-3 sm:gap-4">
             {personalizedAdvantages.map((advantage, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors">
+              <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors border border-white/20">
                 <span className="text-lg sm:text-xl">{advantage.substring(0, 2)}</span>
                 <span className="text-sm sm:text-base">{advantage.substring(2)}</span>
               </div>
@@ -170,13 +174,15 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </CardContent>
       </Card>
       
+      {/* Case Studies Carousel - Secondary Level */}
       <CaseStudyCarousel />
       
-      <Card>
-        <CardHeader>
-          <CardTitle>Cosa include il Sistema Organizzativo di Spazio Impresa:</CardTitle>
+      {/* Features Card - Secondary Level */}
+      <Card className="border border-gray-300 shadow-lg bg-white">
+        <CardHeader className="border-b border-gray-200">
+          <CardTitle className="text-lg sm:text-xl font-bold text-black">Cosa include il Sistema Organizzativo di Spazio Impresa:</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 sm:p-6">
           <ul className="space-y-2 text-sm sm:text-base">
             <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze visite mediche e attestati di formazione</span></li>
             <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Archivio documentale digitale 24/7</span></li>

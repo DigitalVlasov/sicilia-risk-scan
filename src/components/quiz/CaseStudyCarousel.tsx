@@ -8,13 +8,13 @@ export const CaseStudyCarousel: React.FC = () => {
   const [currentCaseStudy, setCurrentCaseStudy] = useState(0);
   
   return (
-    <Card className={UNIFIED_STYLES.cardElevated}>
-      <CardHeader>
-        <CardTitle className={UNIFIED_STYLES.titleSecondary}>
+    <Card className="border border-gray-300 shadow-lg bg-white">
+      <CardHeader className="border-b border-gray-200">
+        <CardTitle className="text-lg sm:text-xl font-bold text-black">
           Casi di successo
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 sm:p-6">
         <div className="relative">
           <div className="overflow-hidden">
             <div 
@@ -23,9 +23,9 @@ export const CaseStudyCarousel: React.FC = () => {
             >
               {CASE_STUDIES.map((study, idx) => (
                 <div key={idx} className="w-full flex-shrink-0 px-2">
-                  <div className={`${UNIFIED_STYLES.cardBase} p-6 hover:shadow-md ${DESIGN_TOKENS.animation.transition} ${DESIGN_TOKENS.animation.normal}`}>
-                    <div className="mb-5">
-                      <h3 className={`${UNIFIED_STYLES.titleSecondary} text-black mb-2`}>
+                  <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all">
+                    <div className="mb-4 sm:mb-5">
+                      <h3 className="text-lg sm:text-xl font-bold text-black mb-2">
                         {study.title}
                       </h3>
                       <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-50 border border-red-200">
@@ -35,24 +35,24 @@ export const CaseStudyCarousel: React.FC = () => {
                       </div>
                     </div>
                     
-                    <div className="space-y-4">
-                      <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="space-y-3 sm:space-y-4">
+                      <div className="bg-white rounded-lg p-3 sm:p-4 border border-gray-200">
                         <h4 className="font-semibold text-red-600 text-sm mb-2">SFIDA</h4>
-                        <p className={`${UNIFIED_STYLES.bodyText} text-gray-700`}>
+                        <p className="text-sm sm:text-base text-gray-700">
                           {study.challenge}
                         </p>
                       </div>
                       
-                      <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="bg-white rounded-lg p-3 sm:p-4 border border-gray-200">
                         <h4 className="font-semibold text-black text-sm mb-2">SOLUZIONE</h4>
-                        <p className={`${UNIFIED_STYLES.bodyText} text-gray-700`}>
+                        <p className="text-sm sm:text-base text-gray-700">
                           {study.solution}
                         </p>
                       </div>
                       
-                      <div className="bg-red-600 rounded-lg p-4">
+                      <div className="bg-red-600 rounded-lg p-3 sm:p-4 border-2 border-red-700">
                         <h4 className="font-semibold text-white text-sm mb-2">RISULTATO</h4>
-                        <p className="text-sm font-medium text-white">
+                        <p className="text-sm sm:text-base font-medium text-white">
                           {study.result}
                         </p>
                       </div>
