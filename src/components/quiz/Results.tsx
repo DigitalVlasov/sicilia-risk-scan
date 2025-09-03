@@ -174,9 +174,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </Card>
       )}
       
-      {/* Case Studies Carousel - Secondary Level */}
-      <CaseStudyCarousel />
-      
       {/* Features Card - Secondary Level */}
       <Card className="border border-gray-300 shadow-lg bg-white">
         <CardHeader className="border-b border-gray-200">
@@ -194,6 +191,9 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       </Card>
       
       <ContactCTA risk={risk} sector={answers.settore} />
+      
+      {/* Case Studies Carousel - Moved to bottom */}
+      <CaseStudyCarousel />
       
       <div className="text-center mt-6">
         <Button variant="ghost" onClick={onReset}>

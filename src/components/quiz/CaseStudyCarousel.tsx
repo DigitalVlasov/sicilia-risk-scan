@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { CaseStudy } from "../../types";
 import { CASE_STUDIES } from "../../constants/quiz-config";
@@ -6,6 +6,14 @@ import { UNIFIED_STYLES, DESIGN_TOKENS } from "../../constants/design-tokens";
 
 export const CaseStudyCarousel: React.FC = () => {
   const [currentCaseStudy, setCurrentCaseStudy] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCaseStudy((prev) => (prev + 1) % CASE_STUDIES.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
   
   return (
     <Card className="border border-gray-300 shadow-lg bg-white">
