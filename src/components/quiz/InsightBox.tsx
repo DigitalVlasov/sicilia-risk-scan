@@ -16,7 +16,7 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
       <CardContent className="p-4 sm:p-6">
         <div className="space-y-3 sm:space-y-4">
           <h2 className="text-lg sm:text-xl font-bold text-black leading-tight">
-            {insight.title}
+            Cosa emerge dalle risposte:
           </h2>
           <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
             {insight.text}
