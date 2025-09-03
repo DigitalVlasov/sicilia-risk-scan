@@ -47,14 +47,14 @@ class InsightService {
     companySize: string;
   } {
     const sectorNames = {
-      edilizia: "dell'edilizia",
-      manifatturiero: "manifatturiero", 
-      alimentare: "alimentare e della ristorazione",
-      trasporto: "dei trasporti e logistica",
-      agricoltura: "agricolo",
-      commercio: "del commercio",
-      servizi: "dei servizi",
-      ristorazione: "dell'alloggio e ristorazione"
+      edilizia: "di Edilizia",
+      manifatturiero: "di Manifatturiero / Logistica", 
+      alimentare: "alimentare e della ristorazione", // legacy fallback
+      trasporto: "dei trasporti e logistica", // legacy fallback
+      agricoltura: "di Agricoltura / Allevamento",
+      commercio: "del commercio", // legacy fallback
+      servizi: "di Servizi / Uffici",
+      ristorazione: "di Ristorazione / Commercio"
     };
 
     const managementStyles = {
@@ -140,14 +140,14 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
     };
 
     const sectorNames = {
-      edilizia: "edili",
-      manifatturiero: "manifatturiere", 
-      alimentare: "del settore alimentare",
-      trasporto: "di logistica",
-      agricoltura: "del settore agricolo",
-      commercio: "del commercio",
-      servizi: "dei servizi",
-      ristorazione: "dell'alloggio e ristorazione"
+      edilizia: "di Edilizia",
+      manifatturiero: "di Manifatturiero / Logistica", 
+      alimentare: "del settore alimentare", // legacy fallback
+      trasporto: "di logistica", // legacy fallback
+      agricoltura: "di Agricoltura / Allevamento",
+      commercio: "del commercio", // legacy fallback
+      servizi: "di Servizi / Uffici",
+      ristorazione: "di Ristorazione / Commercio"
     };
 
     const sectorPercentage = sectorPercentages[sector] || "65%";
