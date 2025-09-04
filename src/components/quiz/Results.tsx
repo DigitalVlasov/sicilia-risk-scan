@@ -155,11 +155,45 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Personalized Insight Box - After Violations Detail */}
       <InsightBox insight={dynamicInsight} ctaTarget="#vantaggi-completi" />
       
+      {/* How it works section - Between insight and benefits */}
+      {violations.length > 0 && (
+        <Card className="border border-gray-300 shadow-lg bg-white">
+          <CardHeader className="border-b border-gray-200">
+            <CardTitle className="text-lg sm:text-xl font-bold text-black">Come funziona in pratica (3 step)</CardTitle>
+          </CardHeader>
+          <CardContent className="p-4 sm:p-6">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                <div>
+                  <h4 className="font-semibold text-black mb-1">Analisi e configurazione iniziale</h4>
+                  <p className="text-sm text-gray-600">Configuriamo il sistema in base alle tue esigenze specifiche entro 48h dall'attivazione</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                <div>
+                  <h4 className="font-semibold text-black mb-1">Implementazione e formazione</h4>
+                  <p className="text-sm text-gray-600">Ti formiamo sull'utilizzo e integriamo il sistema con i tuoi processi attuali</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                <div>
+                  <h4 className="font-semibold text-black mb-1">Supporto continuo</h4>
+                  <p className="text-sm text-gray-600">Assistenza costante e aggiornamenti automatici per garantire sempre la conformità</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Solutions Card - Premium Dark Theme - Show for all scenarios */}
       {dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
         <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
           <CardHeader className="border-b border-gray-700">
-            <CardTitle className="text-lg sm:text-xl font-bold text-white">Come possiamo aiutarti - Sistema Spazio Impresa</CardTitle>
+            <CardTitle className="text-lg sm:text-xl font-bold text-white">Cosa ottieni con il Sistema Organizzativo di Spazio Impresa</CardTitle>
             {violations.length > 0 && (
               <p className="text-sm text-gray-300 mt-2">
                 Cosa ottieni dopo l'attivazione (configuriamo tutto in 48h):
