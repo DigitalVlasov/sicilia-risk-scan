@@ -16,41 +16,41 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector, answers, v
   const hasViolations = violations.length > 0;
   const managementStyle = answers.gestione;
   
-  // Dynamic copy based on management style with problem-solution focus
+  // Dynamic copy based on management style with conversational tone
   const getOptimizedCopy = () => {
     switch (managementStyle) {
       case "gestisco-io":
         return {
           title: "INTERVENTO IMMEDIATO NECESSARIO",
-          subtitle: "Hai lacune critiche nel sistema che gestisci → Serve una seconda opinione specializzata per evitare sanzioni",
+          subtitle: "Stai gestendo tutto internamente, ma dalle risposte emergono lacune critiche che potrebbero costarti caro. Hai bisogno di una seconda opinione specializzata per validare il tuo approccio e correggere quello che non va.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Conferma o correzione della strategia attuale"
         };
       case "interno": 
         return {
           title: "FERMA SUBITO LE PERDITE",
-          subtitle: "Il tuo team interno ha gap di competenza → Supporto specialistico immediato per colmare le lacune", 
+          subtitle: "Il tuo team interno sta facendo del suo meglio, ma ha evidenti gap di competenza in materia di sicurezza. Serve un supporto specialistico immediato per evitare che questi buchi si trasformino in sanzioni.", 
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Accelerazione del processo interno"
         };
       case "consulente":
         return {
           title: "AUDIT INDIPENDENTE URGENTE", 
-          subtitle: "Il consulente attuale non sta coprendo tutti i rischi → Verifica indipendente per garantire completezza",
+          subtitle: "Hai un consulente, ma dai risultati è chiaro che non sta coprendo tutti i rischi. Serve una verifica indipendente per capire cosa manca e garantire che sia tutto a norma.",
           ctaText: "Seconda Opinione Specializzata", 
           benefit: "Verifica standard e gap analysis"
         };
       case "studi-multipli":
         return {
           title: "COORDINAMENTO SPECIALISTICO",
-          subtitle: "Troppi professionisti senza coordinamento = lacune e sprechi → Orchestrazione centralizzata urgente",
+          subtitle: "Lavori con più professionisti ma senza un coordinamento centrale, e questo sta creando lacune pericolose e sprechi. È il momento di mettere ordine con una strategia unificata.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Ottimizzazione costi e tempi"
         };
       default:
         return {
           title: "INTERVENTO IMMEDIATO NECESSARIO",
-          subtitle: "I rischi identificati richiedono azione immediata → Seconda opinione specializzata per piano d'emergenza",
+          subtitle: "I rischi che abbiamo identificato nelle tue risposte sono seri e richiedono un intervento immediato. Hai bisogno di una seconda opinione specializzata per elaborare un piano d'emergenza efficace.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Piano d'azione personalizzato e urgente"
         };
