@@ -1,36 +1,158 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselApi } from "../ui/carousel";
 import { CaseStudy } from "../../types";
 import { CASE_STUDIES } from "../../constants/quiz-config";
 import { UNIFIED_STYLES, DESIGN_TOKENS } from "../../constants/design-tokens";
 
 export const CaseStudyCarousel: React.FC = () => {
   const [currentCaseStudy, setCurrentCaseStudy] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCaseStudy((prev) => (prev + 1) % CASE_STUDIES.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [isInteracting, setIsInteracting] = useState(false);
+  const [inView, setInView] = useState(true);
   
+  const containerRef = useRef<HTMLDivElement>(null);
+  const autoplayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Check for reduced motion preference
+  const [autoPlayEnabled] = useState(() => {
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
+
+  // Clear all timeouts
+  const clearTimeouts = useCallback(() => {
+    if (autoplayTimeoutRef.current) {
+      clearTimeout(autoplayTimeoutRef.current);
+      autoplayTimeoutRef.current = null;
+    }
+    if (interactionTimeoutRef.current) {
+      clearTimeout(interactionTimeoutRef.current);
+      interactionTimeoutRef.current = null;
+    }
+  }, []);
+
+  // Setup intersection observer
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  // Setup carousel API listener
+  useEffect(() => {
+    if (!carouselApi) return;
+
+    const onSelect = () => {
+      setCurrentCaseStudy(carouselApi.selectedScrollSnap());
+    };
+
+    carouselApi.on("select", onSelect);
+    onSelect();
+
+    return () => {
+      carouselApi.off("select", onSelect);
+    };
+  }, [carouselApi]);
+
+  // Autoplay logic
+  useEffect(() => {
+    if (!autoPlayEnabled || !inView || isInteracting || !carouselApi) {
+      clearTimeouts();
+      return;
+    }
+
+    const startAutoplay = () => {
+      clearTimeouts();
+      autoplayTimeoutRef.current = setTimeout(() => {
+        if (carouselApi && !isInteracting && inView) {
+          carouselApi.scrollNext();
+        }
+      }, 3000);
+    };
+
+    startAutoplay();
+    return () => clearTimeouts();
+  }, [autoPlayEnabled, inView, isInteracting, carouselApi, currentCaseStudy, clearTimeouts]);
+
+  // Handle page visibility
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setIsInteracting(true);
+      } else if (!document.hidden && isInteracting) {
+        // Resume after page becomes visible again
+        setIsInteracting(false);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isInteracting]);
+
+  // Interaction handlers
+  const handleInteractionStart = useCallback(() => {
+    setIsInteracting(true);
+    clearTimeouts();
+  }, [clearTimeouts]);
+
+  const handleInteractionEnd = useCallback((resumeDelay: number = 2000) => {
+    clearTimeouts();
+    interactionTimeoutRef.current = setTimeout(() => {
+      setIsInteracting(false);
+    }, resumeDelay);
+  }, [clearTimeouts]);
+
+  const handleManualNavigation = useCallback((index: number) => {
+    if (carouselApi) {
+      carouselApi.scrollTo(index);
+      handleInteractionStart();
+      handleInteractionEnd(8000); // Longer pause for manual selection
+    }
+  }, [carouselApi, handleInteractionStart, handleInteractionEnd]);
+
+  const handlePointerDown = useCallback(() => {
+    handleInteractionStart();
+    handleInteractionEnd(10000); // Long pause for touch/drag
+  }, [handleInteractionStart, handleInteractionEnd]);
+
   return (
-    <Card className="border border-gray-300 shadow-lg bg-white">
+    <Card className="border border-gray-300 shadow-lg bg-white" ref={containerRef}>
       <CardHeader className="border-b border-gray-200">
         <CardTitle className="text-lg sm:text-xl font-bold text-black">
           Casi di successo
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4 sm:p-6">
-        <div className="relative">
-          <div className="overflow-hidden">
-            <div 
-              className={`flex ${DESIGN_TOKENS.animation.transition} ${DESIGN_TOKENS.animation.slow} ease-in-out`}
-              style={{ transform: `translateX(-${currentCaseStudy * 100}%)` }}
-            >
+        <div 
+          className="relative"
+          onMouseEnter={handleInteractionStart}
+          onMouseLeave={() => handleInteractionEnd(2000)}
+          onFocusCapture={handleInteractionStart}
+          onBlurCapture={() => handleInteractionEnd(2000)}
+          onPointerDown={handlePointerDown}
+          onTouchStart={handlePointerDown}
+        >
+          <Carousel
+            setApi={setCarouselApi}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
               {CASE_STUDIES.map((study, idx) => (
-                <div key={idx} className="w-full flex-shrink-0 px-2">
+                <CarouselItem key={idx} className="px-2">
                   <div className="bg-gray-50 rounded-lg border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-all">
                     <div className="mb-4 sm:mb-5">
                       <h3 className="text-lg sm:text-xl font-bold text-black mb-2">
@@ -66,17 +188,17 @@ export const CaseStudyCarousel: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </CarouselItem>
               ))}
-            </div>
-          </div>
+            </CarouselContent>
+          </Carousel>
           
-          {/* User-controlled navigation */}
+          {/* Navigation dots */}
           <div className="flex justify-center gap-3 mt-6">
             {CASE_STUDIES.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentCaseStudy(idx)}
+                onClick={() => handleManualNavigation(idx)}
                 className={`${DESIGN_TOKENS.animation.transition} ${DESIGN_TOKENS.animation.normal} rounded-full border-2 ${
                   currentCaseStudy === idx 
                     ? "w-10 h-4 bg-gradient-to-r from-red-600 to-black border-red-600 shadow-lg" 
