@@ -36,19 +36,31 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
           <li className="flex items-start">
             <span className="text-green-500 mr-2 font-bold">✓</span>
             <span>
-              <strong>Check-up Conformità {APP_CONFIG.version}:</strong> La tua posizione rispetto ai nuovi obblighi normativi.
+              <strong>Audit Completo dei Rischi</strong> - Radiografia precisa di tutte le criticità normative e i gap di conformità della tua azienda
             </span>
           </li>
           <li className="flex items-start">
             <span className="text-green-500 mr-2 font-bold">✓</span>
             <span>
-              <strong>Mappatura Scadenze Critiche:</strong> Le date da cerchiare in rosso sul calendario.
+              <strong>Piano di Rientro Strategico</strong> - Sequenza esatta degli interventi prioritari: cosa sistemare subito, cosa programmare, cosa delegare
             </span>
           </li>
           <li className="flex items-start">
             <span className="text-green-500 mr-2 font-bold">✓</span>
             <span>
-              <strong>Analisi Formazione Finanziata:</strong> Verifica opportunità formative gratuite con i Fondi Interprofessionali.
+              <strong>Budget di Conformità Trasparente</strong> - Investimento reale per ogni singolo adempimento, senza costi nascosti o sorprese successive
+            </span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-green-500 mr-2 font-bold">✓</span>
+            <span>
+              <strong>Protezione Immediata</strong> - Strategie di copertura legale e operativa mentre implementi le correzioni definitive
+            </span>
+          </li>
+          <li className="flex items-start">
+            <span className="text-green-500 mr-2 font-bold">✓</span>
+            <span>
+              <strong>Sistema di Controllo Permanente</strong> - Metodologia per mantenere la conformità automaticamente senza dover ricontrollare tutto
             </span>
           </li>
         </ul>
