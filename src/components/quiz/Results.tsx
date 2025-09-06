@@ -213,7 +213,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </Card>
       )}
       
-      <ContactCTA risk={risk} sector={answers.settore} />
+      <ContactCTA risk={risk} sector={answers.settore} answers={answers} violations={violations} />
       
       {/* Case Studies Carousel */}
       <CaseStudyCarousel />
