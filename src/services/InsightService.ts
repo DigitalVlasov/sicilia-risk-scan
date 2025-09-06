@@ -49,7 +49,7 @@ class InsightService {
   } {
     const sectorNames = {
       edilizia: "di Edilizia",
-      manifatturiero: "di Manifatturiero / Logistica", 
+      manifatturiero: "di Manifatturiero / Produzione", 
       alimentare: "alimentare e della ristorazione", // legacy fallback
       trasporto: "dei trasporti e logistica", // legacy fallback
       agricoltura: "di Agricoltura / Allevamento",
@@ -142,7 +142,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
 
     const sectorNames = {
       edilizia: "di Edilizia",
-      manifatturiero: "di Manifatturiero / Logistica", 
+      manifatturiero: "di Manifatturiero / Produzione", 
       alimentare: "del settore alimentare", // legacy fallback
       trasporto: "di logistica", // legacy fallback
       agricoltura: "di Agricoltura / Allevamento",
@@ -179,7 +179,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
         ]
       },
       "interno": {
-        text: `La tua azienda presenta ${violationCount} aree di rischio, comuni al ${sectorPercentage} delle aziende ${sectorName}. Avere una risorsa interna dedicata è un vantaggio, ma costringerla a monitorare manualmente un sistema normativo in continua evoluzione è inefficiente e rischioso. Si rischia di perdere aggiornamenti cruciali mentre si gestisce l'operatività quotidiana. Noi implementiamo una soluzione chiavi in mano che potenzia la tua risorsa interna con un sistema che automatizza i controlli e azzera le sviste. La tua persona continua a gestire tutto, ma con strumenti professionali che riducono il carico di lavoro dell'80%.`,
+        text: `La tua azienda presenta ${violationCount} aree di rischio, comuni al ${sectorPercentage} delle aziende ${sectorName}. Avere una risorsa interna dedicata è molto vantaggioso, ma di fronte a un sistema normativo in continua evoluzione anche il collaboratore più preparato può trovarsi in difficoltà. Si rischia di perdere aggiornamenti cruciali mentre si gestisce l'operatività quotidiana. Noi implementiamo una soluzione chiavi in mano che potenzia la tua risorsa interna con un sistema che automatizza i controlli e azzera le sviste. La tua persona continua a gestire tutto, ma con strumenti professionali che riducono il carico di lavoro dell'80%.`,
         ctaText: "Scopri come potenziamo la tua risorsa interna",
         benefits: [
           "Meno burocrazia per la tua risorsa interna.",
