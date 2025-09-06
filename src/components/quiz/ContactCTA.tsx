@@ -16,41 +16,41 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector, answers, v
   const hasViolations = violations.length > 0;
   const managementStyle = answers.gestione;
   
-  // Dynamic copy based on management style with action-oriented titles
+  // Dynamic copy based on management style with specific focused versions
   const getOptimizedCopy = () => {
     switch (managementStyle) {
       case "gestisco-io":
         return {
-          title: "Confronta il tuo approccio con uno specialista",
-          subtitle: "Stai gestendo tutto internamente, ma dalle risposte emergono lacune critiche che potrebbero costarti caro. Ottieni una seconda opinione professionale senza impegno per validare il tuo metodo e scoprire cosa correggere.",
+          title: "Seconda opinione per validare il tuo approccio interno",
+          subtitle: "Confronto metodologie: stai gestendo tutto internamente, ma dalle risposte emergono lacune critiche. Ottieni una verifica professionale senza impegno per confermare o correggere la tua strategia attuale.",
           ctaText: "Seconda Opinione Specializzata",
-          benefit: "Conferma o correzione della strategia attuale"
+          benefit: "Conferma o correzione strategia"
         };
       case "interno": 
         return {
-          title: "Potenzia le competenze del tuo team",
-          subtitle: "Il tuo team interno sta facendo del suo meglio, ma ha evidenti gap di competenza in materia di sicurezza. Scopri gratuitamente quali sono i punti deboli e come risolverli senza rischi.", 
+          title: "Supporto specialistico per il tuo team tecnico",
+          subtitle: "Integrazione competenze: il tuo team interno ha evidenti gap di competenza in materia di sicurezza. Scopri come accelerare il processo interno con un supporto mirato e senza rischi.", 
           ctaText: "Seconda Opinione Specializzata",
-          benefit: "Accelerazione del processo interno"
+          benefit: "Accelerazione processo interno"
         };
       case "consulente":
         return {
-          title: "Verifica il lavoro del tuo consulente", 
-          subtitle: "Hai un consulente, ma dai risultati è chiaro che non sta coprendo tutti i rischi. Ottieni un controllo indipendente e gratuito per capire cosa manca senza mettere in discussione nessuno.",
+          title: "Audit indipendente del lavoro in corso", 
+          subtitle: "Qualità e completezza: hai un consulente, ma dai risultati è chiaro che non sta coprendo tutti i rischi. Ottieni una verifica standard indipendente per identificare gap e lacune.",
           ctaText: "Seconda Opinione Specializzata", 
           benefit: "Verifica standard e gap analysis"
         };
       case "studi-multipli":
         return {
-          title: "Coordina i tuoi professionisti",
-          subtitle: "Lavori con più professionisti ma senza un coordinamento centrale, e questo sta creando lacune pericolose. Scopri come ottimizzare la collaborazione senza cambiare fornitori.",
+          title: "Coordinamento specialistico centralizzato",
+          subtitle: "Orchestrazione competenze: lavori con più professionisti senza coordinamento centrale, creando lacune e sprechi. Scopri come ottimizzare costi e tempi con una strategia unificata.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Ottimizzazione costi e tempi"
         };
       default:
         return {
-          title: "Risolvi subito questi rischi critici",
-          subtitle: "I rischi che abbiamo identificato nelle tue risposte sono seri e richiedono un intervento immediato. Ottieni un piano d'azione personalizzato senza impegno per proteggere la tua azienda.",
+          title: "Seconda opinione specializzata urgente",
+          subtitle: "I rischi identificati nelle tue risposte richiedono un intervento immediato. Ottieni un piano d'azione personalizzato senza impegno per proteggere la tua azienda.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Piano d'azione personalizzato e urgente"
         };
