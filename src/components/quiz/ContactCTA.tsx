@@ -21,7 +21,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
   return (
     <div className="rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 text-center shadow-xl">
       <h2 className="text-lg sm:text-xl font-bold text-black mb-3">
-        Trasforma il rischio in tranquillità
+        Analisi Strategica Gratuita
       </h2>
       
       <p className="text-sm sm:text-base text-gray-700 mb-4 max-w-xl mx-auto">
