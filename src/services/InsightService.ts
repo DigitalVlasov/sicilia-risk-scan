@@ -50,7 +50,7 @@ class InsightService {
     const sectorNames = {
       edilizia: "di Edilizia",
       manifatturiero: "di Manifatturiero / Produzione", 
-      alimentare: "alimentare e della ristorazione", // legacy fallback
+      alimentare: "di alloggio/ristorazione", // legacy fallback
       trasporto: "dei trasporti e logistica", // legacy fallback
       agricoltura: "di Agricoltura / Allevamento",
       commercio: "del commercio", // legacy fallback
@@ -143,7 +143,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
     const sectorNames = {
       edilizia: "di Edilizia",
       manifatturiero: "di Manifatturiero / Produzione", 
-      alimentare: "del settore alimentare", // legacy fallback
+      alimentare: "di alloggio/ristorazione", // legacy fallback
       trasporto: "di logistica", // legacy fallback
       agricoltura: "di Agricoltura / Allevamento",
       commercio: "del commercio", // legacy fallback
