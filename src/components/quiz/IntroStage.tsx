@@ -61,9 +61,7 @@ export const IntroStage: React.FC<IntroStageProps> = ({
             <div className="text-center">
               <div className="bg-white p-3 rounded border mb-2">
                 <div className="text-2xl font-black text-red-600">74%</div>
-                <div className="text-sm font-medium text-black">
-                  aziende siciliane presenta non conformità alla prima verifica
-                </div>
+                <div className="text-sm font-medium text-black">delle aziende siciliane è risultato non conforme alla prima ispezione</div>
               </div>
             </div>
             <p className="text-center text-xs text-red-600 mt-2 font-medium">
