@@ -16,41 +16,41 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector, answers, v
   const hasViolations = violations.length > 0;
   const managementStyle = answers.gestione;
   
-  // Dynamic copy based on management style with conversational tone
+  // Dynamic copy based on management style with action-oriented titles
   const getOptimizedCopy = () => {
     switch (managementStyle) {
       case "gestisco-io":
         return {
-          title: "INTERVENTO IMMEDIATO NECESSARIO",
-          subtitle: "Stai gestendo tutto internamente, ma dalle risposte emergono lacune critiche che potrebbero costarti caro. Hai bisogno di una seconda opinione specializzata per validare il tuo approccio e correggere quello che non va.",
+          title: "Confronta il tuo approccio con uno specialista",
+          subtitle: "Stai gestendo tutto internamente, ma dalle risposte emergono lacune critiche che potrebbero costarti caro. Ottieni una seconda opinione professionale senza impegno per validare il tuo metodo e scoprire cosa correggere.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Conferma o correzione della strategia attuale"
         };
       case "interno": 
         return {
-          title: "FERMA SUBITO LE PERDITE",
-          subtitle: "Il tuo team interno sta facendo del suo meglio, ma ha evidenti gap di competenza in materia di sicurezza. Serve un supporto specialistico immediato per evitare che questi buchi si trasformino in sanzioni.", 
+          title: "Potenzia le competenze del tuo team",
+          subtitle: "Il tuo team interno sta facendo del suo meglio, ma ha evidenti gap di competenza in materia di sicurezza. Scopri gratuitamente quali sono i punti deboli e come risolverli senza rischi.", 
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Accelerazione del processo interno"
         };
       case "consulente":
         return {
-          title: "AUDIT INDIPENDENTE URGENTE", 
-          subtitle: "Hai un consulente, ma dai risultati è chiaro che non sta coprendo tutti i rischi. Serve una verifica indipendente per capire cosa manca e garantire che sia tutto a norma.",
+          title: "Verifica il lavoro del tuo consulente", 
+          subtitle: "Hai un consulente, ma dai risultati è chiaro che non sta coprendo tutti i rischi. Ottieni un controllo indipendente e gratuito per capire cosa manca senza mettere in discussione nessuno.",
           ctaText: "Seconda Opinione Specializzata", 
           benefit: "Verifica standard e gap analysis"
         };
       case "studi-multipli":
         return {
-          title: "COORDINAMENTO SPECIALISTICO",
-          subtitle: "Lavori con più professionisti ma senza un coordinamento centrale, e questo sta creando lacune pericolose e sprechi. È il momento di mettere ordine con una strategia unificata.",
+          title: "Coordina i tuoi professionisti",
+          subtitle: "Lavori con più professionisti ma senza un coordinamento centrale, e questo sta creando lacune pericolose. Scopri come ottimizzare la collaborazione senza cambiare fornitori.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Ottimizzazione costi e tempi"
         };
       default:
         return {
-          title: "INTERVENTO IMMEDIATO NECESSARIO",
-          subtitle: "I rischi che abbiamo identificato nelle tue risposte sono seri e richiedono un intervento immediato. Hai bisogno di una seconda opinione specializzata per elaborare un piano d'emergenza efficace.",
+          title: "Risolvi subito questi rischi critici",
+          subtitle: "I rischi che abbiamo identificato nelle tue risposte sono seri e richiedono un intervento immediato. Ottieni un piano d'azione personalizzato senza impegno per proteggere la tua azienda.",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Piano d'azione personalizzato e urgente"
         };
@@ -84,11 +84,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector, answers, v
       
       <p className="text-sm sm:text-base text-gray-700 mb-4 max-w-xl mx-auto">
         {hasViolations ? (
-          <>
-            <strong>{copy.subtitle}</strong>
-            <br />
-            <span className="text-red-600 font-semibold">Solo 3 slot disponibili questa settimana</span>
-          </>
+          copy.subtitle
         ) : (
           <>Prenota la tua <strong>Analisi Strategica Gratuita</strong>. 30 minuti, zero impegno, piano d'azione personalizzato.</>
         )}
@@ -132,6 +128,12 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector, answers, v
           </Button>
         </a>
       </div>
+      
+      {hasViolations && (
+        <p className="text-red-600 font-semibold text-sm mt-3 mb-2">
+          ⏰ Solo 3 slot disponibili questa settimana
+        </p>
+      )}
       
       <p className={`${UNIFIED_STYLES.captionText} text-gray-600 mt-4`}>
         <strong>🏠 Riservato ad aziende siciliane</strong> • {hasViolations ? "Risposta GARANTITA entro 2h" : "Risposta entro 2h in orario di lavoro"}
