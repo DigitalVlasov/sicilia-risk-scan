@@ -157,7 +157,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
     // Template Hopkins-style per ogni tipo di gestione - Semanticamente corretti
     const templates = {
       "studi-multipli": {
-        text: `La tua analisi mostra ${violationCount} aree di rischio, le stesse che espongono a sanzioni il ${sectorPercentage} delle aziende ${sectorName}. Lavorare con più specialisti è un metodo valido, ma genera frammentazione. Quando le informazioni sono divise, il rischio di una scadenza mancata o di un documento non aggiornato aumenta. Il risultato è un sistema che ti espone a multe e ti fa perdere tempo. Noi creiamo una cabina di regia centralizzata che coordina tutti i professionisti coinvolti, mantenendo la specializzazione ma eliminando la frammentazione. Non sostituiamo i tuoi consulenti: diamo loro (e a te) un ambiente condiviso dove tutto è sotto controllo.`,
+        text: `La tua analisi mostra ${violationCount} aree di rischio, le stesse che il ${sectorPercentage} delle aziende nel settore ${sectorName.replace('di ', '').replace('del ', '').replace('dei ', '')} affronta. Lavorare con più specialisti è un metodo valido, ma genera frammentazione. Quando le informazioni sono divise, il rischio di una scadenza mancata o di un documento non aggiornato aumenta. Il risultato è un sistema che ti espone a multe e ti fa perdere tempo. Noi creiamo una cabina di regia centralizzata che coordina tutti i professionisti coinvolti, mantenendo la specializzazione ma eliminando la frammentazione. Non sostituiamo i tuoi consulenti: diamo loro (e a te) un ambiente condiviso dove tutto è sotto controllo.`,
         ctaText: "Scopri la cabina di regia per i tuoi consulenti",
         benefits: [
           "Unico sistema, zero frammentazione.",
@@ -168,7 +168,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
         ]
       },
       "consulente": {
-        text: `Dalle tue risposte emergono ${violationCount} criticità che il ${sectorPercentage} delle aziende ${sectorName} affronta. Affidarsi a un consulente esterno è la scelta corretta, ma anche il professionista migliore, senza un sistema di controllo centralizzato, può trovarsi a rincorrere le informazioni. Questo ti espone a ritardi e rischi inutili. Noi configuriamo un sistema che fornisce al tuo tecnico uno strumento digitale dove tutto è automatizzato e sotto controllo, riducendo gli errori a zero. Non sostituiamo il tuo consulente: gli diamo (e ti diamo) una piattaforma che semplifica il suo lavoro e ti garantisce il pieno controllo.`,
+        text: `Dalle tue risposte emergono ${violationCount} criticità che il ${sectorPercentage} delle aziende nel settore ${sectorName.replace('di ', '').replace('del ', '').replace('dei ', '')} affronta. Affidarsi a un consulente esterno è la scelta corretta, ma anche il professionista migliore, senza un sistema di controllo centralizzato, può trovarsi a rincorrere le informazioni. Questo ti espone a ritardi e rischi inutili. Noi configuriamo un sistema che fornisce al tuo tecnico uno strumento digitale dove tutto è automatizzato e sotto controllo, riducendo gli errori a zero. Non sostituiamo il tuo consulente: gli diamo (e ti diamo) una piattaforma che semplifica il suo lavoro e ti garantisce il pieno controllo.`,
         ctaText: "Scopri lo spazio condiviso per te e il tuo consulente",
         benefits: [
           "Pieno controllo per te e il tuo consulente.",
@@ -179,7 +179,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
         ]
       },
       "interno": {
-        text: `La tua azienda presenta ${violationCount} aree di rischio, comuni al ${sectorPercentage} delle aziende ${sectorName}. Avere una risorsa interna dedicata è molto vantaggioso, ma di fronte a un sistema normativo in continua evoluzione anche il collaboratore più preparato può trovarsi in difficoltà. Si rischia di perdere aggiornamenti cruciali mentre si gestisce l'operatività quotidiana. Noi implementiamo una soluzione chiavi in mano che potenzia la tua risorsa interna con un sistema che automatizza i controlli e azzera le sviste. La tua persona continua a gestire tutto, ma con strumenti professionali che riducono il carico di lavoro dell'80%.`,
+        text: `La tua azienda presenta ${violationCount} aree di rischio, comuni al ${sectorPercentage} delle aziende nel settore ${sectorName.replace('di ', '').replace('del ', '').replace('dei ', '')}. Avere una risorsa interna dedicata è molto vantaggioso, ma di fronte a un sistema normativo in continua evoluzione anche il collaboratore più preparato può trovarsi in difficoltà. Si rischia di perdere aggiornamenti cruciali mentre si gestisce l'operatività quotidiana. Noi implementiamo una soluzione chiavi in mano che potenzia la tua risorsa interna con un sistema che automatizza i controlli e azzera le sviste. La tua persona continua a gestire tutto, ma con strumenti professionali che riducono il carico di lavoro dell'80%.`,
         ctaText: "Scopri come potenziamo la tua risorsa interna",
         benefits: [
           "Meno burocrazia per la tua risorsa interna.",
@@ -190,7 +190,7 @@ Onestamente, al momento non abbiamo consigli specifici da darti perché sembri g
         ]
       },
       "gestisco-io": {
-        text: `La tua analisi evidenzia ${violationCount} criticità, le stesse che il ${sectorPercentage} delle aziende ${sectorName} non riesce a gestire efficacemente. Il tuo controllo diretto è un punto di forza, ma il tempo che dedichi a seguire la burocrazia della sicurezza è tempo che sottrai alla crescita del business. Ogni minuto speso a controllare scadenze e documenti è un minuto perso. Noi installiamo un sistema automatico completamente configurato che ti permette di delegare questi compiti mantenendo il pieno controllo. Tu mantieni la supervisione, ma senza perdere tempo nella gestione quotidiana.`,
+        text: `La tua analisi evidenzia ${violationCount} criticità, le stesse che il ${sectorPercentage} delle aziende nel settore ${sectorName.replace('di ', '').replace('del ', '').replace('dei ', '')} non riesce a gestire efficacemente. Il tuo controllo diretto è un punto di forza, ma il tempo che dedichi a seguire la burocrazia della sicurezza è tempo che sottrai alla crescita del business. Ogni minuto speso a controllare scadenze e documenti è un minuto perso. Noi installiamo un sistema automatico completamente configurato che ti permette di delegare questi compiti mantenendo il pieno controllo. Tu mantieni la supervisione, ma senza perdere tempo nella gestione quotidiana.`,
         ctaText: "Scopri il sistema automatico personalizzato",
         benefits: [
           "Delega la burocrazia, recupera il tuo tempo.",
