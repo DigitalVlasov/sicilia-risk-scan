@@ -16,41 +16,41 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector, answers, v
   const hasViolations = violations.length > 0;
   const managementStyle = answers.gestione;
   
-  // Dynamic copy based on management style
+  // Dynamic copy based on management style with problem-solution focus
   const getOptimizedCopy = () => {
     switch (managementStyle) {
       case "gestisco-io":
         return {
           title: "INTERVENTO IMMEDIATO NECESSARIO",
-          subtitle: "Seconda opinione per validare il tuo approccio interno",
+          subtitle: "Hai lacune critiche nel sistema che gestisci → Serve una seconda opinione specializzata per evitare sanzioni",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Conferma o correzione della strategia attuale"
         };
       case "interno": 
         return {
           title: "FERMA SUBITO LE PERDITE",
-          subtitle: "Supporto specialistico per il tuo team tecnico", 
+          subtitle: "Il tuo team interno ha gap di competenza → Supporto specialistico immediato per colmare le lacune", 
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Accelerazione del processo interno"
         };
       case "consulente":
         return {
           title: "AUDIT INDIPENDENTE URGENTE", 
-          subtitle: "Verifica indipendente del lavoro in corso",
+          subtitle: "Il consulente attuale non sta coprendo tutti i rischi → Verifica indipendente per garantire completezza",
           ctaText: "Seconda Opinione Specializzata", 
           benefit: "Verifica standard e gap analysis"
         };
       case "studi-multipli":
         return {
           title: "COORDINAMENTO SPECIALISTICO",
-          subtitle: "Orchestrazione centralizzata delle competenze",
+          subtitle: "Troppi professionisti senza coordinamento = lacune e sprechi → Orchestrazione centralizzata urgente",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Ottimizzazione costi e tempi"
         };
       default:
         return {
           title: "INTERVENTO IMMEDIATO NECESSARIO",
-          subtitle: "Seconda opinione specializzata per la tua situazione",
+          subtitle: "I rischi identificati richiedono azione immediata → Seconda opinione specializzata per piano d'emergenza",
           ctaText: "Seconda Opinione Specializzata",
           benefit: "Piano d'azione personalizzato e urgente"
         };
