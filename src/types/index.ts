@@ -109,8 +109,6 @@ export interface CaseStudyCarouselProps {
 export interface ContactCTAProps {
   risk: Risk;
   sector?: Sector;
-  answers: QuizAnswers;
-  violations?: Violation[];
 }
 
 export interface ResultsProps {
