@@ -25,8 +25,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
       </h2>
       
       <p className="text-sm sm:text-base text-gray-700 mb-4 max-w-xl mx-auto">
-        Prenota la tua <strong>Analisi Strategica Gratuita</strong>. 
-        30 minuti, zero impegno, piano d'azione personalizzato.
+        Parla con uno specialista senior che ha già risolto 500+ casi simili in Sicilia. 30 minuti, zero impegno, preventivo trasparente.
       </p>
       
       <div className="my-4 sm:my-6 p-3 sm:p-4 bg-white rounded border text-left text-sm max-w-md mx-auto">
