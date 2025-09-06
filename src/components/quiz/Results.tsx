@@ -213,7 +213,12 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </Card>
       )}
       
-      {/* Features Card - Secondary Level */}
+      <ContactCTA risk={risk} sector={answers.settore} />
+      
+      {/* Case Studies Carousel */}
+      <CaseStudyCarousel />
+      
+      {/* Features Card - Moved to bottom */}
       <Card className="border border-gray-300 shadow-lg bg-white">
         <CardHeader className="border-b border-gray-200">
           <CardTitle className="text-lg sm:text-xl font-bold text-black">Cosa include il Sistema Organizzativo di Spazio Impresa:</CardTitle>
@@ -228,11 +233,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </ul>
         </CardContent>
       </Card>
-      
-      <ContactCTA risk={risk} sector={answers.settore} />
-      
-      {/* Case Studies Carousel - Moved to bottom */}
-      <CaseStudyCarousel />
       
       <div className="text-center mt-6">
         <Button variant="ghost" onClick={onReset}>
