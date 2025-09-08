@@ -40,7 +40,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
         items: [
           "Un professionista di fiducia",
           "Costi prevedibili e fissi",
-          "Nessuna formazione interna",
+          "Nessuna formazione interna sui processi",
           "Dipendenza dalla disponibilità",
           "Accesso limitato agli orari"
         ]
@@ -50,7 +50,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
         items: [
           "Stesso professionista + piattaforma",
           "Costi fissi + servizi aggiuntivi",
-          "Formazione automatica inclusa",
+          "Formazione sui processi automatica inclusa",
           "Indipendenza operativa 24/7",
           "Accesso continuo a tutto"
         ]

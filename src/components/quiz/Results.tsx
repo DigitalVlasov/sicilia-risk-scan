@@ -156,11 +156,16 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       )}
       
       {/* Personalized Insight Box - After Violations Detail */}
-      <InsightBox insight={dynamicInsight} ctaTarget="#vantaggi-completi" />
+      <InsightBox 
+        insight={dynamicInsight} 
+        ctaTarget={violations.length === 0 ? "#comparison-table" : "#vantaggi-completi"} 
+      />
       
       {/* Comparison Table - Only for zero violations scenarios */}
       {violations.length === 0 && (
-        <ComparisonTable answers={answers} />
+        <div id="comparison-table">
+          <ComparisonTable answers={answers} />
+        </div>
       )}
       
       {/* How it works section - Between insight and benefits */}
@@ -197,8 +202,8 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </Card>
       )}
 
-      {/* Solutions Card - Premium Dark Theme - Show for all scenarios */}
-      {dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
+      {/* Solutions Card - Premium Dark Theme - Show only for violation scenarios */}
+      {violations.length > 0 && dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
         <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
           <CardHeader className="border-b border-gray-700">
             <CardTitle className="text-lg sm:text-xl font-bold text-white">Cosa ottieni con il Sistema Organizzativo di Spazio Impresa</CardTitle>
