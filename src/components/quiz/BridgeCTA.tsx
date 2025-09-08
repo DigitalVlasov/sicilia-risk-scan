@@ -10,18 +10,18 @@ interface BridgeCTAProps {
 export const BridgeCTA: React.FC<BridgeCTAProps> = ({ risk, violations, answers }) => {
   const getBridgeQuestion = () => {
     if (violations.length === 0) {
-      return "Vuoi verificare se il tuo sistema è davvero ottimale?";
+      return "La tua azienda è già ben strutturata. Vuoi verificare se esistono margini per ottimizzare ulteriormente?";
     }
     
     if (violations.length >= 3) {
-      return "Vuoi mettere fine a queste criticità una volta per tutte?";
+      return `Hai visto i risultati dei nostri clienti. Vuoi trasformare le tue ${violations.length} criticità in conformità totale?`;
     }
     
     if (violations.length >= 2) {
-      return "Vuoi trasformare questi rischi in sicurezza garantita?";
+      return `Come i nostri clienti, anche tu puoi eliminare queste ${violations.length} criticità. Vuoi scoprire come?`;
     }
     
-    return "Vuoi eliminare definitivamente questo rischio?";
+    return `Come per i casi che hai appena visto, possiamo risolvere definitivamente questa criticità. Vuoi sapere come?`;
   };
 
   return (
