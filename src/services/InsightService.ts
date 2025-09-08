@@ -204,7 +204,10 @@ Sapevi che nel tuo settore solo il <strong>10% delle aziende</strong> ha questo 
 
 Spesso ciò che non viene detto è che fare un lavoro d'ufficio, invece di delegarlo a sistemi automatici, e stare dietro alle scadenze, gli attestati, le visite mediche e gli aggiornamenti normativi ti espone a:
 
-• Perdite di tempo che potresti dedicare ad altro
+• Impieghi tempo prezioso che togli al lavoro da imprenditore
+• Potenziali multe e guai legali per semplici sviste o dimenticanze
+• Perdi opportunità di business mentre fai burocrazia
+• Lo stress di dover ricordare ogni scadenza e adempimento
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
