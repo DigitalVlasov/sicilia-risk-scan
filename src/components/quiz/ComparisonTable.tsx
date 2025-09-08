@@ -115,35 +115,35 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
       </CardHeader>
       <CardContent className="p-4 sm:p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {/* Current situation */}
-          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-            <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">{data.current.label}</h3>
+          {/* Current situation - Pain points */}
+          <div className="bg-black rounded-lg p-4 border border-gray-600">
+            <h3 className="font-bold text-white mb-3 text-sm sm:text-base">{data.current.label}</h3>
             <ul className="space-y-2">
               {data.current.items.map((item, index) => (
                 <li key={index} className="flex items-start gap-2 text-xs sm:text-sm">
-                  <span className="text-gray-500 mt-1 flex-shrink-0">•</span>
-                  <span className="text-gray-700">{item}</span>
+                  <span className="text-red-400 mt-1 flex-shrink-0">⚠</span>
+                  <span className="text-white">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
           
-          {/* Proposed solution */}
-          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <h3 className="font-bold text-green-800 mb-3 text-sm sm:text-base">{data.proposed.label}</h3>
+          {/* Proposed solution - Benefits */}
+          <div className="bg-black rounded-lg p-4 border border-gray-600">
+            <h3 className="font-bold text-white mb-3 text-sm sm:text-base">{data.proposed.label}</h3>
             <ul className="space-y-2">
               {data.proposed.items.map((item, index) => (
                 <li key={index} className="flex items-start gap-2 text-xs sm:text-sm">
-                  <span className="text-green-600 mt-1 flex-shrink-0">✓</span>
-                  <span className="text-green-800 font-medium">{item}</span>
+                  <span className="text-green-400 mt-1 flex-shrink-0">✓</span>
+                  <span className="text-white font-medium">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
         
-        <div className="mt-4 p-3 bg-blue-50 rounded border border-blue-200">
-          <p className="text-xs sm:text-sm text-blue-800 font-medium text-center">
+        <div className="mt-4 p-3 bg-red-600 rounded border border-red-700">
+          <p className="text-xs sm:text-sm text-white font-medium text-center">
             🎯 <strong>Il vantaggio:</strong> Mantieni tutti i punti di forza attuali ed elimini le criticità
           </p>
         </div>
