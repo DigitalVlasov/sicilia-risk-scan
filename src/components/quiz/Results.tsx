@@ -7,6 +7,7 @@ import { InsightBox } from "./InsightBox";
 import { CaseStudyCarousel } from "./CaseStudyCarousel";
 import { ContactCTA } from "./ContactCTA";
 import { BridgeCTA } from "./BridgeCTA";
+import { ComparisonTable } from "./ComparisonTable";
 import { FAQ } from "./FAQ";
 import { 
   generateDynamicInsight, 
@@ -156,6 +157,11 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       
       {/* Personalized Insight Box - After Violations Detail */}
       <InsightBox insight={dynamicInsight} ctaTarget="#vantaggi-completi" />
+      
+      {/* Comparison Table - Only for zero violations scenarios */}
+      {violations.length === 0 && (
+        <ComparisonTable answers={answers} />
+      )}
       
       {/* How it works section - Between insight and benefits */}
       {violations.length > 0 && (
