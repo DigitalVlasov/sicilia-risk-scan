@@ -132,7 +132,7 @@ class InsightService {
         text: `Dalle tue risposte emerge che collabori con più professionisti, una scelta di eccellenza che punta alla massima specializzazione. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
 <strong>I vantaggi della tua scelta:</strong> hai accesso ai migliori specialisti per ogni area, con competenze ultra-specifiche.
-<strong>L'unico aspetto critico:</strong> coordinare più interlocutori può generare rallentamenti quando serve una risposta rapida o un documento urgente.
+<strong>L'unico aspetto critico:</strong> coordinare più interlocutori può generare rallentamenti, confusione o dimenticanze quando serve una risposta rapida o un documento urgente.
 
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la specializzazione eliminando i tempi morti di coordinamento</strong>.`,
         ctaText: "Confronta: specializzazione + coordinamento ottimale",
