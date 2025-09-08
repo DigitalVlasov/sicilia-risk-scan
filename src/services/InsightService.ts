@@ -112,19 +112,68 @@ class InsightService {
   }
 
   private generateExcellenceInsight(sector: Sector, management: string, context: any): { title: string; text: string; benefits?: string[]; ctaText?: string } {
-    const titles = [
-      "Complimenti, sei sulla strada giusta!",
-      "La tua azienda è ben organizzata",
-      "Stai facendo un ottimo lavoro"
-    ];
+    const sectorNames = {
+      edilizia: "di Edilizia",
+      manifatturiero: "di Manifatturiero / Produzione", 
+      alimentare: "di alloggio/ristorazione",
+      trasporto: "di logistica",
+      agricoltura: "di Agricoltura / Allevamento",
+      commercio: "del commercio",
+      servizi: "di Servizi / Uffici",
+      ristorazione: "di Ristorazione / Commercio"
+    };
 
-    const text = `Dalle tue risposte emerge che ${context.managementDescription.toLowerCase()} e la tua azienda nel settore ${context.sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. 
+    const sectorName = sectorNames[sector] || "del tuo settore";
 
-<strong>Onestamente, al momento non abbiamo consigli specifici da darti</strong> perché sembri già essere seguito adeguatamente. Tuttavia, se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se ci sono margini per <strong>semplificare alcuni processi, velocizzare le pratiche</strong> o magari <strong>ottenere condizioni più vantaggiose</strong> rispetto a quelle attuali.`;
+    // Template personalizzati per ogni tipo di gestione in scenari positivi
+    const excellenceTemplates = {
+      "studi-multipli": {
+        title: "Complimenti, stai lavorando con i migliori!",
+        text: `Dalle tue risposte emerge che collabori con più specialisti e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Avere diversi professionisti è il top dell'approccio specialistico.
+
+<strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già avere tutto sotto controllo. Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>centralizzare le comunicazioni tra i tuoi consulenti</strong>, <strong>velocizzare il coordinamento</strong> o magari <strong>ridurre i tempi di attesa</strong> quando devi recuperare documenti o informazioni da fonti diverse.`,
+        ctaText: "Confronta con il nostro sistema di coordinamento"
+      },
+      "consulente": {
+        title: "Ottima scelta, hai un professionista di fiducia!",
+        text: `Dalle tue risposte emerge che ${context.managementDescription.toLowerCase()} e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Affidarti a un consulente esterno è una scelta strategica vincente.
+
+<strong>Onestamente, al momento non abbiamo consigli specifici da darti</strong> perché sembri già essere seguito adeguatamente. Tuttavia, se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se ci sono margini per <strong>dare al tuo consulente strumenti più avanzati</strong>, <strong>velocizzare le sue pratiche</strong> o magari <strong>ottenere maggiore visibilità</strong> sullo stato dei tuoi adempimenti.`,
+        ctaText: "Scopri gli strumenti per potenziare il tuo consulente"
+      },
+      "interno": {
+        title: "Fantastico, hai una risorsa dedicata!",
+        text: `Dalle tue risposte emerge che hai una risorsa interna che si occupa della sicurezza e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Tenere tutto "in casa" è una scelta che ti dà il massimo controllo.
+
+<strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già ben organizzato. Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>alleggerire il carico di lavoro della tua risorsa interna</strong>, <strong>automatizzare alcune routine</strong> o magari <strong>darle strumenti più moderni</strong> per gestire tutto con meno sforzo.`,
+        ctaText: "Scopri come alleggerire il carico della tua risorsa"
+      },
+      "gestisco-io": {
+        title: "Complimenti, hai tutto sotto controllo!",
+        text: `Dalle tue risposte emerge che ${context.managementDescription.toLowerCase()} e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Il controllo diretto è il massimo dell'attenzione imprenditoriale.
+
+<strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già avere tutto sotto controllo. Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>liberarti da parte della burocrazia quotidiana</strong>, <strong>automatizzare i controlli di routine</strong> o magari <strong>darti più tempo per il business</strong> mantenendo la tua supervisione.`,
+        ctaText: "Scopri come automatizzare mantenendo il controllo"
+      }
+    };
+
+    const template = excellenceTemplates[management as keyof typeof excellenceTemplates];
+    
+    if (!template) {
+      // Fallback per gestioni non previste
+      return {
+        title: "Complimenti, sei sulla strada giusta!",
+        text: `Dalle tue risposte emerge che la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. 
+
+<strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già essere seguito adeguatamente. Tuttavia, se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se ci sono margini per <strong>semplificare alcuni processi o velocizzare le pratiche</strong>.`,
+        ctaText: "Scopri come ottimizzare ulteriormente"
+      };
+    }
 
     return {
-      title: titles[Math.floor(Math.random() * titles.length)],
-      text
+      title: template.title,
+      text: template.text,
+      ctaText: template.ctaText
     };
   }
 
