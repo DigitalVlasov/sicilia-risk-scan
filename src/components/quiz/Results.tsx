@@ -6,6 +6,7 @@ import { Risk, Violation, QuizAnswers } from "../../types";
 import { InsightBox } from "./InsightBox";
 import { CaseStudyCarousel } from "./CaseStudyCarousel";
 import { ContactCTA } from "./ContactCTA";
+import { FAQ } from "./FAQ";
 import { 
   generateDynamicInsight, 
   calculateSanctionDetails,
@@ -218,21 +219,8 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Case Studies Carousel */}
       <CaseStudyCarousel />
       
-      {/* Features Card - Moved to bottom */}
-      <Card className="border border-gray-300 shadow-lg bg-white">
-        <CardHeader className="border-b border-gray-200">
-          <CardTitle className="text-lg sm:text-xl font-bold text-black">Cosa include il Sistema Organizzativo di Spazio Impresa:</CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 sm:p-6">
-          <ul className="space-y-2 text-sm sm:text-base">
-            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Gestione scadenze visite mediche e attestati di formazione</span></li>
-            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Archivio documentale digitale 24/7</span></li>
-            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Alert automatici personalizzati</span></li>
-            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Supporto in caso di controlli ispettivi</span></li>
-            <li className="flex items-start"><span className="text-blue-500 mr-2">✔</span><span>Erogazione corsi tramite i Fondi Interprofessionali</span></li>
-          </ul>
-        </CardContent>
-      </Card>
+      {/* FAQ Section */}
+      <FAQ />
       
       <div className="text-center mt-6">
         <Button variant="ghost" onClick={onReset}>
