@@ -125,35 +125,47 @@ class InsightService {
 
     const sectorName = sectorNames[sector] || "del tuo settore";
 
-    // Template personalizzati per ogni tipo di gestione in scenari positivi
+    // Template con strategia pro/contro per creare leva naturale per il confronto
     const excellenceTemplates = {
       "studi-multipli": {
         title: "Complimenti, stai lavorando con i migliori!",
-        text: `Dalle tue risposte emerge che collabori con più specialisti e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Avere diversi professionisti è il top dell'approccio specialistico.
+        text: `Dalle tue risposte emerge che collabori con più professionisti, una scelta di eccellenza che punta alla massima specializzazione. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già avere tutto sotto controllo. Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>centralizzare le comunicazioni tra i tuoi consulenti</strong>, <strong>velocizzare il coordinamento</strong> o magari <strong>ridurre i tempi di attesa</strong> quando devi recuperare documenti o informazioni da fonti diverse.`,
-        ctaText: "Confronta con il nostro sistema di coordinamento"
+<strong>I vantaggi della tua scelta:</strong> hai accesso ai migliori specialisti per ogni area, con competenze ultra-specifiche.
+<strong>L'unico aspetto critico:</strong> coordinare più interlocutori può generare rallentamenti quando serve una risposta rapida o un documento urgente.
+
+Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la specializzazione eliminando i tempi morti di coordinamento</strong>.`,
+        ctaText: "Confronta: specializzazione + coordinamento ottimale"
       },
       "consulente": {
         title: "Ottima scelta, hai un professionista di fiducia!",
-        text: `Dalle tue risposte emerge che ${context.managementDescription.toLowerCase()} e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Affidarti a un consulente esterno è una scelta strategica vincente.
+        text: `Dalle tue risposte emerge che hai scelto di affidarti a un professionista esterno, una decisione strategica molto diffusa. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>Onestamente, al momento non abbiamo consigli specifici da darti</strong> perché sembri già essere seguito adeguatamente. Tuttavia, se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se ci sono margini per <strong>dare al tuo consulente strumenti più avanzati</strong>, <strong>velocizzare le sue pratiche</strong> o magari <strong>ottenere maggiore visibilità</strong> sullo stato dei tuoi adempimenti.`,
-        ctaText: "Scopri gli strumenti per potenziare il tuo consulente"
+<strong>I vantaggi della tua scelta:</strong> hai un esperto dedicato, costi prevedibili e nessun onere di formazione interna.
+<strong>L'unico aspetto critico:</strong> quando hai bisogno di informazioni immediate o devi gestire urgenze, dipendi dalla sua disponibilità.
+
+Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la professionalità esterna dandoti accesso immediato a tutto</strong>.`,
+        ctaText: "Confronta: consulente + accesso immediato"
       },
       "interno": {
         title: "Fantastico, hai una risorsa dedicata!",
-        text: `Dalle tue risposte emerge che hai una risorsa interna che si occupa della sicurezza e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Tenere tutto "in casa" è una scelta che ti dà il massimo controllo.
+        text: `Dalle tue risposte emerge che hai una risorsa interna che si occupa della sicurezza, una scelta strategica che ti dà il massimo controllo. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già ben organizzato. Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>alleggerire il carico di lavoro della tua risorsa interna</strong>, <strong>automatizzare alcune routine</strong> o magari <strong>darle strumenti più moderni</strong> per gestire tutto con meno sforzo.`,
-        ctaText: "Scopri come alleggerire il carico della tua risorsa"
+<strong>I vantaggi della tua scelta:</strong> controllo diretto, disponibilità immediata e conoscenza perfetta dell'azienda.
+<strong>L'unico aspetto critico:</strong> il carico di aggiornamenti normativi e la gestione di tutti gli adempimenti può diventare pesante per una sola persona.
+
+Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il controllo diretto alleggerendo significativamente il carico di lavoro</strong>.`,
+        ctaText: "Confronta: controllo diretto + carico ridotto"
       },
       "gestisco-io": {
         title: "Complimenti, hai tutto sotto controllo!",
-        text: `Dalle tue risposte emerge che ${context.managementDescription.toLowerCase()} e la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. Il controllo diretto è il massimo dell'attenzione imprenditoriale.
+        text: `Dalle tue risposte emerge che gestisci personalmente la sicurezza, una scelta che dimostra la massima attenzione imprenditoriale. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già avere tutto sotto controllo. Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>liberarti da parte della burocrazia quotidiana</strong>, <strong>automatizzare i controlli di routine</strong> o magari <strong>darti più tempo per il business</strong> mantenendo la tua supervisione.`,
-        ctaText: "Scopri come automatizzare mantenendo il controllo"
+<strong>I vantaggi della tua scelta:</strong> controllo totale, nessun intermediario e decisioni immediate.
+<strong>L'unico aspetto critico:</strong> il tempo che dedichi alla burocrazia della sicurezza è tempo che sottrai al business e alla crescita aziendale.
+
+Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il tuo controllo totale liberandoti dalla gestione quotidiana</strong>.`,
+        ctaText: "Confronta: controllo totale + tempo per il business"
       }
     };
 
