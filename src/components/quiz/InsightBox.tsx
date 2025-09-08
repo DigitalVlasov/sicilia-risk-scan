@@ -18,9 +18,10 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
           <h2 className="text-lg sm:text-xl font-bold text-black leading-tight">
             Cosa emerge dalle risposte:
           </h2>
-          <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            {insight.text}
-          </p>
+          <p 
+            className="text-sm sm:text-base text-gray-700 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: insight.text }}
+          />
           
           <div className="pt-3 border-t border-gray-200">
             <a 
