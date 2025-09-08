@@ -109,7 +109,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
                 <summary className="p-3 sm:p-4 cursor-pointer flex justify-between items-center hover:bg-gray-100 transition-colors">
                   <div className="flex items-center gap-2 flex-1 min-w-0 overflow-hidden">
                     <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">
-                      {index + 1}
+                      ✕
                     </span>
                     <span className="font-semibold text-sm sm:text-base truncate whitespace-nowrap overflow-hidden text-ellipsis">{v.text}</span>
                   </div>
