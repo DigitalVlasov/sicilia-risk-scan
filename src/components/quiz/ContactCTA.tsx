@@ -48,6 +48,12 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
               <strong>Analisi Formazione Finanziata:</strong> Verifica opportunità formative gratuite con i Fondi Interprofessionali.
             </span>
           </li>
+          <li className="flex items-start">
+            <span className="text-green-500 mr-2 font-bold">✓</span>
+            <span>
+              <strong>Confronto Economico Trasparente:</strong> Analisi dettagliata costi attuali vs benefici del nuovo sistema con ROI previsto.
+            </span>
+          </li>
         </ul>
       </div>
       
