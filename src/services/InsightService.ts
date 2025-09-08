@@ -137,11 +137,11 @@ class InsightService {
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la specializzazione eliminando i tempi morti di coordinamento</strong>.`,
         ctaText: "Confronta: specializzazione + coordinamento ottimale",
         benefits: [
-          "Gestione coordinata di tutti i professionisti tramite un unico sistema integrato",
-          "Piattaforma digitale 24/7 per consultare documenti e situazione aziendale in tempo reale",
-          "Sistema di alert automatici che sincronizza scadenze di tutti gli specialisti",
-          "Aggiornamenti normativi centralizzati distribuiti automaticamente a tutta la rete",
-          "Supporto tecnico specializzato per coordinare interventi complessi multi-disciplinari"
+          "Unico sistema, zero frammentazione.",
+          "Scadenze sotto controllo, rischio azzerato.", 
+          "Documenti sempre pronti per i controlli.",
+          "Nuovi assunti subito a norma, senza sforzi.",
+          "Formazione finanziata, costi ottimizzati."
         ]
       },
       "consulente": {
@@ -154,11 +154,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la professionalità esterna dandoti accesso immediato a tutto</strong>.`,
         ctaText: "Confronta: consulente + accesso immediato",
         benefits: [
-          "Piattaforma digitale accessibile 24/7 per consultare DVR, organigrammi e documenti aziendali",
-          "Consultazione real-time della situazione aziendale anche quando il consulente è impegnato",
-          "Sistema di alert automatici per scadenze attestati e rinnovi senza perdere nessuna data",
-          "Aggiornamenti normativi automatici che arrivano prima delle comunicazioni tradizionali",
-          "Supporto tecnico specializzato per dubbi urgenti e interpretazioni normative complesse"
+          "Pieno controllo per te e il tuo consulente.",
+          "Scadenze e adempimenti sempre rispettati.",
+          "Documentazione a prova di ispezione, 24/7.",
+          "Gestione del personale semplice e conforme.",
+          "Costi di formazione ridotti con i fondi."
         ]
       },
       "interno": {
@@ -171,11 +171,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il controllo diretto alleggerendo significativamente il carico di lavoro</strong>.`,
         ctaText: "Confronta: controllo diretto + carico ridotto",
         benefits: [
-          "Gestione automatica scadenze attestati con prenotazione corsi per nuovi dipendenti",
-          "Accesso privilegiato ai Fondi Interprofessionali per formazione finanziata al 100%",
-          "Sconto 10% su tutti i corsi a pagamento per contenere i costi formativi aziendali",
-          "Supporto tecnico specializzato per interpretazioni normative e casi complessi",
-          "Sistema di alert che libera la risorsa interna da controlli manuali delle scadenze"
+          "Meno burocrazia per la tua risorsa interna.",
+          "Nessuna scadenza mancata, zero errori.",
+          "Verbali e documenti pronti all'uso.",
+          "Gestione di fissi e stagionali senza problemi.",
+          "Formazione obbligatoria a costi ottimizzati."
         ]
       },
       "gestisco-io": {
@@ -188,11 +188,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il tuo controllo totale liberandoti dalla gestione quotidiana</strong>.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
         benefits: [
-          "Gestione e aggiornamento automatico di DVR aziendale e organigramma senza intervento manuale",
-          "Piattaforma digitale 24/7 per consultare situazione aziendale in qualsiasi momento",
-          "Sistema di alert automatici che ti avvisa su scadenze senza dover ricordare date",
-          "Predisposizione automatica verbali Art. 36 e consegna DPI personalizzati per dipendente",
-          "Analisi continua rischi aziendali con aggiornamenti che arrivano direttamente in piattaforma"
+          "Più tempo per il tuo business, meno burocrazia.",
+          "Controllo totale senza perdere tempo operativo.",
+          "Sistema che lavora per te, anche di notte.",
+          "Crescita aziendale senza rischi normativi.",
+          "Automazione completa, decisioni sempre tue."
         ]
       }
     };
@@ -208,11 +208,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 <strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già essere seguito adeguatamente. Tuttavia, se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se ci sono margini per <strong>semplificare alcuni processi o velocizzare le pratiche</strong>.`,
         ctaText: "Scopri come ottimizzare ulteriormente",
         benefits: [
-          "Analisi gratuita delle tue procedure attuali per identificare inefficienze nascoste",
-          "Implementazione graduale di automazioni senza stravolgere i processi esistenti",
-          "Sistema di alert intelligenti che previene problemi prima che si verifichino",
-          "Accesso diretto a specialisti per normative di nicchia o situazioni particolari",
-          "Accompagnamento strategico nella crescita aziendale mantenendo sempre la conformità"
+          "Processi ottimizzati senza stravolgimenti.",
+          "Controllo avanzato su conformità aziendale.",
+          "Supporto specialistico per casi complessi.",
+          "Crescita aziendale in piena sicurezza.",
+          "Automazione intelligente su misura."
         ]
       };
     }
