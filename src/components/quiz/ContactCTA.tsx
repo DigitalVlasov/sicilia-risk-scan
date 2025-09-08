@@ -13,8 +13,19 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
   sector
 }) => {
   const whatsappHref = React.useMemo(() => {
-    const text = encodeURIComponent(`Ciao Spazio Impresa! Ho completato il test (rischio ${risk.level}). Vorrei prenotare la mia Analisi Strategica Gratuita per la mia azienda${sector ? ` nel settore ${getSectorName(sector)}` : ''}.`);
-    return `https://wa.me/${APP_CONFIG.contact.whatsapp}?text=${text}`;
+    let message = `Ciao Spazio Impresa! Ho completato il test di conformità. `;
+    
+    if (risk.level === "Alto" || risk.level === "Medio") {
+      const violationCount = risk.level === "Alto" ? "multiple criticità" : "alcune criticità";
+      message += `Risultato: rischio ${risk.level} con ${violationCount} rilevate${sector ? ` nel settore ${getSectorName(sector)}` : ''}. `;
+      message += `Vorrei prenotare l'Analisi Strategica Gratuita per vedere il confronto costi-benefici e capire come eliminare questi rischi.`;
+    } else {
+      message += `Risultato: rischio ${risk.level}${sector ? ` nel settore ${getSectorName(sector)}` : ''}. `;
+      message += `Vorrei comunque confrontare il mio sistema attuale con il vostro per vedere se ci sono margini di ottimizzazione.`;
+    }
+    
+    const text = encodeURIComponent(message);
+    return `https://wa.me/+390955872480?text=${text}`;
   }, [risk.level, sector]);
   return <div className="rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 text-center shadow-xl">
       <h2 className="text-lg sm:text-xl font-bold text-black mb-3">
