@@ -179,9 +179,9 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
         title: "Complimenti, hai tutto sotto controllo!",
         text: `Dalle tue risposte emerge che gestisci personalmente la sicurezza, una scelta che dimostra la massima attenzione imprenditoriale. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-Nel tuo settore, solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore. <strong>Spesso però ciò che non viene detto è che</strong> stai perdendo focus strategico inseguendo scadenze burocratiche. Ogni interruzione per un adempimento è concentrazione spezzata, e devi tenere a mente decine di date diverse invece di delegare il monitoraggio automatico.
+Nel tuo settore, solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore. <strong>Spesso ciò che non viene detto è che</strong> impiegare tempo per fare un lavoro d'ufficio, toglie tempo al lavoro da imprenditore. Stare dietro alle scadenze, gli attestati, le visite mediche, gli aggiornamenti normativi... non solo ti espone a potenziali multe e guai legali per semplici sviste o dimenticanze, ma toglie tempo a far crescere il tuo business.
 
-Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandti dalla gestione quotidiana.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
         benefits: [
           "Più tempo per il tuo business, meno burocrazia.",
