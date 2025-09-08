@@ -52,7 +52,7 @@ export const CaseStudyCarousel: React.FC = () => {
           <div className="flex items-start justify-between mb-3">
             <div>
               <h3 className="font-semibold text-foreground">{selectedCaseStudy.title}</h3>
-              <span className="text-xs px-2 py-1 rounded bg-secondary text-secondary-foreground">
+              <span className="text-xs px-2 py-1 rounded bg-destructive text-destructive-foreground">
                 {selectedCaseStudy.situation}
               </span>
             </div>
