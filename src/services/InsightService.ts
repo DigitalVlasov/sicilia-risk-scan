@@ -135,7 +135,14 @@ class InsightService {
 <strong>L'unico aspetto critico:</strong> coordinare più interlocutori può generare rallentamenti quando serve una risposta rapida o un documento urgente.
 
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la specializzazione eliminando i tempi morti di coordinamento</strong>.`,
-        ctaText: "Confronta: specializzazione + coordinamento ottimale"
+        ctaText: "Confronta: specializzazione + coordinamento ottimale",
+        benefits: [
+          "🎯 **Coordinamento unificato**: Un unico interlocutore per tutti gli specialisti, mantenendo la qualità della multi-consulenza",
+          "⚡ **Risposte immediate**: Accesso istantaneo a tutte le competenze specialistiche senza tempi di attesa",
+          "📋 **Gestione integrata**: Tutti i documenti e le scadenze coordinati in un sistema unico",
+          "💡 **Consulenza premium**: Accesso diretto ai migliori specialisti nazionali per ogni area normativa",
+          "🔄 **Aggiornamenti automatici**: Sistema sempre allineato alle ultime normative senza dover contattare più consulenti"
+        ]
       },
       "consulente": {
         title: "Ottima scelta, hai un professionista di fiducia!",
@@ -145,7 +152,14 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 <strong>L'unico aspetto critico:</strong> quando hai bisogno di informazioni immediate o devi gestire urgenze, dipendi dalla sua disponibilità.
 
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la professionalità esterna dandoti accesso immediato a tutto</strong>.`,
-        ctaText: "Confronta: consulente + accesso immediato"
+        ctaText: "Confronta: consulente + accesso immediato",
+        benefits: [
+          "🚀 **Disponibilità H24**: Accesso immediato a tutte le informazioni e documenti, senza aspettare la disponibilità del consulente",
+          "📱 **Sistema sempre attivo**: Piattaforma digitale che lavora per te anche quando il consulente non è disponibile",
+          "💰 **Stesso budget, più valore**: Mantieni il costo fisso mensile ma ottieni servizi aggiuntivi e disponibilità continua",
+          "🔧 **Strumenti professionali**: Accesso agli stessi tool utilizzati dai migliori consulenti del settore",
+          "📊 **Monitoraggio automatico**: Sistema che ti avvisa in anticipo su scadenze e aggiornamenti normativi"
+        ]
       },
       "interno": {
         title: "Fantastico, hai una risorsa dedicata!",
@@ -155,7 +169,14 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 <strong>L'unico aspetto critico:</strong> il carico di aggiornamenti normativi e la gestione di tutti gli adempimenti può diventare pesante per una sola persona.
 
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il controllo diretto alleggerendo significativamente il carico di lavoro</strong>.`,
-        ctaText: "Confronta: controllo diretto + carico ridotto"
+        ctaText: "Confronta: controllo diretto + carico ridotto",
+        benefits: [
+          "⚡ **Automazione intelligente**: Sistema che gestisce automaticamente routine e scadenze, liberando tempo per attività strategiche",
+          "🎓 **Formazione continua**: Accesso a training specialistici per mantenere sempre aggiornata la risorsa interna",
+          "🔍 **Supporto esperto**: Backup di specialisti esterni per situazioni complesse o dubbi interpretativi",
+          "📋 **Gestione semplificata**: Piattaforma intuitiva che riduce del 70% il tempo dedicato alla burocrazia",
+          "🏢 **Controllo totale**: Mantieni il controllo diretto ma con strumenti professionali di livello enterprise"
+        ]
       },
       "gestisco-io": {
         title: "Complimenti, hai tutto sotto controllo!",
@@ -165,7 +186,14 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 <strong>L'unico aspetto critico:</strong> il tempo che dedichi alla burocrazia della sicurezza è tempo che sottrai al business e alla crescita aziendale.
 
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il tuo controllo totale liberandoti dalla gestione quotidiana</strong>.`,
-        ctaText: "Confronta: controllo totale + tempo per il business"
+        ctaText: "Confronta: controllo totale + tempo per il business",
+        benefits: [
+          "🚀 **Più tempo per il business**: Sistema automatizzato che riduce del 90% il tempo dedicato agli adempimenti",
+          "🎯 **Controllo manageriale**: Dashboard executive per monitorare tutto a colpo d'occhio senza perderti nei dettagli",
+          "💼 **Focus su crescita**: Liberi tempo prezioso per concentrarti su vendite, innovazione e sviluppo aziendale",
+          "🔄 **Processo automatico**: Sistema che lavora in background gestendo scadenze e aggiornamenti automaticamente",
+          "👑 **Governance strategica**: Mantieni il controllo sulle decisioni importanti, deleghi solo l'operatività"
+        ]
       }
     };
 
@@ -178,14 +206,22 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
         text: `Dalle tue risposte emerge che la tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>. 
 
 <strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già essere seguito adeguatamente. Tuttavia, se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se ci sono margini per <strong>semplificare alcuni processi o velocizzare le pratiche</strong>.`,
-        ctaText: "Scopri come ottimizzare ulteriormente"
+        ctaText: "Scopri come ottimizzare ulteriormente",
+        benefits: [
+          "⚡ **Ottimizzazione processi**: Analisi delle tue procedure attuali per identificare possibili miglioramenti",
+          "🔄 **Automazione smart**: Implementazione di automazioni per ridurre i tempi di gestione",
+          "📊 **Monitoraggio avanzato**: Sistema di controllo per mantenere sempre alta la conformità",
+          "🎯 **Consulenza specialistica**: Accesso a esperti per situazioni particolari o nuove normative",
+          "💼 **Supporto strategico**: Partnership per accompagnare la crescita aziendale in sicurezza"
+        ]
       };
     }
 
     return {
       title: template.title,
       text: template.text,
-      ctaText: template.ctaText
+      ctaText: template.ctaText,
+      benefits: template.benefits
     };
   }
 
