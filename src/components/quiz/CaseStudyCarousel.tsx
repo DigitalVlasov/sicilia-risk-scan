@@ -156,37 +156,36 @@ export const CaseStudyCarousel: React.FC = () => {
             <CarouselContent>
               {CASE_STUDIES.map((study, idx) => (
                 <CarouselItem key={idx} className="px-2">
-                  <div className="bg-gradient-to-br from-white to-gray-50 rounded-lg border-2 border-gray-200 p-5 sm:p-6 hover:shadow-xl hover:border-gray-300 transition-all duration-300 animate-fade-in">
-                    {/* Header with timeline badge */}
-                    <div className="flex items-start justify-between mb-5">
+                  <div className="bg-white rounded-lg border border-gray-300 p-5 sm:p-6 hover:shadow-lg hover:border-gray-400 transition-all duration-300">
+                    {/* Header with company info */}
+                    <div className="flex items-start justify-between mb-5 pb-4 border-b border-gray-200">
                       <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-black mb-3 leading-tight">
+                        <h3 className="text-lg sm:text-xl font-bold text-black mb-2 leading-tight">
                           {study.title}
                         </h3>
-                        <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-red-50 border-2 border-red-200">
-                          <div className="w-2 h-2 bg-red-500 rounded-full mr-2 animate-pulse"></div>
-                          <span className="text-sm font-semibold text-red-700">
+                        <div className="inline-flex items-center px-3 py-1 rounded bg-gray-100 border border-gray-300">
+                          <span className="text-sm font-medium text-gray-700">
                             {study.situation}
                           </span>
                         </div>
                       </div>
-                      <div className="ml-3 bg-green-100 border border-green-300 rounded-lg px-3 py-2 text-center min-w-0 flex-shrink-0">
-                        <div className="text-xs font-medium text-green-700 uppercase tracking-wider">Risolto in</div>
-                        <div className="text-sm font-bold text-green-800">90 giorni</div>
+                      <div className="ml-4 text-right text-xs text-gray-500 font-medium">
+                        <div>Tempo di risoluzione</div>
+                        <div className="text-sm font-bold text-black mt-1">90 giorni</div>
                       </div>
                     </div>
                     
-                    {/* Three-section layout with icons and better contrast */}
+                    {/* Three-section layout with consistent styling */}
                     <div className="space-y-4">
                       {/* Challenge section */}
-                      <div className="relative bg-red-50 rounded-lg p-4 border-l-4 border-red-500 hover:bg-red-100 transition-colors">
+                      <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-red-600">
                         <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                            ⚠
+                          <div className="flex-shrink-0 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                            ✕
                           </div>
                           <div className="flex-1">
-                            <h4 className="font-bold text-red-700 text-sm mb-2 uppercase tracking-wide">Problema</h4>
-                            <p className="text-sm text-red-800 font-medium leading-relaxed">
+                            <h4 className="font-bold text-black text-sm mb-2 uppercase tracking-wide">Criticità rilevata</h4>
+                            <p className="text-sm text-gray-700 leading-relaxed">
                               {study.challenge}
                             </p>
                           </div>
@@ -194,29 +193,29 @@ export const CaseStudyCarousel: React.FC = () => {
                       </div>
                       
                       {/* Solution section */}
-                      <div className="relative bg-blue-50 rounded-lg p-4 border-l-4 border-blue-500 hover:bg-blue-100 transition-colors">
+                      <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-600">
                         <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                            🔧
+                          <div className="flex-shrink-0 w-6 h-6 bg-gray-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                            •
                           </div>
                           <div className="flex-1">
-                            <h4 className="font-bold text-blue-700 text-sm mb-2 uppercase tracking-wide">Intervento</h4>
-                            <p className="text-sm text-blue-800 font-medium leading-relaxed">
+                            <h4 className="font-bold text-black text-sm mb-2 uppercase tracking-wide">Intervento realizzato</h4>
+                            <p className="text-sm text-gray-700 leading-relaxed">
                               {study.solution}
                             </p>
                           </div>
                         </div>
                       </div>
                       
-                      {/* Result section - highlight */}
-                      <div className="relative bg-gradient-to-r from-green-600 to-green-500 rounded-lg p-4 border-2 border-green-700 shadow-lg hover:shadow-xl transition-all">
+                      {/* Result section */}
+                      <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-600 border-2 border-green-200">
                         <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0 w-8 h-8 bg-white text-green-600 rounded-full flex items-center justify-center text-sm font-bold">
+                          <div className="flex-shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
                             ✓
                           </div>
                           <div className="flex-1">
-                            <h4 className="font-bold text-white text-sm mb-2 uppercase tracking-wide">Risultato ottenuto</h4>
-                            <p className="text-sm text-white font-semibold leading-relaxed">
+                            <h4 className="font-bold text-green-800 text-sm mb-2 uppercase tracking-wide">Risultato ottenuto</h4>
+                            <p className="text-sm text-green-800 font-medium leading-relaxed">
                               {study.result}
                             </p>
                           </div>
