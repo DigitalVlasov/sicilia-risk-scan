@@ -54,12 +54,6 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
           <li className="flex items-start">
             <span className="text-green-500 mr-2 font-bold">✓</span>
             <span>
-              <strong>Protezione Immediata</strong> - Strategie di copertura legale e operativa mentre implementi le correzioni definitive
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-500 mr-2 font-bold">✓</span>
-            <span>
               <strong>Sistema di Controllo Permanente</strong> - Metodologia per mantenere la conformità automaticamente senza dover ricontrollare tutto
             </span>
           </li>
