@@ -137,11 +137,11 @@ class InsightService {
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la specializzazione eliminando i tempi morti di coordinamento</strong>.`,
         ctaText: "Confronta: specializzazione + coordinamento ottimale",
         benefits: [
-          "Un unico interlocutore coordina tutti gli specialisti eliminando i tempi morti di comunicazione",
-          "Accesso immediato alle competenze specialistiche anche fuori orario lavorativo",
-          "Tutti i documenti e le scadenze sincronizzati automaticamente in un sistema integrato",
-          "Backup immediato quando uno specialista non è disponibile per urgenze",
-          "Tariffe negoziate su volume per tutti i servizi specialistici con risparmio garantito"
+          "Gestione coordinata di tutti i professionisti tramite un unico sistema integrato",
+          "Piattaforma digitale 24/7 per consultare documenti e situazione aziendale in tempo reale",
+          "Sistema di alert automatici che sincronizza scadenze di tutti gli specialisti",
+          "Aggiornamenti normativi centralizzati distribuiti automaticamente a tutta la rete",
+          "Supporto tecnico specializzato per coordinare interventi complessi multi-disciplinari"
         ]
       },
       "consulente": {
@@ -154,11 +154,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la professionalità esterna dandoti accesso immediato a tutto</strong>.`,
         ctaText: "Confronta: consulente + accesso immediato",
         benefits: [
-          "Assistenza tecnica disponibile 24 ore su 24 per risolvere dubbi e urgenze operative",
-          "Piattaforma digitale autonoma che lavora anche quando il consulente è impegnato altrove",
-          "Stessa spesa mensile con servizi aggiuntivi inclusi e nessun costo extra per consulenze",
-          "Formazione continua per restare sempre aggiornato sulle ultime modifiche normative",
-          "Notifiche proattive su scadenze e nuovi obblighi prima che diventino urgenti"
+          "Piattaforma digitale accessibile 24/7 per consultare DVR, organigrammi e documenti aziendali",
+          "Consultazione real-time della situazione aziendale anche quando il consulente è impegnato",
+          "Sistema di alert automatici per scadenze attestati e rinnovi senza perdere nessuna data",
+          "Aggiornamenti normativi automatici che arrivano prima delle comunicazioni tradizionali",
+          "Supporto tecnico specializzato per dubbi urgenti e interpretazioni normative complesse"
         ]
       },
       "interno": {
@@ -171,11 +171,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il controllo diretto alleggerendo significativamente il carico di lavoro</strong>.`,
         ctaText: "Confronta: controllo diretto + carico ridotto",
         benefits: [
-          "Automazione completa delle routine amministrative liberando 4-5 ore settimanali",
-          "Corsi di specializzazione inclusi per mantenere le competenze sempre aggiornate",
-          "Consulenti senior a disposizione per casi complessi senza sostituire la risorsa interna",
-          "Interfaccia semplificata che riduce drasticamente gli errori e i tempi di compilazione",
-          "Strumenti di livello enterprise normalmente accessibili solo alle grandi aziende"
+          "Gestione automatica scadenze attestati con prenotazione corsi per nuovi dipendenti",
+          "Accesso privilegiato ai Fondi Interprofessionali per formazione finanziata al 100%",
+          "Sconto 10% su tutti i corsi a pagamento per contenere i costi formativi aziendali",
+          "Supporto tecnico specializzato per interpretazioni normative e casi complessi",
+          "Sistema di alert che libera la risorsa interna da controlli manuali delle scadenze"
         ]
       },
       "gestisco-io": {
@@ -188,11 +188,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il tuo controllo totale liberandoti dalla gestione quotidiana</strong>.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
         benefits: [
-          "Eliminazione del 90% delle attività burocratiche per concentrarti solo su strategia e vendite",
-          "Dashboard esecutiva che mostra lo stato di conformità con un colpo d'occhio mensile",
-          "Tempo liberato reinvestibile in sviluppo commerciale e crescita del fatturato aziendale",
-          "Sistema completamente automatizzato che non richiede più la tua presenza quotidiana",
-          "Mantieni potere decisionale su investimenti e politiche delegando solo le operazioni"
+          "Gestione e aggiornamento automatico di DVR aziendale e organigramma senza intervento manuale",
+          "Piattaforma digitale 24/7 per consultare situazione aziendale in qualsiasi momento",
+          "Sistema di alert automatici che ti avvisa su scadenze senza dover ricordare date",
+          "Predisposizione automatica verbali Art. 36 e consegna DPI personalizzati per dipendente",
+          "Analisi continua rischi aziendali con aggiornamenti che arrivano direttamente in piattaforma"
         ]
       }
     };
