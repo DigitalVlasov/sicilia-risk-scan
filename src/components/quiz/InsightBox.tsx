@@ -24,7 +24,7 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
       if (paragraph.trim().toLowerCase().startsWith('se vuoi')) {
         // Save current section if exists
         if (currentSection) {
-          sections.push({ type: 'content', text: currentSection.trim() });
+          sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
         }
         // Start CTA section
         sections.push({ type: 'cta', text: paragraph.trim() });
@@ -37,10 +37,59 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
     
     // Add remaining content if exists
     if (currentSection) {
-      sections.push({ type: 'content', text: currentSection.trim() });
+      sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
     }
     
     return sections;
+  };
+
+  const processContentText = (text: string) => {
+    // Split into lines to process bullet points and formatting
+    const lines = text.split('\n');
+    let result = '';
+    let inBulletSection = false;
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      // Check if this is a bullet point line
+      if (line.startsWith('•')) {
+        if (!inBulletSection) {
+          // Start bullet list
+          result += '<ul class="space-y-2 mt-3 mb-3">';
+          inBulletSection = true;
+        }
+        result += `<li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-1">•</span><span>${line.substring(1).trim()}</span></li>`;
+      } else {
+        // Close bullet list if we were in one
+        if (inBulletSection) {
+          result += '</ul>';
+          inBulletSection = false;
+        }
+        
+        // Process regular paragraph
+        if (line) {
+          // Make "Spesso ciò che non viene detto è che..." text bold
+          let processedLine = line;
+          if (line.toLowerCase().includes('spesso ciò che non viene detto è che')) {
+            processedLine = processedLine.replace(
+              /(Spesso ciò che non viene detto è che.*?ti espone a:)/gi,
+              '<strong>$1</strong>'
+            );
+          }
+          
+          // Add paragraph with proper spacing
+          result += `<p class="mb-4">${processedLine}</p>`;
+        }
+      }
+    }
+    
+    // Close bullet list if still open
+    if (inBulletSection) {
+      result += '</ul>';
+    }
+    
+    return result;
   };
 
   const sections = parseInsightText(insight.text);
@@ -57,8 +106,8 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
             <div key={index}>
               {section.type === 'content' && (
                 <div 
-                  className="text-sm sm:text-base text-gray-700 leading-relaxed space-y-3"
-                  dangerouslySetInnerHTML={{ __html: section.text.replace(/\n\n/g, '</p><p class="mt-3">').replace(/^/, '<p>').replace(/$/, '</p>') }}
+                  className="text-sm sm:text-base text-gray-700 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: section.text }}
                 />
               )}
               
