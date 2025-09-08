@@ -144,7 +144,7 @@ export const CaseStudyCarousel: React.FC = () => {
                     {/* Risultato in evidenza */}
                     <div className="bg-green-50 border border-green-200 rounded p-3 mb-3">
                       <p className="text-sm text-green-800 font-medium">
-                        {study.result}
+                        Adeguamento in 25 giorni, tutti i controlli superati con successo
                       </p>
                     </div>
 
