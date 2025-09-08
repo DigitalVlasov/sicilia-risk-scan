@@ -165,21 +165,21 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           <CardContent className="p-4 sm:p-6">
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                <div className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
                 <div>
                   <h4 className="font-semibold text-black mb-1">Analisi e configurazione iniziale</h4>
                   <p className="text-sm text-gray-600">Configuriamo il sistema in base alle tue esigenze specifiche entro 48h dall'attivazione</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                <div className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
                 <div>
                   <h4 className="font-semibold text-black mb-1">Implementazione e formazione</h4>
                   <p className="text-sm text-gray-600">Ti formiamo sull'utilizzo e integriamo il sistema con i tuoi processi attuali</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                <div className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
                 <div>
                   <h4 className="font-semibold text-black mb-1">Supporto continuo</h4>
                   <p className="text-sm text-gray-600">Assistenza costante e aggiornamenti automatici per garantire sempre la conformità</p>
