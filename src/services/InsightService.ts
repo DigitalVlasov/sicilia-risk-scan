@@ -202,7 +202,7 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
 
 Sapevi che nel tuo settore solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore?
 
-Spesso ciò che non viene detto è che fare un lavoro d'ufficio, invece di delegarlo a sistemi automatici, e stare dietro alle scadenze, gli attestati, le visite mediche e gli aggiornamenti normativi ti espone a:
+Spesso ciò che non viene detto è che fare un lavoro d'ufficio, invece di delegarlo a sistemi automatici, e stare dietro alle scadenze, gli attestati, le visite mediche e gli aggiornamenti normativi comporta diversi problemi:
 
 • Perdite di tempo prezioso che potresti dedicare ad altro
 • Potenziali multe e guai legali per semplici sviste o dimenticanze
