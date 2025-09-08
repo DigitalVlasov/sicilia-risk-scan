@@ -156,7 +156,7 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
 
 Sapevi che nel tuo settore solo il <strong>20% delle aziende</strong> ha questo tipo di risultati con consulenza esterna?
 
-Spesso ciò che non viene detto è che dipendere da un solo consulente, significa stare dietro alle sue disponibilità:
+<strong>Spesso ciò che non viene detto è che dipendere da un solo consulente, significa stare dietro alle sue disponibilità:</strong>
 
 • Quando hai un'urgenza, potrebbe non essere subito disponibile
 • L'organizzazione generale dipende dalla sua agenda, non dalla tua
