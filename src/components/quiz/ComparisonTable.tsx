@@ -11,94 +11,94 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
   
   const comparisonData = {
     "studi-multipli": {
-      title: "Confronto: Multi-consulenza vs Sistema Coordinato",
+      title: "La verità sui sistemi multi-consulenza",
       current: {
-        label: "La tua situazione attuale",
+        label: "Il problema che nessuno ti dice",
         items: [
-          "Più consulenti specializzati",
-          "Competenze ultra-specifiche",
-          "Controllo qualità per area",
-          "Coordinamento manuale",
-          "Risposte dipendenti da disponibilità"
+          "Quando hai urgenza, nessuno si prende la responsabilità totale",
+          "Ogni consulente conosce solo il suo pezzo",
+          "Le informazioni si perdono tra un professionista e l'altro",
+          "Paghi per il coordinamento, ma lo fai tu",
+          "In caso di ispezione, ogni consulente dice 'non è competenza mia'"
         ]
       },
       proposed: {
-        label: "Con il Sistema Spazio Impresa",
+        label: "La soluzione che funziona davvero",
         items: [
-          "Stessi consulenti + coordinamento",
-          "Competenze specialistiche + sistema",
-          "Controllo qualità + monitoraggio 24/7",
-          "Coordinamento automatizzato",
-          "Risposte immediate sempre disponibili"
+          "Un responsabile unico che coordina tutti i tuoi consulenti",
+          "Ogni professionista lavora su una piattaforma condivisa",
+          "Tutte le informazioni sono centralizzate e accessibili",
+          "Il coordinamento è automatico e incluso nel prezzo",
+          "Una sola persona risponde di tutto, sempre"
         ]
       }
     },
     "consulente": {
-      title: "Confronto: Consulente Esterno vs Sistema Integrato",
+      title: "La realtà della consulenza esterna",
       current: {
-        label: "La tua situazione attuale",
+        label: "Il problema che nessuno ti dice",
         items: [
-          "Un professionista di fiducia",
-          "Costi prevedibili e fissi",
-          "Nessuna formazione interna sui processi",
-          "Dipendenza dalla disponibilità",
-          "Accesso limitato agli orari"
+          "Quando hai urgenza, è sempre impegnato con altri clienti",
+          "Quando è disponibile lui, non sei disponibile tu", 
+          "Paghi per ogni chiamata, anche per una semplice domanda",
+          "Le sue competenze dipendono dalla sua esperienza personale",
+          "Se si ammala o va in vacanza, sei bloccato"
         ]
       },
       proposed: {
-        label: "Con il Sistema Spazio Impresa",
+        label: "La soluzione che funziona davvero",
         items: [
-          "Stesso professionista + piattaforma",
-          "Costi fissi + servizi aggiuntivi",
-          "Formazione sui processi automatica inclusa",
-          "Indipendenza operativa 24/7",
-          "Accesso continuo a tutto"
+          "Il tuo consulente + una piattaforma che lavora 24/7",
+          "Accesso immediato a tutte le informazioni, sempre",
+          "Costo fisso che include supporto illimitato",
+          "Competenze integrate con un sistema che non sbaglia mai",
+          "Continuità garantita indipendentemente dalle persone"
         ]
       }
     },
     "interno": {
-      title: "Confronto: Risorsa Interna vs Sistema Potenziato",
+      title: "La verità sulle risorse interne",
       current: {
-        label: "La tua situazione attuale",
+        label: "Il problema che nessuno ti dice", 
         items: [
-          "Controllo diretto interno",
-          "Conoscenza perfetta azienda",
-          "Disponibilità immediata",
-          "Gestione manuale scadenze",
-          "Aggiornamenti da ricercare"
+          "Quella persona è sempre in overload e rischia il burnout",
+          "Deve essere esperta di tutto: impossibile rimanere aggiornata",
+          "Se sbaglia qualcosa, la responsabilità è solo tua",
+          "Ogni aggiornamento normativo è una corsa contro il tempo",
+          "Un errore umano può costare migliaia di euro di sanzioni"
         ]
       },
       proposed: {
-        label: "Con il Sistema Spazio Impresa",
+        label: "La soluzione che funziona davvero",
         items: [
-          "Stesso controllo + automazione",
-          "Conoscenza aziendale + expertise",
-          "Disponibilità + strumenti pro",
-          "Gestione automatica scadenze",
-          "Aggiornamenti automatici"
+          "La tua risorsa si concentra sulla strategia, il sistema fa il resto",
+          "Competenze specialistiche integrate nel sistema",
+          "Responsabilità condivisa con partner esperti",
+          "Aggiornamenti automatici senza stress",
+          "Gli errori umani sono impossibili: tutto è automatizzato"
         ]
       }
     },
     "gestisco-io": {
-      title: "Confronto: Gestione Diretta vs Sistema Automatizzato",
+      title: "Il costo nascosto della gestione diretta",
       current: {
-        label: "La tua situazione attuale",
+        label: "Il problema che nessuno ti dice",
         items: [
-          "Controllo totale personale",
-          "Decisioni immediate",
-          "Nessun intermediario",
-          "Tempo dedicato alla burocrazia",
-          "Gestione manuale completa"
+          "Stai facendo un lavoro da €30/ora quando potresti fatturare €300/ora",
+          "Ogni minuto sulla burocrazia è un cliente che non chiami",
+          "Le competenze tecniche cambiano: tu quando le studi?",
+          "Un errore ti costa migliaia di euro: ne vale la pena?",
+          "I tuoi dipendenti aspettano risposte che potresti non avere"
         ]
       },
       proposed: {
-        label: "Con il Sistema Spazio Impresa",
+        label: "La soluzione che funziona davvero",
         items: [
-          "Controllo strategico mantenuto",
-          "Decisioni + tempo liberato",
-          "Sistema diretto senza intermediari",
-          "Tempo dedicato al business",
-          "Gestione automatizzata"
+          "Tu prendi le decisioni strategiche, il sistema esegue",
+          "Il tuo tempo torna sul business e sui clienti",
+          "Competenze sempre aggiornate senza che tu debba studiare",
+          "Zero errori possibili: tutto è verificato automaticamente",
+          "Risposte immediate per te e il tuo team, sempre"
         ]
       }
     }
@@ -114,37 +114,35 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
         <CardTitle className="text-lg sm:text-xl font-bold text-black">{data.title}</CardTitle>
       </CardHeader>
       <CardContent className="p-4 sm:p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Current situation - Pain points */}
-          <div className="bg-black rounded-lg p-4 border border-gray-600">
-            <h3 className="font-bold text-white mb-3 text-sm sm:text-base">{data.current.label}</h3>
-            <ul className="space-y-2">
+          <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+            <h3 className="font-bold text-white mb-4 text-base">{data.current.label}</h3>
+            <ul className="space-y-3">
               {data.current.items.map((item, index) => (
-                <li key={index} className="flex items-start gap-2 text-xs sm:text-sm">
-                  <span className="text-red-400 mt-0.5 flex-shrink-0">×</span>
-                  <span className="text-white">{item}</span>
+                <li key={index} className="text-sm text-gray-100 leading-relaxed border-l-2 border-red-500 pl-3">
+                  {item}
                 </li>
               ))}
             </ul>
           </div>
           
           {/* Proposed solution - Benefits */}
-          <div className="bg-black rounded-lg p-4 border border-gray-600">
-            <h3 className="font-bold text-white mb-3 text-sm sm:text-base">{data.proposed.label}</h3>
-            <ul className="space-y-2">
+          <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+            <h3 className="font-bold text-white mb-4 text-base">{data.proposed.label}</h3>
+            <ul className="space-y-3">
               {data.proposed.items.map((item, index) => (
-                <li key={index} className="flex items-start gap-2 text-xs sm:text-sm">
-                  <span className="text-green-400 mt-1 flex-shrink-0">✓</span>
-                  <span className="text-white font-medium">{item}</span>
+                <li key={index} className="text-sm text-gray-100 leading-relaxed font-medium border-l-2 border-green-500 pl-3">
+                  {item}
                 </li>
               ))}
             </ul>
           </div>
         </div>
         
-        <div className="mt-4 p-3 bg-red-600 rounded border border-red-700">
-          <p className="text-xs sm:text-sm text-white font-medium text-center">
-            🎯 <strong>Il vantaggio:</strong> Mantieni tutti i punti di forza attuali ed elimini le criticità
+        <div className="mt-6 p-4 bg-red-600 rounded border border-red-700">
+          <p className="text-sm text-white font-semibold text-center">
+            <strong>Il risultato:</strong> Elimini tutti i problemi operativi mantenendo tutti i vantaggi attuali
           </p>
         </div>
       </CardContent>
