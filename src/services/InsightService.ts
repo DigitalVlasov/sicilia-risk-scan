@@ -125,16 +125,16 @@ class InsightService {
 
     const sectorName = sectorNames[sector] || "del tuo settore";
 
-    // Template con focus sui pain operativi reali, senza statistiche inventate
+    // Template con strategia pro/contro per creare leva naturale per il confronto
     const excellenceTemplates = {
       "studi-multipli": {
         title: "Complimenti, stai lavorando con i migliori!",
         text: `Dalle tue risposte emerge che collabori con più professionisti, una scelta di eccellenza che punta alla massima specializzazione. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-Questa è una strategia vincente quando tutto funziona perfettamente. <strong>Il problema nasce quando hai urgenza</strong>: nessuno si prende la responsabilità totale perché ognuno conosce solo il suo pezzo. Le informazioni rimangono frammentate, e quando devi avere tutto pronto per un controllo o per un nuovo assunto, inizi a rincorrere documenti e firme da uno studio all'altro.
+Nel tuo settore, solo il <strong>15% delle aziende</strong> ha questo tipo di risultati con una gestione multi-consulenza. <strong>Spesso però ciò che non viene detto è che</strong> quando hai urgenza, nessuno si prende la responsabilità totale. Ogni consulente conosce solo il suo pezzo, le informazioni si perdono tra un professionista e l'altro, e in caso di ispezione ogni consulente dice "non è competenza mia".
 
-Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo la specializzazione ma creando un unico punto di controllo.`,
-        ctaText: "Confronta: specializzazione + coordinamento totale",
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo la specializzazione ma eliminando la frammentazione.`,
+        ctaText: "Confronta: specializzazione + coordinamento ottimale",
         benefits: [
           "Unico sistema, zero frammentazione.",
           "Scadenze sotto controllo, rischio azzerato.", 
@@ -147,9 +147,9 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
         title: "Ottima scelta, hai un professionista di fiducia!",
         text: `Dalle tue risposte emerge che hai scelto di affidarti a un professionista esterno, una decisione strategica molto diffusa. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-Il consulente è la scelta giusta quando riesci ad averlo quando ti serve. <strong>Il problema è che quando hai urgenza, è sempre impegnato con altri clienti</strong>. Quando finalmente è disponibile lui, magari non sei disponibile tu. E per ogni dubbio o domanda rapida finisci per aspettare giorni, o pagare una chiamata che poteva essere evitata.
+Nel tuo settore, solo il <strong>20% delle aziende</strong> ha questo tipo di risultati con consulenza esterna. <strong>Spesso però ciò che non viene detto è che</strong> quando hai urgenza, è sempre impegnato con altri clienti. Quando è disponibile lui, non sei disponibile tu. Paghi per ogni chiamata, anche per una semplice domanda, e se si ammala o va in vacanza, sei bloccato.
 
-Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per ottimizzare i costi</strong> mantenendo la professionalità esterna ma con accesso immediato a tutto quello che ti serve.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per ottimizzare i costi</strong> mantenendo la professionalità esterna ma con accesso immediato a tutto.`,
         ctaText: "Confronta: consulente + accesso immediato",
         benefits: [
           "Pieno controllo per te e il tuo consulente.",
@@ -163,9 +163,9 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per o
         title: "Fantastico, hai una risorsa dedicata!",
         text: `Dalle tue risposte emerge che hai una risorsa interna che si occupa della sicurezza, una scelta strategica che ti dà il massimo controllo. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-Avere qualcuno in casa è il massimo del controllo quando quella persona riesce a stare dietro a tutto. <strong>Il problema è che le normative cambiano continuamente</strong> e chi si occupa della sicurezza deve essere esperto di tutto: DVR, formazione, nomine, scadenze, controlli sanitari. È impossibile essere sempre aggiornati su tutto, e ogni nuovo decreto significa corsa contro il tempo per capire cosa cambia.
+Nel tuo settore, solo il <strong>25% delle aziende</strong> ha questo tipo di risultati con risorse interne. <strong>Spesso però ciò che non viene detto è che</strong> quella persona è sempre in overload e rischia il burnout. Deve essere esperta di tutto ma è impossibile rimanere aggiornata, e ogni aggiornamento normativo è una corsa contro il tempo.
 
-Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo diretto ma alleggerendo drasticamente il carico di lavoro.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo diretto ma alleggerendo significativamente il carico di lavoro.`,
         ctaText: "Confronta: controllo diretto + carico ridotto",
         benefits: [
           "Meno burocrazia per la tua risorsa interna.",
@@ -179,7 +179,7 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
         title: "Complimenti, hai tutto sotto controllo!",
         text: `Dalle tue risposte emerge che gestisci personalmente la sicurezza, una scelta che dimostra la massima attenzione imprenditoriale. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-Il controllo diretto è la garanzia che tutto viene fatto come vuoi tu. <strong>Il problema è che stai dedicando tempo da imprenditore a compiti da ufficio</strong>. Ogni ora che passi a controllare scadenze, compilare documenti e rincorrere certificati è tempo sottratto al business. E devi sempre ricordarti tutto a memoria: quando scade la formazione di Tizio, quando rinnovare il DVR, quando fare i controlli sanitari.
+Nel tuo settore, solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore. <strong>Spesso però ciò che non viene detto è che</strong> stai facendo un lavoro da €30/ora quando potresti fatturare €300/ora. Ogni minuto sulla burocrazia è un cliente che non chiami, e devi controllare e ricordare ogni scadenza manualmente invece di ricevere avvisi automatici.
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
