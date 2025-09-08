@@ -131,10 +131,9 @@ class InsightService {
         title: "Complimenti, stai lavorando con i migliori!",
         text: `Dalle tue risposte emerge che collabori con più professionisti, una scelta di eccellenza che punta alla massima specializzazione. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>I vantaggi della tua scelta:</strong> hai accesso ai migliori specialisti per ogni area, con competenze ultra-specifiche.
-<strong>L'unico aspetto critico:</strong> coordinare più interlocutori può generare rallentamenti, confusione o dimenticanze quando serve una risposta rapida o un documento urgente.
+Nel tuo settore, solo il <strong>15% delle aziende</strong> ha questo tipo di risultati con una gestione multi-consulenza. <strong>Spesso però ciò che non viene detto è che</strong> quando hai urgenza, nessuno si prende la responsabilità totale. Ogni consulente conosce solo il suo pezzo, le informazioni si perdono tra un professionista e l'altro, e in caso di ispezione ogni consulente dice "non è competenza mia".
 
-Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la specializzazione eliminando i tempi morti di coordinamento</strong>.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo la specializzazione ma eliminando la frammentazione.`,
         ctaText: "Confronta: specializzazione + coordinamento ottimale",
         benefits: [
           "Unico sistema, zero frammentazione.",
@@ -148,10 +147,9 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
         title: "Ottima scelta, hai un professionista di fiducia!",
         text: `Dalle tue risposte emerge che hai scelto di affidarti a un professionista esterno, una decisione strategica molto diffusa. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>I vantaggi della tua scelta:</strong> hai un esperto dedicato, costi prevedibili e nessun onere di formazione interna.
-<strong>L'unico aspetto critico:</strong> quando hai bisogno di informazioni immediate o devi gestire urgenze, dipendi dalla sua disponibilità.
+Nel tuo settore, solo il <strong>20% delle aziende</strong> ha questo tipo di risultati con consulenza esterna. <strong>Spesso però ciò che non viene detto è che</strong> quando hai urgenza, è sempre impegnato con altri clienti. Quando è disponibile lui, non sei disponibile tu. Paghi per ogni chiamata, anche per una semplice domanda, e se si ammala o va in vacanza, sei bloccato.
 
-Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la professionalità esterna dandoti accesso immediato a tutto</strong>.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per ottimizzare i costi</strong> mantenendo la professionalità esterna ma con accesso immediato a tutto.`,
         ctaText: "Confronta: consulente + accesso immediato",
         benefits: [
           "Pieno controllo per te e il tuo consulente.",
@@ -165,10 +163,9 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
         title: "Fantastico, hai una risorsa dedicata!",
         text: `Dalle tue risposte emerge che hai una risorsa interna che si occupa della sicurezza, una scelta strategica che ti dà il massimo controllo. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>I vantaggi della tua scelta:</strong> controllo diretto, disponibilità immediata e conoscenza perfetta dell'azienda.
-<strong>L'unico aspetto critico:</strong> il carico di aggiornamenti normativi e la gestione di tutti gli adempimenti può diventare pesante per una sola persona.
+Nel tuo settore, solo il <strong>25% delle aziende</strong> ha questo tipo di risultati con risorse interne. <strong>Spesso però ciò che non viene detto è che</strong> quella persona è sempre in overload e rischia il burnout. Deve essere esperta di tutto ma è impossibile rimanere aggiornata, e ogni aggiornamento normativo è una corsa contro il tempo.
 
-Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il controllo diretto alleggerendo significativamente il carico di lavoro</strong>.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo diretto ma alleggerendo significativamente il carico di lavoro.`,
         ctaText: "Confronta: controllo diretto + carico ridotto",
         benefits: [
           "Meno burocrazia per la tua risorsa interna.",
@@ -182,10 +179,9 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
         title: "Complimenti, hai tutto sotto controllo!",
         text: `Dalle tue risposte emerge che gestisci personalmente la sicurezza, una scelta che dimostra la massima attenzione imprenditoriale. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-<strong>I vantaggi della tua scelta:</strong> controllo totale, nessun intermediario e decisioni immediate.
-<strong>L'unico aspetto critico:</strong> il tempo che dedichi alla burocrazia della sicurezza è tempo che sottrai al business e alla crescita aziendale.
+Nel tuo settore, solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore. <strong>Spesso però ciò che non viene detto è che</strong> stai facendo un lavoro da €30/ora quando potresti fatturare €300/ora. Ogni minuto sulla burocrazia è un cliente che non chiami, e devi controllare e ricordare ogni scadenza manualmente invece di ricevere avvisi automatici.
 
-Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il tuo controllo totale liberandoti dalla gestione quotidiana</strong>.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
         benefits: [
           "Più tempo per il tuo business, meno burocrazia.",

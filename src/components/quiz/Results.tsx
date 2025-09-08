@@ -161,12 +161,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         ctaTarget={violations.length === 0 ? "#comparison-table" : "#vantaggi-completi"} 
       />
       
-      {/* Comparison Table - Only for zero violations scenarios */}
-      {violations.length === 0 && (
-        <div id="comparison-table">
-          <ComparisonTable answers={answers} />
-        </div>
-      )}
       
       {/* How it works section - Between insight and benefits */}
       <Card className="border border-gray-300 shadow-lg bg-white">
