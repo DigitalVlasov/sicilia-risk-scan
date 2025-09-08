@@ -206,7 +206,7 @@ Spesso ciò che non viene detto è che fare un lavoro d'ufficio, invece di deleg
 
 • Perdite di tempo prezioso che potresti dedicare ad altro
 • Potenziali multe e guai legali per semplici sviste o dimenticanze
-• Perdi opportunità di business mentre fai burocrazia
+• Perdite di opportunità di business mentre ti occupi di burocrazia
 • Lo stress di dover ricordare ogni scadenza e adempimento
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
