@@ -156,12 +156,12 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
 
 Sapevi che nel tuo settore solo il <strong>20% delle aziende</strong> ha questo tipo di risultati con consulenza esterna?
 
-Spesso ciò che non viene detto è che dipendere da un solo consulente, invece di avere accesso diretto a tutte le informazioni, e stare dietro ai suoi impegni con altri clienti ti espone a:
+Spesso ciò che non viene detto è che dipendere da un solo consulente, significa stare dietro alle sue disponibilità:
 
-• Quando hai urgenza, è sempre impegnato con altri clienti
-• Quando è disponibile lui, non sei disponibile tu
-• Paghi per ogni chiamata, anche per una semplice domanda
-• Se si ammala o va in vacanza, sei completamente bloccato
+• Quando hai un'urgenza, potrebbe non essere subito disponibile
+• L'organizzazione generale dipende dalla sua agenda, non dalla tua
+• In caso di ispezione, se non c'è lui potresti trovarti scoperto
+• La gestione dei fondi formativi richiede la sua presenza continua
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per ottimizzare i costi</strong> mantenendo la professionalità esterna ma con accesso immediato a tutto.`,
         ctaText: "Confronta: consulente + accesso immediato",
