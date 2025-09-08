@@ -82,12 +82,12 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
     "gestisco-io": {
       title: "Il costo nascosto della gestione diretta",
       current: {
-        label: "Il problema che nessuno ti dice",
+        label: "Il problema che nessuno ti dice", 
         items: [
           "Stai facendo un lavoro da €30/ora quando potresti fatturare €300/ora",
           "Ogni minuto sulla burocrazia è un cliente che non chiami",
-          "Le competenze tecniche cambiano: tu quando le studi?",
-          "Un errore ti costa migliaia di euro: ne vale la pena?",
+          "Le norme e gli obblighi cambiano spesso: quanto tempo ti costa studiarle tutte?",
+          "Un errore può costarti migliaia di euro",
           "I tuoi dipendenti aspettano risposte che potresti non avere"
         ]
       },
