@@ -179,7 +179,7 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
         title: "Complimenti, hai tutto sotto controllo!",
         text: `Dalle tue risposte emerge che gestisci personalmente la sicurezza, una scelta che dimostra la massima attenzione imprenditoriale. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
 
-Nel tuo settore, solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore. <strong>Spesso però ciò che non viene detto è che</strong> stai facendo un lavoro da €30/ora quando potresti fatturare €300/ora. Ogni minuto sulla burocrazia è un cliente che non chiami, e devi controllare e ricordare ogni scadenza manualmente invece di ricevere avvisi automatici.
+Nel tuo settore, solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore. <strong>Spesso però ciò che non viene detto è che</strong> stai perdendo focus strategico inseguendo scadenze burocratiche. Ogni interruzione per un adempimento è concentrazione spezzata, e devi tenere a mente decine di date diverse invece di delegare il monitoraggio automatico.
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
