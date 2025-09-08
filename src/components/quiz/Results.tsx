@@ -6,6 +6,7 @@ import { Risk, Violation, QuizAnswers } from "../../types";
 import { InsightBox } from "./InsightBox";
 import { CaseStudyCarousel } from "./CaseStudyCarousel";
 import { ContactCTA } from "./ContactCTA";
+import { BridgeCTA } from "./BridgeCTA";
 import { FAQ } from "./FAQ";
 import { 
   generateDynamicInsight, 
@@ -216,6 +217,9 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       
       {/* Case Studies Carousel */}
       <CaseStudyCarousel />
+      
+      {/* Bridge CTA */}
+      <BridgeCTA risk={risk} violations={violations} answers={answers} />
       
       <ContactCTA risk={risk} sector={answers.settore} />
       
