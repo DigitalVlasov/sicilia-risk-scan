@@ -158,7 +158,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Personalized Insight Box - After Violations Detail */}
       <InsightBox 
         insight={dynamicInsight} 
-        ctaTarget={violations.length === 0 ? "#comparison-table" : "#vantaggi-completi"} 
+        ctaTarget="#vantaggi-completi" 
       />
       
       
