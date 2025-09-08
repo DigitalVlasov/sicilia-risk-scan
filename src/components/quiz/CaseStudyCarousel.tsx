@@ -134,14 +134,11 @@ export const CaseStudyCarousel: React.FC = () => {
               {CASE_STUDIES.map((study, idx) => (
                 <CarouselItem key={idx}>
                   <div className="border border-border rounded-lg p-4 bg-muted/30">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h3 className="font-semibold text-foreground">{study.title}</h3>
-                        <span className="text-xs px-2 py-1 rounded bg-destructive text-destructive-foreground">
-                          {study.situation}
-                        </span>
-                      </div>
-                      <span className="text-xs text-muted-foreground font-medium">90 giorni</span>
+                    <div className="mb-3">
+                      <h3 className="font-semibold text-foreground mb-2">{study.title}</h3>
+                      <span className="text-xs px-2 py-1 rounded bg-destructive text-destructive-foreground">
+                        {study.situation}
+                      </span>
                     </div>
                     
                     {/* Risultato in evidenza */}
