@@ -197,7 +197,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
             <CardTitle className="text-lg sm:text-xl font-bold text-white">Cosa ottieni con il Sistema Organizzativo di Spazio Impresa</CardTitle>
             {violations.length > 0 && (
               <p className="text-sm text-gray-300 mt-2">
-                Cosa ottieni dopo l'attivazione (configuriamo tutto in 48h):
+                Cosa ottieni dopo l'attivazione del servizio (configuriamo tutto in 48h):
               </p>
             )}
           </CardHeader>
