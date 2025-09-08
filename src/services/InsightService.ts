@@ -129,9 +129,16 @@ class InsightService {
     const excellenceTemplates = {
       "studi-multipli": {
         title: "Complimenti, stai lavorando con i migliori!",
-        text: `Dalle tue risposte emerge che collabori con più professionisti, una scelta di eccellenza che punta alla massima specializzazione. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
+        text: `La tua azienda nel settore ${sectorName} sembra ben strutturata dal punto di vista della sicurezza.
 
-Nel tuo settore, solo il <strong>15% delle aziende</strong> ha questo tipo di risultati con una gestione multi-consulenza. <strong>Spesso però ciò che non viene detto è che</strong> quando hai urgenza, nessuno si prende la responsabilità totale. Ogni consulente conosce solo il suo pezzo, le informazioni si perdono tra un professionista e l'altro, e in caso di ispezione ogni consulente dice "non è competenza mia".
+Sapevi che nel tuo settore solo il <strong>15% delle aziende</strong> ha questo tipo di risultati con una gestione multi-consulenza?
+
+Spesso ciò che non viene detto è che affidarsi a più specialisti, invece di avere un coordinamento centralizzato, e stare dietro alle comunicazioni frammentate tra consulenti ti espone a:
+
+• Nessuno si prende la responsabilità totale quando hai urgenza
+• Ogni consulente conosce solo il suo pezzo del puzzle
+• Le informazioni critiche si perdono tra un professionista e l'altro
+• In caso di ispezione ogni consulente dice "non è competenza mia"
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo la specializzazione ma eliminando la frammentazione.`,
         ctaText: "Confronta: specializzazione + coordinamento ottimale",
@@ -145,9 +152,16 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
       },
       "consulente": {
         title: "Ottima scelta, hai un professionista di fiducia!",
-        text: `Dalle tue risposte emerge che hai scelto di affidarti a un professionista esterno, una decisione strategica molto diffusa. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
+        text: `La tua azienda nel settore ${sectorName} sembra ben strutturata dal punto di vista della sicurezza.
 
-Nel tuo settore, solo il <strong>20% delle aziende</strong> ha questo tipo di risultati con consulenza esterna. <strong>Spesso però ciò che non viene detto è che</strong> quando hai urgenza, è sempre impegnato con altri clienti. Quando è disponibile lui, non sei disponibile tu. Paghi per ogni chiamata, anche per una semplice domanda, e se si ammala o va in vacanza, sei bloccato.
+Sapevi che nel tuo settore solo il <strong>20% delle aziende</strong> ha questo tipo di risultati con consulenza esterna?
+
+Spesso ciò che non viene detto è che dipendere da un solo consulente, invece di avere accesso diretto a tutte le informazioni, e stare dietro ai suoi impegni con altri clienti ti espone a:
+
+• Quando hai urgenza, è sempre impegnato con altri clienti
+• Quando è disponibile lui, non sei disponibile tu
+• Paghi per ogni chiamata, anche per una semplice domanda
+• Se si ammala o va in vacanza, sei completamente bloccato
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per ottimizzare i costi</strong> mantenendo la professionalità esterna ma con accesso immediato a tutto.`,
         ctaText: "Confronta: consulente + accesso immediato",
@@ -161,9 +175,16 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per o
       },
       "interno": {
         title: "Fantastico, hai una risorsa dedicata!",
-        text: `Dalle tue risposte emerge che hai una risorsa interna che si occupa della sicurezza, una scelta strategica che ti dà il massimo controllo. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
+        text: `La tua azienda nel settore ${sectorName} sembra ben strutturata dal punto di vista della sicurezza.
 
-Nel tuo settore, solo il <strong>25% delle aziende</strong> ha questo tipo di risultati con risorse interne. <strong>Spesso però ciò che non viene detto è che</strong> quella persona è sempre in overload e rischia il burnout. Deve essere esperta di tutto ma è impossibile rimanere aggiornata, e ogni aggiornamento normativo è una corsa contro il tempo.
+Sapevi che nel tuo settore solo il <strong>25% delle aziende</strong> ha questo tipo di risultati con risorse interne?
+
+Spesso ciò che non viene detto è che caricare tutto su una persona, invece di supportarla con sistemi automatici, e stare dietro a tutti gli aggiornamenti normativi ti espone a:
+
+• Quella persona è sempre in overload e rischia il burnout
+• Deve essere esperta di tutto ma è impossibile rimanere sempre aggiornata
+• Ogni aggiornamento normativo diventa una corsa contro il tempo
+• Un errore umano può costare molto caro all'azienda
 
 Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo diretto ma alleggerendo significativamente il carico di lavoro.`,
         ctaText: "Confronta: controllo diretto + carico ridotto",
@@ -177,11 +198,18 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
       },
       "gestisco-io": {
         title: "Complimenti, hai tutto sotto controllo!",
-        text: `Dalle tue risposte emerge che gestisci personalmente la sicurezza, una scelta che dimostra la massima attenzione imprenditoriale. La tua azienda nel settore ${sectorName} appare <strong>ben strutturata dal punto di vista della sicurezza</strong>.
+        text: `La tua azienda nel settore ${sectorName} sembra ben strutturata dal punto di vista della sicurezza.
 
-Nel tuo settore, solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore. <strong>Spesso ciò che non viene detto è che</strong> impiegare tempo per fare un lavoro d'ufficio, toglie tempo al lavoro da imprenditore. Stare dietro alle scadenze, gli attestati, le visite mediche, gli aggiornamenti normativi... non solo ti espone a potenziali multe e guai legali per semplici sviste o dimenticanze, ma toglie tempo a far crescere il tuo business.
+Sapevi che nel tuo settore solo il <strong>10% delle aziende</strong> ha questo tipo di risultati con gestione diretta dell'imprenditore?
 
-Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandti dalla gestione quotidiana.`,
+Spesso ciò che non viene detto è che fare un lavoro d'ufficio, invece di delegarlo a sistemi automatici, e stare dietro alle scadenze, gli attestati, le visite mediche e gli aggiornamenti normativi ti espone a:
+
+• Impieghi tempo prezioso che togli al lavoro da imprenditore
+• Potenziali multe e guai legali per semplici sviste o dimenticanze
+• Perdi opportunità di business mentre fai burocrazia
+• Lo stress di dover ricordare ogni scadenza e adempimento
+
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
         benefits: [
           "Più tempo per il tuo business, meno burocrazia.",
