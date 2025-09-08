@@ -87,8 +87,8 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
           "Stai facendo un lavoro da €30/ora quando potresti fatturare €300/ora",
           "Ogni minuto sulla burocrazia è un cliente che non chiami",
           "Le norme e gli obblighi cambiano spesso: quanto tempo ti costa studiarle tutte?",
-          "Un errore può costarti migliaia di euro",
-          "Quando un dipendente ha un dubbio sulla sicurezza, fermi tutto per cercarne la risposta"
+          "Un errore o una dimenticanza può costarti migliaia di euro oltre a guai legali",
+          "Devi controllare e ricordare ogni scadenza manualmente invece di ricevere avvisi automatici"
         ]
       },
       proposed: {
