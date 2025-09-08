@@ -4,22 +4,19 @@ import { Risk } from "../../types";
 import { APP_CONFIG } from "../../constants/quiz-config";
 import { getSectorName } from "../../utils/quiz-helpers";
 import { UNIFIED_STYLES } from "../../constants/design-tokens";
-
 interface ContactCTAProps {
   risk: Risk;
   sector?: string;
 }
-
-export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
+export const ContactCTA: React.FC<ContactCTAProps> = ({
+  risk,
+  sector
+}) => {
   const whatsappHref = React.useMemo(() => {
-    const text = encodeURIComponent(
-      `Ciao Spazio Impresa! Ho completato il test (rischio ${risk.level}). Vorrei prenotare la mia Analisi Strategica Gratuita per la mia azienda${sector ? ` nel settore ${getSectorName(sector)}` : ''}.`
-    );
+    const text = encodeURIComponent(`Ciao Spazio Impresa! Ho completato il test (rischio ${risk.level}). Vorrei prenotare la mia Analisi Strategica Gratuita per la mia azienda${sector ? ` nel settore ${getSectorName(sector)}` : ''}.`);
     return `https://wa.me/${APP_CONFIG.contact.whatsapp}?text=${text}`;
   }, [risk.level, sector]);
-
-  return (
-    <div className="rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 text-center shadow-xl">
+  return <div className="rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 text-center shadow-xl">
       <h2 className="text-lg sm:text-xl font-bold text-black mb-3">
         Analisi Strategica Gratuita
       </h2>
@@ -36,25 +33,19 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
           <li className="flex items-start">
             <span className="text-green-500 mr-2 font-bold">✓</span>
             <span>
-              <strong>Audit Completo dei Rischi</strong> - Radiografia precisa di tutte le criticità normative e i gap di conformità della tua azienda
+              <strong>Check-up Conformità {APP_CONFIG.version}:</strong> La tua posizione rispetto ai nuovi obblighi normativi.
             </span>
           </li>
           <li className="flex items-start">
             <span className="text-green-500 mr-2 font-bold">✓</span>
             <span>
-              <strong>Piano di Rientro Strategico</strong> - Sequenza esatta degli interventi prioritari: cosa sistemare subito, cosa programmare, cosa delegare
+              <strong>Piano Strategico</strong> Le date da cerchiare in rosso sul calendario.
             </span>
           </li>
           <li className="flex items-start">
             <span className="text-green-500 mr-2 font-bold">✓</span>
             <span>
-              <strong>Budget di Conformità Trasparente</strong> - Investimento reale per ogni singolo adempimento, senza costi nascosti o sorprese successive
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-500 mr-2 font-bold">✓</span>
-            <span>
-              <strong>Sistema di Controllo Permanente</strong> - Metodologia per mantenere la conformità automaticamente senza dover ricontrollare tutto
+              <strong>Analisi Formazione Finanziata:</strong> Verifica opportunità formative gratuite con i Fondi Interprofessionali.
             </span>
           </li>
         </ul>
@@ -76,6 +67,5 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({ risk, sector }) => {
       <p className={`${UNIFIED_STYLES.captionText} text-gray-600 mt-4`}>
         <strong>🏠 Riservato ad aziende siciliane</strong> • Risposta entro 2h in orario di lavoro
       </p>
-    </div>
-  );
+    </div>;
 };
