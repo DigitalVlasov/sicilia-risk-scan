@@ -88,7 +88,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
           "Ogni minuto sulla burocrazia è un cliente che non chiami",
           "Le norme e gli obblighi cambiano spesso: quanto tempo ti costa studiarle tutte?",
           "Un errore può costarti migliaia di euro",
-          "I tuoi dipendenti aspettano risposte che potresti non avere"
+          "Quando un dipendente ha un dubbio sulla sicurezza, fermi tutto per cercarne la risposta"
         ]
       },
       proposed: {
