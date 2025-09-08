@@ -112,7 +112,7 @@ export const CaseStudyCarousel: React.FC = () => {
           Trasformazioni aziendali concrete
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Risultati verificabili in 90 giorni
+          Clicca sui dettagli per vedere come abbiamo aiutato aziende simili alla tua
         </p>
       </CardHeader>
       <CardContent>
