@@ -137,11 +137,11 @@ class InsightService {
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la specializzazione eliminando i tempi morti di coordinamento</strong>.`,
         ctaText: "Confronta: specializzazione + coordinamento ottimale",
         benefits: [
-          "<strong>Coordinamento unificato</strong>: Un unico interlocutore per tutti gli specialisti mantenendo la qualità",
-          "<strong>Risposte immediate</strong>: Accesso istantaneo a tutte le competenze senza tempi di attesa",
-          "<strong>Gestione integrata</strong>: Documenti e scadenze coordinati in un sistema unico",
-          "<strong>Consulenza premium</strong>: Accesso diretto ai migliori specialisti per ogni area normativa",
-          "<strong>Aggiornamenti automatici</strong>: Sistema sempre allineato senza contattare più consulenti"
+          "Un unico interlocutore coordina tutti gli specialisti eliminando i tempi morti di comunicazione",
+          "Accesso immediato alle competenze specialistiche anche fuori orario lavorativo",
+          "Tutti i documenti e le scadenze sincronizzati automaticamente in un sistema integrato",
+          "Backup immediato quando uno specialista non è disponibile per urgenze",
+          "Tariffe negoziate su volume per tutti i servizi specialistici con risparmio garantito"
         ]
       },
       "consulente": {
@@ -154,11 +154,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere la professionalità esterna dandoti accesso immediato a tutto</strong>.`,
         ctaText: "Confronta: consulente + accesso immediato",
         benefits: [
-          "<strong>Disponibilità H24</strong>: Accesso immediato a informazioni e documenti senza aspettare il consulente",
-          "<strong>Sistema sempre attivo</strong>: Piattaforma digitale che lavora anche quando il consulente non è disponibile",
-          "<strong>Stesso budget, più valore</strong>: Costo fisso mensile con servizi aggiuntivi e disponibilità continua",
-          "<strong>Strumenti professionali</strong>: Accesso agli stessi tool dei migliori consulenti del settore",
-          "<strong>Monitoraggio automatico</strong>: Sistema che ti avvisa in anticipo su scadenze e aggiornamenti"
+          "Assistenza tecnica disponibile 24 ore su 24 per risolvere dubbi e urgenze operative",
+          "Piattaforma digitale autonoma che lavora anche quando il consulente è impegnato altrove",
+          "Stessa spesa mensile con servizi aggiuntivi inclusi e nessun costo extra per consulenze",
+          "Formazione continua per restare sempre aggiornato sulle ultime modifiche normative",
+          "Notifiche proattive su scadenze e nuovi obblighi prima che diventino urgenti"
         ]
       },
       "interno": {
@@ -171,11 +171,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il controllo diretto alleggerendo significativamente il carico di lavoro</strong>.`,
         ctaText: "Confronta: controllo diretto + carico ridotto",
         benefits: [
-          "<strong>Automazione intelligente</strong>: Sistema che gestisce routine e scadenze liberando tempo strategico",
-          "<strong>Formazione continua</strong>: Training specialistici per mantenere aggiornata la risorsa interna",
-          "<strong>Supporto esperto</strong>: Backup di specialisti per situazioni complesse o dubbi interpretativi",
-          "<strong>Gestione semplificata</strong>: Piattaforma che riduce del 70% il tempo dedicato alla burocrazia",
-          "<strong>Controllo totale</strong>: Mantieni il controllo diretto con strumenti professionali enterprise"
+          "Automazione completa delle routine amministrative liberando 4-5 ore settimanali",
+          "Corsi di specializzazione inclusi per mantenere le competenze sempre aggiornate",
+          "Consulenti senior a disposizione per casi complessi senza sostituire la risorsa interna",
+          "Interfaccia semplificata che riduce drasticamente gli errori e i tempi di compilazione",
+          "Strumenti di livello enterprise normalmente accessibili solo alle grandi aziende"
         ]
       },
       "gestisco-io": {
@@ -188,11 +188,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se riusciamo a <strong>mantenere il tuo controllo totale liberandoti dalla gestione quotidiana</strong>.`,
         ctaText: "Confronta: controllo totale + tempo per il business",
         benefits: [
-          "<strong>Più tempo per il business</strong>: Sistema che riduce del 90% il tempo dedicato agli adempimenti",
-          "<strong>Controllo manageriale</strong>: Dashboard executive per monitorare tutto senza perderti nei dettagli",
-          "<strong>Focus su crescita</strong>: Tempo prezioso liberato per vendite, innovazione e sviluppo aziendale",
-          "<strong>Processo automatico</strong>: Sistema in background che gestisce scadenze e aggiornamenti",
-          "<strong>Governance strategica</strong>: Controllo sulle decisioni importanti, deleghi solo l'operatività"
+          "Eliminazione del 90% delle attività burocratiche per concentrarti solo su strategia e vendite",
+          "Dashboard esecutiva che mostra lo stato di conformità con un colpo d'occhio mensile",
+          "Tempo liberato reinvestibile in sviluppo commerciale e crescita del fatturato aziendale",
+          "Sistema completamente automatizzato che non richiede più la tua presenza quotidiana",
+          "Mantieni potere decisionale su investimenti e politiche delegando solo le operazioni"
         ]
       }
     };
@@ -208,11 +208,11 @@ Se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se
 <strong>Al momento non abbiamo consigli specifici da darti</strong> perché sembri già essere seguito adeguatamente. Tuttavia, se vuoi, possiamo confrontare il tuo sistema attuale con il nostro per vedere se ci sono margini per <strong>semplificare alcuni processi o velocizzare le pratiche</strong>.`,
         ctaText: "Scopri come ottimizzare ulteriormente",
         benefits: [
-          "<strong>Ottimizzazione processi</strong>: Analisi delle procedure attuali per identificare miglioramenti",
-          "<strong>Automazione smart</strong>: Implementazione di automazioni per ridurre i tempi di gestione",
-          "<strong>Monitoraggio avanzato</strong>: Sistema di controllo per mantenere sempre alta la conformità",
-          "<strong>Consulenza specialistica</strong>: Accesso a esperti per situazioni particolari o nuove normative",
-          "<strong>Supporto strategico</strong>: Partnership per accompagnare la crescita aziendale in sicurezza"
+          "Analisi gratuita delle tue procedure attuali per identificare inefficienze nascoste",
+          "Implementazione graduale di automazioni senza stravolgere i processi esistenti",
+          "Sistema di alert intelligenti che previene problemi prima che si verifichino",
+          "Accesso diretto a specialisti per normative di nicchia o situazioni particolari",
+          "Accompagnamento strategico nella crescita aziendale mantenendo sempre la conformità"
         ]
       };
     }
