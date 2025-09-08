@@ -121,7 +121,7 @@ export const ComparisonTable: React.FC<ComparisonTableProps> = ({ answers }) => 
             <ul className="space-y-2">
               {data.current.items.map((item, index) => (
                 <li key={index} className="flex items-start gap-2 text-xs sm:text-sm">
-                  <span className="text-red-400 mt-1 flex-shrink-0">⚠</span>
+                  <span className="text-red-400 mt-0.5 flex-shrink-0">×</span>
                   <span className="text-white">{item}</span>
                 </li>
               ))}
