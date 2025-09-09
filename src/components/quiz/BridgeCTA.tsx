@@ -17,7 +17,7 @@ export const BridgeCTA: React.FC<BridgeCTAProps> = ({ risk, violations, answers 
     const primaryViolation = violations[0];
     
     const benefitMap: Record<string, string> = {
-      dvr: "eliminare definitivamente il rischio sospensione e proteggere la tua azienda da denunce penali",
+      dvr: "eliminare il rischio sospensione e proteggere la tua azienda da potenziali denunce penali",
       formazione: "azzerare la responsabilità penale e rendere il tuo team perfettamente formato e operativo",
       sorveglianza: "garantire che tutti i dipendenti siano sempre idonei al lavoro senza rischi legali",
       figure_spp: "avere tutte le figure di sicurezza nominate e operative per una protezione totale",
