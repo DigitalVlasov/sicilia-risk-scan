@@ -35,7 +35,7 @@ export const BridgeCTA: React.FC<BridgeCTAProps> = ({ risk, violations, answers 
 
   return (
     <div className="bg-black text-white rounded-lg p-6 text-center shadow-xl border-2 border-gray-800">
-      <h2 className="text-xl sm:text-2xl font-bold mb-4">
+      <h2 className="text-lg sm:text-xl font-bold mb-4">
         {getBridgeQuestion()}
       </h2>
       <div className="flex justify-center">
