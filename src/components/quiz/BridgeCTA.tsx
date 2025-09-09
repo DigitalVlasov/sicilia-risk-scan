@@ -8,20 +8,29 @@ interface BridgeCTAProps {
 }
 
 export const BridgeCTA: React.FC<BridgeCTAProps> = ({ risk, violations, answers }) => {
-  const getBridgeQuestion = () => {
+  const getDynamicBenefit = () => {
     if (violations.length === 0) {
-      return "La tua azienda è già ben strutturata. Vuoi verificare se esistono margini per ottimizzare ulteriormente?";
+      return "ottimizzare la tua struttura già solida e diventare un esempio di eccellenza nel settore";
     }
+
+    // Get the most critical violation (they are sorted by priority)
+    const primaryViolation = violations[0];
     
-    if (violations.length >= 3) {
-      return `Hai visto i risultati dei nostri clienti. Vuoi trasformare le tue ${violations.length} criticità in conformità totale?`;
-    }
-    
-    if (violations.length >= 2) {
-      return `Come i nostri clienti, anche tu puoi eliminare queste ${violations.length} criticità. Vuoi scoprire come?`;
-    }
-    
-    return `Come per i casi che hai appena visto, possiamo risolvere definitivamente questa criticità. Vuoi sapere come?`;
+    const benefitMap: Record<string, string> = {
+      dvr: "eliminare definitivamente il rischio sospensione e proteggere la tua azienda da denunce penali",
+      formazione: "azzerare la responsabilità penale e rendere il tuo team perfettamente formato e operativo",
+      sorveglianza: "garantire che tutti i dipendenti siano sempre idonei al lavoro senza rischi legali",
+      figure_spp: "avere tutte le figure di sicurezza nominate e operative per una protezione totale",
+      emergenze: "essere preparati a qualsiasi emergenza con procedure certificate e testate",
+      gestione: "creare un sistema di sicurezza che funziona da solo e ti fa dormire sonni tranquilli"
+    };
+
+    return benefitMap[primaryViolation.key] || "trasformare le tue criticità in punti di forza competitivi";
+  };
+
+  const getBridgeQuestion = () => {
+    const benefit = getDynamicBenefit();
+    return `Vuoi anche tu questo tipo di risultati? Scopri come ${benefit}`;
   };
 
   return (
