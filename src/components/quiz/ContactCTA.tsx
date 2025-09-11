@@ -123,7 +123,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
       </div>
       
       <p className="text-sm text-gray-600 mt-4">
-        Gratuito • Senza impegno • Risposta immediata • Zero burocrazia • Consulenza telefonica
+        Gratuito • Senza impegno • Risposta immediata • Zero burocrazia
       </p>
     </div>;
 };
