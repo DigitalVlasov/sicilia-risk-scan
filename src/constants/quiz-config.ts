@@ -388,7 +388,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Azienda Dolciaria - Provincia Catania",
     situation: "Controllo ispettivo in corso",
     challenge: "L'azienda ha ricevuto un controllo ispettivo e necessitava di adeguarsi rapidamente alla normativa sulla sicurezza aziendale.",
-    solution: "Abbiamo organizzato corsi di formazione Art. 37 presso la sede, formato le figure aziendali tramite Ente Accreditato, coordinato visite mediche immediate e prodotto DVR, Piano Emergenza e verbali richiesti.",
+    solution: [
+      "Formazione Art. 37 organizzata direttamente in azienda",
+      "Figure aziendali certificate tramite Ente Accreditato",
+      "Visite mediche coordinate in tempi record",
+      "DVR e Piano Emergenza consegnati chiavi in mano"
+    ],
     result: "In 20-25 giorni l'azienda ha presentato tutti i documenti richiesti ai funzionari",
     icon: "🍰"
   },
@@ -398,7 +403,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "PMI Metalmeccanica - Provincia Siracusa",
     situation: "Necessità formazione senza budget",
     challenge: "L'azienda doveva formare tutto il personale sulla sicurezza ma non aveva budget disponibile per i corsi obbligatori.",
-    solution: "Attraverso l'iscrizione a Fondi Interprofessionali, abbiamo erogato gratuitamente tutti i percorsi formativi necessari sulla sicurezza aziendale.",
+    solution: [
+      "Accesso ai Fondi Interprofessionali per formazione gratuita",
+      "Erogazione di tutti i percorsi formativi obbligatori",
+      "Risparmio economico significativo sui costi di formazione",
+      "Personale completamente formato e certificato"
+    ],
     result: "Risparmio di oltre €2.200 sui costi di formazione standard",
     icon: "⚙️"
   },
@@ -408,7 +418,12 @@ export const CASE_STUDIES: CaseStudy[] = [
     title: "Azienda Confezioni - Provincia Messina", 
     situation: "AUDIT esterno imminente",
     challenge: "L'azienda doveva superare un AUDIT di consulenti esterni su sicurezza e salubrità ambienti, con richieste molto specifiche.",
-    solution: "Coordinato team di specialisti (tecnico DPI/estintori, Ingegnere formatore, Medico Competente), prodotto Piano Emergenza e DVR personalizzato secondo richieste AUDIT.",
+    solution: [
+      "Team multidisciplinare di specialisti coordinati",
+      "Piano Emergenza personalizzato per audit specifico",
+      "DVR realizzato su misura per le richieste",
+      "Supporto tecnico completo DPI ed estintori"
+    ],
     result: "Superamento dell'AUDIT con valutazione positiva",
     icon: "👔"
   }

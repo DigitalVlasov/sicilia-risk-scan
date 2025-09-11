@@ -137,12 +137,19 @@ export const CaseStudyCarousel: React.FC = () => {
                         <p className="text-sm text-foreground">{study.challenge}</p>
                       </div>
                       
-                      {/* Soluzione */}
-                      <div className="border-l-2 border-muted pl-3">
-                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
-                          Intervento realizzato
+                      {/* Benefici operativi */}
+                      <div className="border-l-2 border-green-500 pl-3">
+                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                          Benefici operativi per l'azienda
                         </h4>
-                        <p className="text-sm text-foreground">{study.solution}</p>
+                        <ul className="space-y-1">
+                          {study.solution.map((benefit, idx) => (
+                            <li key={idx} className="text-sm text-foreground flex items-start">
+                              <span className="text-green-600 mr-2 mt-0.5">•</span>
+                              <span>{benefit}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
                   </div>

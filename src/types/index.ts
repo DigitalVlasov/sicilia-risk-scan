@@ -64,7 +64,7 @@ export interface CaseStudy {
   title: string;
   situation: string;
   challenge: string;
-  solution: string;
+  solution: string[];
   result: string;
   icon: string;
 }
