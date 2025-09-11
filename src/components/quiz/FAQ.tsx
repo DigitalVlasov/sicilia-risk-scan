@@ -28,7 +28,7 @@ const faqData = [
   },
   {
     question: "Perdo tempo con riunioni e formazione?",
-    answer: "Mai. Dopo il sopralluogo iniziale gratuito, il sistema diventa completamente passivo per te. Ricevi solo le comunicazioni essenziali via email. Non devi partecipare a riunioni, call di aggiornamento o sessioni di formazione."
+    answer: "Mai. Dopo il sopralluogo iniziale gratuito, il sistema diventa completamente passivo per te. Ricevi solo le comunicazioni essenziali via email. Non devi partecipare a riunioni, call di aggiornamento o sessioni di formazione. Potrebbero esserci solo alcuni obblighi normativi a cui dovrai partecipare anche tu, ma per il resto zero perdite di tempo."
   }
 ];
 
