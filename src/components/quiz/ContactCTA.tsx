@@ -27,7 +27,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Confronto <strong>approccio attuale</strong> vs sistemi professionali automatizzati",
           "Analisi <strong>opportunità mancate</strong> per efficientamento e controllo totale",
           "Piano <strong>mantenimento autonomia</strong> con strumenti che lavorano per te H24",
-          "Verifica <strong>fondi disponibili</strong> per formazione gratuita o scontata"
+          "Verifica <strong>fondi disponibili</strong> per formazione obbligatoria scontata o gratuita"
         ];
       
       case "interno":
@@ -37,7 +37,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Piano <strong>alleggerimento operativo</strong> senza assumere personale",
           "Mappatura <strong>vulnerabilità operative</strong> in caso di assenze/ferie del referente sicurezza",
           "Confronto <strong>stress attuale</strong> vs gestione semplificata",
-          "Verifica <strong>fondi disponibili</strong> per formazione team gratuita"
+          "Verifica <strong>fondi disponibili</strong> per formazione obbligatoria scontata o gratuita"
         ];
       
       case "consulente":
@@ -47,7 +47,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Piano <strong>mantenimento consulente</strong> + strumenti avanzati per lui",
           "Sistema <strong>controllo condiviso</strong> senza dipendere dalla sua agenda",
           "Calcolo <strong>ottimizzazione costi</strong> con servizi potenziati",
-          "Verifica <strong>fondi disponibili</strong> per formazione scontata"
+          "Verifica <strong>fondi disponibili</strong> per formazione obbligatoria scontata o gratuita"
         ];
       
       case "studi-multipli":
@@ -57,7 +57,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Confronto <strong>costi reali</strong> di coordinamento vs sistema integrato centralizzato",
           "Analisi <strong>vulnerabilità operative</strong> quando i consulenti non si parlano",
           "Piano <strong>mantenimento specialisti</strong> con controllo unificato e visione d'insieme",
-          "Verifica <strong>fondi disponibili</strong> per formazione unificata"
+          "Verifica <strong>fondi disponibili</strong> per formazione obbligatoria scontata o gratuita"
         ];
       
       default:
@@ -66,7 +66,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Calcolo <strong>ROI previsto</strong> basato sulla tua situazione reale",
           "Identificazione <strong>priorità immediate</strong> per massimizzare risultati",
           "Piano <strong>implementazione graduale</strong> senza stravolgimenti operativi",
-          "Verifica <strong>fondi disponibili</strong> per formazione gratuita"
+          "Verifica <strong>fondi disponibili</strong> per formazione obbligatoria scontata o gratuita"
         ];
     }
   };
