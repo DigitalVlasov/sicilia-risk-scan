@@ -19,7 +19,9 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
     const sections = [];
     let currentSection = "";
     let warningSection = "";
+    let gapSection = "";
     let inWarningSection = false;
+    let inGapSection = false;
     
     for (const paragraph of paragraphs) {
       // Check if this paragraph starts with "Se vuoi" - this indicates the CTA section
@@ -32,6 +34,11 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
         if (warningSection) {
           sections.push({ type: 'warning', text: processContentText(warningSection.trim()) });
           warningSection = "";
+        }
+        // Save gap section if exists
+        if (gapSection) {
+          sections.push({ type: 'gap', text: processContentText(gapSection.trim()) });
+          gapSection = "";
         }
         // Start CTA section
         sections.push({ type: 'cta', text: paragraph.trim() });
@@ -47,17 +54,44 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
         // Start warning section
         warningSection = paragraph;
         inWarningSection = true;
+        inGapSection = false;
+      }
+      // Check if this paragraph starts with "Affidarsi a" - this starts the gap section for violation scenarios
+      else if (paragraph.toLowerCase().includes('affidarsi a')) {
+        // Save current section if exists
+        if (currentSection) {
+          sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
+          currentSection = "";
+        }
+        // Save warning section if exists
+        if (warningSection) {
+          sections.push({ type: 'warning', text: processContentText(warningSection.trim()) });
+          warningSection = "";
+          inWarningSection = false;
+        }
+        // Start gap section
+        gapSection = paragraph;
+        inGapSection = true;
       }
       // If we're in warning section and this is a bullet point or continuation
       else if (inWarningSection && (paragraph.trim().startsWith('•') || paragraph.trim().startsWith('Perdite') || paragraph.trim().startsWith('Potenziali') || paragraph.trim().startsWith('Lo stress'))) {
         warningSection += '\n\n' + paragraph;
       }
+      // If we're in gap section and this is a bullet point or continuation
+      else if (inGapSection && paragraph.trim().startsWith('•')) {
+        gapSection += '\n\n' + paragraph;
+      }
       else {
-        // If we were in warning section, close it
+        // If we were in warning or gap section, close it
         if (inWarningSection) {
           sections.push({ type: 'warning', text: processContentText(warningSection.trim()) });
           warningSection = "";
           inWarningSection = false;
+        }
+        if (inGapSection) {
+          sections.push({ type: 'gap', text: processContentText(gapSection.trim()) });
+          gapSection = "";
+          inGapSection = false;
         }
         // Add to current section
         currentSection += (currentSection ? '\n\n' : '') + paragraph;
@@ -67,6 +101,9 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
     // Add remaining sections if they exist
     if (warningSection) {
       sections.push({ type: 'warning', text: processContentText(warningSection.trim()) });
+    }
+    if (gapSection) {
+      sections.push({ type: 'gap', text: processContentText(gapSection.trim()) });
     }
     if (currentSection) {
       sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
@@ -147,6 +184,15 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
               )}
               
               {section.type === 'warning' && (
+                <div className="bg-gray-800 rounded-lg p-4 my-4">
+                  <div 
+                    className="text-sm text-white leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: section.text }}
+                  />
+                </div>
+              )}
+              
+              {section.type === 'gap' && (
                 <div className="bg-gray-800 rounded-lg p-4 my-4">
                   <div 
                     className="text-sm text-white leading-relaxed"
