@@ -387,14 +387,14 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Alimentare",
     title: "Azienda Dolciaria - Provincia Catania",
     situation: "Controllo ispettivo in corso",
-    challenge: "L'azienda ha ricevuto un controllo ispettivo e necessitava di adeguarsi rapidamente alla normativa sulla sicurezza aziendale.",
+    challenge: "L'azienda ha ricevuto un <strong>controllo ispettivo</strong> e necessitava di <strong>adeguarsi rapidamente</strong> alla normativa sulla sicurezza aziendale.",
     solution: [
-      "Formazione Art. 37 organizzata direttamente in azienda",
-      "Figure aziendali certificate tramite Ente Accreditato",
-      "Visite mediche coordinate in tempi record",
-      "DVR e Piano Emergenza consegnati chiavi in mano"
+      "<strong>Formazione Art. 37</strong> organizzata direttamente in azienda",
+      "Figure aziendali <strong>certificate</strong> tramite Ente Accreditato",
+      "Visite mediche coordinate in <strong>tempi record</strong>",
+      "<strong>DVR e Piano Emergenza</strong> consegnati chiavi in mano"
     ],
-    result: "In 20-25 giorni l'azienda ha presentato tutti i documenti richiesti ai funzionari",
+    result: "In <strong>20-25 giorni</strong> l'azienda ha presentato <strong>tutti i documenti richiesti</strong> ai funzionari",
     icon: "🍰"
   },
   {
@@ -402,14 +402,14 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Manifatturiero", 
     title: "PMI Metalmeccanica - Provincia Siracusa",
     situation: "Necessità formazione senza budget",
-    challenge: "L'azienda doveva formare tutto il personale sulla sicurezza ma non aveva budget disponibile per i corsi obbligatori.",
+    challenge: "L'azienda doveva formare tutto il personale sulla sicurezza ma <strong>non aveva budget</strong> disponibile per i corsi obbligatori.",
     solution: [
-      "Accesso ai Fondi Interprofessionali per formazione gratuita",
-      "Erogazione di tutti i percorsi formativi obbligatori",
-      "Risparmio economico significativo sui costi di formazione",
-      "Personale completamente formato e certificato"
+      "Accesso ai <strong>Fondi Interprofessionali</strong> per formazione gratuita",
+      "Erogazione di tutti i percorsi formativi <strong>obbligatori</strong>",
+      "<strong>Risparmio economico</strong> significativo sui costi di formazione",
+      "Personale completamente <strong>formato e certificato</strong>"
     ],
-    result: "Risparmio di oltre €2.200 sui costi di formazione standard",
+    result: "<strong>Risparmio di oltre €2.200</strong> sui costi di formazione standard",
     icon: "⚙️"
   },
   {
@@ -417,15 +417,15 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Tessile",
     title: "Azienda Confezioni - Provincia Messina", 
     situation: "AUDIT esterno imminente",
-    challenge: "L'azienda doveva superare un AUDIT di consulenti esterni su sicurezza e salubrità ambienti, con richieste molto specifiche.",
+    challenge: "L'azienda doveva superare un <strong>AUDIT di consulenti esterni</strong> su sicurezza e salubrità ambienti, con <strong>richieste molto specifiche</strong>.",
     solution: [
-      "Team multidisciplinare di specialisti coordinati",
-      "Piano Emergenza personalizzato per audit specifico", 
-      "DVR realizzato su misura per le richieste",
-      "Coordinamento completo di tutti i fornitori senza stress aggiuntivo",
-      "Supporto tecnico completo DPI ed estintori"
+      "<strong>Team multidisciplinare</strong> di specialisti coordinati",
+      "Piano Emergenza <strong>personalizzato</strong> per audit specifico", 
+      "DVR realizzato <strong>su misura</strong> per le richieste",
+      "<strong>Coordinamento completo</strong> di tutti i fornitori senza stress aggiuntivo",
+      "Supporto tecnico completo <strong>DPI ed estintori</strong>"
     ],
-    result: "Superamento dell'AUDIT con valutazione positiva",
+    result: "<strong>Superamento dell'AUDIT</strong> con valutazione positiva",
     icon: "👔"
   }
 ];

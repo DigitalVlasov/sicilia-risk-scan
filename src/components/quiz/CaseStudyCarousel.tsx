@@ -122,9 +122,10 @@ export const CaseStudyCarousel: React.FC = () => {
                     
                     {/* Risultato in evidenza */}
                     <div className="bg-green-50 border border-green-200 rounded p-3 mb-3">
-                      <p className="text-sm text-green-800 font-medium">
-                        {study.result}
-                      </p>
+                      <p 
+                        className="text-sm text-green-800 font-medium"
+                        dangerouslySetInnerHTML={{ __html: study.result }}
+                      />
                     </div>
 
                     {/* Dettagli sempre visibili */}
@@ -134,7 +135,10 @@ export const CaseStudyCarousel: React.FC = () => {
                         <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
                           Criticità rilevata
                         </h4>
-                        <p className="text-sm text-foreground">{study.challenge}</p>
+                        <p 
+                          className="text-sm text-foreground"
+                          dangerouslySetInnerHTML={{ __html: study.challenge }}
+                        />
                       </div>
                       
                       {/* Benefici operativi */}
@@ -146,7 +150,7 @@ export const CaseStudyCarousel: React.FC = () => {
                           {study.solution.map((benefit, idx) => (
                             <li key={idx} className="text-sm text-foreground flex items-start">
                               <span className="text-green-600 mr-2 mt-0.5">•</span>
-                              <span>{benefit}</span>
+                              <span dangerouslySetInnerHTML={{ __html: benefit }} />
                             </li>
                           ))}
                         </ul>
