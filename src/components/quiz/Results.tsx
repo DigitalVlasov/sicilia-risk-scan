@@ -108,15 +108,24 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
               </div>
             )}
             
-            {/* Small phrase below badge */}
-            <div className="text-xs sm:text-sm text-gray-600 font-medium mb-4">
-              {heroData.message}
-            </div>
+            {/* Small phrase below badge - only for violations scenarios */}
+            {violations.length > 0 && (
+              <div className="text-xs sm:text-sm text-gray-600 font-medium mb-4">
+                {heroData.message}
+              </div>
+            )}
             
             {/* Main message with sanctions - less prominent */}
             <div className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
               {heroData.subtitle}
             </div>
+
+            {/* Additional phrase for clean scenarios - after main message */}
+            {violations.length === 0 && (
+              <div className="text-sm sm:text-base text-gray-600 font-medium">
+                {heroData.message}
+              </div>
+            )}
           </div>
           
           {violations.length > 0 && (
