@@ -26,7 +26,8 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Mappatura <strong>colli di bottiglia operativi</strong> nelle tue procedure attuali", 
           "Confronto <strong>approccio attuale</strong> vs sistemi professionali automatizzati",
           "Analisi <strong>opportunità mancate</strong> per efficientamento e controllo totale",
-          "Piano <strong>mantenimento autonomia</strong> con strumenti che lavorano per te H24"
+          "Piano <strong>mantenimento autonomia</strong> con strumenti che lavorano per te H24",
+          "Strategia <strong>massimizzazione fondi intraprofessionali</strong> per autofinanziare la formazione"
         ];
       
       case "interno":
@@ -35,7 +36,8 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Calcolo <strong>costi nascosti</strong> di errori/ritardi per overload",
           "Piano <strong>alleggerimento operativo</strong> senza assumere personale",
           "Mappatura <strong>vulnerabilità operative</strong> in caso di assenze/ferie del referente sicurezza",
-          "Confronto <strong>stress attuale</strong> vs gestione semplificata"
+          "Confronto <strong>stress attuale</strong> vs gestione semplificata",
+          "Accesso <strong>fondi intraprofessionali</strong> per formare il team senza costi aggiuntivi"
         ];
       
       case "consulente":
@@ -44,7 +46,8 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Quantificazione <strong>costi nascosti</strong> dei ritardi nelle urgenze",
           "Piano <strong>mantenimento consulente</strong> + strumenti avanzati per lui",
           "Sistema <strong>controllo condiviso</strong> senza dipendere dalla sua agenda",
-          "Calcolo <strong>ottimizzazione costi</strong> con servizi potenziati"
+          "Calcolo <strong>ottimizzazione costi</strong> con servizi potenziati",
+          "Sfruttamento <strong>fondi intraprofessionali</strong> per ridurre ulteriormente i costi formativi"
         ];
       
       case "studi-multipli":
@@ -53,7 +56,8 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Mappatura <strong>opportunità mancate</strong> per responsabilità frammentate e sovrapposte",
           "Confronto <strong>costi reali</strong> di coordinamento vs sistema integrato centralizzato",
           "Analisi <strong>vulnerabilità operative</strong> quando i consulenti non si parlano",
-          "Piano <strong>mantenimento specialisti</strong> con controllo unificato e visione d'insieme"
+          "Piano <strong>mantenimento specialisti</strong> con controllo unificato e visione d'insieme",
+          "Ottimizzazione <strong>fondi intraprofessionali</strong> eliminando sprechi tra fornitori multipli"
         ];
       
       default:
@@ -61,7 +65,8 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Check-up <strong>conformità 2025</strong> con quantificazione gap specifici",
           "Calcolo <strong>ROI previsto</strong> basato sulla tua situazione reale",
           "Identificazione <strong>priorità immediate</strong> per massimizzare risultati",
-          "Piano <strong>implementazione graduale</strong> senza stravolgimenti operativi"
+          "Piano <strong>implementazione graduale</strong> senza stravolgimenti operativi",
+          "Guida <strong>fondi intraprofessionali</strong> per finanziare formazione e aggiornamenti"
         ];
     }
   };
