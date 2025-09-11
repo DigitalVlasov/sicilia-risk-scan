@@ -161,17 +161,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         ctaTarget="#contact-cta" 
       />
       
-      {/* Case Studies Carousel */}
-      <CaseStudyCarousel />
-      
-      {/* Bridge CTA */}
-      <BridgeCTA risk={risk} violations={violations} answers={answers} />
-      
-      
-      <div id="contact-cta">
-        <ContactCTA risk={risk} sector={answers.settore} answers={answers} />
-      </div>
-      
       {/* Solutions Card - Premium Dark Theme - Show for all scenarios when benefits exist */}
       {dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
         <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
@@ -199,6 +188,17 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </CardContent>
         </Card>
       )}
+      
+      {/* Case Studies Carousel */}
+      <CaseStudyCarousel />
+      
+      {/* Bridge CTA */}
+      <BridgeCTA risk={risk} violations={violations} answers={answers} />
+      
+      
+      <div id="contact-cta">
+        <ContactCTA risk={risk} sector={answers.settore} answers={answers} />
+      </div>
       
       {/* FAQ Section */}
       <FAQ />
