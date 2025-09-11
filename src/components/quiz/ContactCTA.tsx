@@ -83,24 +83,24 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
     return `https://wa.me/+390955872480?text=${text}`;
   }, [risk.level, sector]);
   return <div className="rounded-lg border-2 border-green-500 bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 text-center shadow-xl">
-      <h2 className="text-lg sm:text-xl font-bold text-black mb-3">
+      <h2 className="text-xl sm:text-2xl font-bold text-black mb-4">
         Analisi Strategica Gratuita
       </h2>
       
-      <p className="text-sm sm:text-base text-gray-700 mb-4 max-w-xl mx-auto">
+      <p className="text-base sm:text-lg text-gray-700 mb-6 max-w-xl mx-auto">
         Parla con uno specialista senior che ha già risolto 500+ casi simili in Sicilia. 30 minuti, zero impegno, preventivo trasparente.
       </p>
       
-      <div className="my-4 sm:my-6 p-3 sm:p-4 bg-white rounded border text-left text-sm max-w-md mx-auto">
-        <h4 className="font-bold text-center mb-3 text-sm sm:text-base">
+      <div className="my-4 sm:my-6 p-4 sm:p-5 bg-white rounded border text-left max-w-lg mx-auto">
+        <h4 className="font-bold text-center mb-4 text-base sm:text-lg">
           Cosa otterrai (gratuitamente):
         </h4>
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {checklist.map((item, index) => (
             <li key={index} className="flex items-start">
-              <span className="text-green-500 mr-2 font-bold">✓</span>
+              <span className="text-green-500 mr-3 font-bold text-base">✓</span>
               <span 
-                className="text-xs"
+                className="text-sm sm:text-base"
                 dangerouslySetInnerHTML={{ __html: item }} 
               />
             </li>
@@ -121,7 +121,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         </a>
       </div>
       
-      <p className={`${UNIFIED_STYLES.captionText} text-gray-600 mt-4`}>
+      <p className="text-sm sm:text-base text-gray-600 mt-4">
         <strong>🏠 Riservato ad aziende siciliane</strong> • Risposta entro 2h in orario di lavoro
       </p>
     </div>;
