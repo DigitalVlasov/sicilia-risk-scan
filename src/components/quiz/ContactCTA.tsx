@@ -22,11 +22,11 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
     switch (managementType) {
       case "gestisco-io":
         return [
-          "Calcolo preciso <strong>ore settimanali</strong> che recuperi per il business core",
-          "Quantificazione <strong>valore economico</strong> del tuo tempo imprenditoriale attuale", 
-          "Sistema <strong>controllo totale</strong> senza più perdere tempo in burocrazia",
-          "Roadmap <strong>deleghe automatiche</strong> mantenendo decisioni sempre tue",
-          "Confronto <strong>costi attuali</strong> vs automazione che lavora H24"
+          "Identificazione <strong>rischi nascosti</strong> che sfuggono alla gestione individuale",
+          "Mappatura <strong>colli di bottiglia operativi</strong> nelle tue procedure attuali", 
+          "Confronto <strong>approccio attuale</strong> vs sistemi professionali automatizzati",
+          "Analisi <strong>opportunità mancate</strong> per efficientamento e controllo totale",
+          "Piano <strong>mantenimento autonomia</strong> con strumenti che lavorano per te H24"
         ];
       
       case "interno":
