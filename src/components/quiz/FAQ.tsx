@@ -3,32 +3,32 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 const faqData = [
   {
-    question: "Cosa è incluso nel Sistema Organizzativo Spazio Impresa?",
-    answer: "Il sistema include: monitoraggio automatico di tutte le scadenze aziendali con alert preventivi, gestione coordinata di Medico Competente e soggetti formatori qualificati, piattaforma digitale per l'archiviazione e consultazione di tutti i documenti (DVR, attestati, organigramma, verbali), accesso privilegiato ai Fondi Interprofessionali per formazione gratuita, aggiornamenti automatici della documentazione per conformità normativa, supporto durante controlli ispettivi, e un referente unico che coordina l'intera rete di professionisti. Tutto gestito proattivamente senza che tu debba ricordare o sollecitare nulla."
+    question: "Devo cambiare tutto quello che sto facendo ora?",
+    answer: "Assolutamente no. Mantieni tutto ciò che già funziona nella tua azienda. Il nostro sistema si integra con le tue procedure esistenti e migliora solo quello che serve, senza stravolgimenti. Il tuo modo di lavorare rimane invariato, ma diventa più efficiente."
   },
   {
-    question: "Come funziona concretamente il sistema di alert?",
-    answer: "Monitoriamo costantemente tutte le scadenze aziendali attraverso il nostro sistema gestionale. Ti avvisiamo via email 30-60 giorni prima di ogni scadenza e ci occupiamo direttamente delle prenotazioni necessarie. Ricevi sempre conferma di ogni azione intrapresa."
+    question: "Devo imparare ad usare sistemi complicati?",
+    answer: "Zero. Non devi imparare nulla di nuovo. Pensiamo a tutto noi: ricevi solo email di promemoria e hai accesso semplice ai documenti tramite link diretti. Non ci sono software da installare, login complicati o procedure da memorizzare."
   },
   {
-    question: "Quanto tempo richiede l'attivazione del servizio?",
-    answer: "L'onboarding iniziale richiede circa 15 giorni lavorativi per la mappatura completa della situazione aziendale e l'inserimento nel nostro sistema di monitoraggio. Da quel momento il sistema diventa completamente automatico."
+    question: "Ci sono costi nascosti oltre al servizio?",
+    answer: "Il prezzo concordato include tutto: monitoraggio, promemoria, coordinamento professionisti e piattaforma digitale. Gli unici costi aggiuntivi sono quelli dei professionisti esterni (medico competente, formatori) che pagheresti comunque, ma spesso otteniamo sconti tramite convenzioni."
   },
   {
-    question: "È adatto anche per aziende molto piccole?",
-    answer: "Il sistema è pensato proprio per PMI che non possono permettersi internamente un ufficio dedicato alla sicurezza aziendale. Dalla ditta individuale all'azienda con 50 dipendenti, il valore aggiunto è ancora maggiore per le realtà più piccole che hanno meno tempo da dedicare alla burocrazia."
+    question: "Come funziona la consulenza gratuita?",
+    answer: "30 minuti di analisi telefonica dove mappiamo la tua situazione attuale, calcoliamo i risparmi di tempo e costi specifici per la tua azienda, e ti spieghiamo come funzionerebbe il sistema nel tuo caso. Zero impegno, zero pressione commerciale."
   },
   {
-    question: "Cosa succede in caso di controllo ispettivo improvviso?",
-    answer: "La documentazione è sempre aggiornata e immediatamente disponibile sulla piattaforma digitale. In caso di controllo, puoi accedere istantaneamente a tutti i documenti necessari. Il nostro team fornisce anche supporto telefonico immediato durante l'ispezione."
+    question: "Una volta iniziato, mi vincolo per anni?",
+    answer: "Il contratto è biennale per garantire continuità nel monitoraggio, ma se non sei soddisfatto nei primi 60 giorni, puoi recedere senza penali. La durata biennale serve per ammortizzare l'investimento iniziale di mappatura e per mantenere efficace il sistema di allerta."
   },
   {
-    question: "Come funziona l'accesso ai fondi per la formazione?",
-    answer: "Ti iscriviamo al Fondo Interprofessionale più conveniente per la tua tipologia aziendale e gestiamo tutta la burocrazia per accedere ai finanziamenti. Spesso riusciamo a ottenere formazione completamente gratuita, con risparmi significativi sui costi annuali."
+    question: "È adatto anche alla mia piccola azienda?",
+    answer: "È pensato proprio per PMI come la tua. Più sei piccolo, più il valore è alto: recuperi tempo prezioso da dedicare al business invece che alla burocrazia. Funziona dalla ditta individuale all'azienda con 50+ dipendenti."
   },
   {
-    question: "Qual è la durata del contratto?",
-    answer: "Il contratto ha durata biennale per garantire continuità nel servizio e permettere una gestione efficace di tutti i processi. La continuità è fondamentale per mantenere il sistema di monitoraggio sempre efficiente e la conformità sempre aggiornata."
+    question: "Perdo tempo con riunioni e formazione?",
+    answer: "Mai. Dopo l'analisi iniziale (30 min telefonici), il sistema diventa completamente passivo per te. Ricevi solo le comunicazioni essenziali via email. Non devi partecipare a riunioni, call di aggiornamento o sessioni di formazione."
   }
 ];
 
