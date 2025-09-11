@@ -1,31 +1,23 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselApi } from "../ui/carousel";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
-import { ChevronDown } from "lucide-react";
 import { CaseStudy } from "../../types";
 import { CASE_STUDIES } from "../../constants/quiz-config";
 
 export const CaseStudyCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isInteracting, setIsInteracting] = useState(false);
   const [inView, setInView] = useState(true);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const autoplayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const expandTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Clear timeouts
   const clearTimeouts = useCallback(() => {
     if (autoplayTimeoutRef.current) {
       clearTimeout(autoplayTimeoutRef.current);
       autoplayTimeoutRef.current = null;
-    }
-    if (expandTimeoutRef.current) {
-      clearTimeout(expandTimeoutRef.current);
-      expandTimeoutRef.current = null;
     }
   }, []);
 
@@ -51,7 +43,6 @@ export const CaseStudyCarousel: React.FC = () => {
 
     const onSelect = () => {
       setCurrentIndex(carouselApi.selectedScrollSnap());
-      setIsExpanded(false); // Close details when sliding
     };
 
     carouselApi.on("select", onSelect);
@@ -64,7 +55,7 @@ export const CaseStudyCarousel: React.FC = () => {
 
   // Autoplay logic
   useEffect(() => {
-    if (!inView || isInteracting || isExpanded || !carouselApi) {
+    if (!inView || isInteracting || !carouselApi) {
       clearTimeouts();
       return;
     }
@@ -72,28 +63,16 @@ export const CaseStudyCarousel: React.FC = () => {
     const startAutoplay = () => {
       clearTimeouts();
       autoplayTimeoutRef.current = setTimeout(() => {
-        if (carouselApi && !isInteracting && !isExpanded && inView) {
+        if (carouselApi && !isInteracting && inView) {
           carouselApi.scrollNext();
         }
-      }, 3000);
+      }, 4000); // Increased to 4 seconds since details are always visible
     };
 
     startAutoplay();
     return () => clearTimeouts();
-  }, [inView, isInteracting, isExpanded, carouselApi, currentIndex, clearTimeouts]);
+  }, [inView, isInteracting, carouselApi, currentIndex, clearTimeouts]);
 
-  // Handle expand state changes
-  const handleExpandChange = useCallback((expanded: boolean) => {
-    setIsExpanded(expanded);
-    clearTimeouts();
-    
-    if (expanded) {
-      // Set timeout to resume after 8 seconds
-      expandTimeoutRef.current = setTimeout(() => {
-        setIsExpanded(false);
-      }, 8000);
-    }
-  }, [clearTimeouts]);
 
   // Interaction handlers
   const handleInteractionStart = useCallback(() => {
@@ -109,10 +88,10 @@ export const CaseStudyCarousel: React.FC = () => {
     <Card className="border-border bg-card" ref={containerRef}>
       <CardHeader className="pb-4">
         <CardTitle className="text-lg font-semibold text-foreground">
-          Trasformazioni aziendali concrete
+          Casi di successo
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Clicca sui dettagli per vedere come abbiamo aiutato aziende simili alla tua
+          Scopri come abbiamo aiutato aziende simili alla tua
         </p>
       </CardHeader>
       <CardContent>
@@ -148,30 +127,24 @@ export const CaseStudyCarousel: React.FC = () => {
                       </p>
                     </div>
 
-                    {/* Collapsible per i dettagli */}
-                    <Collapsible open={isExpanded && currentIndex === idx} onOpenChange={handleExpandChange}>
-                      <CollapsibleTrigger className="flex items-center justify-between w-full text-sm font-medium text-foreground hover:text-primary transition-colors">
-                        <span>Vedi dettagli completi</span>
-                        <ChevronDown className={`h-4 w-4 transition-transform ${isExpanded && currentIndex === idx ? 'rotate-180' : ''}`} />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent className="space-y-3 mt-3">
-                        {/* Criticità */}
-                        <div className="border-l-2 border-red-500 pl-3">
-                          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
-                            Criticità rilevata
-                          </h4>
-                          <p className="text-sm text-foreground">{study.challenge}</p>
-                        </div>
-                        
-                        {/* Soluzione */}
-                        <div className="border-l-2 border-muted pl-3">
-                          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
-                            Intervento realizzato
-                          </h4>
-                          <p className="text-sm text-foreground">{study.solution}</p>
-                        </div>
-                      </CollapsibleContent>
-                    </Collapsible>
+                    {/* Dettagli sempre visibili */}
+                    <div className="space-y-3 mt-3">
+                      {/* Criticità */}
+                      <div className="border-l-2 border-red-500 pl-3">
+                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                          Criticità rilevata
+                        </h4>
+                        <p className="text-sm text-foreground">{study.challenge}</p>
+                      </div>
+                      
+                      {/* Soluzione */}
+                      <div className="border-l-2 border-muted pl-3">
+                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                          Intervento realizzato
+                        </h4>
+                        <p className="text-sm text-foreground">{study.solution}</p>
+                      </div>
+                    </div>
                   </div>
                 </CarouselItem>
               ))}
