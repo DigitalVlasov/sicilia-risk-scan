@@ -122,8 +122,8 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         </a>
       </div>
       
-      <p className="text-sm sm:text-base text-gray-600 mt-4">
-        Zero Vincoli - Risposta entro 15min lun-ven in orario di lavoro
+      <p className="text-sm text-gray-600 mt-4">
+        Gratuito • Senza impegno • Risposta immediata • Zero burocrazia • Consulenza telefonica
       </p>
     </div>;
 };
