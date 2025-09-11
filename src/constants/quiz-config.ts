@@ -387,7 +387,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Alimentare",
     title: "Azienda Dolciaria - Provincia Catania",
     situation: "Controllo ispettivo in corso",
-    challenge: "L'azienda aveva ricevuto un controllo ispettivo a sorpresa durante il periodo più critico dell'anno:\n\n• <strong>Rischio sospensione immediata</strong> dell'attività produttiva\n• <strong>Perdite economiche devastanti</strong> durante il periodo natalizio (70% fatturato annuo)\n• <strong>Sanzioni cumulative giornaliere</strong> per ogni documento mancante\n• <strong>Responsabilità penale diretta</strong> del datore di lavoro\n• <strong>Impossibilità di continuare</strong> la produzione senza conformità",
+    challenge: "L'azienda aveva ricevuto un controllo ispettivo a sorpresa durante il periodo più critico dell'anno:\n\n• <strong>Sospensione immediata</strong> dell'attività produttiva\n• <strong>Perdite devastanti</strong> durante periodo natalizio (70% fatturato)\n• <strong>Sanzioni cumulative</strong> giornaliere per ogni documento mancante\n• <strong>Responsabilità penale</strong> diretta del datore di lavoro\n• <strong>Stop totale produzione</strong> senza conformità",
     solution: [
       "<strong>Formazione Art. 37</strong> organizzata direttamente in azienda",
       "Figure aziendali <strong>certificate</strong> tramite Ente Accreditato",
@@ -402,7 +402,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Manifatturiero", 
     title: "PMI Metalmeccanica - Provincia Siracusa",
     situation: "Necessità formazione senza budget",
-    challenge: "L'azienda aveva **urgenti necessità di adeguamento normativo** per il rinnovo degli attestati di formazione obbligatoria:\n\n• **Perdite operative significative** per il tempo dedicato alla ricerca di enti accreditati\n• **Costi elevati non preventivati** (€2.500+ necessari) per la gestione frammentata\n• **Spreco di risorse interne** nella coordinazione di diversi fornitori di formazione\n• **Rischio di interruzioni produttive** per la difficile pianificazione delle sessioni\n• **Mancanza di controllo sui costi** senza una visione d'insieme dell'investimento formativo",
+    challenge: "L'azienda aveva urgenti necessità di adeguamento normativo per il rinnovo degli attestati di formazione obbligatoria:\n\n• <strong>Perdite operative</strong> per ricerca enti accreditati\n• <strong>Costi elevati</strong> (€2.500+) non preventivati\n• <strong>Spreco di risorse</strong> nella coordinazione fornitori\n• <strong>Interruzioni produttive</strong> per pianificazione complessa\n• <strong>Zero controllo costi</strong> formativi",
     solution: [
       "Accesso ai <strong>Fondi Interprofessionali</strong> per formazione gratuita",
       "Erogazione di tutti i percorsi formativi <strong>obbligatori</strong>",
@@ -417,7 +417,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Tessile",
     title: "Azienda Confezioni - Provincia Messina", 
     situation: "AUDIT esterno imminente",
-    challenge: "L'azienda doveva superare un AUDIT critico dal cliente principale che rappresentava il 70% del fatturato:\n\n• <strong>Perdita del contratto principale</strong> in caso di fallimento\n• <strong>Chiusura potenziale dell'attività</strong> senza questo cliente\n• <strong>Zero margine di errore</strong> nelle richieste tecniche specifiche\n• <strong>Tempi strettissimi</strong> per l'adeguamento completo\n• <strong>Reputazione aziendale a rischio</strong> nel settore di riferimento",
+    challenge: "L'azienda doveva superare un AUDIT critico dal cliente principale che rappresentava il 70% del fatturato:\n\n• <strong>Perdita contratto principale</strong> in caso di fallimento\n• <strong>Chiusura potenziale</strong> dell'attività\n• <strong>Zero margine errore</strong> nelle richieste tecniche\n• <strong>Tempi strettissimi</strong> per adeguamento completo\n• <strong>Reputazione aziendale</strong> a rischio totale",
     solution: [
       "<strong>Team multidisciplinare</strong> di specialisti coordinati",
       "Piano Emergenza <strong>personalizzato</strong> per audit specifico", 
