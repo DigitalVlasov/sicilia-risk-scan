@@ -87,13 +87,13 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       <Card className="border-2 border-red-600 shadow-xl bg-white">
         <CardContent className="p-4 sm:p-6">
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">
+            <div className="text-3xl sm:text-4xl font-black text-red-600 mb-3 sm:mb-4">
               {heroData.title}
             </div>
-            <div className="text-base sm:text-lg font-semibold text-gray-800 mb-2">
+            <div className="text-xl sm:text-2xl font-bold text-red-700 mb-3">
               {heroData.subtitle}
             </div>
-            <div className="text-sm sm:text-base text-gray-600 mb-4">
+            <div className="text-base sm:text-lg text-red-600 font-semibold mb-6">
               {heroData.message}
             </div>
           </div>
@@ -139,25 +139,25 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       </Card>
 
       {/* Immediate Primary CTA */}
-      <Card className="border-2 border-blue-600 bg-gradient-to-r from-blue-50 to-blue-100 shadow-lg">
+      <Card className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
         <CardContent className="p-4 sm:p-6 text-center">
-          <div className="space-y-3">
-            <div className="text-lg sm:text-xl font-bold text-blue-900">
+          <div className="space-y-4">
+            <div className="text-lg sm:text-xl font-bold text-white">
               {heroData.ctaText}
             </div>
-            <div className="text-sm sm:text-base text-blue-800">
+            <div className="text-sm sm:text-base text-gray-300">
               {heroData.ctaSubtext}
             </div>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <a 
                 href="#contact-cta" 
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
+                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
               >
                 📞 Prenota Subito
               </a>
               <a 
                 href={`https://wa.me/393517704451?text=Ciao, ho appena completato il test di sicurezza e sono interessato all'analisi gratuita per la mia azienda.`}
-                className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
+                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
                 target="_blank" 
                 rel="noopener noreferrer"
               >
@@ -167,6 +167,12 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </div>
         </CardContent>
       </Card>
+
+      {/* Personalized Insight Box - Before Violations Detail */}
+      <InsightBox 
+        insight={dynamicInsight} 
+        ctaTarget="#contact-cta" 
+      />
       
       {/* Violations Detail Card - Secondary Level - Right after Hero */}
       {violations.length > 0 && (
@@ -224,12 +230,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </CardContent>
         </Card>
       )}
-      
-      {/* Personalized Insight Box - After Violations Detail */}
-      <InsightBox 
-        insight={dynamicInsight} 
-        ctaTarget="#contact-cta" 
-      />
       
       {/* Solutions Card - Premium Dark Theme - Show for all scenarios when benefits exist */}
       {dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
