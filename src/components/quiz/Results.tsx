@@ -164,7 +164,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         {violations.length > 0 ? (
           <>
             <p className="text-lg mb-4 font-medium">
-              Non aspettare l'ispezione. Risolviamo insieme ogni criticità in 15 minuti.
+              Non aspettare l'ispezione, risolviamo insieme ogni criticità. Prenota ora una consulenza gratuita.
             </p>
             <Button 
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold"
