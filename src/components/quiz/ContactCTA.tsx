@@ -22,92 +22,56 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
     switch (managementType) {
       case "gestisco-io":
         return [
-          {
-            title: "Audit Organizzativo Personalizzato",
-            bullets: [
-              "Identificazione <strong>ore recuperabili</strong> per il core business",
-              "Piano <strong>deleghe immediate</strong> senza perdere controllo"
-            ]
-          },
-          {
-            title: "Analisi ROI su Produttività",
-            bullets: [
-              "Calcolo <strong>ritorno economico</strong> in 12 mesi",
-              "Automazione <strong>processi ripetitivi</strong> sicurezza"
-            ]
-          }
+          "Identificazione <strong>ore recuperabili</strong> per il core business (quantificazione precisa)",
+          "Piano <strong>deleghe immediate</strong> senza perdere controllo operativo",
+          "Calcolo <strong>ROI economico</strong> su automazione processi sicurezza",
+          "Sistema <strong>monitoraggio efficace</strong> senza micromanagement del team",
+          "Valutazione <strong>costo-opportunità</strong> del tuo tempo imprenditoriale",
+          "Roadmap <strong>ottimizzazione struttura</strong> di controllo aziendale"
         ];
       
       case "interno":
         return [
-          {
-            title: "Assessment Competenze Interne",
-            bullets: [
-              "Valutazione <strong>gap formativi</strong> critici del team",
-              "Piano <strong>potenziamento risorse</strong> esistenti"
-            ]
-          },
-          {
-            title: "Sistema di Supporto Specialistico",
-            bullets: [
-              "Integrazione <strong>expertise esterna</strong> senza sostituzioni",
-              "Backup <strong>professionale</strong> per emergenze"
-            ]
-          }
+          "Assessment <strong>competenze critiche</strong> del tuo referente interno",
+          "Identificazione <strong>gap formativi</strong> prioritari da colmare subito",
+          "Piano <strong>potenziamento risorse</strong> esistenti senza nuove assunzioni",
+          "Sistema <strong>backup professionale</strong> per emergenze e ferie",
+          "Integrazione <strong>expertise esterna</strong> senza sostituire il team",
+          "Confronto <strong>efficienza costi</strong> gestione interna vs esternalizzazione",
+          "Percorso <strong>crescita professionale</strong> referente con certificazioni"
         ];
       
       case "consulente":
         return [
-          {
-            title: "Benchmark di Mercato",
-            bullets: [
-              "Confronto <strong>performance attuale</strong> vs standard",
-              "Verifica <strong>rapporto qualità-prezzo</strong> servizi"
-            ]
-          },
-          {
-            title: "Gap Analysis Servizi",
-            bullets: [
-              "Identificazione <strong>servizi mancanti</strong> critici",
-              "Piano <strong>ottimizzazione costi</strong> mantenendo qualità"
-            ]
-          }
+          "Benchmark <strong>performance attuale</strong> vs standard di mercato",
+          "Verifica <strong>rapporto qualità-prezzo</strong> dei servizi ricevuti",
+          "Identificazione <strong>servizi mancanti</strong> o sottoperformanti",
+          "Piano <strong>ottimizzazione costi</strong> mantenendo la qualità",
+          "Sistema <strong>controllo qualità</strong> e KPI misurabili",
+          "Negoziazione <strong>servizi aggiuntivi</strong> a parità di investimento",
+          "Valutazione <strong>alternative di mercato</strong> per confronto trasparente"
         ];
       
       case "studi-multipli":
         return [
-          {
-            title: "Audit Coordinamento Multi-Fornitore",
-            bullets: [
-              "Analisi <strong>costi nascosti</strong> gestione frammentata",
-              "Mappatura <strong>sovrapposizioni</strong> e duplicazioni"
-            ]
-          },
-          {
-            title: "Calcolo Saving da Unificazione",
-            bullets: [
-              "Quantificazione <strong>risparmi immediati</strong> centralizzazione",
-              "Dashboard <strong>controllo unificato</strong> tutti fornitori"
-            ]
-          }
+          "Analisi <strong>costi nascosti</strong> della gestione frammentata attuale",
+          "Mappatura <strong>sovrapposizioni</strong> e duplicazioni tra fornitori",
+          "Quantificazione <strong>risparmi immediati</strong> da centralizzazione",
+          "Piano <strong>unificazione graduale</strong> senza interruzioni operative",
+          "Dashboard <strong>controllo centralizzato</strong> di tutti i fornitori",
+          "Eliminazione <strong>conflitti competenze</strong> e responsabilità",
+          "Sistema <strong>reporting unificato</strong> per decisioni strategiche",
+          "Calcolo <strong>tempo risparmiato</strong> nel coordinamento quotidiano"
         ];
       
       default:
         return [
-          {
-            title: "Check-up Conformità 2025",
-            bullets: [
-              "Posizione rispetto <strong>nuovi obblighi</strong> normativi",
-              "Priorità <strong>intervento immediate</strong>"
-            ]
-          },
-          {
-            title: "Analisi Economica Trasparente",
-            bullets: [
-              "Calcolo <strong>ROI previsto</strong> 12-24 mesi",
-              "Verifica <strong>formazione gratuita</strong> disponibile"
-            ]
-          }
+          "Check-up <strong>conformità 2025</strong> rispetto ai nuovi obblighi",
+          "Identificazione <strong>priorità immediate</strong> per la tua azienda",
+          "Calcolo <strong>ROI previsto</strong> dell'investimento in 12-24 mesi",
+          "Verifica <strong>formazione gratuita</strong> disponibile con Fondi",
+          "Confronto <strong>costi attuali</strong> vs benefici nuovo sistema",
+          "Roadmap <strong>adempimenti scaglionati</strong> senza stress operativo"
         ];
     }
   };
@@ -141,21 +105,14 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         <h4 className="font-bold text-center mb-3 text-sm sm:text-base">
           Cosa otterrai (gratuitamente):
         </h4>
-        <ul className="space-y-3">
+        <ul className="space-y-2">
           {checklist.map((item, index) => (
             <li key={index} className="flex items-start">
               <span className="text-green-500 mr-2 font-bold">✓</span>
-              <div>
-                <div className="font-bold mb-1 text-sm">{item.title}:</div>
-                <ul className="space-y-1 ml-2">
-                  {item.bullets.map((bullet, bulletIndex) => (
-                    <li key={bulletIndex} className="flex items-start text-xs">
-                      <span className="text-green-400 mr-1 text-xs">•</span>
-                      <span dangerouslySetInnerHTML={{ __html: bullet }} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <span 
+                className="text-xs"
+                dangerouslySetInnerHTML={{ __html: item }} 
+              />
             </li>
           ))}
         </ul>
