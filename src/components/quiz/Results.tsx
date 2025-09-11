@@ -168,8 +168,8 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </CardContent>
       </Card>
 
-      {/* Dynamic Insights Box */}
-      <InsightBox insight={dynamicInsight} />
+      {/* Dynamic Insights Box - for clean scenarios */}
+      {violations.length === 0 && <InsightBox insight={dynamicInsight} />}
 
       {/* CTA Section - Only for violations scenarios */}
       {violations.length > 0 && (
@@ -185,6 +185,9 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </Button>
         </div>
       )}
+      
+      {/* Dynamic Insights Box - for violations scenarios */}
+      {violations.length > 0 && <InsightBox insight={dynamicInsight} />}
       
       {/* Violations Detail Card - Secondary Level - Right after Hero */}
       {violations.length > 0 && (
