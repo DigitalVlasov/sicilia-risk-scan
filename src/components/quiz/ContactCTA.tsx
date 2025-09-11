@@ -49,11 +49,11 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
       
       case "studi-multipli":
         return [  
-          "Mappatura <strong>tempo perso</strong> nel coordinamento quotidiano tra fornitori",
-          "Quantificazione <strong>risparmi immediati</strong> eliminando sovrapposizioni",
-          "Sistema <strong>cabina di regia</strong> per tutti i tuoi consulenti",
-          "Eliminazione <strong>comunicazioni frammentate</strong> e responsabilità divise",
-          "Confronto <strong>complessità attuale</strong> vs coordinamento centralizzato"
+          "Identificazione <strong>rischi nascosti</strong> nelle zone grigie tra consulenti diversi",
+          "Mappatura <strong>opportunità mancate</strong> per responsabilità frammentate e sovrapposte",
+          "Confronto <strong>costi reali</strong> di coordinamento vs sistema integrato centralizzato",
+          "Analisi <strong>vulnerabilità operative</strong> quando i consulenti non si parlano",
+          "Piano <strong>mantenimento specialisti</strong> con controllo unificato e visione d'insieme"
         ];
       
       default:
