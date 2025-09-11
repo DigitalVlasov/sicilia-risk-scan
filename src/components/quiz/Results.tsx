@@ -159,6 +159,9 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </CardContent>
       </Card>
 
+      {/* Dynamic Insights Box */}
+      <InsightBox insight={dynamicInsight} />
+
       {/* CTA Section - Only for violations scenarios */}
       {violations.length > 0 && (
         <div className="bg-gray-800 text-white p-6 rounded-lg text-center">
