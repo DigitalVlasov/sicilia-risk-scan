@@ -122,16 +122,11 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
               )}
               
               {section.type === 'info' && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-white text-xs font-bold">i</span>
-                    </div>
-                    <div 
-                      className="text-sm text-blue-800 leading-relaxed font-medium"
-                      dangerouslySetInnerHTML={{ __html: section.text }}
-                    />
-                  </div>
+                <div className="bg-gray-800 rounded-lg p-4 my-4">
+                  <div 
+                    className="text-sm text-white leading-relaxed font-medium"
+                    dangerouslySetInnerHTML={{ __html: section.text }}
+                  />
                 </div>
               )}
               
