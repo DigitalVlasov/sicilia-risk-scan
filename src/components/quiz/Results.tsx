@@ -93,13 +93,28 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       <Card className="border-2 border-red-600 shadow-xl bg-white">
         <CardContent className="p-4 sm:p-6">
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-black text-red-600 mb-3 sm:mb-4">
-              {heroData.title}
-            </div>
-            <div className="text-xl sm:text-2xl font-bold text-red-700 mb-3">
+            {/* Risk Badge - Oval shape with colors based on risk level */}
+            {violations.length > 0 ? (
+              <div className={`inline-flex items-center px-6 py-3 rounded-full mb-4 ${
+                risk.level === 'Alto' ? 'bg-red-100 text-red-800 border-2 border-red-300' :
+                risk.level === 'Medio' ? 'bg-orange-100 text-orange-800 border-2 border-orange-300' :
+                'bg-yellow-100 text-yellow-800 border-2 border-yellow-300'
+              }`}>
+                <span className="font-bold text-sm sm:text-base">RISCHIO {risk.level.toUpperCase()}</span>
+              </div>
+            ) : (
+              <div className="inline-flex items-center px-6 py-3 rounded-full mb-4 bg-green-100 text-green-800 border-2 border-green-300">
+                <span className="font-bold text-sm sm:text-base">✅ COMPLIMENTI!</span>
+              </div>
+            )}
+            
+            {/* Main message with sanctions - less prominent */}
+            <div className="text-xl sm:text-2xl font-bold text-gray-800 mb-3">
               {heroData.subtitle}
             </div>
-            <div className="text-base sm:text-lg text-red-600 font-semibold mb-6">
+            
+            {/* Subhead in black */}
+            <div className="text-base sm:text-lg text-black font-medium mb-6">
               {heroData.message}
             </div>
           </div>
