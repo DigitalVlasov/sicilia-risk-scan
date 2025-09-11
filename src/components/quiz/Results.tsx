@@ -196,11 +196,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Bridge CTA */}
       <BridgeCTA risk={risk} violations={violations} answers={answers} />
       
-      <div id="contact-cta">
-        <ContactCTA risk={risk} sector={answers.settore} />
-      </div>
-      
-      {/* How it works section - After Contact CTA */}
+      {/* How it works section - Before Contact CTA */}
       <Card className="border border-gray-300 shadow-lg bg-white">
         <CardHeader className="border-b border-gray-200">
           <CardTitle className="text-lg sm:text-xl font-bold text-black">
@@ -261,6 +257,10 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </div>
         </CardContent>
       </Card>
+      
+      <div id="contact-cta">
+        <ContactCTA risk={risk} sector={answers.settore} />
+      </div>
       
       {/* FAQ Section */}
       <FAQ />
