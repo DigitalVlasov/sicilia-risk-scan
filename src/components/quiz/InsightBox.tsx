@@ -56,8 +56,11 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
         inWarningSection = true;
         inGapSection = false;
       }
-      // Check if this paragraph starts with "Affidarsi a" - this starts the gap section for violation scenarios
-      else if (paragraph.toLowerCase().includes('affidarsi a')) {
+      // Check if this paragraph starts with any violation scenario pattern - this starts the gap section
+      else if (paragraph.toLowerCase().includes('affidarsi a') || 
+               paragraph.toLowerCase().includes('lavorare con più specialisti') ||
+               paragraph.toLowerCase().includes('avere una risorsa interna dedicata') ||
+               paragraph.toLowerCase().includes('il tuo controllo diretto è un punto di forza')) {
         // Save current section if exists
         if (currentSection) {
           sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
