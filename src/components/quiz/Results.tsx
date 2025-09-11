@@ -12,7 +12,8 @@ import { FAQ } from "./FAQ";
 import { 
   generateDynamicInsight, 
   calculateSanctionDetails,
-  riskBadgeVariant 
+  riskBadgeVariant,
+  getSectorName
 } from "../../utils/quiz-helpers";
 import { UNIFIED_STYLES } from "../../constants/design-tokens";
 
@@ -188,7 +189,16 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </p>
           <Button 
             className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 text-sm font-semibold"
-            onClick={() => window.open('https://wa.me/393123456789?text=Ciao, ho fatto il test di sicurezza e vorrei parlare delle criticità emerse', '_blank')}
+            onClick={() => {
+              let message = `Ciao Spazio Impresa! Ho completato il test di conformità. `;
+              const violationCount = risk.level === "Alto" ? "multiple criticità" : "alcune criticità";
+              const sector = answers.settore;
+              message += `Risultato: rischio ${risk.level} con ${violationCount} rilevate${sector ? ` nel settore ${getSectorName(sector)}` : ''}. `;
+              message += `Vorrei prenotare l'Analisi Strategica Gratuita per vedere il confronto costi-benefici e capire come eliminare questi rischi.`;
+              const text = encodeURIComponent(message);
+              const whatsappUrl = `https://wa.me/+390955872480?text=${text}`;
+              window.open(whatsappUrl, '_blank');
+            }}
           >
             → Parliamone su WhatsApp
           </Button>
