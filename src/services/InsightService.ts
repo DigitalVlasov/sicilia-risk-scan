@@ -292,12 +292,7 @@ Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per v
 • Le comunicazioni si perdono tra un professionista e l'altro
 • <strong>Il risultato? Un sistema che ti espone a multe e ti fa perdere tempo</strong>
 
-<strong>La nostra soluzione:</strong>
-
-Creiamo una <strong>cabina di regia centralizzata</strong> che coordina tutti i professionisti coinvolti. 
-
-✓ <strong>Manteniamo la specializzazione</strong> ma eliminiamo la frammentazione
-✓ <strong>Non sostituiamo i tuoi consulenti:</strong> diamo loro (e a te) un ambiente condiviso dove tutto è sotto controllo`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo la specializzazione ma eliminando la frammentazione del coordinamento.`,
         ctaText: "Scopri la cabina di regia per i tuoi consulenti",
         benefits: [
           "Unico sistema, zero frammentazione.",
@@ -316,15 +311,7 @@ Creiamo una <strong>cabina di regia centralizzata</strong> che coordina tutti i 
 • Quando hai urgenza potrebbe non essere subito disponibile  
 • <strong>Questo ti espone a ritardi e rischi inutili</strong>
 
-<strong>La nostra soluzione:</strong>
-
-Configuriamo un <strong>sistema digitale</strong> che fornisce al tuo tecnico:
-
-✓ <strong>Strumento automatizzato</strong> dove tutto è sotto controllo
-✓ <strong>Errori ridotti a zero</strong> grazie all'automazione
-✓ <strong>Piena trasparenza</strong> per te in tempo reale
-
-<strong>Non sostituiamo il tuo consulente:</strong> gli diamo (e ti diamo) una piattaforma che semplifica il suo lavoro e ti garantisce il pieno controllo.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per ottimizzare i costi</strong> mantenendo la professionalità esterna ma con accesso immediato a tutto.`,
         ctaText: "Scopri lo spazio condiviso per te e il tuo consulente",
         benefits: [
           "Pieno controllo per te e il tuo consulente.",
@@ -344,15 +331,7 @@ Configuriamo un <strong>sistema digitale</strong> che fornisce al tuo tecnico:
 • Ogni aggiornamento normativo diventa una corsa contro il tempo
 • <strong>Un errore umano può costare molto caro all'azienda</strong>
 
-<strong>La nostra soluzione:</strong>
-
-Implementiamo una <strong>soluzione chiavi in mano</strong> che potenzia la tua risorsa interna:
-
-✓ <strong>Sistema automatizzato</strong> che azzera le sviste
-✓ <strong>Carico di lavoro ridotto dell'80%</strong> grazie all'automazione  
-✓ <strong>Strumenti professionali</strong> sempre aggiornati
-
-<strong>La tua persona continua a gestire tutto</strong>, ma con il supporto tecnologico che merita.`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo diretto ma alleggerendo significativamente il carico di lavoro.`,
         ctaText: "Scopri come potenziamo la tua risorsa interna",
         benefits: [
           "Meno burocrazia per la tua risorsa interna.",
@@ -372,14 +351,7 @@ Implementiamo una <strong>soluzione chiavi in mano</strong> che potenzia la tua 
 • Lo stress di dover ricordare ogni adempimento
 • <strong>Potenziali multe per semplici sviste o dimenticanze</strong>
 
-<strong>La nostra soluzione:</strong>
-
-Installiamo un <strong>sistema automatico completamente configurato</strong> che ti permette di delegare mantenendo il controllo:
-
-✓ <strong>Tu mantieni la supervisione</strong> ma senza perdere tempo
-✓ <strong>Automazione intelligente</strong> per tutte le scadenze
-✓ <strong>Controllo totale</strong> senza gestione quotidiana
-✓ <strong>Più tempo per il business</strong> che ami davvero`,
+Se vuoi, possiamo prenderci del tempo per un <strong>confronto sui margini per velocizzare i processi operativi</strong> mantenendo il controllo totale ma liberandoti dalla gestione quotidiana.`,
         ctaText: "Scopri il sistema automatico personalizzato",
         benefits: [
           "Delega la burocrazia, recupera il tuo tempo.",
