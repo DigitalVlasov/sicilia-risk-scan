@@ -165,20 +165,28 @@ export const CaseStudyCarousel: React.FC = () => {
                         </div>
                       </div>
                       
-                      {/* Benefici operativi */}
-                      <div className="border-l-2 border-green-500 pl-3">
-                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                          Benefici operativi per l'azienda
-                        </h4>
-                        <ul className="space-y-1">
-                          {study.solution.map((benefit, idx) => (
-                            <li key={idx} className="text-sm text-foreground flex items-start">
-                              <span className="text-green-600 mr-2 mt-0.5">•</span>
-                              <span dangerouslySetInnerHTML={{ __html: benefit }} />
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                       {/* Benefici operativi */}
+                       <div className="border-l-2 border-green-500 pl-3">
+                         <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                           Benefici operativi per l'azienda
+                         </h4>
+                         
+                         {/* Testo di cerniera */}
+                         <div className="bg-green-50 border border-green-200 rounded p-2 mb-3">
+                           <div className="text-xs text-green-800 font-medium">
+                             <strong>Dopo l'attivazione del nostro sistema:</strong>
+                           </div>
+                         </div>
+                         
+                         <ul className="space-y-1">
+                           {study.solution.map((benefit, idx) => (
+                             <li key={idx} className="text-sm text-foreground flex items-start">
+                               <span className="text-green-600 mr-2 mt-0.5">•</span>
+                               <span dangerouslySetInnerHTML={{ __html: benefit }} />
+                             </li>
+                           ))}
+                         </ul>
+                       </div>
                     </div>
                     
                     {/* Risultato in evidenza - spostato in basso */}
