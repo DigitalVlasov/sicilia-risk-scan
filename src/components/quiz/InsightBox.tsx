@@ -18,6 +18,8 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
     
     const sections = [];
     let currentSection = "";
+    let warningSection = "";
+    let inWarningSection = false;
     
     for (const paragraph of paragraphs) {
       // Check if this paragraph starts with "Se vuoi" - this indicates the CTA section
@@ -26,16 +28,46 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
         if (currentSection) {
           sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
         }
+        // Save warning section if exists
+        if (warningSection) {
+          sections.push({ type: 'warning', text: processContentText(warningSection.trim()) });
+          warningSection = "";
+        }
         // Start CTA section
         sections.push({ type: 'cta', text: paragraph.trim() });
         currentSection = "";
-      } else {
+      } 
+      // Check if this paragraph contains "Spesso ciò che non viene detto" - this starts the warning section
+      else if (paragraph.toLowerCase().includes('spesso ciò che non viene detto')) {
+        // Save current section if exists
+        if (currentSection) {
+          sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
+          currentSection = "";
+        }
+        // Start warning section
+        warningSection = paragraph;
+        inWarningSection = true;
+      }
+      // If we're in warning section and this is a bullet point or continuation
+      else if (inWarningSection && (paragraph.trim().startsWith('•') || paragraph.trim().startsWith('Perdite') || paragraph.trim().startsWith('Potenziali') || paragraph.trim().startsWith('Lo stress'))) {
+        warningSection += '\n\n' + paragraph;
+      }
+      else {
+        // If we were in warning section, close it
+        if (inWarningSection) {
+          sections.push({ type: 'warning', text: processContentText(warningSection.trim()) });
+          warningSection = "";
+          inWarningSection = false;
+        }
         // Add to current section
         currentSection += (currentSection ? '\n\n' : '') + paragraph;
       }
     }
     
-    // Add remaining content if exists
+    // Add remaining sections if they exist
+    if (warningSection) {
+      sections.push({ type: 'warning', text: processContentText(warningSection.trim()) });
+    }
     if (currentSection) {
       sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
     }
@@ -112,6 +144,15 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
                   className="text-sm sm:text-base text-gray-700 leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: section.text }}
                 />
+              )}
+              
+              {section.type === 'warning' && (
+                <div className="bg-gray-800 rounded-lg p-4 my-4">
+                  <div 
+                    className="text-sm text-white leading-relaxed"
+                    dangerouslySetInnerHTML={{ __html: section.text }}
+                  />
+                </div>
               )}
               
               {section.type === 'cta' && (
