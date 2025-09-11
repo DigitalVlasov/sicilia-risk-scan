@@ -92,7 +92,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         Solo per chi ha completato questo test, abbiamo riservato 1 slot gratuito questo mese con il nostro Specialista Senior.
       </p>
       
-      <div className="my-4 sm:my-6 p-4 sm:p-5 bg-gray-900 text-white rounded-lg border border-gray-700 text-left max-w-lg mx-auto">
+      <div className="my-4 sm:my-6 p-4 sm:p-5 bg-gradient-to-br from-gray-900 to-black text-white rounded-lg border-2 border-black shadow-xl text-left max-w-lg mx-auto">
         <h4 className="font-bold text-center mb-4 text-base sm:text-lg">
           Cosa otterrai (gratuitamente):
         </h4>
