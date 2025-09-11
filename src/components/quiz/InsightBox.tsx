@@ -29,16 +29,6 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
         // Start CTA section
         sections.push({ type: 'cta', text: paragraph.trim() });
         currentSection = "";
-      } 
-      // Check if this paragraph starts with "Sapevi che" - this is an info box for positive scenarios
-      else if (paragraph.trim().toLowerCase().startsWith('sapevi che')) {
-        // Save current section if exists
-        if (currentSection) {
-          sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
-        }
-        // Add info box section
-        sections.push({ type: 'info', text: paragraph.trim() });
-        currentSection = "";
       } else {
         // Add to current section
         currentSection += (currentSection ? '\n\n' : '') + paragraph;
@@ -54,8 +44,11 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
   };
 
   const processContentText = (text: string) => {
+    // First, handle the "Sapevi che" flow - merge it with previous content
+    let processedText = text.replace(/\n\nSapevi che/g, ' Sapevi che');
+    
     // Split into lines to process bullet points and formatting
-    const lines = text.split('\n');
+    const lines = processedText.split('\n');
     let result = '';
     let inBulletSection = false;
     
@@ -119,15 +112,6 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
                   className="text-sm sm:text-base text-gray-700 leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: section.text }}
                 />
-              )}
-              
-              {section.type === 'info' && (
-                <div className="bg-gray-800 rounded-lg p-4 my-4">
-                  <div 
-                    className="text-sm text-white leading-relaxed font-medium"
-                    dangerouslySetInnerHTML={{ __html: section.text }}
-                  />
-                </div>
               )}
               
               {section.type === 'cta' && (
