@@ -16,7 +16,7 @@ const faqData = [
   },
   {
     question: "Come funziona la consulenza gratuita?",
-    answer: "30 minuti di analisi telefonica dove mappiamo la tua situazione attuale, calcoliamo i risparmi di tempo e costi specifici per la tua azienda, e ti spieghiamo come funzionerebbe il sistema nel tuo caso. Zero impegno, zero pressione commerciale."
+    answer: "Prima una breve chiamata telefonica per concordare un appuntamento, poi un sopralluogo gratuito in presenza dove mappiamo la tua situazione attuale, calcoliamo i risparmi di tempo e costi specifici per la tua azienda, e ti spieghiamo come funzionerebbe il sistema nel tuo caso. Zero impegno, zero pressione commerciale."
   },
   {
     question: "Una volta iniziato, mi vincolo per anni?",
@@ -28,7 +28,7 @@ const faqData = [
   },
   {
     question: "Perdo tempo con riunioni e formazione?",
-    answer: "Mai. Dopo l'analisi iniziale (30 min telefonici), il sistema diventa completamente passivo per te. Ricevi solo le comunicazioni essenziali via email. Non devi partecipare a riunioni, call di aggiornamento o sessioni di formazione."
+    answer: "Mai. Dopo il sopralluogo iniziale gratuito, il sistema diventa completamente passivo per te. Ricevi solo le comunicazioni essenziali via email. Non devi partecipare a riunioni, call di aggiornamento o sessioni di formazione."
   }
 ];
 
