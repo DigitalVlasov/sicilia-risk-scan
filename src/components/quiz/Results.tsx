@@ -116,7 +116,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
             )}
             
             {/* Main message with sanctions - less prominent */}
-            <div className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
+            <div className="text-xl sm:text-2xl font-bold text-red-600 mb-6">
               {heroData.subtitle}
             </div>
 
