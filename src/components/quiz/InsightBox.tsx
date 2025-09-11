@@ -134,7 +134,10 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
           result += '<ul class="space-y-2 mt-3 mb-3">';
           inBulletSection = true;
         }
-        result += `<li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-1">•</span><span>${line.substring(1).trim()}</span></li>`;
+        // Apply bold formatting to bullet content
+        let bulletContent = line.substring(1).trim();
+        bulletContent = applyKeyTermBolding(bulletContent);
+        result += `<li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-1">•</span><span>${bulletContent}</span></li>`;
       } else {
         // Close bullet list if we were in one
         if (inBulletSection) {
@@ -144,14 +147,18 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
         
         // Process regular paragraph
         if (line) {
-          // Make "Spesso ciò che non viene detto è che..." text bold
           let processedLine = line;
+          
+          // Make "Spesso ciò che non viene detto è che..." text bold
           if (line.toLowerCase().includes('spesso ciò che non viene detto è che')) {
             processedLine = processedLine.replace(
               /(Spesso ciò che non viene detto è che.*?ti espone a:)/gi,
               '<strong>$1</strong>'
             );
           }
+          
+          // Apply general key term bolding
+          processedLine = applyKeyTermBolding(processedLine);
           
           // Add paragraph with proper spacing
           result += `<p class="mb-4">${processedLine}</p>`;
@@ -165,6 +172,32 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
     }
     
     return result;
+  };
+
+  const applyKeyTermBolding = (text: string): string => {
+    let processedText = text;
+    
+    // Financial amounts and percentages
+    processedText = processedText.replace(/€\s*[\d.,]+/g, '<strong>$&</strong>');
+    processedText = processedText.replace(/(\d+(?:[.,]\d+)?)\s*%/g, '<strong>$1%</strong>');
+    processedText = processedText.replace(/(\d+)\s*(giorni?|mesi?|anni?)/g, '<strong>$1 $2</strong>');
+    
+    // Legal and compliance terms
+    processedText = processedText.replace(/\b(D\.Lgs\.?\s*\d+\/\d+|art\.\s*\d+|DVR|RSPP|RLS|INAIL|ASP|Ispettorato del Lavoro)\b/gi, '<strong>$&</strong>');
+    
+    // Critical actions and outcomes
+    processedText = processedText.replace(/\b(sospensione|chiusura|multa|sanzione|arresto|denuncia|responsabilità penale|controllo ispettivo)\b/gi, '<strong>$&</strong>');
+    
+    // Time-sensitive and urgent terms
+    processedText = processedText.replace(/\b(immediat[ao]|urgent[ei]|critico|priorità|scadenz[ae]|entro|prima di)\b/gi, '<strong>$&</strong>');
+    
+    // Key business terms
+    processedText = processedText.replace(/\b(fatturato|produttività|costi|risparmi[ao]|perdite|clienti|dipendenti)\b/gi, '<strong>$&</strong>');
+    
+    // Compliance states
+    processedText = processedText.replace(/\b(conformità|violazione|adeguamento|aggiornamento|formazione obbligatoria)\b/gi, '<strong>$&</strong>');
+    
+    return processedText;
   };
 
   const sections = parseInsightText(insight.text);
