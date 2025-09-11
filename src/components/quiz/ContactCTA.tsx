@@ -34,7 +34,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           "Assessment <strong>sovraccarico effettivo</strong> della tua risorsa interna",
           "Calcolo <strong>costi nascosti</strong> di errori/ritardi per overload",
           "Piano <strong>alleggerimento operativo</strong> senza assumere personale",
-          "Sistema <strong>backup professionale</strong> per ferie/emergenze automatico",
+          "Mappatura <strong>vulnerabilità operative</strong> per assenze/ferie della persona",
           "Confronto <strong>stress attuale</strong> vs gestione semplificata"
         ];
       
