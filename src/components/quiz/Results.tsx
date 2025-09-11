@@ -161,6 +161,34 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         ctaTarget="#contact-cta" 
       />
       
+      {/* Solutions Card - Premium Dark Theme - Show for all scenarios when benefits exist */}
+      {dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
+        <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
+          <CardHeader className="border-b border-gray-700">
+            <CardTitle className="text-lg sm:text-xl font-bold text-white">
+              {violations.length > 0 
+                ? "Cosa ottieni con il Sistema Organizzativo di Spazio Impresa" 
+                : "Vantaggi dell'ottimizzazione con Spazio Impresa"}
+            </CardTitle>
+            <p className="text-sm text-gray-300 mt-2">
+              {violations.length > 0 
+                ? "(dopo l'attivazione del servizio)" 
+                : "(mantenendo ciò che già funziona)"}
+            </p>
+          </CardHeader>
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid gap-3 sm:gap-4">
+              {dynamicInsight.benefits.map((benefit, index) => (
+                <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors border border-white/20">
+                  <span className="text-lg sm:text-xl">•</span>
+                  <span className="text-sm sm:text-base">{benefit}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      
       
       {/* How it works section - Between insight and benefits */}
       <Card className="border border-gray-300 shadow-lg bg-white">
@@ -224,34 +252,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </CardContent>
       </Card>
 
-      {/* Solutions Card - Premium Dark Theme - Show for all scenarios when benefits exist */}
-      {dynamicInsight.benefits && dynamicInsight.benefits.length > 0 && (
-        <Card id="vantaggi-completi" className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
-          <CardHeader className="border-b border-gray-700">
-            <CardTitle className="text-lg sm:text-xl font-bold text-white">
-              {violations.length > 0 
-                ? "Cosa ottieni con il Sistema Organizzativo di Spazio Impresa" 
-                : "Vantaggi dell'ottimizzazione con Spazio Impresa"}
-            </CardTitle>
-            <p className="text-sm text-gray-300 mt-2">
-              {violations.length > 0 
-                ? "(dopo l'attivazione del servizio)" 
-                : "(mantenendo ciò che già funziona)"}
-            </p>
-          </CardHeader>
-          <CardContent className="p-4 sm:p-6">
-            <div className="grid gap-3 sm:gap-4">
-              {dynamicInsight.benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/20 transition-colors border border-white/20">
-                  <span className="text-lg sm:text-xl">•</span>
-                  <span className="text-sm sm:text-base">{benefit}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-      
       {/* Case Studies Carousel */}
       <CaseStudyCarousel />
       
