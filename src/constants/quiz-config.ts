@@ -417,7 +417,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Tessile",
     title: "Azienda Confezioni - Provincia Messina", 
     situation: "AUDIT esterno imminente",
-    challenge: "L'azienda doveva superare un AUDIT critico dal cliente principale che rappresentava il 70% del fatturato:\n\n• <strong>Perdita contratto principale</strong> in caso di fallimento\n• <strong>Chiusura potenziale</strong> dell'attività\n• <strong>Zero margine errore</strong> nelle richieste tecniche\n• <strong>Tempi strettissimi</strong> per adeguamento completo\n• <strong>Reputazione aziendale</strong> a rischio totale",
+    challenge: "L'azienda doveva superare un AUDIT critico dal cliente principale che rappresentava il 70% del fatturato:\n\n• <strong>Perdita di commessa da milioni di euro</strong> in caso di fallimento\n• <strong>Chiusura potenziale</strong> dell'attività\n• <strong>Zero margine errore</strong> nelle richieste tecniche\n• <strong>Tempi strettissimi</strong> per adeguamento completo\n• <strong>Reputazione aziendale</strong> a rischio totale",
     solution: [
       "<strong>Team multidisciplinare</strong> di specialisti coordinati",
       "Piano Emergenza <strong>personalizzato</strong> per audit specifico", 
