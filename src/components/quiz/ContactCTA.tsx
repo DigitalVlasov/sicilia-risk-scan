@@ -88,7 +88,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
       </h2>
       
       <p className="text-base sm:text-lg text-gray-700 mb-6 max-w-xl mx-auto">
-        Parla con uno specialista senior che ha già risolto 500+ casi simili in Sicilia. 30 minuti, zero impegno, preventivo trasparente.
+        Solo per chi ha completato questo test, abbiamo riservato 1 slot gratuito questo mese con il nostro Specialista Senior.
       </p>
       
       <div className="my-4 sm:my-6 p-4 sm:p-5 bg-white rounded border text-left max-w-lg mx-auto">
