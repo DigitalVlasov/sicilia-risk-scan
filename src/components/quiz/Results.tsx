@@ -116,13 +116,22 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
             )}
             
             {/* Main message with sanctions - less prominent */}
-            <div className="text-xl sm:text-2xl font-bold text-red-600 mb-6">
-              {heroData.subtitle}
+            <div className={`text-xl sm:text-2xl font-bold mb-6 ${
+              violations.length === 0 ? 'text-black' : 'text-red-600'
+            }`}>
+              {violations.length === 0 ? (
+                <>
+                  <div>La tua azienda rispetta</div>
+                  <div>le norme di sicurezza</div>
+                </>
+              ) : (
+                heroData.subtitle
+              )}
             </div>
 
             {/* Additional phrase for clean scenarios - after main message */}
             {violations.length === 0 && (
-              <div className="text-sm sm:text-base text-gray-600 font-medium">
+              <div className="text-sm sm:text-base text-red-600 font-medium">
                 {heroData.message}
               </div>
             )}
