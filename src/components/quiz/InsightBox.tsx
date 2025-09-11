@@ -29,6 +29,16 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
         // Start CTA section
         sections.push({ type: 'cta', text: paragraph.trim() });
         currentSection = "";
+      } 
+      // Check if this paragraph starts with "Sapevi che" - this is an info box for positive scenarios
+      else if (paragraph.trim().toLowerCase().startsWith('sapevi che')) {
+        // Save current section if exists
+        if (currentSection) {
+          sections.push({ type: 'content', text: processContentText(currentSection.trim()) });
+        }
+        // Add info box section
+        sections.push({ type: 'info', text: paragraph.trim() });
+        currentSection = "";
       } else {
         // Add to current section
         currentSection += (currentSection ? '\n\n' : '') + paragraph;
@@ -109,6 +119,20 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
                   className="text-sm sm:text-base text-gray-700 leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: section.text }}
                 />
+              )}
+              
+              {section.type === 'info' && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 my-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-white text-xs font-bold">i</span>
+                    </div>
+                    <div 
+                      className="text-sm text-blue-800 leading-relaxed font-medium"
+                      dangerouslySetInnerHTML={{ __html: section.text }}
+                    />
+                  </div>
+                </div>
               )}
               
               {section.type === 'cta' && (
