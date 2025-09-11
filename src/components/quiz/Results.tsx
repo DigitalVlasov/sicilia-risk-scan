@@ -40,8 +40,8 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         title: "✅ COMPLIMENTI!",
         subtitle: "La tua azienda rispetta le norme di sicurezza",
         message: "Ma stai sfruttando tutte le opportunità per eccellere nel tuo settore?",
-        ctaText: "🚀 ANALISI STRATEGICA GRATUITA",
-        ctaSubtext: "Ottimizza per diventare un'eccellenza"
+        ctaText: "Scopri come diventare un'eccellenza del settore",
+        ctaAction: "#contact-cta"
       };
     }
 
@@ -68,14 +68,18 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       mainViolationType === 'gestione' ? "violazioni gestionali" :
       "violazioni normative";
 
+    const solutionText = 
+      mainViolationType === 'dvr' ? "Elimina il rischio sospensione con un DVR completo" :
+      mainViolationType === 'formazione' ? "Azzerare la responsabilità penale con formazione certificata" :
+      mainViolationType === 'gestione' ? "Crea un sistema di sicurezza che funziona automaticamente" :
+      "Metti in sicurezza la tua azienda prima del controllo";
+
     return {
       title: `⚠️ RISCHIO ${risk.level.toUpperCase()}`,
       subtitle: `Rischi fino a €${sanctionMax.toLocaleString("it-IT")} di sanzioni e ${consequenceText}`,
       message: `in caso di ispezione con ${violationContext}`,
-      ctaText: "🎯 ANALISI GRATUITA - 15 MIN",
-      ctaSubtext: risk.level === "Alto" ? "Metti subito in sicurezza la tua azienda" :
-                   risk.level === "Medio" ? "Risolvi le criticità prima che sia tardi" :
-                   "Completa la messa a norma definitiva"
+      ctaText: solutionText,
+      ctaAction: "#contact-cta"
     };
   };
 
@@ -87,10 +91,10 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       <Card className="border-2 border-red-600 shadow-xl bg-white">
         <CardContent className="p-4 sm:p-6">
           <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-black text-red-600 mb-3 sm:mb-4">
+            <div className="text-sm text-gray-500 mb-4">
               {heroData.title}
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-red-700 mb-3">
+            <div className="text-3xl sm:text-4xl font-black text-red-600 mb-3 sm:mb-4">
               {heroData.subtitle}
             </div>
             <div className="text-base sm:text-lg text-red-600 font-semibold mb-6">
@@ -141,30 +145,12 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Immediate Primary CTA */}
       <Card className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
         <CardContent className="p-4 sm:p-6 text-center">
-          <div className="space-y-4">
-            <div className="text-lg sm:text-xl font-bold text-white">
-              {heroData.ctaText}
-            </div>
-            <div className="text-sm sm:text-base text-gray-300">
-              {heroData.ctaSubtext}
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <a 
-                href="#contact-cta" 
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
-              >
-                📞 Prenota Subito
-              </a>
-              <a 
-                href={`https://wa.me/393517704451?text=Ciao, ho appena completato il test di sicurezza e sono interessato all'analisi gratuita per la mia azienda.`}
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                💬 WhatsApp
-              </a>
-            </div>
-          </div>
+          <a 
+            href={heroData.ctaAction}
+            className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg transition-colors inline-block text-lg"
+          >
+            {heroData.ctaText}
+          </a>
         </CardContent>
       </Card>
 
