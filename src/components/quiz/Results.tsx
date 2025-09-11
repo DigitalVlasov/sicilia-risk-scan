@@ -159,34 +159,20 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </CardContent>
       </Card>
 
-      {/* CTA Section - Bridge between Hero and Details */}
-      <div className="bg-gray-800 text-white p-6 rounded-lg text-center">
-        {violations.length > 0 ? (
-          <>
-            <p className="text-lg mb-4 font-medium">
-              Non aspettare l'ispezione, risolviamo insieme ogni criticità. Prenota ora una consulenza gratuita.
-            </p>
-            <Button 
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold"
-              onClick={() => window.open('https://wa.me/393123456789?text=Ciao, ho fatto il test di sicurezza e vorrei parlare delle criticità emerse', '_blank')}
-            >
-              📱 Parliamone su WhatsApp
-            </Button>
-          </>
-        ) : (
-          <>
-            <p className="text-lg mb-4 font-medium">
-              Ottimo lavoro! Vuoi un secondo parere professionale per confermare tutto?
-            </p>
-            <Button 
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg font-semibold"
-              onClick={() => window.open('https://wa.me/393123456789?text=Ciao, ho fatto il test di sicurezza e vorrei un secondo parere professionale', '_blank')}
-            >
-              💬 Richiedi Secondo Parere
-            </Button>
-          </>
-        )}
-      </div>
+      {/* CTA Section - Only for violations scenarios */}
+      {violations.length > 0 && (
+        <div className="bg-gray-800 text-white p-6 rounded-lg text-center">
+          <p className="text-lg mb-4 font-medium">
+            Non aspettare l'ispezione, risolviamo insieme ogni criticità. Prenota ora una consulenza gratuita.
+          </p>
+          <Button 
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 text-lg font-semibold"
+            onClick={() => window.open('https://wa.me/393123456789?text=Ciao, ho fatto il test di sicurezza e vorrei parlare delle criticità emerse', '_blank')}
+          >
+            📱 Parliamone su WhatsApp
+          </Button>
+        </div>
+      )}
       
       {/* Violations Detail Card - Secondary Level - Right after Hero */}
       {violations.length > 0 && (
