@@ -190,7 +190,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
             className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 text-sm font-semibold"
             onClick={() => window.open('https://wa.me/393123456789?text=Ciao, ho fatto il test di sicurezza e vorrei parlare delle criticità emerse', '_blank')}
           >
-            📱 Parliamone su WhatsApp
+            → Parliamone su WhatsApp
           </Button>
         </div>
       )}

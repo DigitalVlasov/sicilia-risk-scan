@@ -53,20 +53,23 @@ export const CaseStudyCarousel: React.FC = () => {
     };
   }, [carouselApi]);
 
-  // Autoplay logic
+  // Autoplay logic with dynamic timing
   useEffect(() => {
-    if (!inView || isInteracting || !carouselApi) {
+    if (!inView || !carouselApi) {
       clearTimeouts();
       return;
     }
 
     const startAutoplay = () => {
       clearTimeouts();
+      // Use 12 seconds when interacting, 7 seconds when not
+      const interval = isInteracting ? 12000 : 7000;
+      
       autoplayTimeoutRef.current = setTimeout(() => {
-        if (carouselApi && !isInteracting && inView) {
+        if (carouselApi && inView) {
           carouselApi.scrollNext();
         }
-      }, 7000); // Increased to 7 seconds since details are always visible
+      }, interval);
     };
 
     startAutoplay();
