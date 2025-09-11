@@ -127,15 +127,36 @@ export const CaseStudyCarousel: React.FC = () => {
                         <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                           Criticità rilevata
                         </h4>
-                        <div 
-                          className="text-sm text-foreground space-y-1"
-                          dangerouslySetInnerHTML={{ 
-                            __html: study.challenge
-                              .replace(/\n\n•/g, '<ul class="mt-2 space-y-1"><li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-0.5">•</span><span>')
-                              .replace(/\n•/g, '</span></li><li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-0.5">•</span><span>')
-                              .replace(/$/g, '</span></li></ul>')
-                          }}
-                        />
+                        <div className="text-sm text-foreground space-y-1">
+                          {(() => {
+                            const parts = study.challenge.split('\n\n•', 2);
+                            const firstSentence = parts[0];
+                            const bulletPoints = parts[1] ? '•' + parts[1] : '';
+                            
+                            return (
+                              <>
+                                {/* Prima frase con sfondo rossiccio */}
+                                <div className="bg-red-50 border border-red-200 rounded p-2">
+                                  <span dangerouslySetInnerHTML={{ __html: firstSentence }} />
+                                </div>
+                                
+                                {/* Bullet points con sfondo bianco */}
+                                {bulletPoints && (
+                                  <div className="bg-white rounded p-2">
+                                    <div 
+                                      dangerouslySetInnerHTML={{ 
+                                        __html: bulletPoints
+                                          .replace(/\n•/g, '</span></li><li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-0.5">•</span><span>')
+                                          .replace(/^•/, '<ul class="space-y-1"><li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-0.5">•</span><span>')
+                                          .replace(/$/g, '</span></li></ul>')
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })()}
+                        </div>
                       </div>
                       
                       {/* Benefici operativi */}
