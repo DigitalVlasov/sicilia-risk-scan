@@ -402,7 +402,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Manifatturiero", 
     title: "PMI Metalmeccanica - Provincia Siracusa",
     situation: "Necessità formazione senza budget",
-    challenge: "L'azienda operava in grave violazione normativa con tutto il personale privo di formazione obbligatoria:\n\n• <strong>Rischio penale diretto</strong> per il datore di lavoro ogni giorno lavorativo\n• <strong>Chiusura forzata immediata</strong> in caso di controllo ispettivo\n• <strong>Budget insufficiente</strong> (€2.500+ necessari) per la regolarizzazione\n• <strong>Responsabilità penale totale</strong> in caso di qualsiasi incidente\n• <strong>Impossibilità di continuare</strong> l'attività produttiva legalmente",
+    challenge: "L'azienda aveva **urgenti necessità di adeguamento normativo** per il rinnovo degli attestati di formazione obbligatoria:\n\n• **Perdite operative significative** per il tempo dedicato alla ricerca di enti accreditati\n• **Costi elevati non preventivati** (€2.500+ necessari) per la gestione frammentata\n• **Spreco di risorse interne** nella coordinazione di diversi fornitori di formazione\n• **Rischio di interruzioni produttive** per la difficile pianificazione delle sessioni\n• **Mancanza di controllo sui costi** senza una visione d'insieme dell'investimento formativo",
     solution: [
       "Accesso ai <strong>Fondi Interprofessionali</strong> per formazione gratuita",
       "Erogazione di tutti i percorsi formativi <strong>obbligatori</strong>",
