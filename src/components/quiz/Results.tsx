@@ -34,29 +34,76 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
     return count === 1 ? `${count} criticità rilevata` : `${count} criticità rilevate`;
   };
 
+  const getHeroMessage = () => {
+    if (violations.length === 0) {
+      return {
+        title: "✅ COMPLIMENTI!",
+        subtitle: "La tua azienda rispetta le norme di sicurezza",
+        message: "Ma stai sfruttando tutte le opportunità per eccellere nel tuo settore?",
+        ctaText: "🚀 ANALISI STRATEGICA GRATUITA",
+        ctaSubtext: "Ottimizza per diventare un'eccellenza"
+      };
+    }
+
+    // Get the most severe consequence from violations
+    const mostSevereConsequence = violations
+      .flatMap(v => v.consequences)
+      .find(c => c.toLowerCase().includes('sospensione') || c.toLowerCase().includes('blocco')) ||
+      violations.flatMap(v => v.consequences)
+        .find(c => c.toLowerCase().includes('denuncia') || c.toLowerCase().includes('penale')) ||
+      violations[0]?.consequences[0] || "possibili sanzioni amministrative";
+
+    const consequenceText = mostSevereConsequence.toLowerCase().includes('sospensione') ? 
+      "la sospensione dell'attività" :
+      mostSevereConsequence.toLowerCase().includes('blocco') ?
+      "il blocco dell'attività" :  
+      mostSevereConsequence.toLowerCase().includes('denuncia') ?
+      "possibili denunce penali" :
+      "gravi conseguenze amministrative";
+
+    const mainViolationType = violations[0]?.key;
+    const violationContext = 
+      mainViolationType === 'dvr' ? "gravi violazioni DVR" :
+      mainViolationType === 'formazione' ? "violazioni formative" :
+      mainViolationType === 'gestione' ? "violazioni gestionali" :
+      "violazioni normative";
+
+    return {
+      title: `⚠️ RISCHIO ${risk.level.toUpperCase()}`,
+      subtitle: `Rischi fino a €${sanctionMax.toLocaleString("it-IT")} di sanzioni e ${consequenceText}`,
+      message: `in caso di ispezione con ${violationContext}`,
+      ctaText: "🎯 ANALISI GRATUITA - 15 MIN",
+      ctaSubtext: risk.level === "Alto" ? "Metti subito in sicurezza la tua azienda" :
+                   risk.level === "Medio" ? "Risolvi le criticità prima che sia tardi" :
+                   "Completa la messa a norma definitiva"
+    };
+  };
+
+  const heroData = getHeroMessage();
+
   return (
     <section aria-labelledby="results-title" className="space-y-4 sm:space-y-6">
-      {/* Primary Risk Card - Highest Visual Hierarchy */}
+      {/* Primary Risk Card - Dynamic Hero Section */}
       <Card className="border-2 border-red-600 shadow-xl bg-white">
         <CardContent className="p-4 sm:p-6">
           <div className="text-center">
-            <Badge variant={riskBadgeVariant(risk.level)} className="mb-3 sm:mb-4 text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2">
-              Rischio {risk.level}
-            </Badge>
+            <div className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">
+              {heroData.title}
+            </div>
+            <div className="text-base sm:text-lg font-semibold text-gray-800 mb-2">
+              {heroData.subtitle}
+            </div>
+            <div className="text-sm sm:text-base text-gray-600 mb-4">
+              {heroData.message}
+            </div>
           </div>
           
-          {violations.length > 0 ? (
+          {violations.length > 0 && (
             <div className="mt-4 sm:mt-6">
               <div className="rounded-lg border-2 border-black bg-white p-4 sm:p-6 text-center shadow-inner">
-                <div className="text-3xl sm:text-5xl font-black text-red-600 mb-2 sm:mb-3">
-                  €{sanctionMax.toLocaleString("it-IT")}
-                </div>
-                <div className="text-sm sm:text-base text-black font-semibold">
-                  È la sanzione massima che rischi OGGI se l'ispettore suona il campanello.
-                </div>
                 <button 
                   onClick={() => setShowCalculation(!showCalculation)} 
-                  className="mt-3 text-xs sm:text-sm text-gray-600 hover:text-black font-medium flex items-center justify-center gap-1 mx-auto transition-colors"
+                  className="text-xs sm:text-sm text-gray-600 hover:text-black font-medium flex items-center justify-center gap-1 mx-auto transition-colors"
                 >
                   <span>Come abbiamo ottenuto questa cifra?</span>
                   <span className={`transition-transform ${showCalculation ? 'rotate-180' : ''}`}>▼</span>
@@ -87,14 +134,37 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
                 )}
               </div>
             </div>
-          ) : (
-            <div className="mt-4 sm:mt-6 rounded-lg border-2 border-green-500 bg-green-50 p-4 sm:p-6 text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">🎯 COMPLIMENTI!</div>
-              <div className="text-sm sm:text-base text-green-800 font-semibold">
-                Sulla base delle tue risposte, la tua azienda appare conforme ai controlli ispettivi più frequenti.
-              </div>
-            </div>
           )}
+        </CardContent>
+      </Card>
+
+      {/* Immediate Primary CTA */}
+      <Card className="border-2 border-blue-600 bg-gradient-to-r from-blue-50 to-blue-100 shadow-lg">
+        <CardContent className="p-4 sm:p-6 text-center">
+          <div className="space-y-3">
+            <div className="text-lg sm:text-xl font-bold text-blue-900">
+              {heroData.ctaText}
+            </div>
+            <div className="text-sm sm:text-base text-blue-800">
+              {heroData.ctaSubtext}
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              <a 
+                href="#contact-cta" 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
+              >
+                📞 Prenota Subito
+              </a>
+              <a 
+                href={`https://wa.me/393517704451?text=Ciao, ho appena completato il test di sicurezza e sono interessato all'analisi gratuita per la mia azienda.`}
+                className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                💬 WhatsApp
+              </a>
+            </div>
+          </div>
         </CardContent>
       </Card>
       
