@@ -24,19 +24,35 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         return [
           {
             title: "Audit Organizzativo Personalizzato",
-            description: "Valutazione della tua struttura di controllo e identificazione delle aree da ottimizzare per massimizzare l'efficacia."
+            bullets: [
+              "Valutazione della tua struttura di controllo attuale",
+              "Identificazione aree da ottimizzare per massima efficacia",
+              "Mappatura dei processi critici che richiedono la tua presenza"
+            ]
           },
           {
             title: "Piano di Deleghe Strategiche",
-            description: "Come distribuire le responsabilità mantenendo il controllo operativo e riducendo il carico gestionale."
+            bullets: [
+              "Come distribuire responsabilità mantenendo controllo operativo",
+              "Definizione ruoli e competenze per il tuo team",
+              "Sistema di monitoraggio senza micromanagement"
+            ]
           },
           {
             title: "Analisi Time-Saving",
-            description: "Quantifichiamo esattamente quanto tempo puoi recuperare per il core business automatizzando la compliance."
+            bullets: [
+              "Quantificazione ore recuperabili per il core business",
+              "Automazione processi compliance ripetitivi",
+              "Focus sul tuo valore aggiunto imprenditoriale"
+            ]
           },
           {
             title: "ROI Diretto su Produttività",
-            description: "Calcolo preciso del ritorno economico derivante dalla riduzione del tempo dedicato alla sicurezza."
+            bullets: [
+              "Calcolo preciso del ritorno economico",
+              "Analisi costo-opportunità del tuo tempo",
+              "Proiezione benefici a 12-24 mesi"
+            ]
           }
         ];
       
@@ -44,19 +60,35 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         return [
           {
             title: "Assessment Competenze Interne",
-            description: "Valutazione delle capacità del tuo team e gap formativi per massimizzare l'investimento in risorse."
+            bullets: [
+              "Valutazione capacità del tuo team attuale",
+              "Identificazione gap formativi prioritari",
+              "Piano per massimizzare investimento in risorse"
+            ]
           },
           {
             title: "Sistema di Supporto Specialistico",
-            description: "Come integrare expertise esterna senza sostituire le risorse interne, potenziandone l'efficacia."
+            bullets: [
+              "Integrazione expertise esterna senza sostituzioni",
+              "Potenziamento efficacia risorse interne",
+              "Backup professionale per situazioni critiche"
+            ]
           },
           {
             title: "Formazione Mirata del Personale",
-            description: "Piano di sviluppo specifico per il tuo referente interno con focus su competenze critiche."
+            bullets: [
+              "Piano sviluppo specifico per referente interno",
+              "Focus su competenze critiche mancanti",
+              "Certificazioni e aggiornamenti normativi"
+            ]
           },
           {
             title: "Analisi Efficienza Costi",
-            description: "Confronto trasparente tra gestione interna potenziata vs esternalizzazione completa con analisi ROI."
+            bullets: [
+              "Confronto gestione interna vs esternalizzazione",
+              "Analisi ROI investimento in formazione",
+              "Ottimizzazione budget sicurezza aziendale"
+            ]
           }
         ];
       
@@ -64,19 +96,35 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         return [
           {
             title: "Benchmark di Mercato",
-            description: "Confronto performance del tuo consulente attuale vs standard di settore e best practice."
+            bullets: [
+              "Confronto performance consulente attuale vs standard",
+              "Analisi best practice di settore",
+              "Verifica rapporto qualità-prezzo dei servizi"
+            ]
           },
           {
             title: "Gap Analysis Servizi",
-            description: "Identificazione di servizi mancanti o sottoperformanti nella gestione attuale."
+            bullets: [
+              "Identificazione servizi mancanti o sottoperformanti",
+              "Analisi copertura normativa completa",
+              "Valutazione proattività vs reattività"
+            ]
           },
           {
             title: "Ottimizzazione Rapporto Qualità-Prezzo",
-            description: "Come ottenere più valore dall'investimento in consulenza o ridurre i costi mantenendo la qualità."
+            bullets: [
+              "Come ottenere più valore dall'investimento",
+              "Negoziazione servizi aggiuntivi a parità di costo",
+              "Alternative per ridurre costi mantenendo qualità"
+            ]
           },
           {
             title: "Sistema di Controllo e KPI",
-            description: "Metriche concrete per misurare l'efficacia del consulente e garantire risultati tangibili."
+            bullets: [
+              "Metriche concrete per misurare efficacia",
+              "Dashboard di monitoraggio performance",
+              "Garanzie su risultati e tempistiche"
+            ]
           }
         ];
       
@@ -84,19 +132,35 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         return [
           {
             title: "Audit Coordinamento Multi-Fornitore",
-            description: "Analisi delle inefficienze generate dalla gestione frammentata e costi nascosti."
+            bullets: [
+              "Analisi inefficienze da gestione frammentata",
+              "Identificazione costi nascosti e sovrapposizioni",
+              "Mappatura responsabilità e competenze"
+            ]
           },
           {
             title: "Strategia di Unificazione",
-            description: "Piano per centralizzare la gestione mantenendo le specializzazioni necessarie."
+            bullets: [
+              "Piano centralizzazione mantenendo specializzazioni",
+              "Eliminazione duplicazioni e conflitti",
+              "Semplificazione flussi informativi"
+            ]
           },
           {
             title: "Calcolo Saving da Semplificazione",
-            description: "Quantificazione precisa dei risparmi ottenibili eliminando sovrapposizioni e duplicazioni."
+            bullets: [
+              "Quantificazione risparmi da eliminazione sovrapposizioni",
+              "Riduzione costi amministrativi e coordinamento",
+              "Ottimizzazione tempi di gestione"
+            ]
           },
           {
             title: "Sistema di Controllo Unificato",
-            description: "Dashboard centralizzato per monitorare performance, scadenze e costi di tutti i fornitori."
+            bullets: [
+              "Dashboard centralizzato multi-fornitore",
+              "Monitoraggio performance, scadenze e costi",
+              "Reporting unificato per decisioni strategiche"
+            ]
           }
         ];
       
@@ -104,19 +168,35 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         return [
           {
             title: "Check-up Conformità 2025",
-            description: "La tua posizione rispetto ai nuovi obblighi normativi."
+            bullets: [
+              "Posizione rispetto ai nuovi obblighi normativi",
+              "Identificazione gap critici da colmare",
+              "Priorità di intervento personalizzate"
+            ]
           },
           {
             title: "Piano Strategico",
-            description: "Le date da cerchiare in rosso sul calendario."
+            bullets: [
+              "Date critiche da cerchiare in rosso",
+              "Roadmap adempimenti scaglionati nel tempo",
+              "Gestione proattiva vs reattiva delle scadenze"
+            ]
           },
           {
             title: "Analisi Formazione Finanziata",
-            description: "Verifica opportunità formative gratuite con i Fondi Interprofessionali."
+            bullets: [
+              "Verifica opportunità Fondi Interprofessionali",
+              "Calcolo formazione gratuita disponibile",
+              "Ottimizzazione budget formativo aziendale"
+            ]
           },
           {
             title: "Confronto Economico Trasparente",
-            description: "Analisi dettagliata costi attuali vs benefici del nuovo sistema con ROI previsto."
+            bullets: [
+              "Analisi costi attuali vs nuovo sistema",
+              "Calcolo ROI previsto su 12-24 mesi",
+              "Valutazione costo-opportunità inazione"
+            ]
           }
         ];
     }
@@ -151,13 +231,21 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         <h4 className="font-bold text-center mb-3 text-sm sm:text-base">
           Cosa otterrai (gratuitamente):
         </h4>
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {checklist.map((item, index) => (
             <li key={index} className="flex items-start">
               <span className="text-green-500 mr-2 font-bold">✓</span>
-              <span>
-                <strong>{item.title}:</strong> {item.description}
-              </span>
+              <div>
+                <div className="font-bold mb-1">{item.title}:</div>
+                <ul className="space-y-1 ml-2">
+                  {item.bullets.map((bullet, bulletIndex) => (
+                    <li key={bulletIndex} className="flex items-start text-sm">
+                      <span className="text-green-400 mr-1 text-xs">•</span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </li>
           ))}
         </ul>
