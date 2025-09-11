@@ -402,7 +402,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Manifatturiero", 
     title: "PMI Metalmeccanica - Provincia Siracusa",
     situation: "Necessità formazione senza budget",
-    challenge: "L'azienda aveva urgenti necessità di adeguamento normativo per il rinnovo degli attestati di formazione obbligatoria:\n\n• <strong>Perdite operative</strong> per ricerca enti accreditati\n• <strong>Costi elevati</strong> (€2.500+) non preventivati\n• <strong>Spreco di risorse</strong> nella coordinazione fornitori\n• <strong>Interruzioni produttive</strong> per pianificazione complessa\n• <strong>Zero controllo costi</strong> formativi",
+    challenge: "L'azienda aveva urgenti necessità di adeguamento normativo per il rinnovo degli attestati di formazione obbligatoria:\n\n• <strong>Spreco di tempo</strong> per ricerca enti accreditati\n• <strong>Costi elevati</strong> (€2.500+) non preventivati\n• <strong>Spreco di risorse</strong> nella coordinazione fornitori\n• <strong>Interruzioni produttive</strong> per pianificazione complessa\n• <strong>Zero controllo costi</strong> formativi",
     solution: [
       "Accesso ai <strong>Fondi Interprofessionali</strong> per formazione gratuita",
       "Erogazione di tutti i percorsi formativi <strong>obbligatori</strong>",
