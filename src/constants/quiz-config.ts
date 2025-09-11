@@ -420,8 +420,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     challenge: "L'azienda doveva superare un AUDIT di consulenti esterni su sicurezza e salubrità ambienti, con richieste molto specifiche.",
     solution: [
       "Team multidisciplinare di specialisti coordinati",
-      "Piano Emergenza personalizzato per audit specifico",
+      "Piano Emergenza personalizzato per audit specifico", 
       "DVR realizzato su misura per le richieste",
+      "Coordinamento completo di tutti i fornitori senza stress aggiuntivo",
       "Supporto tecnico completo DPI ed estintori"
     ],
     result: "Superamento dell'AUDIT con valutazione positiva",

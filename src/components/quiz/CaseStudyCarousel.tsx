@@ -66,7 +66,7 @@ export const CaseStudyCarousel: React.FC = () => {
         if (carouselApi && !isInteracting && inView) {
           carouselApi.scrollNext();
         }
-      }, 4000); // Increased to 4 seconds since details are always visible
+      }, 7000); // Increased to 7 seconds since details are always visible
     };
 
     startAutoplay();
