@@ -174,14 +174,16 @@ export const CaseStudyCarousel: React.FC = () => {
                            </div>
                          </div>
                          
-                         <ul className="space-y-1">
-                           {study.solution.map((benefit, idx) => (
-                             <li key={idx} className="text-sm text-foreground flex items-start bg-white rounded p-2 border border-gray-100">
-                               <span className="text-green-600 mr-2 mt-0.5">•</span>
-                               <span dangerouslySetInnerHTML={{ __html: benefit }} />
-                             </li>
-                           ))}
-                         </ul>
+                         <div className="bg-white rounded p-2 border border-gray-100">
+                           <ul className="space-y-1">
+                             {study.solution.map((benefit, idx) => (
+                               <li key={idx} className="text-sm text-foreground flex items-start">
+                                 <span className="text-green-600 mr-2 mt-0.5">•</span>
+                                 <span dangerouslySetInnerHTML={{ __html: benefit }} />
+                               </li>
+                             ))}
+                           </ul>
+                         </div>
                        </div>
                     </div>
                     
