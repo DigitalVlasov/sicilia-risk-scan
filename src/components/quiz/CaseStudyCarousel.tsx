@@ -137,7 +137,13 @@ export const CaseStudyCarousel: React.FC = () => {
                               <>
                                 {/* Prima frase con sfondo rossiccio */}
                                 <div className="bg-red-50 border border-red-200 rounded p-2">
+                                  <div className="font-semibold text-red-800 mb-1">
+                                    <strong>Situazione critica rilevata:</strong>
+                                  </div>
                                   <span dangerouslySetInnerHTML={{ __html: firstSentence }} />
+                                  <div className="text-xs text-red-600 mt-1 font-medium">
+                                    <strong>↓ Rischi concreti che stavano correndo:</strong>
+                                  </div>
                                 </div>
                                 
                                 {/* Bullet points con sfondo bianco */}
