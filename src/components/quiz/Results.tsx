@@ -167,67 +167,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Bridge CTA */}
       <BridgeCTA risk={risk} violations={violations} answers={answers} />
       
-      {/* How it works section - Before Contact CTA */}
-      <Card className="border border-gray-300 shadow-lg bg-white">
-        <CardHeader className="border-b border-gray-200">
-          <CardTitle className="text-lg sm:text-xl font-bold text-black">
-            {violations.length > 0 ? "Come funziona in pratica (3 step)" : "Come ottimizziamo il tuo sistema (3 step)"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 sm:p-6">
-          <div className="space-y-4">
-            {violations.length > 0 ? (
-              <>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
-                  <div>
-                    <h4 className="font-semibold text-black mb-1">Analisi e configurazione iniziale</h4>
-                    <p className="text-sm text-gray-600">Configuriamo il sistema in base alle tue esigenze specifiche entro 48h dall'attivazione</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
-                  <div>
-                    <h4 className="font-semibold text-black mb-1">Implementazione e formazione</h4>
-                    <p className="text-sm text-gray-600">Ti formiamo sull'utilizzo e integriamo il sistema con i tuoi processi attuali</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
-                  <div>
-                    <h4 className="font-semibold text-black mb-1">Supporto continuo</h4>
-                    <p className="text-sm text-gray-600">Assistenza costante e aggiornamenti automatici per garantire sempre la conformità</p>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
-                  <div>
-                    <h4 className="font-semibold text-black mb-1">Analisi del tuo sistema attuale</h4>
-                    <p className="text-sm text-gray-600">Studiamo i tuoi processi per individuare margini di ottimizzazione senza stravolgere ciò che già funziona</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
-                  <div>
-                    <h4 className="font-semibold text-black mb-1">Integrazione graduale</h4>
-                    <p className="text-sm text-gray-600">Implementiamo miglioramenti graduali che si integrano con i tuoi processi esistenti</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
-                  <div>
-                    <h4 className="font-semibold text-black mb-1">Ottimizzazione continua</h4>
-                    <p className="text-sm text-gray-600">Monitoriamo i risultati e continuiamo a migliorare efficienza e velocità dei tuoi processi</p>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </CardContent>
-      </Card>
       
       <div id="contact-cta">
         <ContactCTA risk={risk} sector={answers.settore} answers={answers} />
