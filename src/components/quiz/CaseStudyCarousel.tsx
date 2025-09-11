@@ -115,9 +115,6 @@ export const CaseStudyCarousel: React.FC = () => {
                   <div className="border border-border rounded-lg p-4 bg-muted/30">
                     <div className="mb-3">
                       <h3 className="font-semibold text-foreground mb-2">{study.title}</h3>
-                      <span className="text-xs px-2 py-1 rounded bg-destructive text-destructive-foreground">
-                        {study.situation}
-                      </span>
                     </div>
 
                     {/* Dettagli sempre visibili */}
@@ -135,16 +132,16 @@ export const CaseStudyCarousel: React.FC = () => {
                             
                             return (
                               <>
-                                {/* Prima frase con sfondo rossiccio */}
-                                <div className="bg-red-50 border border-red-200 rounded p-2">
-                                  <div className="font-semibold text-red-800 mb-1">
-                                    <strong>Situazione critica rilevata:</strong>
-                                  </div>
-                                  <span dangerouslySetInnerHTML={{ __html: firstSentence }} />
-                                  <div className="text-xs text-red-600 mt-1 font-medium">
-                                    <strong>↓ Rischi concreti che stavano correndo:</strong>
-                                  </div>
-                                </div>
+                                 {/* Prima frase con sfondo rossiccio */}
+                                 <div className="bg-red-50 border border-red-200 rounded p-2">
+                                   <div className="font-semibold text-red-800 mb-1">
+                                     <strong>Situazione critica rilevata: {study.situation}</strong>
+                                   </div>
+                                   <span dangerouslySetInnerHTML={{ __html: firstSentence }} />
+                                   <div className="text-xs text-red-600 mt-1 font-medium">
+                                     <strong>↓ Rischi concreti che stavano correndo:</strong>
+                                   </div>
+                                 </div>
                                 
                                 {/* Bullet points con sfondo bianco */}
                                 {bulletPoints && (
