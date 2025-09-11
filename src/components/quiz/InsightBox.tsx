@@ -180,8 +180,11 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
     // Convert any existing anchor tags to point to the contact CTA section (above FAQ)
     processedText = processedText.replace(/<a\s+[^>]*href\s*=\s*["'][^"']*["'][^>]*>/gi, '<a href="#contact-cta" class="text-red-600 hover:text-red-800 font-semibold underline transition-colors">');
     
-    // Convert common CTA phrases to links
-    processedText = processedText.replace(/\b(analisi gratuita|consulenza gratuita|valutazione gratuita|scopri come|vedi come|analisi completa)\b/gi, '<a href="#contact-cta" class="text-red-600 hover:text-red-800 font-semibold underline transition-colors">$1</a>');
+    // Convert common CTA phrases to links with more intuitive button-like styling
+    processedText = processedText.replace(/\b(analisi gratuita|consulenza gratuita|valutazione gratuita|scopri come|vedi come|analisi completa)\b/gi, '<a href="#contact-cta" class="inline-flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-1 rounded-md transition-all duration-200 shadow-sm hover:shadow-md no-underline">$1 →</a>');
+    
+    // Convert action phrases to more prominent CTAs
+    processedText = processedText.replace(/\b(prenota ora|richiedi ora|contattaci|parlane con noi|fissa un appuntamento)\b/gi, '<a href="#contact-cta" class="inline-flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg no-underline">$1 →</a>');
     
     // Financial amounts and percentages
     processedText = processedText.replace(/€\s*[\d.,]+/g, '<strong>$&</strong>');
