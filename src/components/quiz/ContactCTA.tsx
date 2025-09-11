@@ -88,7 +88,7 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
         Analisi Strategica Gratuita
       </h2>
       
-      <p className="text-base sm:text-lg text-gray-700 mb-6 max-w-xl mx-auto">
+      <p className="text-sm text-gray-700 mb-6 max-w-xl mx-auto">
         Solo per chi ha completato questo test, abbiamo riservato 1 slot gratuito questo mese con il nostro Specialista Senior.
       </p>
       
