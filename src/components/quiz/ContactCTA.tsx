@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Risk, QuizAnswers } from "../../types";
 import { APP_CONFIG } from "../../constants/quiz-config";
@@ -67,6 +67,36 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
   };
 
   const checklist = getChecklistByManagement();
+  
+  // Dynamic slot counter
+  const [slotsLeft, setSlotsLeft] = useState(10);
+  
+  useEffect(() => {
+    const targetSlots = Math.floor(Math.random() * 3) + 2; // Random between 2-4
+    let currentSlots = 10;
+    let timeoutId: NodeJS.Timeout;
+    
+    const updateSlots = () => {
+      if (currentSlots > targetSlots) {
+        currentSlots--;
+        setSlotsLeft(currentSlots);
+        
+        // Calculate delay: shorter at beginning, longer as we progress
+        const progress = (10 - currentSlots) / (10 - targetSlots);
+        const baseDelay = 2000; // 2 seconds
+        const maxDelay = 8000; // 8 seconds
+        const delay = baseDelay + (maxDelay - baseDelay) * Math.pow(progress, 2);
+        
+        timeoutId = setTimeout(updateSlots, delay);
+      }
+    };
+    
+    // Start countdown after 3 seconds
+    timeoutId = setTimeout(updateSlots, 3000);
+    
+    return () => clearTimeout(timeoutId);
+  }, []);
+  
   const whatsappHref = React.useMemo(() => {
     let message = `Ciao Spazio Impresa! Ho completato il test di conformità. `;
     
@@ -122,7 +152,10 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
       </div>
       
       <p className="text-sm sm:text-base text-gray-600 mt-4">
-        <strong>🏠 Riservato ad aziende siciliane</strong> • Risposta entro 2h in orario di lavoro
+        <strong>🏠 Riservato ad aziende siciliane</strong> • 
+        <span className="font-semibold text-orange-600">
+          Solo {slotsLeft} slot rimasti disponibili
+        </span>
       </p>
     </div>;
 };
