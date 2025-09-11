@@ -95,7 +95,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           <div className="text-center">
             {/* Risk Badge - Oval shape with colors based on risk level */}
             {violations.length > 0 ? (
-              <div className={`inline-flex items-center px-6 py-3 rounded-full mb-4 ${
+              <div className={`inline-flex items-center px-6 py-3 rounded-full mb-2 ${
                 risk.level === 'Alto' ? 'bg-red-100 text-red-800 border-2 border-red-300' :
                 risk.level === 'Medio' ? 'bg-orange-100 text-orange-800 border-2 border-orange-300' :
                 'bg-yellow-100 text-yellow-800 border-2 border-yellow-300'
@@ -103,19 +103,19 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
                 <span className="font-bold text-sm sm:text-base">RISCHIO {risk.level.toUpperCase()}</span>
               </div>
             ) : (
-              <div className="inline-flex items-center px-6 py-3 rounded-full mb-4 bg-green-100 text-green-800 border-2 border-green-300">
+              <div className="inline-flex items-center px-6 py-3 rounded-full mb-2 bg-green-100 text-green-800 border-2 border-green-300">
                 <span className="font-bold text-sm sm:text-base">✅ COMPLIMENTI!</span>
               </div>
             )}
             
-            {/* Main message with sanctions - less prominent */}
-            <div className="text-xl sm:text-2xl font-bold text-gray-800 mb-3">
-              {heroData.subtitle}
+            {/* Small phrase below badge */}
+            <div className="text-xs sm:text-sm text-gray-600 font-medium mb-4">
+              {heroData.message}
             </div>
             
-            {/* Subhead in black */}
-            <div className="text-base sm:text-lg text-black font-medium mb-6">
-              {heroData.message}
+            {/* Main message with sanctions - less prominent */}
+            <div className="text-xl sm:text-2xl font-bold text-gray-800 mb-6">
+              {heroData.subtitle}
             </div>
           </div>
           
