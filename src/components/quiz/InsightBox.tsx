@@ -189,7 +189,7 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
               {section.type === 'warning' && (
                 <div className="bg-gray-800 rounded-lg p-4 my-4">
                   <div 
-                    className="text-sm text-white leading-relaxed"
+                    className="text-sm sm:text-base text-white leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: section.text }}
                   />
                 </div>
@@ -198,7 +198,7 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
               {section.type === 'gap' && (
                 <div className="bg-gray-800 rounded-lg p-4 my-4">
                   <div 
-                    className="text-sm text-white leading-relaxed"
+                    className="text-sm sm:text-base text-white leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: section.text }}
                   />
                 </div>
