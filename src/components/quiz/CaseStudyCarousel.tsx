@@ -119,14 +119,6 @@ export const CaseStudyCarousel: React.FC = () => {
                         {study.situation}
                       </span>
                     </div>
-                    
-                    {/* Risultato in evidenza */}
-                    <div className="bg-green-50 border border-green-200 rounded p-3 mb-3">
-                      <p 
-                        className="text-sm text-green-800 font-medium"
-                        dangerouslySetInnerHTML={{ __html: study.result }}
-                      />
-                    </div>
 
                     {/* Dettagli sempre visibili */}
                     <div className="space-y-3 mt-3">
@@ -155,6 +147,14 @@ export const CaseStudyCarousel: React.FC = () => {
                           ))}
                         </ul>
                       </div>
+                    </div>
+                    
+                    {/* Risultato in evidenza - spostato in basso */}
+                    <div className="bg-green-50 border border-green-200 rounded p-3 mt-4">
+                      <p 
+                        className="text-sm text-green-800 font-medium"
+                        dangerouslySetInnerHTML={{ __html: study.result }}
+                      />
                     </div>
                   </div>
                 </CarouselItem>

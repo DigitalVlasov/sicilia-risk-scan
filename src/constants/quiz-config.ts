@@ -387,7 +387,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Alimentare",
     title: "Azienda Dolciaria - Provincia Catania",
     situation: "Controllo ispettivo in corso",
-    challenge: "L'azienda ha ricevuto un <strong>controllo ispettivo</strong> e necessitava di <strong>adeguarsi rapidamente</strong> alla normativa sulla sicurezza aziendale.",
+    challenge: "L'azienda aveva ricevuto un <strong>controllo ispettivo a sorpresa</strong> e rischiava la <strong>sospensione immediata dell'attività</strong> con perdite economiche devastanti. Mancavano documenti critici come DVR aggiornato, attestati di formazione validi e il Piano di Emergenza. <strong>Ogni giorno di ritardo significava potenziali sanzioni cumulative</strong> e l'impossibilità di continuare la produzione durante il periodo natalizio, il più redditizio dell'anno.",
     solution: [
       "<strong>Formazione Art. 37</strong> organizzata direttamente in azienda",
       "Figure aziendali <strong>certificate</strong> tramite Ente Accreditato",
@@ -402,7 +402,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Manifatturiero", 
     title: "PMI Metalmeccanica - Provincia Siracusa",
     situation: "Necessità formazione senza budget",
-    challenge: "L'azienda doveva formare tutto il personale sulla sicurezza ma <strong>non aveva budget</strong> disponibile per i corsi obbligatori.",
+    challenge: "L'azienda era in <strong>grave violazione normativa</strong> con tutto il personale operativo privo di formazione obbligatoria sulla sicurezza. <strong>Ogni giorno lavorativo rappresentava un rischio penale diretto</strong> per il datore di lavoro. La mancanza di budget (oltre €2.500 necessari) rendeva impossibile la regolarizzazione, <strong>esponendo l'azienda a chiusura forzata</strong> e responsabilità penali in caso di qualsiasi incidente, anche minore.",
     solution: [
       "Accesso ai <strong>Fondi Interprofessionali</strong> per formazione gratuita",
       "Erogazione di tutti i percorsi formativi <strong>obbligatori</strong>",
@@ -417,7 +417,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Tessile",
     title: "Azienda Confezioni - Provincia Messina", 
     situation: "AUDIT esterno imminente",
-    challenge: "L'azienda doveva superare un <strong>AUDIT di consulenti esterni</strong> su sicurezza e salubrità ambienti, con <strong>richieste molto specifiche</strong>.",
+    challenge: "L'azienda doveva superare un <strong>AUDIT critico di consulenti esterni</strong> commissionato dal cliente principale (che rappresentava il 70% del fatturato). <strong>Il fallimento dell'audit significava perdere il contratto principale</strong> e potenzialmente chiudere l'attività. Le richieste erano estremamente specifiche e tecniche, con <strong>zero margine di errore</strong> e tempi strettissimi per l'adeguamento completo.",
     solution: [
       "<strong>Team multidisciplinare</strong> di specialisti coordinati",
       "Piano Emergenza <strong>personalizzato</strong> per audit specifico", 
