@@ -230,7 +230,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       </Card>
       
       <div id="contact-cta">
-        <ContactCTA risk={risk} sector={answers.settore} />
+        <ContactCTA risk={risk} sector={answers.settore} answers={answers} />
       </div>
       
       {/* Solutions Card - Premium Dark Theme - Show for all scenarios when benefits exist */}

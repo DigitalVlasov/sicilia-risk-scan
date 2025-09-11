@@ -1,17 +1,128 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { Risk } from "../../types";
+import { Risk, QuizAnswers } from "../../types";
 import { APP_CONFIG } from "../../constants/quiz-config";
 import { getSectorName } from "../../utils/quiz-helpers";
 import { UNIFIED_STYLES } from "../../constants/design-tokens";
 interface ContactCTAProps {
   risk: Risk;
   sector?: string;
+  answers: QuizAnswers;
 }
+
 export const ContactCTA: React.FC<ContactCTAProps> = ({
   risk,
-  sector
+  sector,
+  answers
 }) => {
+  // Get dynamic checklist based on management type
+  const getChecklistByManagement = () => {
+    const managementType = answers.gestione;
+    
+    switch (managementType) {
+      case "gestisco-io":
+        return [
+          {
+            title: "Audit Organizzativo Personalizzato",
+            description: "Valutazione della tua struttura di controllo e identificazione delle aree da ottimizzare per massimizzare l'efficacia."
+          },
+          {
+            title: "Piano di Deleghe Strategiche",
+            description: "Come distribuire le responsabilità mantenendo il controllo operativo e riducendo il carico gestionale."
+          },
+          {
+            title: "Analisi Time-Saving",
+            description: "Quantifichiamo esattamente quanto tempo puoi recuperare per il core business automatizzando la compliance."
+          },
+          {
+            title: "ROI Diretto su Produttività",
+            description: "Calcolo preciso del ritorno economico derivante dalla riduzione del tempo dedicato alla sicurezza."
+          }
+        ];
+      
+      case "interno":
+        return [
+          {
+            title: "Assessment Competenze Interne",
+            description: "Valutazione delle capacità del tuo team e gap formativi per massimizzare l'investimento in risorse."
+          },
+          {
+            title: "Sistema di Supporto Specialistico",
+            description: "Come integrare expertise esterna senza sostituire le risorse interne, potenziandone l'efficacia."
+          },
+          {
+            title: "Formazione Mirata del Personale",
+            description: "Piano di sviluppo specifico per il tuo referente interno con focus su competenze critiche."
+          },
+          {
+            title: "Analisi Efficienza Costi",
+            description: "Confronto trasparente tra gestione interna potenziata vs esternalizzazione completa con analisi ROI."
+          }
+        ];
+      
+      case "consulente":
+        return [
+          {
+            title: "Benchmark di Mercato",
+            description: "Confronto performance del tuo consulente attuale vs standard di settore e best practice."
+          },
+          {
+            title: "Gap Analysis Servizi",
+            description: "Identificazione di servizi mancanti o sottoperformanti nella gestione attuale."
+          },
+          {
+            title: "Ottimizzazione Rapporto Qualità-Prezzo",
+            description: "Come ottenere più valore dall'investimento in consulenza o ridurre i costi mantenendo la qualità."
+          },
+          {
+            title: "Sistema di Controllo e KPI",
+            description: "Metriche concrete per misurare l'efficacia del consulente e garantire risultati tangibili."
+          }
+        ];
+      
+      case "studi-multipli":
+        return [
+          {
+            title: "Audit Coordinamento Multi-Fornitore",
+            description: "Analisi delle inefficienze generate dalla gestione frammentata e costi nascosti."
+          },
+          {
+            title: "Strategia di Unificazione",
+            description: "Piano per centralizzare la gestione mantenendo le specializzazioni necessarie."
+          },
+          {
+            title: "Calcolo Saving da Semplificazione",
+            description: "Quantificazione precisa dei risparmi ottenibili eliminando sovrapposizioni e duplicazioni."
+          },
+          {
+            title: "Sistema di Controllo Unificato",
+            description: "Dashboard centralizzato per monitorare performance, scadenze e costi di tutti i fornitori."
+          }
+        ];
+      
+      default:
+        return [
+          {
+            title: "Check-up Conformità 2025",
+            description: "La tua posizione rispetto ai nuovi obblighi normativi."
+          },
+          {
+            title: "Piano Strategico",
+            description: "Le date da cerchiare in rosso sul calendario."
+          },
+          {
+            title: "Analisi Formazione Finanziata",
+            description: "Verifica opportunità formative gratuite con i Fondi Interprofessionali."
+          },
+          {
+            title: "Confronto Economico Trasparente",
+            description: "Analisi dettagliata costi attuali vs benefici del nuovo sistema con ROI previsto."
+          }
+        ];
+    }
+  };
+
+  const checklist = getChecklistByManagement();
   const whatsappHref = React.useMemo(() => {
     let message = `Ciao Spazio Impresa! Ho completato il test di conformità. `;
     
@@ -41,30 +152,14 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
           Cosa otterrai (gratuitamente):
         </h4>
         <ul className="space-y-2">
-          <li className="flex items-start">
-            <span className="text-green-500 mr-2 font-bold">✓</span>
-            <span>
-              <strong>Check-up Conformità {APP_CONFIG.version}:</strong> La tua posizione rispetto ai nuovi obblighi normativi.
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-500 mr-2 font-bold">✓</span>
-            <span>
-              <strong>Piano Strategico</strong> Le date da cerchiare in rosso sul calendario.
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-500 mr-2 font-bold">✓</span>
-            <span>
-              <strong>Analisi Formazione Finanziata:</strong> Verifica opportunità formative gratuite con i Fondi Interprofessionali.
-            </span>
-          </li>
-          <li className="flex items-start">
-            <span className="text-green-500 mr-2 font-bold">✓</span>
-            <span>
-              <strong>Confronto Economico Trasparente:</strong> Analisi dettagliata costi attuali vs benefici del nuovo sistema con ROI previsto.
-            </span>
-          </li>
+          {checklist.map((item, index) => (
+            <li key={index} className="flex items-start">
+              <span className="text-green-500 mr-2 font-bold">✓</span>
+              <span>
+                <strong>{item.title}:</strong> {item.description}
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
       
