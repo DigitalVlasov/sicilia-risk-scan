@@ -177,6 +177,12 @@ export const InsightBox: React.FC<InsightBoxProps> = ({
   const applyKeyTermBolding = (text: string): string => {
     let processedText = text;
     
+    // Convert any existing anchor tags to point to the benefits section
+    processedText = processedText.replace(/<a\s+[^>]*href\s*=\s*["'][^"']*["'][^>]*>/gi, '<a href="#vantaggi-completi" class="text-red-600 hover:text-red-800 font-semibold underline transition-colors">');
+    
+    // Convert common CTA phrases to links
+    processedText = processedText.replace(/\b(analisi gratuita|consulenza gratuita|valutazione gratuita|scopri come|vedi come|analisi completa)\b/gi, '<a href="#vantaggi-completi" class="text-red-600 hover:text-red-800 font-semibold underline transition-colors">$1</a>');
+    
     // Financial amounts and percentages
     processedText = processedText.replace(/€\s*[\d.,]+/g, '<strong>$&</strong>');
     processedText = processedText.replace(/(\d+(?:[.,]\d+)?)\s*%/g, '<strong>$1%</strong>');
