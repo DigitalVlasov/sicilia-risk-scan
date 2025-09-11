@@ -15,63 +15,53 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
   sector,
   answers
 }) => {
-  // Get dynamic checklist based on management type
+  // Get dynamic analysis steps that bridge from diagnosed situation to final benefits
   const getChecklistByManagement = () => {
     const managementType = answers.gestione;
     
     switch (managementType) {
       case "gestisco-io":
         return [
-          "Identificazione <strong>ore recuperabili</strong> per il core business (quantificazione precisa)",
-          "Piano <strong>deleghe immediate</strong> senza perdere controllo operativo",
-          "Calcolo <strong>ROI economico</strong> su automazione processi sicurezza",
-          "Sistema <strong>monitoraggio efficace</strong> senza micromanagement del team",
-          "Valutazione <strong>costo-opportunità</strong> del tuo tempo imprenditoriale",
-          "Roadmap <strong>ottimizzazione struttura</strong> di controllo aziendale"
+          "Calcolo preciso <strong>ore settimanali</strong> che recuperi per il business core",
+          "Quantificazione <strong>valore economico</strong> del tuo tempo imprenditoriale attuale", 
+          "Sistema <strong>controllo totale</strong> senza più perdere tempo in burocrazia",
+          "Roadmap <strong>deleghe automatiche</strong> mantenendo decisioni sempre tue",
+          "Confronto <strong>costi attuali</strong> vs automazione che lavora H24"
         ];
       
       case "interno":
         return [
-          "Assessment <strong>competenze critiche</strong> del tuo referente interno",
-          "Identificazione <strong>gap formativi</strong> prioritari da colmare subito",
-          "Piano <strong>potenziamento risorse</strong> esistenti senza nuove assunzioni",
-          "Sistema <strong>backup professionale</strong> per emergenze e ferie",
-          "Integrazione <strong>expertise esterna</strong> senza sostituire il team",
-          "Confronto <strong>efficienza costi</strong> gestione interna vs esternalizzazione",
-          "Percorso <strong>crescita professionale</strong> referente con certificazioni"
+          "Assessment <strong>sovraccarico effettivo</strong> della tua risorsa interna",
+          "Calcolo <strong>costi nascosti</strong> di errori/ritardi per overload",
+          "Piano <strong>alleggerimento operativo</strong> senza assumere personale",
+          "Sistema <strong>backup professionale</strong> per ferie/emergenze automatico",
+          "Confronto <strong>stress attuale</strong> vs gestione semplificata"
         ];
       
       case "consulente":
         return [
-          "Benchmark <strong>performance attuale</strong> vs standard di mercato",
-          "Verifica <strong>rapporto qualità-prezzo</strong> dei servizi ricevuti",
-          "Identificazione <strong>servizi mancanti</strong> o sottoperformanti",
-          "Piano <strong>ottimizzazione costi</strong> mantenendo la qualità",
-          "Sistema <strong>controllo qualità</strong> e KPI misurabili",
-          "Negoziazione <strong>servizi aggiuntivi</strong> a parità di investimento",
-          "Valutazione <strong>alternative di mercato</strong> per confronto trasparente"
+          "Benchmark <strong>tempi di risposta</strong> attuali vs accesso immediato 24/7",
+          "Quantificazione <strong>costi nascosti</strong> dei ritardi nelle urgenze",
+          "Piano <strong>mantenimento consulente</strong> + strumenti avanzati per lui",
+          "Sistema <strong>controllo condiviso</strong> senza dipendere dalla sua agenda",
+          "Calcolo <strong>ottimizzazione costi</strong> con servizi potenziati"
         ];
       
       case "studi-multipli":
-        return [
-          "Analisi <strong>costi nascosti</strong> della gestione frammentata attuale",
-          "Mappatura <strong>sovrapposizioni</strong> e duplicazioni tra fornitori",
-          "Quantificazione <strong>risparmi immediati</strong> da centralizzazione",
-          "Piano <strong>unificazione graduale</strong> senza interruzioni operative",
-          "Dashboard <strong>controllo centralizzato</strong> di tutti i fornitori",
-          "Eliminazione <strong>conflitti competenze</strong> e responsabilità",
-          "Sistema <strong>reporting unificato</strong> per decisioni strategiche",
-          "Calcolo <strong>tempo risparmiato</strong> nel coordinamento quotidiano"
+        return [  
+          "Mappatura <strong>tempo perso</strong> nel coordinamento quotidiano tra fornitori",
+          "Quantificazione <strong>risparmi immediati</strong> eliminando sovrapposizioni",
+          "Sistema <strong>cabina di regia</strong> per tutti i tuoi consulenti",
+          "Eliminazione <strong>comunicazioni frammentate</strong> e responsabilità divise",
+          "Confronto <strong>complessità attuale</strong> vs coordinamento centralizzato"
         ];
       
       default:
         return [
-          "Check-up <strong>conformità 2025</strong> rispetto ai nuovi obblighi",
-          "Identificazione <strong>priorità immediate</strong> per la tua azienda",
-          "Calcolo <strong>ROI previsto</strong> dell'investimento in 12-24 mesi",
-          "Verifica <strong>formazione gratuita</strong> disponibile con Fondi",
-          "Confronto <strong>costi attuali</strong> vs benefici nuovo sistema",
-          "Roadmap <strong>adempimenti scaglionati</strong> senza stress operativo"
+          "Check-up <strong>conformità 2025</strong> con quantificazione gap specifici",
+          "Calcolo <strong>ROI previsto</strong> basato sulla tua situazione reale",
+          "Identificazione <strong>priorità immediate</strong> per massimizzare risultati",
+          "Piano <strong>implementazione graduale</strong> senza stravolgimenti operativi"
         ];
     }
   };
