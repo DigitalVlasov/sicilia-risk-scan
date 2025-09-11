@@ -158,7 +158,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Personalized Insight Box - After Violations Detail */}
       <InsightBox 
         insight={dynamicInsight} 
-        ctaTarget="#vantaggi-completi" 
+        ctaTarget="#contact-cta" 
       />
       
       
@@ -258,7 +258,9 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
       {/* Bridge CTA */}
       <BridgeCTA risk={risk} violations={violations} answers={answers} />
       
-      <ContactCTA risk={risk} sector={answers.settore} />
+      <div id="contact-cta">
+        <ContactCTA risk={risk} sector={answers.settore} />
+      </div>
       
       {/* FAQ Section */}
       <FAQ />
