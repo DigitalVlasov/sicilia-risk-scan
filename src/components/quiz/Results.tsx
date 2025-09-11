@@ -144,36 +144,6 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
         </CardContent>
       </Card>
 
-      {/* Immediate Primary CTA */}
-      <Card className="border-2 border-black shadow-xl bg-gradient-to-br from-gray-900 to-black text-white">
-        <CardContent className="p-4 sm:p-6 text-center">
-          <div className="space-y-4">
-            <div className="text-lg sm:text-xl font-bold text-white">
-              {heroData.ctaText}
-            </div>
-            <div className="text-sm sm:text-base text-gray-300">
-              {heroData.ctaSubtext}
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-              <a 
-                href="#contact-cta" 
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
-              >
-                📞 Prenota Subito
-              </a>
-              <a 
-                href={`https://wa.me/393517704451?text=Ciao, ho appena completato il test di sicurezza e sono interessato all'analisi gratuita per la mia azienda.`}
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                💬 WhatsApp
-              </a>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Personalized Insight Box - Before Violations Detail */}
       <InsightBox 
         insight={dynamicInsight} 
