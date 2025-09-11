@@ -387,7 +387,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Alimentare",
     title: "Azienda Dolciaria - Provincia Catania",
     situation: "Controllo ispettivo in corso",
-    challenge: "L'azienda aveva ricevuto un <strong>controllo ispettivo a sorpresa</strong> e rischiava la <strong>sospensione immediata dell'attività</strong> con perdite economiche devastanti. Mancavano documenti critici come DVR aggiornato, attestati di formazione validi e il Piano di Emergenza. <strong>Ogni giorno di ritardo significava potenziali sanzioni cumulative</strong> e l'impossibilità di continuare la produzione durante il periodo natalizio, il più redditizio dell'anno.",
+    challenge: "L'azienda aveva ricevuto un controllo ispettivo a sorpresa durante il periodo più critico dell'anno:\n\n• <strong>Rischio sospensione immediata</strong> dell'attività produttiva\n• <strong>Perdite economiche devastanti</strong> durante il periodo natalizio (70% fatturato annuo)\n• <strong>Sanzioni cumulative giornaliere</strong> per ogni documento mancante\n• <strong>Responsabilità penale diretta</strong> del datore di lavoro\n• <strong>Impossibilità di continuare</strong> la produzione senza conformità",
     solution: [
       "<strong>Formazione Art. 37</strong> organizzata direttamente in azienda",
       "Figure aziendali <strong>certificate</strong> tramite Ente Accreditato",
@@ -402,7 +402,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Manifatturiero", 
     title: "PMI Metalmeccanica - Provincia Siracusa",
     situation: "Necessità formazione senza budget",
-    challenge: "L'azienda era in <strong>grave violazione normativa</strong> con tutto il personale operativo privo di formazione obbligatoria sulla sicurezza. <strong>Ogni giorno lavorativo rappresentava un rischio penale diretto</strong> per il datore di lavoro. La mancanza di budget (oltre €2.500 necessari) rendeva impossibile la regolarizzazione, <strong>esponendo l'azienda a chiusura forzata</strong> e responsabilità penali in caso di qualsiasi incidente, anche minore.",
+    challenge: "L'azienda operava in grave violazione normativa con tutto il personale privo di formazione obbligatoria:\n\n• <strong>Rischio penale diretto</strong> per il datore di lavoro ogni giorno lavorativo\n• <strong>Chiusura forzata immediata</strong> in caso di controllo ispettivo\n• <strong>Budget insufficiente</strong> (€2.500+ necessari) per la regolarizzazione\n• <strong>Responsabilità penale totale</strong> in caso di qualsiasi incidente\n• <strong>Impossibilità di continuare</strong> l'attività produttiva legalmente",
     solution: [
       "Accesso ai <strong>Fondi Interprofessionali</strong> per formazione gratuita",
       "Erogazione di tutti i percorsi formativi <strong>obbligatori</strong>",
@@ -417,7 +417,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     sector: "Tessile",
     title: "Azienda Confezioni - Provincia Messina", 
     situation: "AUDIT esterno imminente",
-    challenge: "L'azienda doveva superare un <strong>AUDIT critico di consulenti esterni</strong> commissionato dal cliente principale (che rappresentava il 70% del fatturato). <strong>Il fallimento dell'audit significava perdere il contratto principale</strong> e potenzialmente chiudere l'attività. Le richieste erano estremamente specifiche e tecniche, con <strong>zero margine di errore</strong> e tempi strettissimi per l'adeguamento completo.",
+    challenge: "L'azienda doveva superare un AUDIT critico dal cliente principale che rappresentava il 70% del fatturato:\n\n• <strong>Perdita del contratto principale</strong> in caso di fallimento\n• <strong>Chiusura potenziale dell'attività</strong> senza questo cliente\n• <strong>Zero margine di errore</strong> nelle richieste tecniche specifiche\n• <strong>Tempi strettissimi</strong> per l'adeguamento completo\n• <strong>Reputazione aziendale a rischio</strong> nel settore di riferimento",
     solution: [
       "<strong>Team multidisciplinare</strong> di specialisti coordinati",
       "Piano Emergenza <strong>personalizzato</strong> per audit specifico", 

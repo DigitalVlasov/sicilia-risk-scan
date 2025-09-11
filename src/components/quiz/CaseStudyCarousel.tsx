@@ -124,12 +124,17 @@ export const CaseStudyCarousel: React.FC = () => {
                     <div className="space-y-3 mt-3">
                       {/* Criticità */}
                       <div className="border-l-2 border-red-500 pl-3">
-                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                           Criticità rilevata
                         </h4>
-                        <p 
-                          className="text-sm text-foreground"
-                          dangerouslySetInnerHTML={{ __html: study.challenge }}
+                        <div 
+                          className="text-sm text-foreground space-y-1"
+                          dangerouslySetInnerHTML={{ 
+                            __html: study.challenge
+                              .replace(/\n\n•/g, '<ul class="mt-2 space-y-1"><li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-0.5">•</span><span>')
+                              .replace(/\n•/g, '</span></li><li class="flex items-start gap-2"><span class="text-red-600 font-bold mt-0.5">•</span><span>')
+                              .replace(/$/g, '</span></li></ul>')
+                          }}
                         />
                       </div>
                       
