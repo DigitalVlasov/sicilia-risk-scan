@@ -24,11 +24,7 @@ export const IntroStage: React.FC<IntroStageProps> = ({
     content: "Analisi personalizzata per il tuo settore, identificazione delle priorità, stima realistica dei rischi e delle tempistiche. Tutto quello che serve per decidere i prossimi passi in modo informato."
   }];
   return <section aria-labelledby="intro-title">
-      <div className="text-center py-5">
-        <div className="w-20 h-20 bg-white border-2 border-red-600 rounded-full flex items-center justify-center shadow-lg overflow-hidden mx-auto">
-          <img src="/lovable-uploads/53e4bec6-be78-459e-a5a5-a2b8ae560a04.png" alt="Spazio Impresa Logo" className="w-full h-full object-contain p-1" />
-        </div>
-      </div>
+      
       
       <Card className={`border-2 border-red-600 ${DESIGN_TOKENS.shadows["2xl"]}`}>
         <CardContent className={DESIGN_TOKENS.padding.card}>
