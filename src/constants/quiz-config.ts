@@ -13,9 +13,9 @@ export const APP_CONFIG = {
     caseStudyAutoAdvance: false, // User-controlled only
   },
   legal: {
-    framework: "D.Lgs. 81/08 aggiornato 2025",
-    source: "protocolli ispettivi INL/ASP/SPRESAL Sicilia 2025",
-    disclaimer: "Test basato su D.Lgs. 81/08 aggiornato 2025 e protocolli ispettivi INL/ASP/SPRESAL Sicilia 2025"
+    framework: "D.Lgs. 81/08 aggiornato 2024",
+    source: "ASP Catania, Messina, Siracusa - INL Rapporto 2024",
+    disclaimer: "Test basato su 859 ispezioni ASP Catania, protocolli ASP-Procura-INAIL-SPRESAL e Rapporto INL 2024"
   }
 } as const;
 
@@ -63,7 +63,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "dvr",
     title: "L'ispettore ti dice: «Fammi vedere DVR aggiornato, nomine SPP e verbali riunioni». Hai tutto pronto?",
-    subtitle: "Primo controllo sempre richiesto - Fonte: 859 ispezioni ASP Catania 2024",
+    subtitle: "Controllo prioritario - 859 ispezioni ASP Catania 2024: 811 violazioni rilevate",
     type: "score",
     options: [
       { value: "si", label: "Sì, tutto pronto", weight: 0 },
@@ -74,7 +74,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "formazione",
     title: "L'ispettore controlla 3 dipendenti a caso + il datore di lavoro: trovi tutti gli attestati validi?",
-    subtitle: "Novità 2025: include obbligo formazione datori 16 ore (Accordo Stato-Regioni)",
+    subtitle: "Controllo standard - tasso irregolarità Sud Italia 79,4% (INL 2024)",
     type: "score",
     options: [
       { value: "si", label: "Sì, attestati validi", weight: 0 },
@@ -107,7 +107,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "patente-cantieri",
     title: "Hai la patente a punti o crediti nei cantieri edili, con almeno 15 punti attivi?",
-    subtitle: "Obbligatoria dal 1° ottobre 2024 – in caso di mancanza si rischia sanzione amministrativa ed esclusione dalla partecipazione a lavori pubblici",
+    subtitle: "Obbligatoria dal 1° ottobre 2024 - ASP Catania: 504 ispezioni edili, 10 sospensioni ASP Messina",
     type: "score",
     conditional: {
       dependsOn: "settore",
@@ -137,7 +137,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "verifiche-inail",
     title: "Hai i verbali delle verifiche periodiche INAIL/ARPAV per impianti e attrezzature?",
-    subtitle: "Sollevamento, pressione, messa a terra - D.Lgs 81/08 Allegato VII",
+    subtitle: "SIA Catania: 4.590 verifiche 2024, +144% violazioni vs 2022",
     type: "score",
     conditional: {
       dependsOn: "settore",
@@ -201,8 +201,8 @@ export const VIOLATIONS_CONFIG: Record<string, Violation> = {
   dvr: {
     key: "dvr",
     text: "DVR e Nomine",
-    min: 2894,
-    max: 7404,
+    min: 800,
+    max: 2500,
     consequences: [
       "Sospensione immediata dell'attività in caso di controllo.",
       "In caso di infortunio, rischi una denuncia per lesioni o omicidio colposo.",
@@ -213,32 +213,32 @@ export const VIOLATIONS_CONFIG: Record<string, Violation> = {
       "Nominare formalmente RSPP e altre figure obbligatorie.",
       "Verbalizzare la riunione periodica annuale."
     ],
-    fonte: "D.Lgs. 81/08, art. 18 e 29 (sanzioni rivalutate 2025)",
+    fonte: "ASP Catania 2024: 811 violazioni su 859 ispezioni (€1.110 media sanzione)",
     priority: { order: 1, urgency: "CRITICO" }
   },
   formazione: {
     key: "formazione",
     text: "Formazione Aggiornata",
-    min: 1709,
-    max: 7404,
+    min: 900,
+    max: 3200,
     consequences: [
       "Responsabilità penale diretta in caso di infortunio.",
       "Nullità di incarichi chiave (RLS, addetti antincendio, etc.).",
-      "Dal 2025, la mancata formazione del Datore di Lavoro è violazione grave."
+      "INL 2024: 83.330 violazioni penali sicurezza (+127% vs 2023)."
     ],
     actions: [
       "Verificare immediatamente lo stato di tutti gli attestati.",
       "Iscrivere il personale ai corsi di aggiornamento.",
-      "Pianificare il nuovo corso obbligatorio di 16 ore per il Datore di Lavoro."
+      "Completare formazione obbligatoria per ruoli chiave."
     ],
-    fonte: "D.Lgs. 81/08 art. 37 + Nuovo Accordo Stato-Regioni 2025",
+    fonte: "INL 2024: tasso irregolarità 79,4% Sud Italia, 73,7% nazionale",
     priority: { order: 2, urgency: "CRITICO" }
   },
   sorveglianza: {
     key: "sorveglianza",
     text: "Sorveglianza Sanitaria",
-    min: 2316,
-    max: 7632,
+    min: 1000,
+    max: 2800,
     consequences: [
       "Un dipendente senza giudizio di idoneità valido non può legalmente lavorare.",
       "Rischio di denuncia se un infortunio è correlato a una condizione non monitorata.",
@@ -249,7 +249,7 @@ export const VIOLATIONS_CONFIG: Record<string, Violation> = {
       "Pianificare le visite mediche periodiche.",
       "Assicurarsi che il protocollo sanitario sia aggiornato ai rischi del DVR."
     ],
-    fonte: "D.Lgs. 81/08, Titolo I e X; Legge 203/2024",
+    fonte: "Protocollo ASP-Procura-INAIL-SPRESAL standardizzato 2024",
     priority: { order: 3, urgency: "ALTO" }
   },
   emergenze: {
@@ -278,14 +278,14 @@ export const VIOLATIONS_CONFIG: Record<string, Violation> = {
     consequences: [
       "Impossibilità di operare in qualsiasi cantiere.",
       "Esclusione automatica da gare e appalti.",
-      "Sanzione min. €6.000 e blocco immediato dell'attività."
+      "ASP Messina 2024: 10 imprese edili sospese per irregolarità."
     ],
     actions: [
       "Richiedere la patente all'Ispettorato del Lavoro.",
       "Verificare di avere almeno 15 crediti attivi.",
       "Frequentare corsi per recuperare eventuali crediti persi."
     ],
-    fonte: "D.L. 19/2024 (Decreto PNRR 4)",
+    fonte: "INL 2024: 41.106 ispezioni edili (+73% vs 2023)",
     priority: { order: 1, urgency: "BLOCCANTE" }
   },
   "nuovo-assunto": {
