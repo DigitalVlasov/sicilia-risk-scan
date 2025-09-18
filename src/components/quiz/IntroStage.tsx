@@ -50,20 +50,6 @@ export const IntroStage: React.FC<IntroStageProps> = ({
             </div>
           </div>
           
-          <div className="bg-red-50 border-2 border-red-200 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6">
-            <h2 className={`${UNIFIED_STYLES.titleSecondary} text-center mb-2 sm:mb-3 text-red-700`}>
-              📊 Statistiche Ufficiali Sicilia
-            </h2>
-            <div className="text-center">
-              <div className="bg-white p-3 rounded border mb-2">
-                <div className="text-2xl font-black text-red-600">Il 74%</div>
-                <div className="text-sm font-medium text-black">delle aziende siciliane è risultato non conforme alla prima ispezione</div>
-              </div>
-            </div>
-            <p className="text-center text-xs text-red-600 mt-2 font-medium">
-              Fonte: Elaborazione su dati INL-SPRESAL 2024
-            </p>
-          </div>
           
           <div className="bg-gray-900 rounded-lg p-4 mb-6">
             <div className="flex flex-wrap gap-2 mb-3">
