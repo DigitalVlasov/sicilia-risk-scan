@@ -45,9 +45,6 @@ export const IntroStage: React.FC<IntroStageProps> = ({
               </Button>
             </div>
             
-            <div className="inline-block bg-yellow-400 text-black px-2 py-1 rounded text-[10px] font-semibold border border-black mb-2">
-              ⚡ Analisi rapida basata su {APP_CONFIG.legal.source}
-            </div>
           </div>
           
           
