@@ -71,7 +71,7 @@ export const QuizContainer: React.FC = () => {
       <div className="fixed bottom-0 left-0 right-0 bg-black text-white p-2 text-center text-xs z-50">
         {APP_CONFIG.legal.disclaimer}
       </div>
-      <main className="container mx-auto max-w-3xl px-4 py-6 sm:py-8 pb-16">
+      <main className="container mx-auto max-w-3xl px-4 py-6 sm:py-8 pb-5 sm:pb-16">
         {renderStage()}
       </main>
     </div>
