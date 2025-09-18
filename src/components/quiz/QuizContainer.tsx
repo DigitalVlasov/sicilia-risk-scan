@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { filterQuestions, calculateRisk, calculateViolations } from "../../utils/quiz-helpers";
 import { useQuizState } from "../../hooks/useQuizState";
 import { QuizStage } from "./QuizStage";
@@ -12,6 +12,13 @@ export const QuizContainer: React.FC = () => {
   const { state, handleStart, handleGoBack, handleReset, handleSelectOption } = useQuizState(filteredQuestions);
   
   const { stage, currentQuestionIndex, answers, baseScore, multiplier } = state;
+  
+  // Scroll to top when quiz starts for better navigation
+  useEffect(() => {
+    if (stage === "quiz") {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [stage]);
   
   // Recalculate filtered questions based on current answers
   const currentFilteredQuestions = useMemo(() => filterQuestions(answers), [answers]);
