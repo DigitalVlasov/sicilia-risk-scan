@@ -25,7 +25,6 @@ src/
 └── pages/               # Route components
 
 public/
-├── assessment.html      # Standalone HTML version
 └── assets/              # Static assets
 ```
 
@@ -82,13 +81,11 @@ The app builds to static files and can be hosted on:
 
 ### 2. Build Output
 - Built files are in `dist/` folder
-- Include both the React app and `assessment.html`
 
 ## Environment Configuration
 No environment variables required for basic functionality. All configuration is in:
 - `src/constants/quiz-config.ts` - App settings
 - `src/data/questions.ts` - Quiz questions
-- `public/assessment.html` - Standalone version
 
 ## Browser Compatibility
 - Modern browsers (Chrome 88+, Firefox 78+, Safari 14+)

@@ -5,7 +5,7 @@
 ### Basic Iframe Code
 ```html
 <iframe 
-  src="https://[YOUR-PROJECT-URL].lovable.app/assessment.html" 
+  src="https://[YOUR-PROJECT-URL].lovable.app/" 
   width="100%" 
   height="800px" 
   frameborder="0" 
@@ -17,7 +17,7 @@
 ```html
 <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
   <iframe 
-    src="https://[YOUR-PROJECT-URL].lovable.app/assessment.html" 
+    src="https://[YOUR-PROJECT-URL].lovable.app/" 
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
     frameborder="0" 
     title="Assessment Sicurezza Lavoro">
@@ -45,7 +45,7 @@ Add to your theme's `functions.php`:
 function safety_assessment_shortcode($atts) {
     $atts = shortcode_atts(array(
         'height' => '800px',
-        'url' => 'https://[YOUR-PROJECT-URL].lovable.app/assessment.html'
+        'url' => 'https://[YOUR-PROJECT-URL].lovable.app/'
     ), $atts);
     
     return '<iframe src="' . esc_url($atts['url']) . '" width="100%" height="' . esc_attr($atts['height']) . '" frameborder="0" title="Assessment Sicurezza Lavoro"></iframe>';
