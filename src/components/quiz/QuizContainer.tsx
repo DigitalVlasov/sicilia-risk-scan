@@ -13,10 +13,12 @@ export const QuizContainer: React.FC = () => {
   
   const { stage, currentQuestionIndex, answers, baseScore, multiplier } = state;
   
-  // Scroll to top when quiz starts for better navigation
+  // Scroll to top when quiz starts and notify parent WordPress page
   useEffect(() => {
     if (stage === "quiz") {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Notify parent WordPress page to scroll to iframe
+      window.parent.postMessage({ type: 'quiz-started' }, '*');
     }
   }, [stage]);
   
