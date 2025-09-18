@@ -82,7 +82,7 @@ export const QuizStage: React.FC<QuizStageProps> = ({
         </CardContent>
       </Card>
       
-      <div className="flex justify-start">
+      <div className="flex justify-start mt-2 sm:mt-4">
         <Button 
           variant="ghost" 
           size="sm" 
