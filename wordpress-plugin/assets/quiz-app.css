@@ -1,0 +1,198 @@
+/*
+ * Quiz Sicurezza sul Lavoro - Compiled Styles
+ * Version: 1.0.0
+ * 
+ * This file contains all the compiled CSS for the quiz application.
+ * All Tailwind classes and custom styles are included here.
+ * 
+ * IMPORTANT: This is a placeholder for the actual compiled build.
+ * To generate the real file, run: npm run build
+ * Then copy the contents of dist/assets/*.css here
+ */
+
+/* WordPress Integration Styles */
+#quiz-sicurezza-root {
+    width: 100%;
+    min-height: 400px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #374151;
+}
+
+/* Reset potential theme conflicts */
+#quiz-sicurezza-root * {
+    box-sizing: border-box;
+}
+
+#quiz-sicurezza-root button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+#quiz-sicurezza-root input,
+#quiz-sicurezza-root select,
+#quiz-sicurezza-root textarea {
+    font-family: inherit;
+}
+
+/* Responsive container */
+#quiz-sicurezza-root .quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    #quiz-sicurezza-root .quiz-container {
+        padding: 15px;
+    }
+}
+
+/* Override common theme conflicts */
+#quiz-sicurezza-root .card {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+#quiz-sicurezza-root .button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    text-decoration: none !important;
+    border: none !important;
+}
+
+#quiz-sicurezza-root .button-primary {
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+#quiz-sicurezza-root .button-primary:hover {
+    background-color: #b91c1c !important;
+}
+
+/* Ensure proper text colors */
+#quiz-sicurezza-root h1,
+#quiz-sicurezza-root h2,
+#quiz-sicurezza-root h3,
+#quiz-sicurezza-root h4,
+#quiz-sicurezza-root h5,
+#quiz-sicurezza-root h6 {
+    color: #111827 !important;
+    margin-top: 0 !important;
+}
+
+#quiz-sicurezza-root p {
+    color: #374151 !important;
+    margin-bottom: 1rem !important;
+}
+
+/* Loading state styles */
+.quiz-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.quiz-loading .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e5e7eb;
+    border-top: 3px solid #dc2626;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Progress bar */
+.quiz-progress {
+    width: 100%;
+    height: 6px;
+    background-color: #f3f4f6;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.quiz-progress-fill {
+    height: 100%;
+    background-color: #dc2626;
+    transition: width 0.3s ease;
+}
+
+/* Risk level badges */
+.risk-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.risk-badge.alto {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.risk-badge.medio {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.risk-badge.basso {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+/* Animation utilities */
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/*
+ * BUILD INSTRUCTIONS:
+ * 
+ * 1. Navigate to your React project directory
+ * 2. Run: npm run build
+ * 3. Copy the content of dist/assets/index-[hash].css
+ * 4. Replace this file with the compiled CSS
+ * 5. Ensure all Tailwind utilities are compiled
+ * 6. Test that styles don't conflict with WordPress themes
+ * 
+ * The compiled CSS should include:
+ * - All Tailwind utilities used in components
+ * - Custom design tokens from index.css
+ * - Component-specific styles
+ * - Responsive breakpoints
+ * - Animation keyframes
+ */
