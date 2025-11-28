@@ -23,19 +23,19 @@ export const QuizContainer: React.FC = () => {
     }
   }, [stage]);
 
-  // Track loading stage
-  useEffect(() => {
-    if (stage === "loading") {
-      trackingService.trackLoading();
-    }
-  }, [stage]);
-  
   // Recalculate filtered questions based on current answers
   const currentFilteredQuestions = useMemo(() => filterQuestions(answers), [answers]);
   const currentQuestion = currentFilteredQuestions[currentQuestionIndex];
   
   const risk = useMemo(() => calculateRisk(baseScore, multiplier), [baseScore, multiplier]);
   const violations = useMemo(() => calculateViolations(answers), [answers]);
+
+  // Track loading stage
+  useEffect(() => {
+    if (stage === "loading") {
+      trackingService.trackLoading();
+    }
+  }, [stage]);
 
   // Track results viewed (after risk and violations are declared)
   useEffect(() => {
