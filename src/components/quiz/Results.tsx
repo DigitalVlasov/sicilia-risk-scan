@@ -16,6 +16,7 @@ import {
   getSectorName
 } from "../../utils/quiz-helpers";
 import { UNIFIED_STYLES } from "../../constants/design-tokens";
+import { trackingService } from "../../services/TrackingService";
 
 interface ResultsProps {
   risk: Risk;
@@ -142,7 +143,12 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
             <div className="mt-4 sm:mt-6">
               <div className="rounded-lg border-2 border-black bg-white p-4 sm:p-6 text-center shadow-inner">
                 <button 
-                  onClick={() => setShowCalculation(!showCalculation)} 
+                  onClick={() => {
+                    if (!showCalculation) {
+                      trackingService.trackCalculationExpanded(risk.level, sanctionMax);
+                    }
+                    setShowCalculation(!showCalculation);
+                  }} 
                   className="text-xs sm:text-sm text-gray-600 hover:text-black font-medium flex items-center justify-center gap-1 mx-auto transition-colors"
                 >
                   <span>Come abbiamo ottenuto questa cifra?</span>
@@ -190,6 +196,7 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           <Button 
             className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 text-sm font-semibold"
             onClick={() => {
+              trackingService.trackWhatsAppHeroClick(risk.level, answers.settore || '', violations.length);
               let message = `Ciao Spazio Impresa! Ho completato il test di conformità. `;
               const violationCount = risk.level === "Alto" ? "multiple criticità" : "alcune criticità";
               const sector = answers.settore;
@@ -217,7 +224,15 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
           </CardHeader>
           <CardContent className="space-y-2 sm:space-y-3 p-4 sm:p-6">
             {violations.map((v, index) => (
-              <details key={v.key} className="group bg-gray-50 rounded-lg border border-gray-200 overflow-hidden transition-all hover:shadow-md">
+              <details 
+                key={v.key} 
+                className="group bg-gray-50 rounded-lg border border-gray-200 overflow-hidden transition-all hover:shadow-md"
+                onToggle={(e) => {
+                  if ((e.target as HTMLDetailsElement).open) {
+                    trackingService.trackViolationDetailViewed(v.key, v.text, v.priority.urgency);
+                  }
+                }}
+              >
                 <summary className="p-3 sm:p-4 cursor-pointer flex justify-between items-center hover:bg-gray-100 transition-colors">
                   <div className="flex items-center gap-2 flex-1 min-w-0 overflow-hidden">
                     <span className="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">

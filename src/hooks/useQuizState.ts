@@ -1,6 +1,7 @@
 import { useReducer, useCallback, useMemo } from "react";
 import { QuizState, QuizAnswers, QuizQuestion } from "../types";
 import { APP_CONFIG } from "../constants/quiz-config";
+import { trackingService } from "../services/TrackingService";
 
 // ==================== STATE MANAGEMENT ====================
 const initialState: QuizState = {
@@ -73,6 +74,7 @@ export const useQuizState = (filteredQuestions: QuizQuestion[]) => {
   const [state, dispatch] = useReducer(quizReducer, initialState);
   
   const handleStart = useCallback(() => {
+    trackingService.trackQuizStarted();
     dispatch({ type: 'START_QUIZ' });
   }, []);
   
@@ -80,11 +82,22 @@ export const useQuizState = (filteredQuestions: QuizQuestion[]) => {
     dispatch({ type: 'GO_BACK' });
   }, []);
   
-  const handleReset = useCallback(() => {
+  const handleReset = useCallback((previousRiskLevel?: string) => {
+    if (previousRiskLevel) {
+      trackingService.trackQuizReset(previousRiskLevel);
+    }
     dispatch({ type: 'RESET' });
   }, []);
   
   const handleSelectOption = useCallback((question: QuizQuestion, option: any, currentFilteredQuestions: QuizQuestion[]) => {
+    // Tracking risposta
+    trackingService.trackAnswer(
+      question.id,
+      question.title,
+      option.label,
+      state.currentQuestionIndex
+    );
+    
     dispatch({ type: 'SELECT_OPTION', question, option });
     
     setTimeout(() => {
