@@ -6,6 +6,7 @@ import { LoadingStage } from "./LoadingStage";
 import { Results } from "./Results";
 import { IntroStage } from "./IntroStage";
 import { APP_CONFIG } from "../../constants/quiz-config";
+import { trackingService } from "../../services/TrackingService";
 
 export const QuizContainer: React.FC = () => {
   const filteredQuestions = useMemo(() => filterQuestions({}), []);
@@ -21,6 +22,13 @@ export const QuizContainer: React.FC = () => {
       window.parent.postMessage({ type: 'quiz-started' }, '*');
     }
   }, [stage]);
+
+  // Track loading stage
+  useEffect(() => {
+    if (stage === "loading") {
+      trackingService.trackLoading();
+    }
+  }, [stage]);
   
   // Recalculate filtered questions based on current answers
   const currentFilteredQuestions = useMemo(() => filterQuestions(answers), [answers]);
@@ -28,6 +36,21 @@ export const QuizContainer: React.FC = () => {
   
   const risk = useMemo(() => calculateRisk(baseScore, multiplier), [baseScore, multiplier]);
   const violations = useMemo(() => calculateViolations(answers), [answers]);
+
+  // Track results viewed (after risk and violations are declared)
+  useEffect(() => {
+    if (stage === "results") {
+      const sanctionMax = violations.reduce((total, v) => total + v.max, 0);
+      trackingService.trackResultsViewed(
+        risk.level,
+        risk.finalScore,
+        violations.length,
+        sanctionMax,
+        answers.settore || '',
+        answers.gestione || ''
+      );
+    }
+  }, [stage, risk, violations, answers]);
   
   const totalQuestionsForDisplay = useMemo(() => {
     if (answers.settore) {
@@ -57,7 +80,7 @@ export const QuizContainer: React.FC = () => {
             risk={risk}
             violations={violations}
             answers={answers}
-            onReset={handleReset}
+            onReset={() => handleReset(risk.level)}
           />
         );
       case "intro":

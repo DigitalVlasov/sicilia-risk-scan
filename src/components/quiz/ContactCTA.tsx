@@ -4,6 +4,7 @@ import { Risk, QuizAnswers } from "../../types";
 import { APP_CONFIG } from "../../constants/quiz-config";
 import { getSectorName } from "../../utils/quiz-helpers";
 import { UNIFIED_STYLES } from "../../constants/design-tokens";
+import { trackingService } from "../../services/TrackingService";
 interface ContactCTAProps {
   risk: Risk;
   sector?: string;
@@ -115,12 +116,22 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
       </div>
       
       <div className="space-y-3 sm:space-y-0 sm:flex sm:gap-4 sm:justify-center">
-        <a href={whatsappHref} target="_blank" rel="noreferrer" className="block">
+        <a 
+          href={whatsappHref} 
+          target="_blank" 
+          rel="noreferrer" 
+          className="block"
+          onClick={() => trackingService.trackWhatsAppCtaClick(risk.level, sector || '')}
+        >
           <Button size="lg" className="w-full bg-green-600 text-white hover:bg-green-700">
             💬 Prenota via WhatsApp
           </Button>
         </a>
-        <a href={`tel:${APP_CONFIG.contact.phone}`} className="block">
+        <a 
+          href={`tel:${APP_CONFIG.contact.phone}`} 
+          className="block"
+          onClick={() => trackingService.trackPhoneCtaClick(risk.level, sector || '')}
+        >
           <Button size="lg" variant="outline" className="w-full">
             📞 Chiama {APP_CONFIG.contact.phone}
           </Button>
