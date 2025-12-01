@@ -204,7 +204,18 @@ export const Results: React.FC<ResultsProps> = ({ risk, violations, answers, onR
               message += `Vorrei prenotare l'Analisi Strategica Gratuita per vedere il confronto costi-benefici e capire come eliminare questi rischi.`;
               const text = encodeURIComponent(message);
               const whatsappUrl = `https://wa.me/+390955872480?text=${text}`;
-              window.open(whatsappUrl, '_blank');
+              
+              // Open in parent window if in iframe, otherwise open normally
+              try {
+                if (window.top !== window.self) {
+                  window.top!.location.href = whatsappUrl;
+                } else {
+                  window.location.href = whatsappUrl;
+                }
+              } catch {
+                // Fallback if cross-origin iframe
+                window.location.href = whatsappUrl;
+              }
             }}
           >
             → Parliamone su WhatsApp

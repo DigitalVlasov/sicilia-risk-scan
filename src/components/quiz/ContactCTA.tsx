@@ -116,17 +116,28 @@ export const ContactCTA: React.FC<ContactCTAProps> = ({
       </div>
       
       <div className="space-y-3 sm:space-y-0 sm:flex sm:gap-4 sm:justify-center">
-        <a 
-          href={whatsappHref} 
-          target="_blank" 
-          rel="noreferrer" 
-          className="block"
-          onClick={() => trackingService.trackWhatsAppCtaClick(risk.level, sector || '')}
+        <Button 
+          size="lg" 
+          className="w-full bg-green-600 text-white hover:bg-green-700"
+          onClick={(e) => {
+            e.preventDefault();
+            trackingService.trackWhatsAppCtaClick(risk.level, sector || '');
+            
+            // Open in parent window if in iframe, otherwise open normally
+            try {
+              if (window.top !== window.self) {
+                window.top!.location.href = whatsappHref;
+              } else {
+                window.location.href = whatsappHref;
+              }
+            } catch {
+              // Fallback if cross-origin iframe
+              window.location.href = whatsappHref;
+            }
+          }}
         >
-          <Button size="lg" className="w-full bg-green-600 text-white hover:bg-green-700">
-            💬 Prenota via WhatsApp
-          </Button>
-        </a>
+          💬 Prenota via WhatsApp
+        </Button>
         <a 
           href={`tel:${APP_CONFIG.contact.phone}`} 
           className="block"
