@@ -107,7 +107,7 @@ export const useQuizState = (filteredQuestions: QuizQuestion[]) => {
       } else {
         // Quiz completed - redirect to results SPA
         const encodedData = encodeQuizData(newAnswers, newBaseScore, newMultiplier);
-        window.location.href = `/sicilia-risk-scan/risultati/?data=${encodedData}`;
+        window.location.href = `../risultati/?data=${encodedData}`;
       }
     }, APP_CONFIG.ui.transitionDelay);
   }, [state.currentQuestionIndex, state.answers, state.baseScore, state.multiplier]);
