@@ -1,7 +1,8 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import { filterQuestions } from "../../utils/quiz-helpers";
 import { useQuizState } from "../../hooks/useQuizState";
 import { QuizStage } from "./QuizStage";
+import { trackingService } from "../../services/TrackingService";
 
 export const QuizContainer: React.FC = () => {
   const filteredQuestions = useMemo(() => filterQuestions({}), []);
@@ -9,9 +10,14 @@ export const QuizContainer: React.FC = () => {
   
   const { currentQuestionIndex, answers } = state;
   
-  // Scroll to top on mount
+  // Track quiz_started only once on mount
+  const hasTrackedStart = useRef(false);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!hasTrackedStart.current) {
+      trackingService.trackQuizStarted();
+      hasTrackedStart.current = true;
+    }
   }, []);
 
   // Recalculate filtered questions based on current answers

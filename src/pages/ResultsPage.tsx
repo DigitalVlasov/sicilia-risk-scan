@@ -1,7 +1,8 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState, useRef } from "react";
 import { Results } from "../components/quiz/Results";
 import { calculateRisk, calculateViolations } from "../utils/quiz-helpers";
 import { QuizAnswers } from "../types";
+import { trackingService } from "../services/TrackingService";
 
 interface QuizData {
   answers: QuizAnswers;
@@ -43,20 +44,25 @@ export const ResultsPage: React.FC = () => {
     return calculateViolations(quizData.answers);
   }, [quizData]);
 
-  // Push to dataLayer for GA4 tracking (optional)
+  // Track results_viewed via postMessage
+  const hasTrackedResults = useRef(false);
   useEffect(() => {
-    if (quizData && typeof window !== "undefined" && (window as any).dataLayer) {
-      (window as any).dataLayer.push({
-        event: "results_loaded",
-        risk_level: risk.level,
-        violations_count: violations.length,
-        sector: quizData.answers.settore || "",
-        management: quizData.answers.gestione || ""
-      });
+    if (quizData && !hasTrackedResults.current) {
+      trackingService.trackResultsViewed(
+        risk.level,
+        risk.finalScore,
+        violations.length,
+        0, // maxSanction calculated separately in Results component
+        quizData.answers.settore || "",
+        quizData.answers.gestione || ""
+      );
+      hasTrackedResults.current = true;
     }
   }, [quizData, risk, violations]);
 
   const handleReset = () => {
+    // Track reset before redirecting
+    trackingService.trackQuizReset(risk.level);
     // Redirect back to quiz SPA
     window.location.href = "../domande/";
   };
